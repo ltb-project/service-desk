@@ -127,6 +127,42 @@
                 </form>
             </div>
         </div>
-     
+
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <p class="panel-title">
+                    <i class="fa fa-fw fa-lock"></i>
+                    {$msg_resetpassword}
+                </p>
+            </div>
+
+             <div class="panel-body">
+
+                 <form id="resetpassword" method="post" action="index.php?page=resetpassword">
+                     {if $resetpasswordresult eq 'passwordrequired'}
+                     <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrequired}</div>
+                     {/if}
+                     {if $resetpasswordresult eq 'passwordrefused'}
+                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrefused}</div>
+                     {/if}
+                     {if $resetpasswordresult eq 'passwordchanged'}
+                     <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordchanged}</div>
+                     {/if}
+                     <input type="hidden" name="dn" value="{$dn}" />
+                     <div class="form-group">
+                         <div class="input-group">
+                             <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                             <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <button type="submit" class="btn btn-success">
+                             <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
+                         </button>
+                     </div>
+                </form>
+            </div>
+        </div>
+
    </div>
 </div>

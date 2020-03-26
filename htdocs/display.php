@@ -8,6 +8,7 @@ $dn = "";
 $entry = "";
 $edit_link = "";
 $checkpasswordresult= "";
+$resetpasswordresult= "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -21,6 +22,9 @@ if (isset($_GET["checkpasswordresult"]) and $_GET["checkpasswordresult"]) {
     $checkpasswordresult = $_GET["checkpasswordresult"];
 }
 
+if (isset($_GET["resetpasswordresult"]) and $_GET["resetpasswordresult"]) {
+    $resetpasswordresult = $_GET["resetpasswordresult"];
+}
 
 if ($result === "") {
 
@@ -88,4 +92,5 @@ $smarty->assign("show_undef", $display_show_undefined);
 $smarty->assign("edit_link", $edit_link);
 
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
+$smarty->assign("resetpasswordresult", $resetpasswordresult);
 ?>
