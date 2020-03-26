@@ -6,6 +6,7 @@
 $result = "";
 $dn = "";
 $password = "";
+$pwdreset = "";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
@@ -17,6 +18,10 @@ if (isset($_POST["newpassword"]) and $_POST["newpassword"]) {
     $password = $_POST["newpassword"];
 } else {
     $result = "passwordrequired";
+}
+
+if (isset($_POST["pwdreset"]) and $_POST["pwdreset"]) {
+    $pwdreset = $_POST["pwdreset"];
 }
 
 if ($result === "") {
@@ -32,6 +37,9 @@ if ($result === "") {
 
     if ($ldap) {
         $entry["userPassword"] = $password;
+	if ( $pwdreset === "true" ) {
+            $entry["pwdReset"] = "TRUE";
+	}
 	$modification = ldap_mod_replace($ldap, $dn, $entry);
 	$errno = ldap_errno($ldap);
         if ( $errno ) {

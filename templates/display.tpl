@@ -155,6 +155,19 @@
                              <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
                          </div>
                      </div>
+                     <div class="form-groupi row">
+                         <div class="col-md-9"><p>{$msg_forcereset}</p></div>
+                         <div class="col-md-3 text-right">
+                             <div class="btn-group" data-toggle="buttons">
+                                 <label class="btn btn-primary active">
+                                     <input type="radio" name="pwdreset" id="true" value="true" checked> {$msg_true}
+                                 </label>
+                                 <label class="btn btn-primary">
+                                     <input type="radio" name="pwdreset" id="false" value="false"> {$msg_false}
+                                 </label>
+                             </div>
+                         </div>
+                     </div>
                      <div class="form-group">
                          <button type="submit" class="btn btn-success">
                              <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}

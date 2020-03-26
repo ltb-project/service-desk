@@ -13,6 +13,7 @@ $messages['editentry'] = "Modifier l'entrée";
 $messages['entriesfound'] = "entrées trouvées";
 $messages['entryfound'] = "entrée trouvée";
 $messages['false'] = "Non";
+$messages['forcereset'] = "Forcer la réinitialisation à la prochaine connexion";
 $messages['pager_all'] = "Tout";
 $messages['print_all'] = "Imprimer tous les résultats";
 $messages['print_page'] = "Imprimer cette page";
