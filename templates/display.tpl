@@ -202,5 +202,15 @@
         </div>
         {/if}
 
+        {if $isExpired}
+        <div class="panel panel-danger">
+            <div class="panel-heading text-center">
+                <p class="panel-title">
+                    <i class="fa fa-fw fa-exclamation-triangle"></i>
+                    {$msg_passwordexpired}
+                </p>
+            </div>
+        </div>
+        {/if}
    </div>
 </div>

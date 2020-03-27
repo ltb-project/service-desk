@@ -92,6 +92,7 @@ if ($result === "") {
 
 	$isLocked = false;
 	$unlockDate = "";
+	$isExpired = false;
 	$ppolicy_entry = "";
 
         if ($pwdPolicy) {
@@ -117,6 +118,17 @@ if ($result === "") {
                 }
             }
 
+            # Expiration
+            $pwdMaxAge = $ppolicy_entry[0]['pwdmaxage'][0];
+            $pwdChangedTime = $entry[0]['pwdchangedtime'][0];
+
+	    if (isset($pwdChangedTime) and isset($pwdMaxAge)) {
+                $changedDate = ldapDate2phpDate($pwdChangedTime);
+                $expirationDate = date_add( $changedDate, new DateInterval('PT'.$pwdMaxAge.'S'));
+                if ( time() >= $expirationDate->getTimestamp() ) {
+                    $isExpired = true;
+                }
+	    }
         }
 
     }
@@ -132,6 +144,7 @@ $smarty->assign("show_undef", $display_show_undefined);
 
 $smarty->assign("isLocked", $isLocked);
 $smarty->assign("unlockDate", $unlockDate);
+$smarty->assign("isExpired", $isExpired);
 
 $smarty->assign("edit_link", $edit_link);
 

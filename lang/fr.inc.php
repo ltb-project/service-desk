@@ -56,6 +56,7 @@ $messages['noentriesfound'] = "Aucune entrée trouvée";
 $messages['notdefined'] = "Non renseigné";
 $messages['password'] = "Mot de passe";
 $messages['passwordchanged'] = "Le mot de passe a été changé";
+$messages['passwordexpired'] = "Le mot de passe est expiré";
 $messages['passwordinvalid'] = "Authentification en échec";
 $messages['passwordok'] = "Authentification réussie !";
 $messages['passwordrefused'] = "Le mot de passe a été refusé";
