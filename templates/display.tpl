@@ -48,7 +48,7 @@
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
-                    <i class="fa fa-fw fa-lock"></i>
+                    <i class="fa fa-fw fa-info-circle"></i>
                     {$msg_accountstatus}
                 </p>
             </div>
@@ -66,13 +66,10 @@
                     {continue}
                 {/if}
                     <tr>
-                        <th class="text-center">
-                            <i class="fa fa-fw fa-{$faclass}"></i>
-                        </th>
-                        <th class="hidden-xs">
+                        <th class="col-md-6">
                             {$msg_label_{$item}}
                         </th>
-                        <td>
+                        <td class="col-md-6">
                         {if ({$entry.$attribute.0})}
                             {foreach $entry.{$attribute} as $value}
                             {include 'value_displayer.tpl' value=$value type=$type truncate_value_after=10000}
@@ -95,7 +92,7 @@
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
-                    <i class="fa fa-fw fa-lock"></i>
+                    <i class="fa fa-fw fa-check-circle"></i>
                     {$msg_checkpassword}
                 </p>
             </div>
@@ -131,7 +128,7 @@
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
-                    <i class="fa fa-fw fa-lock"></i>
+                    <i class="fa fa-fw fa-repeat"></i>
                     {$msg_resetpassword}
                 </p>
             </div>
