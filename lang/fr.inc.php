@@ -4,6 +4,8 @@
 # French
 #==============================================================================
 
+$messages['accountlocked'] = "Le compte est bloqué";
+$messages['accountnotunlocked'] = "Échec de déblocage du compte";
 $messages['accountstatus'] = "Statut du compte";
 $messages['checkpassword'] = "Vérification du mot de passe";
 $messages['currentpassword'] = "Mot de passe actuel";
@@ -69,6 +71,8 @@ $messages['todate'] = "Jusqu'au";
 $messages['tooltip_emailto'] = "Envoyer un email";
 $messages['tooltip_phoneto'] = "Composer ce numéro";
 $messages['true'] = "Oui";
+$messages['unlockaccount'] = "Débloquer le compte";
+$messages['unlockdate'] = "Date de déblocage automatique :";
 $messages['welcome'] = "Bienvenue sur le guichet de service LDAP Tool Box";
 
 ?>

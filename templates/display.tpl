@@ -174,5 +174,33 @@
             </div>
         </div>
 
+        {if $isLocked}
+        <div class="panel panel-danger">
+            <div class="panel-heading text-center">
+                <p class="panel-title">
+                    <i class="fa fa-fw fa-exclamation-triangle"></i>
+                    {$msg_accountlocked}
+                </p>
+            </div>
+
+             <div class="panel-body">
+                 {if $unlockDate}
+                 <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
+                 {/if}
+                 <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
+                     {if $unlockaccountresult eq 'ldaperror'}
+                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
+                     {/if}
+                     <input type="hidden" name="dn" value="{$dn}" />
+                     <div class="form-group">
+                         <button type="submit" class="btn btn-success">
+                             <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
+                         </button>
+                     </div>
+                </form>
+            </div>
+        </div>
+        {/if}
+
    </div>
 </div>

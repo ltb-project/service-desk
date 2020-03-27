@@ -4,6 +4,8 @@
 # English
 #==============================================================================
 
+$messages['accountlocked'] = "Account is locked";
+$messages['accountnotunlocked'] = "Fail to unlock account";
 $messages['accountstatus'] = "Account status";
 $messages['checkpassword'] = "Check password";
 $messages['currentpassword'] = "Current password";
@@ -68,6 +70,8 @@ $messages['title_search'] = "Search results:";
 $messages['tooltip_emailto'] = "Send an email";
 $messages['tooltip_phoneto'] = "Dial this number";
 $messages['true'] = "Yes";
+$messages['unlockaccount'] = "Unlock account";
+$messages['unlockdate'] = "Automatic unlock date:";
 $messages['welcome'] = "Welcome to LDAP Tool Box service desk";
 
 ?>

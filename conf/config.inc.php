@@ -32,6 +32,7 @@ $ldap_base = "dc=example,dc=com";
 $ldap_user_base = "ou=users,".$ldap_base;
 $ldap_user_filter = "(objectClass=inetOrgPerson)";
 $ldap_size_limit = 100;
+#$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
 
 # How display attributes
 $attributes_map = array(
