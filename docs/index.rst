@@ -10,6 +10,9 @@ LDAP Tool Box Service Desk documentation
    :maxdepth: 2
    :caption: Contents:
 
+   presentation.rst
+   installation.rst
+   configuration-apache.rst
 
 
 Indices and tables
