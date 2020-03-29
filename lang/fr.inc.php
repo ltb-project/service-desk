@@ -68,7 +68,6 @@ $messages['sizelimit'] = "La limite de recherche a été atteinte, certaines ent
 $messages['submit'] = "Envoyer";
 $messages['title'] = "Guichet de service";
 $messages['title_search'] = "Résultats de la recherche :";
-$messages['todate'] = "Jusqu'au";
 $messages['tooltip_emailto'] = "Envoyer un email";
 $messages['tooltip_phoneto'] = "Composer ce numéro";
 $messages['true'] = "Oui";
