@@ -21,3 +21,4 @@ LDAP Tool Box Service Desk documentation
    search-parameters.rst
    display-parameters.rst
    checkpassword.rst
+   resetpassword.rst
