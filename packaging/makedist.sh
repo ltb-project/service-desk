@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Make tar.gz distribution of White Pages
+# Make tar.gz distribution of Service Desk
 # Usage:
 # * Run from current directory
 # * Set version as parameter
