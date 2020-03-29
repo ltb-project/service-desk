@@ -65,6 +65,7 @@ $smarty->assign('display_footer',$display_footer);
 $smarty->assign('logout_link',$logout_link);
 $smarty->assign('use_checkpassword',$use_checkpassword);
 $smarty->assign('use_resetpassword',$use_resetpassword);
+$smarty->assign('use_unlockaccount',$use_unlockaccount);
 
 # Assign messages
 $smarty->assign('lang',$lang);
@@ -90,6 +91,7 @@ $page = "welcome";
 if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
 if ( $page === "checkpassword" and !$use_checkpassword ) { $page = "welcome"; }
 if ( $page === "resetpassword" and !$use_resetpassword ) { $page = "welcome"; }
+if ( $page === "unlockaccount" and !$use_unlockaccount ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 

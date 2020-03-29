@@ -191,6 +191,7 @@
                  {if $unlockDate}
                  <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
                  {/if}
+                 {if $use_unlockaccount}
                  <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
                      {if $unlockaccountresult eq 'ldaperror'}
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
@@ -201,7 +202,8 @@
                              <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
                          </button>
                      </div>
-                </form>
+                 </form>
+                 {/if}
             </div>
         </div>
         {/if}

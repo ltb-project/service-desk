@@ -92,6 +92,7 @@ $display_password_items = array('pwdchangedtime', 'pwdreset', 'pwdaccountlockedt
 # Features
 $use_checkpassword = true;
 $use_resetpassword = true;
+$use_unlockaccount = true;
 
 # Language
 $lang ="en";
