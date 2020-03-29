@@ -22,3 +22,4 @@ LDAP Tool Box Service Desk documentation
    display-parameters.rst
    checkpassword.rst
    resetpassword.rst
+   unlockaccount.rst
