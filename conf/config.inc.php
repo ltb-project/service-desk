@@ -89,6 +89,9 @@ $display_title = "fullname";
 $display_show_undefined = false;
 $display_password_items = array('pwdchangedtime', 'pwdreset', 'pwdaccountlockedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'created', 'modified');
 
+# Features
+$use_checkpassword = true;
+
 # Language
 $lang ="en";
 $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";

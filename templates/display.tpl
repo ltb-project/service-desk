@@ -89,6 +89,7 @@
     </div>
     <div class="col-md-6">
 
+        {if $use_checkpassword}
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
@@ -124,6 +125,7 @@
                 </form>
             </div>
         </div>
+        {/if}
 
         <div class="panel panel-info">
             <div class="panel-heading text-center">
