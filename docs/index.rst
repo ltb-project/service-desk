@@ -19,3 +19,4 @@ LDAP Tool Box Service Desk documentation
    ldap-parameters.rst
    attributes.rst
    search-parameters.rst
+   display-parameters.rst
