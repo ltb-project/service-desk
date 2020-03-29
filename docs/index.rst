@@ -6,6 +6,8 @@
 LDAP Tool Box Service Desk documentation
 ========================================
 
+.. image:: images/ltb_sd_screenshot.jpg
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -13,11 +15,5 @@ LDAP Tool Box Service Desk documentation
    presentation.rst
    installation.rst
    configuration-apache.rst
+   general-parameters.rst
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

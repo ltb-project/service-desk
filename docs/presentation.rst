@@ -9,11 +9,11 @@ It allows to browse accounts in an LDAP directory, view and update their status.
              trusted users. Some examples are provided in the documentation.
 
 Features
-^^^^^^^^
+--------
 
-- Quick search for an account
-- View main attributes
-- View account and password status
-- Test current password
-- Reset password and force password change at next connection
-- Unlock account
+* Quick search for an account
+* View main attributes
+* View account and password status
+* Test current password
+* Reset password and force password change at next connection
+* Unlock account

@@ -2,7 +2,7 @@ Installation
 ============
 
 From tarball
-^^^^^^^^^^^^
+------------
 
 Uncompress and unarchive the tarball:
 

@@ -2,7 +2,7 @@ Apache configuration
 ====================
 
 Virtual host
-^^^^^^^^^^^^
+------------
 
 Here is a sample virtual host configuration:
 
@@ -29,7 +29,7 @@ Here is a sample virtual host configuration:
 .. warning:: You must protect the access to the application, else everyone will be able to reset any user password!
 
 LDAP authentication and authorization
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------
 
 You can use Apache `mod_authnz_ldap`_. This module checks user credentials against the LDAP directory and can restrict access to users or groups.
 
@@ -47,7 +47,7 @@ You can use Apache `mod_authnz_ldap`_. This module checks user credentials again
     </Directory>
 
 External authentication
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 You can use any authentication source and authentication protocols, like CAS, SAML or OpenID Connect.
 Configuring these solutions is out of scope of the current documentation.
