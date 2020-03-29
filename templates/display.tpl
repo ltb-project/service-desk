@@ -127,6 +127,7 @@
         </div>
         {/if}
 
+        {if $use_resetpassword}
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
@@ -175,6 +176,7 @@
                 </form>
             </div>
         </div>
+        {/if}
 
         {if $isLocked}
         <div class="panel panel-danger">
