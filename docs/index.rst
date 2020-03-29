@@ -17,4 +17,4 @@ LDAP Tool Box Service Desk documentation
    configuration-apache.rst
    general-parameters.rst
    ldap-parameters.rst
-
+   attributes.rst
