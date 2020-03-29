@@ -1,6 +1,7 @@
 # Service Desk
 
 [![Documentation Status](https://readthedocs.org/projects/service-desk/badge/?version=latest)](https://service-desk.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/ltb-project/service-desk.svg?branch=master)](https://travis-ci.org/ltb-project/service-desk)
 
 Application for support team who need to check, unlock and reset user passwords.
 
