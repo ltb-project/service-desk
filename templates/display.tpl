@@ -159,11 +159,11 @@
                          <div class="col-md-9"><p>{$msg_forcereset}</p></div>
                          <div class="col-md-3 text-right">
                              <div class="btn-group" data-toggle="buttons">
-                                 <label class="btn btn-primary active">
-                                     <input type="radio" name="pwdreset" id="true" value="true" checked> {$msg_true}
+                                 <label class="btn btn-primary{if $resetpassword_reset_default} active{/if}">
+                                     <input type="radio" name="pwdreset" id="true" value="true"{if $resetpaswsord_reset_default} checked{/if}> {$msg_true}
                                  </label>
-                                 <label class="btn btn-primary">
-                                     <input type="radio" name="pwdreset" id="false" value="false"> {$msg_false}
+                                 <label class="btn btn-primary{if !$resetpassword_reset_default} active{/if}">
+                                     <input type="radio" name="pwdreset" id="false" value="false"{if !$resetpassword_reset_default} checked{/if}> {$msg_false}
                                  </label>
                              </div>
                          </div>

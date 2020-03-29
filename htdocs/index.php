@@ -65,6 +65,7 @@ $smarty->assign('display_footer',$display_footer);
 $smarty->assign('logout_link',$logout_link);
 $smarty->assign('use_checkpassword',$use_checkpassword);
 $smarty->assign('use_resetpassword',$use_resetpassword);
+$smarty->assign('resetpassword_reset_default',$resetpassword_reset_default);
 $smarty->assign('use_unlockaccount',$use_unlockaccount);
 
 # Assign messages
