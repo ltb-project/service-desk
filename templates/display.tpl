@@ -89,6 +89,7 @@
     </div>
     <div class="col-md-6">
 
+        {if $use_checkpassword}
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
@@ -124,7 +125,9 @@
                 </form>
             </div>
         </div>
+        {/if}
 
+        {if $use_resetpassword}
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
@@ -156,11 +159,11 @@
                          <div class="col-md-9"><p>{$msg_forcereset}</p></div>
                          <div class="col-md-3 text-right">
                              <div class="btn-group" data-toggle="buttons">
-                                 <label class="btn btn-primary active">
-                                     <input type="radio" name="pwdreset" id="true" value="true" checked> {$msg_true}
+                                 <label class="btn btn-primary{if $resetpassword_reset_default} active{/if}">
+                                     <input type="radio" name="pwdreset" id="true" value="true"{if $resetpaswsord_reset_default} checked{/if}> {$msg_true}
                                  </label>
-                                 <label class="btn btn-primary">
-                                     <input type="radio" name="pwdreset" id="false" value="false"> {$msg_false}
+                                 <label class="btn btn-primary{if !$resetpassword_reset_default} active{/if}">
+                                     <input type="radio" name="pwdreset" id="false" value="false"{if !$resetpassword_reset_default} checked{/if}> {$msg_false}
                                  </label>
                              </div>
                          </div>
@@ -173,6 +176,7 @@
                 </form>
             </div>
         </div>
+        {/if}
 
         {if $isLocked}
         <div class="panel panel-danger">
@@ -187,6 +191,7 @@
                  {if $unlockDate}
                  <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
                  {/if}
+                 {if $use_unlockaccount}
                  <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
                      {if $unlockaccountresult eq 'ldaperror'}
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
@@ -197,7 +202,8 @@
                              <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
                          </button>
                      </div>
-                </form>
+                 </form>
+                 {/if}
             </div>
         </div>
         {/if}
