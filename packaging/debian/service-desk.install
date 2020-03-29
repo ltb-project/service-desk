@@ -1,0 +1,9 @@
+# Program files
+../conf/*      usr/share/service-desk/conf/
+../htdocs/*    usr/share/service-desk/htdocs/
+../lang/*      usr/share/service-desk/lang/
+../lib/*       usr/share/service-desk/lib/
+../templates/* usr/share/service-desk/templates/
+
+# Apache configuration
+debian/conf/* etc/apache2/sites-available/

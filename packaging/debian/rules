@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export DH_COMPAT=9
+
+%:
+	dh $@
+
+override_dh_fixperms:
+	dh_fixperms
+	chown www-data:www-data debian/service-desk/usr/share/service-desk/cache
+	chown www-data:www-data debian/service-desk/usr/share/service-desk/templates_c
