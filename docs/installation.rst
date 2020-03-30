@@ -34,7 +34,7 @@ Configure the repository:
 
 .. code-block:: ini
 
-    deb [arch=amd64] http://ltb-project.org/debian/jessie jessie main
+    deb [arch=amd64] http://ltb-project.org/debian/stable stable main
 
 Import repository key:
 
