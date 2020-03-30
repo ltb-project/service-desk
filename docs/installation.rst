@@ -34,13 +34,13 @@ Configure the repository:
 
 .. code-block:: ini
 
-    deb [arch=amd64] http://ltb-project.org/debian/stable stable main
+    deb [arch=amd64] https://ltb-project.org/debian/stable stable main
 
 Import repository key:
 
 .. prompt:: bash #
 
-    wget -O - http://ltb-project.org/wiki/lib/RPM-GPG-KEY-LTB-project | sudo apt-key add -
+    wget -O - https://ltb-project.org/wiki/lib/RPM-GPG-KEY-LTB-project | sudo apt-key add -
 
 Then update:
 
@@ -85,7 +85,7 @@ Import repository key:
 
 .. prompt:: bash #
 
-    rpm --import http://ltb-project.org/wiki/lib/RPM-GPG-KEY-LTB-project
+    rpm --import https://ltb-project.org/wiki/lib/RPM-GPG-KEY-LTB-project
 
 You are now ready to install:
 
