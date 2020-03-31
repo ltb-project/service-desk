@@ -122,7 +122,7 @@ if ($result === "") {
             $pwdMaxAge = $ppolicy_entry[0]['pwdmaxage'][0];
             $pwdChangedTime = $entry[0]['pwdchangedtime'][0];
 
-	    if (isset($pwdChangedTime) and isset($pwdMaxAge)) {
+	    if (isset($pwdChangedTime) and isset($pwdMaxAge) and ($pwdMaxAge > 0)) {
                 $changedDate = ldapDate2phpDate($pwdChangedTime);
                 $expirationDate = date_add( $changedDate, new DateInterval('PT'.$pwdMaxAge.'S'));
                 if ( time() >= $expirationDate->getTimestamp() ) {
