@@ -22,3 +22,7 @@
 {if $type eq 'list'}
     {$value|truncate:{$truncate_value_after}}<br />
 {/if}
+
+{if $type eq 'bytes'}
+    {convert_bytes($value)|truncate:{$truncate_value_after}}<br />
+{/if}

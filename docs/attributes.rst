@@ -9,5 +9,15 @@ Attributes are defined in ``$attributes_map``, where each item is an array with 
 
 This is used to configure how attribute is displayed.
 
+Available types:
+
+* ``text``: simple text
+* ``mailto``: mailto link
+* ``tel``: tel link
+* ``boolean``: true or false
+* ``date``: full date
+* ``list``: value from a list
+* ``bytes``: bytes converted in KB/MB/GB/TB
+
 .. tip:: See LDAP Tool Box White Pages documentation to get more information.
 
