@@ -34,6 +34,7 @@ $messages['label_identifier'] = "Identifiant";
 $messages['label_l'] = "Ville";
 $messages['label_lastname'] = "Nom";
 $messages['label_mail'] = "Courriel";
+$messages['label_mailquota'] = "Quota messagerie";
 $messages['label_mobile'] = "Portable";
 $messages["label_modified"] = "Modifié";
 $messages['label_organization'] = "Organisation";
