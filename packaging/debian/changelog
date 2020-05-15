@@ -1,3 +1,12 @@
+ltb-project-service-desk (0.2-1) unstable; urgency=low
+
+    * Bug #5: Password is marked as expired if policy do not set pwdMaxAge
+    * Bug #7: The pwdReset radio button is not checked by default
+    * Feature #9: PostHook
+    * Feature #10: Viewer for quota attributes
+
+ -- Clement Oudot <clem@ltb-project.org>  Fri, 15 May 2020 23:00:00 +0200
+
 ltb-project-service-desk (0.1-1) unstable; urgency=low
 
     * First release

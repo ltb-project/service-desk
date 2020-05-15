@@ -15,7 +15,7 @@
 #=================================================
 %define sd_name      service-desk
 %define sd_realname  ltb-project-%{name}
-%define sd_version   0.1
+%define sd_version   0.2
 %define sd_destdir   /usr/share/%{name}
 
 #=================================================
@@ -109,5 +109,10 @@ rm -rf %{buildroot}
 # Changelog
 #=================================================
 %changelog
+* Fri May 15 2020 - Clement Oudot <clem@ltb-project.org> - 0.2-1
+- Bug #5: Password is marked as expired if policy do not set pwdMaxAge
+- Bug #7: The pwdReset radio button is not checked by default
+- Feature #9: PostHook
+- Feature #10: Viewer for quota attributes
 * Mon Mar 30 2020 - Clement Oudot <clem@ltb-project.org> - 0.1-1
 - First release
