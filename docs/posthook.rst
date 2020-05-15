@@ -1,5 +1,5 @@
-Posthook parameters
-===================
+Posthook
+========
 
 Posthook feature allows to run a script after the password modification.
 
