@@ -1,3 +1,9 @@
+ltb-project-service-desk (0.2-2) unstable; urgency=low
+
+    * Bug #13: Syntax error in resetpassword.php
+
+ -- Clement Oudot <clem@ltb-project.org>  Tue, 19 May 2020 09:00:00 +0200
+
 ltb-project-service-desk (0.2-1) unstable; urgency=low
 
     * Bug #5: Password is marked as expired if policy do not set pwdMaxAge

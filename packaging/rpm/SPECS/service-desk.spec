@@ -24,7 +24,7 @@
 Summary: LDAP Tool Box Service Desk web interface
 Name: %{sd_name}
 Version: %{sd_version}
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPL
 BuildArch: noarch
 
@@ -109,6 +109,8 @@ rm -rf %{buildroot}
 # Changelog
 #=================================================
 %changelog
+* Tue May 19 2020 - Clement Oudot <clem@ltb-project.org> - 0.2-2
+* Bug #13: Syntax error in resetpassword.php
 * Fri May 15 2020 - Clement Oudot <clem@ltb-project.org> - 0.2-1
 - Bug #5: Password is marked as expired if policy do not set pwdMaxAge
 - Bug #7: The pwdReset radio button is not checked by default
