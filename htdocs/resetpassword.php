@@ -63,7 +63,7 @@ if ($result === "") {
              } else {
                  $command = posthook_command($posthook, $login, $password, $posthook_password_encodebase64);
 		 exec($command, $posthook_output, $posthook_return);
-	         $posthook_message = $posthook_output[0]
+	         $posthook_message = $posthook_output[0];
              }
         }
     }
