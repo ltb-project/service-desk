@@ -115,10 +115,14 @@ if ($result === "") {
 
             if ( $pwdAccountLockedTime === "000001010000Z" ) {
                 $isLocked = true;
-            } else if (isset($pwdAccountLockedTime) and isset($pwdLockoutDuration)) {
-                $lockDate = ldapDate2phpDate($pwdAccountLockedTime);
-                $unlockDate = date_add( $lockDate, new DateInterval('PT'.$pwdLockoutDuration.'S'));
-                if ( time() <= $unlockDate->getTimestamp() ) {
+            } else if (isset($pwdAccountLockedTime)) {
+                if (isset($pwdLockoutDuration) and ($pwdLockoutDuration > 0)) {
+                    $lockDate = ldapDate2phpDate($pwdAccountLockedTime);
+                    $unlockDate = date_add( $lockDate, new DateInterval('PT'.$pwdLockoutDuration.'S'));
+                    if ( time() <= $unlockDate->getTimestamp() ) {
+                        $isLocked = true;
+                    }
+                } else {
                     $isLocked = true;
                 }
             }
