@@ -5,7 +5,9 @@
 #==============================================================================
 
 $messages['accountlocked'] = "Account is locked";
+$messages['accountnotlocked'] = "Fail to lock account";
 $messages['accountnotunlocked'] = "Fail to unlock account";
+$messages['accountunlocked'] = "Account is not locked";
 $messages['accountstatus'] = "Account status";
 $messages['checkpassword'] = "Check password";
 $messages['currentpassword'] = "Current password";
@@ -51,6 +53,7 @@ $messages['label_state'] = "State";
 $messages['label_street'] = "Street";
 $messages['label_title'] = "Title";
 $messages['ldaperror'] = "LDAP communication error";
+$messages['lockaccount'] = "Lock account";
 $messages['logout'] = "Logout";
 $messages['newpassword'] = "New password";
 $messages['noentriesfound'] = "No entries found";
