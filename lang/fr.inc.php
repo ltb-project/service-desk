@@ -5,8 +5,10 @@
 #==============================================================================
 
 $messages['accountlocked'] = "Le compte est bloqué";
+$messages['accountnotlocked'] = "Échec de blocage du compte";
 $messages['accountnotunlocked'] = "Échec de déblocage du compte";
 $messages['accountstatus'] = "Statut du compte";
+$messages['accountunlocked'] = "Le compte n'est pas bloqué";
 $messages['checkpassword'] = "Vérification du mot de passe";
 $messages['currentpassword'] = "Mot de passe actuel";
 $messages['displayentry'] = "Afficher l'entrée";
@@ -51,6 +53,7 @@ $messages['label_state'] = "État";
 $messages['label_street'] = "Voie";
 $messages['label_title'] = "Titre";
 $messages['ldaperror'] = "Erreur de communication avec l'annuaire LDAP";
+$messages['lockaccount'] = "Bloquer le compte";
 $messages['logout'] = "Déconnexion";
 $messages['newpassword'] = "Nouveau mot de passe";
 $messages['noentriesfound'] = "Aucune entrée trouvée";

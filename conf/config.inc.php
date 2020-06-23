@@ -95,6 +95,7 @@ $use_checkpassword = true;
 $use_resetpassword = true;
 $resetpassword_reset_default = true;
 $use_unlockaccount = true;
+$use_lockaccount = true;
 
 # Language
 $lang ="en";

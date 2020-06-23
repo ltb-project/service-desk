@@ -219,6 +219,33 @@
         </div>
         {/if}
 
+        {if !$isLocked}
+        <div class="panel panel-success">
+            <div class="panel-heading text-center">
+                <p class="panel-title">
+                    <i class="fa fa-fw fa-check-square-o"></i>
+                    {$msg_accountunlocked}
+                </p>
+            </div>
+
+             {if $use_lockaccount}
+             <div class="panel-body">
+                 <form id="lockaccount" method="post" action="index.php?page=lockaccount">
+                     {if $lockaccountresult eq 'ldaperror'}
+                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
+                     {/if}
+                     <input type="hidden" name="dn" value="{$dn}" />
+                     <div class="form-group">
+                         <button type="submit" class="btn btn-success">
+                             <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
+                         </button>
+                     </div>
+                 </form>
+            </div>
+            {/if}
+        </div>
+        {/if}
+
         {if $isExpired}
         <div class="panel panel-danger">
             <div class="panel-heading text-center">

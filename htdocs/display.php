@@ -10,6 +10,7 @@ $edit_link = "";
 $checkpasswordresult= "";
 $resetpasswordresult= "";
 $accountunlockresult= "";
+$accountlockresult= "";
 $posthookresult= "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
@@ -30,6 +31,10 @@ if (isset($_GET["resetpasswordresult"]) and $_GET["resetpasswordresult"]) {
 
 if (isset($_GET["accountunlockresult"]) and $_GET["accountunlockresult"]) {
     $accountunlockresult = $_GET["accountunlockresult"];
+}
+
+if (isset($_GET["accountlockresult"]) and $_GET["accountlockresult"]) {
+    $accountlockresult = $_GET["accountlockresult"];
 }
 
 if (isset($_GET["posthookresult"]) and $_GET["posthookresult"]) {
@@ -161,5 +166,6 @@ $smarty->assign("edit_link", $edit_link);
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);
 $smarty->assign("accountunlockresult", $accountunlockresult);
+$smarty->assign("accountlockresult", $accountlockresult);
 $smarty->assign("posthookresult", $posthookresult);
 ?>
