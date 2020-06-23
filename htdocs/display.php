@@ -115,6 +115,7 @@ if ($result === "") {
 
             if ( $pwdAccountLockedTime === "000001010000Z" ) {
                 $isLocked = true;
+                unset($entry[0]['pwdaccountlockedtime']);
             } else if (isset($pwdAccountLockedTime)) {
                 if (isset($pwdLockoutDuration) and ($pwdLockoutDuration > 0)) {
                     $lockDate = ldapDate2phpDate($pwdAccountLockedTime);
