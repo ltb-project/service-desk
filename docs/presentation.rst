@@ -16,4 +16,4 @@ Features
 * View account and password status
 * Test current password
 * Reset password and force password change at next connection
-* Unlock account
+* Lock and unlock account
