@@ -1,3 +1,11 @@
+ltb-project-service-desk (0.3-1) unstable; urgency=low
+
+    * Bug #15: Handle the case where pwdAccountLockedTime is set but pwdLockoutDuration is not set or is equal to 0
+    * Feature #16: Possibility to lock an account
+    * Feature #17: Allow the Smarty path to be set in conf.inc.local.php
+
+ -- Clement Oudot <clem@ltb-project.org>  Mon, 29 Jun 2020 11:00:00 +0200
+
 ltb-project-service-desk (0.2-2) unstable; urgency=low
 
     * Bug #13: Syntax error in resetpassword.php
