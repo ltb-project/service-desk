@@ -25,11 +25,12 @@ if (isset($_POST["pwdreset"]) and $_POST["pwdreset"]) {
     $pwdreset = $_POST["pwdreset"];
 }
 
-if ($result === "") {
+require_once("../conf/config.inc.php");
+require_once("../lib/ldap.inc.php");
+require_once("../lib/posthook.inc.php");
+require_once("../lib/authenticate_admin.inc.php");
 
-    require_once("../conf/config.inc.php");
-    require_once("../lib/ldap.inc.php");
-    require_once("../lib/posthook.inc.php");
+if ($result === "") {
 
     # Connect to LDAP
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);

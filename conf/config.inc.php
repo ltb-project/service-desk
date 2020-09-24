@@ -96,6 +96,7 @@ $use_resetpassword = true;
 $resetpassword_reset_default = true;
 $use_unlockaccount = true;
 $use_lockaccount = true;
+$always_authenticate_admin = false;
 
 # Language
 $lang ="en";

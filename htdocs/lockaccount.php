@@ -6,6 +6,8 @@
 $result = "";
 $dn = "";
 $password = "";
+$ldap_binddn = "";
+$ldap_bindpw = "";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
@@ -13,10 +15,11 @@ if (isset($_POST["dn"]) and $_POST["dn"]) {
     $result = "dnrequired";
 }
 
-if ($result === "") {
+require_once("../conf/config.inc.php");
+require_once("../lib/ldap.inc.php");
+require_once("../lib/authenticate_admin.inc.php");
 
-    require_once("../conf/config.inc.php");
-    require_once("../lib/ldap.inc.php");
+if ($result === "") {
 
     # Connect to LDAP
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
@@ -25,7 +28,9 @@ if ($result === "") {
     $result = $ldap_connection[1];
 
     if ($ldap) {
-        $modification = ldap_mod_replace($ldap, $dn, array("pwdAccountLockedTime" => array("000001010000Z")));
+        date_default_timezone_set("UTC");
+        $lock_time = date("YmdHis")."Z";
+        $modification = ldap_mod_replace($ldap, $dn, array("pwdAccountLockedTime" => array($lock_time)));
         $errno = ldap_errno($ldap);
         if ( $errno ) {
             $result = "ldaperror";

@@ -179,6 +179,19 @@
                              </div>
                          </div>
                      </div>
+                     {if $always_authenticate_admin}
+                         <div class="form-group">
+                             <div class="input-group"><p>{$msg_label_admin_credentials}</p></div>
+                             <div class="input-group">
+                                 <span class="input-group-addon"><i class="fa fa-fw fa-user-circle"></i></span>
+                                 <input type="text" name="admin_username" id="admin_username" class="form-control" placeholder="{$msg_admin_username}" />
+                             </div>
+                             <div class="input-group">
+                                 <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                                 <input type="password" name="admin_password" id="admin_password" class="form-control" placeholder="{$msg_admin_password}" />
+                             </div>
+                         </div>
+                     {/if}
                      <div class="form-group">
                          <button type="submit" class="btn btn-success">
                              <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
@@ -208,6 +221,19 @@
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
+                     {if $always_authenticate_admin}
+                         <div class="form-group">
+                             <div class="input-group"><p>{$msg_label_admin_credentials}</p></div>
+                             <div class="input-group">
+                                 <span class="input-group-addon"><i class="fa fa-fw fa-user-circle"></i></span>
+                                 <input type="text" name="admin_username" id="admin_username" class="form-control" placeholder="{$msg_admin_username}" />
+                             </div>
+                             <div class="input-group">
+                                 <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                                 <input type="password" name="admin_password" id="admin_password" class="form-control" placeholder="{$msg_admin_password}" />
+                             </div>
+                         </div>
+                     {/if}
                      <div class="form-group">
                          <button type="submit" class="btn btn-success">
                              <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
@@ -235,6 +261,19 @@
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
+                     {if $always_authenticate_admin}
+                         <div class="form-group">
+                             <div class="input-group"><p>{$msg_label_admin_credentials}</p></div>
+                             <div class="input-group">
+                                 <span class="input-group-addon"><i class="fa fa-fw fa-user-circle"></i></span>
+                                 <input type="text" name="admin_username" id="admin_username" class="form-control" placeholder="{$msg_admin_username}" />
+                             </div>
+                             <div class="input-group">
+                                 <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                                 <input type="password" name="admin_password" id="admin_password" class="form-control" placeholder="{$msg_admin_password}" />
+                             </div>
+                         </div>
+                     {/if}
                      <div class="form-group">
                          <button type="submit" class="btn btn-success">
                              <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}

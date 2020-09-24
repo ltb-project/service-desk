@@ -68,6 +68,7 @@ $smarty->assign('use_resetpassword',$use_resetpassword);
 $smarty->assign('resetpassword_reset_default',$resetpassword_reset_default);
 $smarty->assign('use_unlockaccount',$use_unlockaccount);
 $smarty->assign('use_lockaccount',$use_lockaccount);
+$smarty->assign('always_authenticate_admin',$always_authenticate_admin);
 
 # Assign messages
 $smarty->assign('lang',$lang);

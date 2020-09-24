@@ -78,5 +78,9 @@ $messages['true'] = "Oui";
 $messages['unlockaccount'] = "Débloquer le compte";
 $messages['unlockdate'] = "Date de déblocage automatique :";
 $messages['welcome'] = "Bienvenue sur le guichet de service LDAP Tool Box";
+$messages['label_admin_credentials'] = "Informations d'identification de l'administrateur";
+$messages['admin_username'] = "Nom d'utilisateur de l'administrateur";
+$messages['admin_password'] = "Mot de passe administrateur";
+$messages['admincredentialsrequired'] = "Informations d'identification de l'administrateur requises";
 
 ?>
