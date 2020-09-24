@@ -28,9 +28,7 @@ if ($result === "") {
     $result = $ldap_connection[1];
 
     if ($ldap) {
-        date_default_timezone_set("UTC");
-        $lock_time = date("YmdHis")."Z";
-        $modification = ldap_mod_replace($ldap, $dn, array("pwdAccountLockedTime" => array($lock_time)));
+        $modification = ldap_mod_replace($ldap, $dn, array("pwdAccountLockedTime" => array("000001010000Z")));
         $errno = ldap_errno($ldap);
         if ( $errno ) {
             $result = "ldaperror";
