@@ -78,5 +78,9 @@ $messages['true'] = "Yes";
 $messages['unlockaccount'] = "Unlock account";
 $messages['unlockdate'] = "Automatic unlock date:";
 $messages['welcome'] = "Welcome to LDAP Tool Box service desk";
+$messages['label_admin_credentials'] = "Administrator's Credentials";
+$messages['admin_username'] = "Administrator's username";
+$messages['admin_password'] = "Administrator's password";
+$messages['admincredentialsrequired'] = "Administrator's Credentials required";
 
 ?>

@@ -6,6 +6,8 @@
 $result = "";
 $dn = "";
 $password = "";
+$ldap_binddn = "";
+$ldap_bindpw = "";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
@@ -13,10 +15,11 @@ if (isset($_POST["dn"]) and $_POST["dn"]) {
     $result = "dnrequired";
 }
 
-if ($result === "") {
+require_once("../conf/config.inc.php");
+require_once("../lib/ldap.inc.php");
+require_once("../lib/authenticate_admin.inc.php");
 
-    require_once("../conf/config.inc.php");
-    require_once("../lib/ldap.inc.php");
+if ($result === "") {
 
     # Connect to LDAP
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
