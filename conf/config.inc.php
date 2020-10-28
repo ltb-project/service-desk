@@ -89,6 +89,7 @@ $display_items = array('identifier', 'firstname', 'lastname', 'title', 'business
 $display_title = "fullname";
 $display_show_undefined = false;
 $display_password_items = array('pwdchangedtime', 'pwdreset', 'pwdaccountlockedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'created', 'modified');
+$display_password_expiration_date = true;
 
 # Features
 $use_checkpassword = true;
