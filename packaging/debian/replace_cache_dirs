@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sed -i 's:^#$smarty_cache_dir.*:$smarty_cache_dir = "/var/cache/service-desk/cache";:' debian/service-desk/usr/share/service-desk/conf/config.inc.php
+sed -i 's:^#$smarty_compile_dir.*:$smarty_compile_dir = "/var/cache/service-desk/templates_c";:' debian/service-desk/usr/share/service-desk/conf/config.inc.php

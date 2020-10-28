@@ -1,2 +1,2 @@
-/usr/share/service-desk/cache
-/usr/share/service-desk/templates_c
+/var/cache/service-desk/cache
+/var/cache/service-desk/templates_c
