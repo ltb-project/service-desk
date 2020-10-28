@@ -123,6 +123,10 @@ $debug = false;
 # To read the actual password in the posthook script, use a base64_decode function/tool
 #$posthook_password_encodebase64 = false;
 
+# Cache directory
+#$smarty_compile_dir = "/var/cache/service-desk/templates_c";
+#$smarty_cache_dir = "/var/cache/service-desk/cache";
+
 # Allow to override current settings with local configuration
 if (file_exists (dirname (__FILE__) . '/config.inc.local.php')) {
     include dirname (__FILE__) . '/config.inc.local.php';
