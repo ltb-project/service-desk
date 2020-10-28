@@ -6,9 +6,6 @@ Source: http://ltb-project.org/wiki/documentation/service-desk
 Files: htdocs/vendor/bootstrap
 Copyright: 2011-2014 Twitter, Inc.
 
-Files: htdocs/vendor/bootstrap-datepicker
-Copyright: 2012 Stefan Petre
-
 Files: htdocs/vendor/font-awesome
 Copyright: @davegandy - http://fontawesome.io - @fontawesome
 
