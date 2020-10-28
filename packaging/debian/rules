@@ -6,7 +6,11 @@ export DH_COMPAT=9
 %:
 	dh $@
 
+override_dh_install:
+	dh_install
+	debian/replace_cache_dirs
+
 override_dh_fixperms:
 	dh_fixperms
-	chown www-data:www-data debian/service-desk/usr/share/service-desk/cache
-	chown www-data:www-data debian/service-desk/usr/share/service-desk/templates_c
+	chown www-data:www-data debian/service-desk/var/cache/service-desk/cache
+	chown www-data:www-data debian/service-desk/var/cache/service-desk/templates_c

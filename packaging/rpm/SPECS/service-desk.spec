@@ -17,6 +17,7 @@
 %define sd_realname  ltb-project-%{name}
 %define sd_version   0.3
 %define sd_destdir   /usr/share/%{name}
+%define sd_cachedir  /var/cache/%{name}
 
 #=================================================
 # Header
@@ -56,13 +57,13 @@ rm -rf %{buildroot}
 
 # Create directories
 mkdir -p %{buildroot}/%{sd_destdir}
-mkdir -p %{buildroot}/%{sd_destdir}/cache
+mkdir -p %{buildroot}/%{sd_cachedir}/cache
 mkdir -p %{buildroot}/%{sd_destdir}/conf
 mkdir -p %{buildroot}/%{sd_destdir}/htdocs
 mkdir -p %{buildroot}/%{sd_destdir}/lang
 mkdir -p %{buildroot}/%{sd_destdir}/lib
 mkdir -p %{buildroot}/%{sd_destdir}/templates
-mkdir -p %{buildroot}/%{sd_destdir}/templates_c
+mkdir -p %{buildroot}/%{sd_cachedir}/templates_c
 mkdir -p %{buildroot}/etc/httpd/conf.d
 
 # Copy files
@@ -78,8 +79,10 @@ install -m 644 templates/*    %{buildroot}/%{sd_destdir}/templates
 ## Apache configuration
 install -m 644 %{SOURCE1}     %{buildroot}/etc/httpd/conf.d/service-desk.conf
 
-# Adapt Smarty path
+# Adapt Smarty paths
 sed -i 's:/usr/share/php/smarty3:/usr/share/php/Smarty:' %{buildroot}%{sd_destdir}/conf/config.inc.php
+sed -i 's:^#$smarty_cache_dir.*:$smarty_cache_dir = "'%{sd_cachedir}/cache'";:' %{buildroot}%{sd_destdir}/conf/config.inc.php
+sed -i 's:^#$smarty_compile_dir.*:$smarty_compile_dir = "'%{sd_cachedir}/templates_c'";:' %{buildroot}%{sd_destdir}/conf/config.inc.php
 
 %post
 #=================================================
@@ -87,8 +90,8 @@ sed -i 's:/usr/share/php/smarty3:/usr/share/php/Smarty:' %{buildroot}%{sd_destdi
 #=================================================
 
 # Change owner
-/bin/chown apache:apache %{sd_destdir}/cache
-/bin/chown apache:apache %{sd_destdir}/templates_c
+/bin/chown apache:apache %{sd_cachedir}/cache
+/bin/chown apache:apache %{sd_cachedir}/templates_c
 
 #=================================================
 # Cleaning
@@ -104,6 +107,7 @@ rm -rf %{buildroot}
 %config(noreplace) %{sd_destdir}/conf/config.inc.php
 %config(noreplace) /etc/httpd/conf.d/service-desk.conf
 %{sd_destdir}
+%{sd_cachedir}
 
 #=================================================
 # Changelog
