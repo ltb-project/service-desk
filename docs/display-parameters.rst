@@ -31,3 +31,8 @@ Configure which items are displayed:
 
     $display_password_items = array('pwdchangedtime', 'pwdreset', 'pwdaccountlockedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'created', 'modified');
 
+You can also display the password expiration date in this panel by enabling this option:
+
+.. code-block:: php
+
+    $display_password_expiration_date = true;
