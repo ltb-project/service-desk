@@ -80,6 +80,16 @@
                         </td>
                     </tr>
                 {/foreach}
+                {if {$display_password_expiration_date} and {$ldapExpirationDate}}
+                    <tr>
+                        <th class="col-md-6">
+                            {$msg_label_expirationdate}
+                        </th>
+                        <td class="col-md-6">
+                            {include 'value_displayer.tpl' value=$ldapExpirationDate type="date" truncate_value_after=10000}
+                        </td>
+                    </tr>
+                {/if}
                 </table>
                 </div>
 

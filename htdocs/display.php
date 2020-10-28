@@ -12,6 +12,7 @@ $resetpasswordresult= "";
 $accountunlockresult= "";
 $accountlockresult= "";
 $posthookresult= "";
+$ldapExpirationDate="";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -143,6 +144,9 @@ if ($result === "") {
                 if ( time() >= $expirationDate->getTimestamp() ) {
                     $isExpired = true;
                 }
+                if ( $display_password_expiration_date ) {
+                    $ldapExpirationDate = $expirationDate->format('YmdHis\Z');
+                }
 	    }
         }
 
@@ -160,6 +164,7 @@ $smarty->assign("show_undef", $display_show_undefined);
 $smarty->assign("isLocked", $isLocked);
 $smarty->assign("unlockDate", $unlockDate);
 $smarty->assign("isExpired", $isExpired);
+$smarty->assign("ldapExpirationDate", $ldapExpirationDate);
 
 $smarty->assign("edit_link", $edit_link);
 

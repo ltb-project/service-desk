@@ -29,6 +29,7 @@ $messages['label_description'] = "Description";
 $messages['label_displayname'] = "Nom d'affichage";
 $messages['label_employeenumber'] = "Numéro d'employé";
 $messages['label_employeetype'] = "Type d'employé";
+$messages['label_expirationdate'] = "Date d'expiration";
 $messages['label_fax'] = "Télécopie";
 $messages['label_firstname'] = "Prénom";
 $messages['label_fullname'] = "Nom complet";
