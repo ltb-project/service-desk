@@ -21,7 +21,7 @@ You need to install these prerequisites:
 * Apache or another web server
 * php
 * php-ldap
-* smarty (version 3)
+* Smarty (version 3)
 
 Debian / Ubuntu
 ---------------
@@ -92,3 +92,16 @@ You are now ready to install:
 .. prompt:: bash #
 
     yum install service-desk
+
+Docker
+------
+
+Prepare a local configuration file for Self Service Password, for example ``/home/test/servicedesk.conf.php``.
+
+Start container, mounting that configuration file:
+
+.. prompt:: bash #
+
+    docker run -p 80:80 \
+        -v /home/test/servicedesk.conf.php:/var/www/conf/config.inc.local.php \
+        -it docker.io/ltbproject/service-desk:latest
