@@ -16,6 +16,15 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
+                {if $use_searchlocked}
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-dashboard"></i> {$msg_dashboards}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="index.php?page=searchlocked"><i class="fa fa-fw fa-lock"></i> {$msg_lockedaccounts}</a></li>
+                    </ul>
+                  </a>
+                </li>
+                {/if}
                 {if $logout_link}
                 <li>
                   <a href="{$logout_link}"><i class="fa fa-fw fa-sign-out"></i> {$msg_logout}</a>
