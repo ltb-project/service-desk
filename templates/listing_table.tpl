@@ -12,6 +12,11 @@
             <a href="index.php?page=display&dn={$entry.dn|escape:'url'}&search={$search}" class="btn btn-info btn-sm{if $listing_linkto===false} hidden{/if}" role="button" title="{$msg_displayentry}">
                 <i class="fa fa-fw fa-id-card"></i>
             </a>
+        {if $display_unlock_button}
+            <a href="index.php?page=unlockaccount&dn={$entry.dn|escape:'url'}&returnto=searchlocked" class="btn btn-success btn-sm" role="button" title="{$msg_unlockaccount}">
+                <i class="fa fa-fw fa-unlock"></i>
+            </a>
+        {/if}
         </th>
     {foreach $listing_columns as $column}
         <td>
