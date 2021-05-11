@@ -6,11 +6,18 @@
 $result = "";
 $dn = "";
 $password = "";
+$returnto = "display";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
+} else if (isset($_GET["dn"]) and $_GET["dn"]) {
+    $dn = $_GET["dn"];
 } else {
     $result = "dnrequired";
+}
+
+if (isset($_GET["returnto"]) and $_GET["returnto"]) {
+    $returnto = $_GET["returnto"];
 }
 
 if ($result === "") {
@@ -33,4 +40,4 @@ if ($result === "") {
     }
 }
 
-header('Location: index.php?page=display&dn='.$dn.'&unlockaccountresult='.$result);
+header('Location: index.php?page='.$returnto.'&dn='.$dn.'&unlockaccountresult='.$result);

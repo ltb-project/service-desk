@@ -5,6 +5,12 @@
 
 {include file="menu.tpl"}
 
+{if $page_title}
+<div class="alert alert-info">
+    <p class="lead text-center">{$msg_{$page_title}}</p>
+</div>
+{/if}
+
 {if $error}
 <div class="alert alert-danger">
     <i class="fa fa-fw fa-exclamation-circle"></i> {$error}

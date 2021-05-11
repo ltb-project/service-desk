@@ -110,6 +110,7 @@ if ($result === "") {
 
 	        }
 
+                $smarty->assign("page_title", "lockedaccounts");
                 if ($nb_entries === 0) {
                     $result = "noentriesfound";
                 } else {
@@ -124,6 +125,7 @@ if ($result === "") {
                     $smarty->assign("listing_sortby",  array_search($search_result_sortby, $columns));
                     $smarty->assign("show_undef", $search_result_show_undefined);
                     $smarty->assign("truncate_value_after", $search_result_truncate_value_after);
+                    $smarty->assign("display_unlock_button", true);
                 }
             }
         }
