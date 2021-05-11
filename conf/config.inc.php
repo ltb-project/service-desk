@@ -98,6 +98,7 @@ $resetpassword_reset_default = true;
 $use_unlockaccount = true;
 $use_lockaccount = true;
 $use_searchlocked = true;
+$use_searchexpired = true;
 
 # Language
 $lang ="en";
