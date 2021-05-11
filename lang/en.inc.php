@@ -82,5 +82,7 @@ $messages['true'] = "Yes";
 $messages['unlockaccount'] = "Unlock account";
 $messages['unlockdate'] = "Automatic unlock date:";
 $messages['welcome'] = "Welcome to LDAP Tool Box service desk";
+$messages['willexpireaccounts'] = "Passwords soon expired";
+$messages['willexpireaccountstitle'] = "Passwords that will expire within $willexpiredays days";
 
 ?>
