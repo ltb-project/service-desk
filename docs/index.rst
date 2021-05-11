@@ -25,3 +25,4 @@ LDAP Tool Box Service Desk documentation
    lockaccount.rst
    unlockaccount.rst
    posthook.rst
+   dashboards.rst
