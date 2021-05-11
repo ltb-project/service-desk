@@ -13,3 +13,14 @@ To enable it:
     $use_searchlocked = true;
 
 It is possible to unlock an account directly from this page. This requires to enable the feature :doc:`unlockaccount`.
+
+Expired passwords
+-----------------
+
+This page will list all accounts with an expired password.
+
+To enable it:
+
+.. code-block:: php
+
+    $use_searchexpired = true;

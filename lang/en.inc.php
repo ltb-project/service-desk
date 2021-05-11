@@ -17,6 +17,7 @@ $messages['dnrequired'] = "Entry identifier required";
 $messages['editentry'] = "Edit entry";
 $messages['entriesfound'] = "entries found";
 $messages['entryfound'] = "entry found";
+$messages['expiredaccounts'] = "Passwords expired";
 $messages['false'] = "No";
 $messages['forcereset'] = "Force reset at next connection";
 $messages['pager_all'] = "All";

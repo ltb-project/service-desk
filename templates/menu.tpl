@@ -16,11 +16,16 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                {if $use_searchlocked}
+                {if $use_searchlocked or $use_searchexpired}
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-dashboard"></i> {$msg_dashboards}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                      {if $use_searchlocked}
                       <li><a href="index.php?page=searchlocked"><i class="fa fa-fw fa-lock"></i> {$msg_lockedaccounts}</a></li>
+                      {/if}
+                      {if $use_searchexpired}
+                      <li><a href="index.php?page=searchexpired"><i class="fa fa-fw fa-hourglass-end"></i> {$msg_expiredaccounts}</a></li>
+                      {/if}
                     </ul>
                   </a>
                 </li>

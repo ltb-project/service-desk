@@ -17,6 +17,7 @@ $messages['dnrequired'] = "L'identifiant de l'entrée est requis";
 $messages['editentry'] = "Modifier l'entrée";
 $messages['entriesfound'] = "entrées trouvées";
 $messages['entryfound'] = "entrée trouvée";
+$messages['expiredaccounts'] = "Mots de passe expirés";
 $messages['false'] = "Non";
 $messages['forcereset'] = "Forcer la réinitialisation à la prochaine connexion";
 $messages['pager_all'] = "Tout";
