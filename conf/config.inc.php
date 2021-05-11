@@ -99,6 +99,8 @@ $use_unlockaccount = true;
 $use_lockaccount = true;
 $use_searchlocked = true;
 $use_searchexpired = true;
+$use_searchwillexpire = true;
+$willexpiredays = 14;
 
 # Language
 $lang ="en";

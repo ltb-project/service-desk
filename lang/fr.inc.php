@@ -82,5 +82,7 @@ $messages['true'] = "Oui";
 $messages['unlockaccount'] = "Débloquer le compte";
 $messages['unlockdate'] = "Date de déblocage automatique :";
 $messages['welcome'] = "Bienvenue sur le guichet de service LDAP Tool Box";
+$messages['willexpireaccounts'] = "Mots de passe bientôt expirés";
+$messages['willexpireaccountstitle'] = "Mots de passe allant expirer dans moins de $willexpiredays jours";
 
 ?>
