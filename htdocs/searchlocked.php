@@ -61,8 +61,11 @@ if ($result === "") {
                 $entries = ldap_get_entries($ldap, $search);
                 unset($entries["count"]);
 
+                # Register policies
+                $pwdPolicies = array();
+
                 # Check if entry is still locked
-		foreach($entries as $entry_key => $entry) {
+                foreach($entries as $entry_key => $entry) {
 
                     # Search active password policy
                     $pwdPolicy = "";
@@ -76,16 +79,19 @@ if ($result === "") {
                     $ppolicy_entry = "";
 
                     if ($pwdPolicy) {
-                        $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdLockoutDuration'));
+                        if (!isset($pwdPolicies[$pwdPolicy])){
+                            $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdLockoutDuration'));
 
-                        if ( $errno ) {
-                            error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
-                        } else {
-                            $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
+                            if ( $errno ) {
+                                error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
+                            } else {
+                                $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
+                                $pwdPolicies[$pwdPolicy]['pwdLockoutDuration'] = $ppolicy_entry[0]['pwdlockoutduration'][0];
+                            }
                         }
 
                         # Lock
-                        $pwdLockoutDuration = $ppolicy_entry[0]['pwdlockoutduration'][0];
+                        $pwdLockoutDuration = $pwdPolicies[$pwdPolicy]['pwdLockoutDuration'];
                         $pwdAccountLockedTime = $entry['pwdaccountlockedtime'][0];
 
                         if ( $pwdAccountLockedTime === "000001010000Z" ) {

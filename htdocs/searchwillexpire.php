@@ -62,8 +62,11 @@ if ($result === "") {
                 $entries = ldap_get_entries($ldap, $search);
                 unset($entries["count"]);
 
-                # Check if entry is still locked
-		foreach($entries as $entry_key => $entry) {
+                # Register policies
+                $pwdPolicies = array();
+
+                # Check if entry will soon expire
+                foreach($entries as $entry_key => $entry) {
 
                     # Search active password policy
                     $pwdPolicy = "";
@@ -77,16 +80,19 @@ if ($result === "") {
                     $ppolicy_entry = "";
 
                     if ($pwdPolicy) {
-                        $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge'));
+                        if (!isset($pwdPolicies[$pwdPolicy])){
+                            $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge'));
 
-                        if ( $errno ) {
-                            error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
-                        } else {
-                            $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
+                            if ( $errno ) {
+                                error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
+                            } else {
+                                $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
+                                $pwdPolicies[$pwdPolicy]['pwdMaxAge'] = $ppolicy_entry[0]['pwdmaxage'][0];
+                           }
                         }
 
                         # Expiration
-                        $pwdMaxAge = $ppolicy_entry[0]['pwdmaxage'][0];
+                        $pwdMaxAge = $pwdPolicies[$pwdPolicy]['pwdMaxAge'];
                         $pwdChangedTime = $entry['pwdchangedtime'][0];
 
                         if (isset($pwdChangedTime) and isset($pwdMaxAge) and ($pwdMaxAge > 0)) {
