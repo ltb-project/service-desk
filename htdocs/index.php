@@ -75,6 +75,7 @@ $smarty->assign('display_password_expiration_date',$display_password_expiration_
 $smarty->assign('use_searchlocked',$use_searchlocked);
 $smarty->assign('use_searchexpired',$use_searchexpired);
 $smarty->assign('use_searchwillexpire',$use_searchwillexpire);
+$smarty->assign('use_searchidle',$use_searchidle);
 
 # Assign messages
 $smarty->assign('lang',$lang);
@@ -105,6 +106,7 @@ if ( $page === "unlockaccount" and !$use_unlockaccount ) { $page = "welcome"; }
 if ( $page === "searchlocked" and !$use_searchlocked ) { $page = "welcome"; }
 if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
 if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
+if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 

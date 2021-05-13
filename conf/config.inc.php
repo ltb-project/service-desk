@@ -101,6 +101,8 @@ $use_searchlocked = true;
 $use_searchexpired = true;
 $use_searchwillexpire = true;
 $willexpiredays = 14;
+$use_searchidle = true;
+$idledays = 60;
 
 # Language
 $lang ="en";
