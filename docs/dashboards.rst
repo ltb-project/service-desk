@@ -41,3 +41,22 @@ To enable it:
 .. code-block:: php
 
     $use_searchexpired = true;
+
+Idle accounts
+-------------
+
+This page will list all accounts never connected, or not connected since a number of days.
+
+.. tip:: This requires the ``authTimestamp`` attribute which is provided by the ``lastbind`` overlay.
+
+To enable it:
+
+.. code-block:: php
+
+    $use_searchidle = true;
+
+You can also configure the number of idle days:
+
+.. code-block:: php
+
+    $idledays = 60;
