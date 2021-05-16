@@ -18,6 +18,40 @@ To edit configuration, you should create ``conf/config.inc.local.php`` and overr
   Do not copy ``config.inc.php`` into ``config.inc.local.php``, as the first one includes the second.
   You would then create an infinite loop and crash your application.
 
+Multi tenancy
+-------------
+
+You can load a specific configuration file by passing a HTTP header.
+This feature is disable by default. To enable it:
+
+.. code:: php
+
+   $header_name_extra_config = "SSP-Extra-Config";
+
+Then if you send the header ``SSP-Extra-Config: domain1``, the file
+``conf/config.inc.domain1.php`` will be loaded.
+
+Using Apache, we may set such header using the following:
+
+.. code:: apache
+
+    <VirtualHost *:80>
+       ServerName ssp.domain1.com
+       RequestHeader setIfEmpty SSP-Extra-Config domain1
+       [...]
+    </VirtualHost>
+
+Using Nginx, we could use instead:
+
+.. code:: nginx
+
+   server {
+       [...]
+       location ~ \.php {
+           fastcgi_param SSP-Extra-Config domain1;
+           [...]
+       }
+
 Language
 --------
 
