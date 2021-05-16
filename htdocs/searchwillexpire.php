@@ -98,22 +98,22 @@ if ($result === "") {
                         if (isset($pwdChangedTime) and isset($pwdMaxAge) and ($pwdMaxAge > 0)) {
                             $changedDate = ldapDate2phpDate($pwdChangedTime);
                             $expirationDate = date_add( $changedDate, new DateInterval('PT'.$pwdMaxAge.'S'));
-			    $expirationDateClone = clone($expirationDate);
-			    $willExpireDate = date_sub( $expirationDateClone, new DateInterval('P'.$willexpiredays.'D'));
-			    $time = time();
+                            $expirationDateClone = clone($expirationDate);
+                            $willExpireDate = date_sub( $expirationDateClone, new DateInterval('P'.$willexpiredays.'D'));
+                            $time = time();
                             if ( $time >= $willExpireDate->getTimestamp() and $time < $expirationDate->getTimestamp() ) {
                                 $isWillExpire = true;
                             }
-	                }
+                        }
 
-	            }
+                    }
 
-	            if ( $isWillExpire === false ) {
-		        unset($entries[$entry_key]);
-			$nb_entries--;
-	            }
+                    if ( $isWillExpire === false ) {
+                        unset($entries[$entry_key]);
+                        $nb_entries--;
+                    }
 
-	        }
+                }
 
                 $smarty->assign("page_title", "willexpireaccountstitle");
                 if ($nb_entries === 0) {
@@ -124,7 +124,7 @@ if ($result === "") {
                     $smarty->assign("size_limit_reached", $size_limit_reached);
 
                     $columns = $search_result_items;
-		    if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+                    if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
                     $smarty->assign("listing_columns", $columns);
                     $smarty->assign("listing_linkto",  isset($search_result_linkto) ? $search_result_linkto : array($search_result_title));
                     $smarty->assign("listing_sortby",  array_search($search_result_sortby, $columns));

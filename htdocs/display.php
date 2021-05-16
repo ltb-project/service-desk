@@ -88,23 +88,23 @@ if ($result === "") {
             $entry[0][$attr] = $values;
         }
 
-	if ($display_edit_link) {
-		# Replace {dn} in URL
-		$edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
-	}
+        if ($display_edit_link) {
+            # Replace {dn} in URL
+            $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
+        }
 
         # Search user active password policy
         $pwdPolicy = "";
         if (isset($entry[0]['pwdpolicysubentry'][0])) {
             $pwdPolicy = $entry[0]['pwdpolicysubentry'][0];
-	} elseif (isset($ldap_default_ppolicy)) {
+        } elseif (isset($ldap_default_ppolicy)) {
             $pwdPolicy = $ldap_default_ppolicy;
         }
 
-	$isLocked = false;
-	$unlockDate = "";
-	$isExpired = false;
-	$ppolicy_entry = "";
+        $isLocked = false;
+        $unlockDate = "";
+        $isExpired = false;
+        $ppolicy_entry = "";
 
         if ($pwdPolicy) {
             $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge', 'pwdLockoutDuration'));
@@ -138,7 +138,7 @@ if ($result === "") {
             $pwdMaxAge = $ppolicy_entry[0]['pwdmaxage'][0];
             $pwdChangedTime = $entry[0]['pwdchangedtime'][0];
 
-	    if (isset($pwdChangedTime) and isset($pwdMaxAge) and ($pwdMaxAge > 0)) {
+            if (isset($pwdChangedTime) and isset($pwdMaxAge) and ($pwdMaxAge > 0)) {
                 $changedDate = ldapDate2phpDate($pwdChangedTime);
                 $expirationDate = date_add( $changedDate, new DateInterval('PT'.$pwdMaxAge.'S'));
                 if ( time() >= $expirationDate->getTimestamp() ) {
@@ -147,7 +147,7 @@ if ($result === "") {
                 if ( $display_password_expiration_date ) {
                     $ldapExpirationDate = $expirationDate->format('YmdHis\Z');
                 }
-	    }
+            }
         }
 
     }

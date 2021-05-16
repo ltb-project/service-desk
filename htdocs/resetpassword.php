@@ -39,32 +39,32 @@ if ($result === "") {
 
     if ($ldap) {
         $entry["userPassword"] = $password;
-	if ( $pwdreset === "true" ) {
+        if ( $pwdreset === "true" ) {
             $entry["pwdReset"] = "TRUE";
-	}
-	$modification = ldap_mod_replace($ldap, $dn, $entry);
-	$errno = ldap_errno($ldap);
+        }
+        $modification = ldap_mod_replace($ldap, $dn, $entry);
+        $errno = ldap_errno($ldap);
         if ( $errno ) {
             $result = "passwordrefused";
         } else {
             $result = "passwordchanged";
         }
 
-	if ( $result === "passwordchanged" && isset($posthook) ) {
+        if ( $result === "passwordchanged" && isset($posthook) ) {
 
-             $login_search = ldap_read($ldap, $dn, '(objectClass=*)', array($posthook_login));
-             $login_entry = ldap_first_entry( $ldap, $login_search );
-             $login_values = ldap_get_values( $ldap, $login_entry, $posthook_login );
-             $login = $login_values[0];
+            $login_search = ldap_read($ldap, $dn, '(objectClass=*)', array($posthook_login));
+            $login_entry = ldap_first_entry( $ldap, $login_search );
+            $login_values = ldap_get_values( $ldap, $login_entry, $posthook_login );
+            $login = $login_values[0];
 
-             if ( !isset($login) ) {
-                 $posthook_return = 255;
-                 $posthook_message = "No login found, cannot execute posthook script";
-             } else {
-                 $command = posthook_command($posthook, $login, $password, $posthook_password_encodebase64);
-		 exec($command, $posthook_output, $posthook_return);
-	         $posthook_message = $posthook_output[0];
-             }
+            if ( !isset($login) ) {
+                $posthook_return = 255;
+                $posthook_message = "No login found, cannot execute posthook script";
+            } else {
+                $command = posthook_command($posthook, $login, $password, $posthook_password_encodebase64);
+                exec($command, $posthook_output, $posthook_return);
+                $posthook_message = $posthook_output[0];
+            }
         }
     }
 }

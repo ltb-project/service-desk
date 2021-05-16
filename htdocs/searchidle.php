@@ -72,7 +72,7 @@ if ($result === "") {
                 $smarty->assign("size_limit_reached", $size_limit_reached);
 
                 $columns = $search_result_items;
-		if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+                if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
                 $smarty->assign("listing_columns", $columns);
                 $smarty->assign("listing_linkto",  isset($search_result_linkto) ? $search_result_linkto : array($search_result_title));
                 $smarty->assign("listing_sortby",  array_search($search_result_sortby, $columns));

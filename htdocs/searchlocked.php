@@ -107,14 +107,14 @@ if ($result === "") {
                                 $isLocked = true;
                             }
                         }
-	            }
+                    }
 
-	            if ( $isLocked === false ) {
-		        unset($entries[$entry_key]);
-			$nb_entries--;
-	            }
+                    if ( $isLocked === false ) {
+                        unset($entries[$entry_key]);
+                        $nb_entries--;
+                    }
 
-	        }
+                }
 
                 $smarty->assign("page_title", "lockedaccounts");
                 if ($nb_entries === 0) {
