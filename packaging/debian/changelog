@@ -1,3 +1,22 @@
+ltb-project-service-desk (0.4-1) unstable; urgency=low
+
+    * gh#19: Display expiration date
+    * gh#20: fix(undefined)
+    * gh#22: Configure cache dir and template cache dir
+    * gh#26: Remove datepicker
+    * gh#27: Display expiration date
+    * gh#30: Move cache dirs in /var
+    * gh#31: Docker Container
+    * gh#36: feat(docker)
+    * gh#37: Dashboard to list locked accounts
+    * gh#38: Dashboard page for locked accounts
+    * gh#39: Dashboard expired passwords
+    * gh#40: Dashboard will expire passwords
+    * gh#42: Dashboard idle accounts
+    * gh#44: Multi tenancy
+
+ -- Clement Oudot <clem@ltb-project.org>  Mon, 17 May 2021 12:00:00 +0200
+
 ltb-project-service-desk (0.3-1) unstable; urgency=low
 
     * Bug #15: Handle the case where pwdAccountLockedTime is set but pwdLockoutDuration is not set or is equal to 0

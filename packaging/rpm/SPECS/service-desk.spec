@@ -15,7 +15,7 @@
 #=================================================
 %define sd_name      service-desk
 %define sd_realname  ltb-project-%{name}
-%define sd_version   0.3
+%define sd_version   0.4
 %define sd_destdir   /usr/share/%{name}
 %define sd_cachedir  /var/cache/%{name}
 
@@ -113,6 +113,21 @@ rm -rf %{buildroot}
 # Changelog
 #=================================================
 %changelog
+* Mon May 17 2021 - Clement Oudot <clem@ltb-project.org> - 0.4-1
+- gh#19: Display expiration date
+- gh#20: fix(undefined)
+- gh#22: Configure cache dir and template cache dir
+- gh#26: Remove datepicker
+- gh#27: Display expiration date
+- gh#30: Move cache dirs in /var
+- gh#31: Docker Container
+- gh#36: feat(docker)
+- gh#37: Dashboard to list locked accounts
+- gh#38: Dashboard page for locked accounts
+- gh#39: Dashboard expired passwords
+- gh#40: Dashboard will expire passwords
+- gh#42: Dashboard idle accounts
+- gh#44: Multi tenancy
 * Mon Jun 29 2020 - Clement Oudot <clem@ltb-project.org> - 0.3-1
 - Bug #15: Handle the case where pwdAccountLockedTime is set but pwdLockoutDuration is not set or is equal to 0
 - Feature #16: Possibility to lock an account
