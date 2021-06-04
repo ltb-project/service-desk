@@ -1,5 +1,7 @@
 <?php
-class LangTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class LangTest extends TestCase
 {
     /**
      * Test language files for missing and excess translations
@@ -19,6 +21,7 @@ class LangTest extends PHPUnit_Framework_TestCase
             closedir($handle);
 	}
 
+        require("conf/config.inc.php");
         require("lang/en.inc.php");
         $reference = $messages;
         $error = '';
