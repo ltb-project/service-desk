@@ -107,7 +107,7 @@ if ($result === "") {
         $ppolicy_entry = "";
 
         if ($pwdPolicy) {
-            $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge', 'pwdLockoutDuration'));
+            $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge', 'pwdLockoutDuration', 'pwdLockout'));
 
             if ( $errno ) {
                 error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
@@ -116,6 +116,7 @@ if ($result === "") {
             }
 
             # Lock
+            $pwdLockout = strtolower($ppolicy_entry[0]['pwdlockout'][0]) == "true" ? true : false;
             $pwdLockoutDuration = $ppolicy_entry[0]['pwdlockoutduration'][0];
             $pwdAccountLockedTime = $entry[0]['pwdaccountlockedtime'][0];
 
@@ -173,4 +174,5 @@ $smarty->assign("resetpasswordresult", $resetpasswordresult);
 $smarty->assign("accountunlockresult", $accountunlockresult);
 $smarty->assign("accountlockresult", $accountlockresult);
 $smarty->assign("posthookresult", $posthookresult);
+if ($pwdLockout == false) $smarty->assign("use_lockaccount", $pwdLockout);
 ?>
