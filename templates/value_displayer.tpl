@@ -26,3 +26,7 @@
 {if $type eq 'bytes'}
     {convert_bytes($value)|truncate:{$truncate_value_after}}<br />
 {/if}
+
+{if $type eq 'timestamp'}
+    {$value|date_format:{$date_specifiers}|truncate:{$truncate_value_after}}<br />
+{/if}
