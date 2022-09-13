@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 # Install PHP extensions and PECL modules.
 RUN buildDeps=" \
         libbz2-dev \
@@ -7,6 +7,7 @@ RUN buildDeps=" \
     " \
     runtimeDeps=" \
         libicu-dev \
+        libldap-common \
         libldap2-dev \
         libzip-dev \
 	locales \
