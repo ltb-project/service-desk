@@ -9,28 +9,10 @@
  <div class="panel-body">
 
      <form id="login" method="post" action="index.php?page=login" name="login">
-         {if $autherror eq 'usernotfound'}
-            <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_usernotfound}</div>
-         {/if}
-         {if $autherror eq 'passwordrefused'}
-            <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrefused}</div>
-         {/if}
-         {if $autherror eq 'usernotallowed'}
-            <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_usernotallowed}</div>
-         {/if}
-         {if $autherror eq 'usernamerequired'}
-            <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_usernamerequired}</div>
-         {/if}
-         {if $autherror eq 'passwordrequired'}
-            <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrequired}</div>
-         {/if}
-         {if $autherror neq 'passwordrefused' 
-         and $autherror neq 'passwordrequired' 
-         and $autherror neq 'usernotfound' 
-         and $autherror neq 'usernamerequired'
-         and $autherror neq 'usernotallowed'
-         and $autherror neq ''}
-            <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> There was an error: {$autherror}</div>
+         {if $autherror neq '' and isset($msg_{$autherror})}
+            <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_{$autherror}}</div>
+         {elseif $autherror neq ''}
+            <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> Error: {$autherror}</div>
          {/if}
          <div class="form-group">
              <div class="input-group">
