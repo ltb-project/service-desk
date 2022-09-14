@@ -92,6 +92,7 @@ $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
 #==============================================================================
 require_once("../lib/login.php"); //Maintains session variables
 $authenticated = $_SESSION["authenticated"];
+$isadmin = $_SESSION['isadmin'];
 $smarty->assign('authenticated',$_SESSION["authenticated"]);
 $smarty->assign('isadmin',$_SESSION["isadmin"]);
 $smarty->assign('displayname',$_SESSION["displayname"]);
@@ -104,14 +105,15 @@ $page = "login";// Default route to login page
 
 if ( $authenticated ) { $page = "display"; }// If authenticated, route to display
 if ( isset($_GET["page"]) and $_GET["page"] and !$authenticated) { $page = "login"; }// If not authenticated, route to login
-if ( isset($_GET["page"])  && $_GET["page"] && $_GET["page"] != "login" && $authenticated) { $page = $_GET["page"]; }
-if ( $page === "checkpassword" and !$use_checkpassword ) { $page = "welcome"; }
-if ( $page === "resetpassword" and !$use_resetpassword ) { $page = "welcome"; }
-if ( $page === "unlockaccount" and !$use_unlockaccount ) { $page = "welcome"; }
-if ( $page === "searchlocked" and !$use_searchlocked ) { $page = "welcome"; }
-if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
-if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
-if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
+if ( isset($_GET["page"])  and $_GET["page"] and $_GET["page"] != "login" and $authenticated) { $page = $_GET["page"]; }
+if ( $page === "checkpassword" and (!$use_checkpassword or !$isadmin) ) { $page = "welcome"; }
+if ( $page === "resetpassword" and (!$use_resetpassword or !$isadmin) ) { $page = "welcome"; }
+if ( $page === "unlockaccount" and (!$use_unlockaccount or !$isadmin) ) { $page = "welcome"; }
+if ( $page === "search" and !$isadmin ) { $page = "welcome"; }
+if ( $page === "searchlocked" and (!$use_searchlocked or !$isadmin) ) { $page = "welcome"; }
+if ( $page === "searchexpired" and (!$use_searchexpired or !$isadmin) ) { $page = "welcome"; }
+if ( $page === "searchwillexpire" and (!$use_searchwillexpire or !$isadmin) ) { $page = "welcome"; }
+if ( $page === "searchidle" and (!$use_searchidle or !$isadmin) ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 
