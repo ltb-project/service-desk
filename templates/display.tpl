@@ -99,7 +99,7 @@
     </div>
     <div class="col-md-6">
 
-        {if $use_checkpassword}
+        {if $use_checkpassword and $isadmin and $displayname neq $entry.cn.0}
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 <p class="panel-title">
