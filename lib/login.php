@@ -16,7 +16,6 @@ $entries = array();
 
 // Sensitive authentication variables:
 // These should be cleared each time login.php is called.
-$authenticated = false;
 $isadmin = false;
 
 // Verify that timezone is correct
