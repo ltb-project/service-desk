@@ -68,7 +68,6 @@ function logon( $username, $password) {
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
 
     $ldap = $ldap_connection[0];
-    $result = $ldap_connection[1];
 
     if ($ldap) {
 
@@ -111,6 +110,19 @@ function logon( $username, $password) {
 
                     if ($bind) {// Log them in only if LDAP bind succeeds
                         $autherror = "authsuccess";
+                        
+                        // Admin Checks
+                        $admincheck1 = ( isset($ldap_allowed_admin_users) and in_array(strtolower($uid), array_map('strtolower', $ldap_allowed_admin_users)) ? true : false );
+                        $admincheck2 = ( isset($ldap_allowed_admin_ous) and in_array(strtolower($ou), array_map('strtolower', $ldap_allowed_admin_ous)) ? true : false );
+                        $admincheck3 = ( isset($ldap_allowed_admin_groups) and array_in_array($memberOf, array_map('strtolower', $ldap_allowed_admin_groups)) ? true : false );
+                        $isadmin = (( $admincheck1 or $admincheck2 or $admincheck3 ) ? true : false );// If any above conditions are met, set the user to be an admin.
+                        
+                        // Update Session Variables
+                        $_SESSION["username"] = $username;
+                        $_SESSION["displayname"] = $displayname;
+                        $_SESSION["isadmin"] = $isadmin;
+                        $_SESSION["entry_dn"] = $dn;
+
                     } else {
                         $autherror = "passwordrefused";
                     }
@@ -124,18 +136,6 @@ function logon( $username, $password) {
                 $autherror = "usernotfound";// User not found
             }
         }
-
-        // Admin Checks
-        $admincheck1 = ( isset($ldap_allowed_admin_users) and in_array(strtolower($uid), array_map('strtolower', $ldap_allowed_admin_users)) ? true : false );
-        $admincheck2 = ( isset($ldap_allowed_admin_ous) and in_array(strtolower($ou), array_map('strtolower', $ldap_allowed_admin_ous)) ? true : false );
-        $admincheck3 = ( isset($ldap_allowed_admin_groups) and array_in_array($memberOf, array_map('strtolower', $ldap_allowed_admin_groups)) ? true : false );
-        $isadmin = (( $admincheck1 or $admincheck2 or $admincheck3 ) ? true : false );// If any above conditions are met, set the user to be an admin.
-        
-        // Update Session Variables
-        $_SESSION["username"] = $username;
-        $_SESSION["displayname"] = $displayname;
-        $_SESSION["isadmin"] = $isadmin;
-        $_SESSION["entry_dn"] = $dn;
 
     } else {
         $autherror = "LDAP connection error";
