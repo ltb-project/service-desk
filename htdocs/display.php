@@ -18,6 +18,8 @@ if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
 } elseif (isset($entry_dn)) {
     $dn = $entry_dn;
+} elseif (isset($_SESSION["entry_dn"])) {
+    $dn = $_SESSION["entry_dn"];
 } else {
     $result = "dnrequired";
 }

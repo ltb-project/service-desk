@@ -1,9 +1,15 @@
 <?php
 
+// Continue session variables
+session_start();
+$displayname = $_SESSION["displayname"];
+
 #==============================================================================
 # French
 #==============================================================================
 
+$messages["label_created"] = "Créé";
+$messages["label_modified"] = "Modifié";
 $messages['accountlocked'] = "Le compte est bloqué";
 $messages['accountnotlocked'] = "Échec de blocage du compte";
 $messages['accountnotunlocked'] = "Échec de déblocage du compte";
@@ -22,13 +28,9 @@ $messages['false'] = "Non";
 $messages['forcereset'] = "Forcer la réinitialisation à la prochaine connexion";
 $messages['idleaccounts'] = "Comptes inactifs";
 $messages['idleaccountstitle'] = "Comptes inactifs depuis plus de $idledays jours";
-$messages['pager_all'] = "Tout";
-$messages['print_all'] = "Imprimer tous les résultats";
-$messages['print_page'] = "Imprimer cette page";
 $messages['label_authtimestamp'] = "Dernière authentification";
 $messages['label_businesscategory'] = "Catégorie";
 $messages['label_carlicense'] = "Permis de conduire";
-$messages["label_created"] = "Créé";
 $messages['label_description'] = "Description";
 $messages['label_displayname'] = "Nom d'affichage";
 $messages['label_employeenumber'] = "Numéro d'employé";
@@ -43,7 +45,6 @@ $messages['label_lastname'] = "Nom";
 $messages['label_mail'] = "Courriel";
 $messages['label_mailquota'] = "Quota messagerie";
 $messages['label_mobile'] = "Portable";
-$messages["label_modified"] = "Modifié";
 $messages['label_organization'] = "Organisation";
 $messages['label_organizationalunit'] = "Service";
 $messages['label_pager'] = "Messagerie";
@@ -60,10 +61,12 @@ $messages['label_title'] = "Titre";
 $messages['ldaperror'] = "Erreur de communication avec l'annuaire LDAP";
 $messages['lockaccount'] = "Bloquer le compte";
 $messages['lockedaccounts'] = "Comptes bloqués";
+$messages['login'] = "Veuillez vous connecter pour continuer";
 $messages['logout'] = "Déconnexion";
 $messages['newpassword'] = "Nouveau mot de passe";
 $messages['noentriesfound'] = "Aucune entrée trouvée";
 $messages['notdefined'] = "Non renseigné";
+$messages['pager_all'] = "Tout";
 $messages['password'] = "Mot de passe";
 $messages['passwordchanged'] = "Le mot de passe a été changé";
 $messages['passwordexpired'] = "Le mot de passe est expiré";
@@ -71,6 +74,8 @@ $messages['passwordinvalid'] = "Authentification en échec";
 $messages['passwordok'] = "Authentification réussie !";
 $messages['passwordrefused'] = "Le mot de passe a été refusé";
 $messages['passwordrequired'] = "Merci de saisir le mot de passe";
+$messages['print_all'] = "Imprimer tous les résultats";
+$messages['print_page'] = "Imprimer cette page";
 $messages['resetpassword'] = "Réinitialisation du mot de passe";
 $messages['search'] = "Rechercher";
 $messages['searchrequired'] = "Veuillez saisir votre recherche";
@@ -83,7 +88,12 @@ $messages['tooltip_phoneto'] = "Composer ce numéro";
 $messages['true'] = "Oui";
 $messages['unlockaccount'] = "Débloquer le compte";
 $messages['unlockdate'] = "Date de déblocage automatique :";
+$messages['username'] = "Username";
+$messages['usernamerequired'] = "Merci d'entrer un username";
+$messages['usernotallowed'] = "Votre compte n'est pas autorisé à se connecter. Veuillez utiliser un compte autorisé.";
+$messages['usernotfound'] = "Le nom d'utilisateur saisi est introuvable. Veuillez réessayer.";
 $messages['welcome'] = "Bienvenue sur le guichet de service LDAP Tool Box";
+$messages['welcomeuser'] = "Bienvenue, $displayname";
 $messages['willexpireaccounts'] = "Mots de passe bientôt expirés";
 $messages['willexpireaccountstitle'] = "Mots de passe allant expirer dans moins de $willexpiredays jours";
 

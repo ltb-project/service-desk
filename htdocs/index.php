@@ -88,11 +88,23 @@ $smarty->registerPlugin("function", "convert_ldap_date", "convert_ldap_date");
 $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
 
 #==============================================================================
+# Authentication
+#==============================================================================
+require_once("../lib/login.php"); //Maintains session variables
+$authenticated = $_SESSION["authenticated"];
+$smarty->assign('authenticated',$_SESSION["authenticated"]);
+$smarty->assign('isadmin',$_SESSION["isadmin"]);
+$smarty->assign('displayname',$_SESSION["displayname"]);
+
+#==============================================================================
 # Route to page
 #==============================================================================
 $result = "";
-$page = "welcome";
-if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
+$page = "login";// Default route to login page
+
+if ( $authenticated ) { $page = "display"; }// If authenticated, route to display
+if ( isset($_GET["page"]) and $_GET["page"] and !$authenticated) { $page = "login"; }// If not authenticated, route to login
+if ( isset($_GET["page"])  && $_GET["page"] && $_GET["page"] != "login" && $authenticated) { $page = $_GET["page"]; }
 if ( $page === "checkpassword" and !$use_checkpassword ) { $page = "welcome"; }
 if ( $page === "resetpassword" and !$use_resetpassword ) { $page = "welcome"; }
 if ( $page === "unlockaccount" and !$use_unlockaccount ) { $page = "welcome"; }
