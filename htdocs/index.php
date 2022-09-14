@@ -106,8 +106,8 @@ $page = "login";// Default route to login page
 if ( $authenticated ) { $page = "display"; }// If authenticated, route to display
 if ( isset($_GET["page"]) and $_GET["page"] and !$authenticated) { $page = "login"; }// If not authenticated, route to login
 if ( isset($_GET["page"])  and $_GET["page"] and $_GET["page"] != "login" and $authenticated) { $page = $_GET["page"]; }
-if ( $page === "checkpassword" and (!$use_checkpassword or !$isadmin) ) { $page = "display"; }
-if ( $page === "resetpassword" and (!$use_resetpassword or !$isadmin) ) { $page = "display"; }
+if ( $page === "checkpassword" and !$use_checkpassword ) { $page = "display"; }
+if ( $page === "resetpassword" and !$use_resetpassword ) { $page = "display"; }
 if ( $page === "unlockaccount" and (!$use_unlockaccount or !$isadmin) ) { $page = "display"; }
 if ( $page === "search" and !$isadmin ) { $page = "display"; }
 if ( $page === "searchlocked" and (!$use_searchlocked or !$isadmin) ) { $page = "display"; }
