@@ -2,3 +2,4 @@ templates_c/*
 cache/*
 docs/_build
 .vscode/*
+conf/config.inc.local.php
