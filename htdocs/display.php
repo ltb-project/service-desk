@@ -21,7 +21,7 @@ if (isset($_GET["dn"]) and $_GET["dn"]) {
 } elseif (isset($_SESSION["entry_dn"])) {
     $dn = $_SESSION["entry_dn"];
 } else {
-    $result = "dnrequired";
+    // $result = "dnrequired";// Deprecating this error in favor of displaying welcome screen instead
 }
 
 if (isset($_GET["checkpasswordresult"]) and $_GET["checkpasswordresult"]) {

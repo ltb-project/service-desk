@@ -40,6 +40,7 @@
             </li>
             {/if}
           </ul>
+          {if $ldap_authentication}
           <form class="navbar-form navbar-right" action="index.php?page=login" method="post">
             <div class="form-group">
               <button type="submit" class="btn btn-success" name="logoff" value="yes">
@@ -47,6 +48,7 @@
               </button>
             </div>
           </form>
+          {/if}
           {if $isadmin }
             <form class="navbar-form navbar-right" role="search" action="index.php?page=search" method="post">
               <div class="input-group">
@@ -61,7 +63,7 @@
       </div>
     </div>
 </div>
-{if $authenticated and $page eq "display"}
+{if $ldap_authentication and $authenticated and $page eq "display"}
 <div class="alert alert-success"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.
 {if $isadmin}<span style="float: right;"> You have admin privileges.</span>{/if}
 </div>

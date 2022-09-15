@@ -1,3 +1,11 @@
+
+{if empty($entry) or $entry.count eq 0} {* If there are no entries to be displayed, show welcome page *}
+<a href="index.php">
+    <img src="{$logo}" alt="{$msg_title}" class="logo img-responsive center-block" />
+</a>
+
+<div class="alert alert-success">{$msg_welcome}</div>
+{else} {* Else display the entry *}
 <div class="row">
     <div class="display col-md-6">
 
@@ -268,3 +276,4 @@
         {/if}
    </div>
 </div>
+{/if}

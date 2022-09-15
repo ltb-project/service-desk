@@ -35,6 +35,7 @@ $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
 
 # Site Authentication Configuration. These are pre-filled with examples, please modify to suit your needs.
+$ldap_authentication = false;// Specify whether you'd like to secure the Service Desk site with LDAP authentication.
 $ldap_allowed_admin_users = array("Administrator");// UID's or SamAccountName(s) of users who are allowed to login and edit all accounts.
 $ldap_allowed_admin_ous = array("OU=Managers,DC=example,DC=com");// Organizational Unit(s) of users who are allowed to login and edit all accounts.
 $ldap_allowed_admin_groups = array("CN=Administrators,OU=Groups,DC=example,DC=com");// Security Group(s) of users who are allowed to login and edit all accounts.

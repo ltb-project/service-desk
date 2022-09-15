@@ -91,11 +91,18 @@ $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
 # Authentication
 #==============================================================================
 require_once("../lib/login.php"); //Maintains session variables
-$authenticated = $_SESSION["authenticated"];
-$isadmin = $_SESSION['isadmin'];
+if ( !$ldap_authentication ) {// If authentication is disabled by configuration
+    $isadmin = $_SESSION["authenticated"] = true;
+    $authenticated = $_SESSION["isadmin"] = true;
+} else {
+    $authenticated = $_SESSION["authenticated"];
+    $isadmin = $_SESSION['isadmin'];
+}
+
 $smarty->assign('authenticated',$_SESSION["authenticated"]);
 $smarty->assign('isadmin',$_SESSION["isadmin"]);
 $smarty->assign('displayname',$_SESSION["displayname"]);
+$smarty->assign('ldap_authentication',$ldap_authentication);
 
 #==============================================================================
 # Route to page
