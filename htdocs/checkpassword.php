@@ -24,7 +24,7 @@ if (isset($_POST["currentpassword"]) and $_POST["currentpassword"]) {
 if ($result === "") {
 
     require_once("../conf/config.inc.php");
-    require __DIR__ . '/vendor/autoload.php';
+    require __DIR__ . '/../vendor/autoload.php';
 
     # Connect to LDAP
     $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $dn, $password, $ldap_network_timeout);

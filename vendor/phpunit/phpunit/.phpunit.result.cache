@@ -1,1 +1,0 @@
-C:37:"PHPUnit\Runner\DefaultTestResultCache":123:{a:2:{s:7:"defects";a:1:{s:26:"LangTest::testTranslations";i:4;}s:5:"times";a:1:{s:26:"LangTest::testTranslations";d:0.03;}}}

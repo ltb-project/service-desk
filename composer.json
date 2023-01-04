@@ -1,4 +1,13 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ltb-project/ltb-ldap.git"
+        }
+    ],
+    "require": {
+        "ltb/ldap": "@dev"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
     }
