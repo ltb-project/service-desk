@@ -1,10 +1,13 @@
 FROM php:7.4-apache
 # Install PHP extensions and PECL modules.
-RUN buildDeps=" \
+ENV BUILDDEP=" \
         libbz2-dev \
         libsasl2-dev \
         libonig-dev \
-    " \
+        git \
+        zip \
+    "
+RUN buildDeps="${BUILDDEP}" \
     runtimeDeps=" \
         libicu-dev \
         libldap2-dev \
@@ -18,8 +21,6 @@ RUN buildDeps=" \
     && docker-php-ext-install ldap \
     && echo en_US.UTF-8 UTF-8 >/etc/locale.gen \
     && /usr/sbin/locale-gen \
-    && apt-get purge -y --auto-remove $buildDeps \
-    && rm -r /var/lib/apt/lists/* \
     && a2enmod rewrite
 RUN mkdir -p /usr/share/php/smarty3/ && \
     curl -Lqs https://github.com/smarty-php/smarty/archive/v3.1.35.tar.gz | \
@@ -30,6 +31,11 @@ RUN rmdir /var/www/html && \
     mv /var/www/htdocs /var/www/html && \
     mkdir -p /var/www/templates_c && \
     chown -R www-data: /var/www/templates_c
+COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
+RUN /usr/bin/composer install
+RUN buildDeps="${BUILDDEP}" \
+    && apt-get purge -y --auto-remove $buildDeps \
+    && rm -r /var/lib/apt/lists/*
 ENV LC_CTYPE=en_US.UTF-8
 EXPOSE 80
 
