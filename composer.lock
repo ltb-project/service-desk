@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36a457b673bd877f66580fbc6765f0ff",
+    "content-hash": "615ded898a3bfc18b610710262813ca2",
     "packages": [
         {
-            "name": "ltb/ldap",
+            "name": "ltb-project/ldap",
             "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ltb-project/ltb-ldap.git",
-                "reference": "0725e39084505922276c4ff8b6b5a73ff649dd2e"
+                "reference": "a75d960a303d45bd3cb1004356045fea60e32a20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ltb-project/ltb-ldap/zipball/0725e39084505922276c4ff8b6b5a73ff649dd2e",
-                "reference": "0725e39084505922276c4ff8b6b5a73ff649dd2e",
+                "url": "https://api.github.com/repos/ltb-project/ltb-ldap/zipball/a75d960a303d45bd3cb1004356045fea60e32a20",
+                "reference": "a75d960a303d45bd3cb1004356045fea60e32a20",
                 "shasum": ""
             },
             "require": {
@@ -39,12 +39,12 @@
             "license": [
                 "GPL-3.0-or-later"
             ],
-            "description": "ldap common tools for ltb projects",
+            "description": "ldap common tools for ltb-project self-service-password service-desk and white-pages white-pages.",
             "support": {
                 "source": "https://github.com/ltb-project/ltb-ldap/tree/main",
                 "issues": "https://github.com/ltb-project/ltb-ldap/issues"
             },
-            "time": "2023-01-04T07:07:02+00:00"
+            "time": "2023-01-04T13:11:34+00:00"
         }
     ],
     "packages-dev": [
@@ -1782,7 +1782,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ltb/ldap": 20
+        "ltb-project/ldap": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
