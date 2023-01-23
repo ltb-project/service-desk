@@ -1,7 +1,7 @@
 <?php
 /*
  * Search entries in LDAP directory
- */ 
+ */
 
 $result = "";
 $nb_entries = 0;
@@ -46,12 +46,6 @@ if ($result === "") {
             error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
         } else {
 
-            # Sort entries
-            if (isset($search_result_sortby)) {
-                $sortby = $attributes_map[$search_result_sortby]['attribute'];
-                ldap_sort($ldap, $search, $sortby);
-            }
-
             # Get search results
             $nb_entries = ldap_count_entries($ldap, $search);
 
@@ -59,6 +53,13 @@ if ($result === "") {
                 $result = "noentriesfound";
             } else {
                 $entries = ldap_get_entries($ldap, $search);
+
+                # Sort entries
+                if (isset($search_result_sortby)) {
+                    $sortby = $attributes_map[$search_result_sortby]['attribute'];
+                    \Ltb\Ldap::ldapSort($entries, $sortby);
+                }
+
                 unset($entries["count"]);
 
                 # Register policies
