@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 # Install PHP extensions and PECL modules.
 ENV BUILDDEP=" \
         libbz2-dev \
