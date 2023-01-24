@@ -7,7 +7,7 @@ require_once("../conf/config.inc.php");
 require __DIR__ . '/../vendor/autoload.php';
 require_once("../lib/date.inc.php");
 
-require __DIR__ . '/search_util.php';
+
 
 $ldapExpirationDate="";
 
@@ -17,7 +17,7 @@ $ldap_filter = "(&".$ldap_user_filter."(pwdChangedTime=*))";
 # Search attributes
 $attributes = array('pwdChangedTime', 'pwdPolicySubentry');
 
-[$ldap,$result,$nb_entries,$entries,$size_limit_reached]=ldap_search_util($ldap_filter,$attributes);
+[$ldap,$result,$nb_entries,$entries,$size_limit_reached]=\Ltb\LtbUtil::search($ldap_filter,$attributes);
 
 if ( ! empty($entries) )
 {
