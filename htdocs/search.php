@@ -6,6 +6,8 @@
 require_once("../conf/config.inc.php");
 require __DIR__ . '/../vendor/autoload.php';
 
+require __DIR__ . '/search_util.php';
+
 $search_query = "";
 
 $filter_escape_chars = null;
@@ -31,65 +33,11 @@ $ldap_filter .= "))";
 # Search attributes
 $attributes = array();
 
-$result = "";
-$nb_entries = 0;
-$entries = array();
-$size_limit_reached = false;
-
-if ($result === "") {
-
-    # Connect to LDAP
-    $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw, $ldap_network_timeout);
-
-    $ldap = $ldap_connection[0];
-    $result = $ldap_connection[1];
-
-    if ($ldap) {
-
-
-        foreach( $search_result_items as $item ) {
-            $attributes[] = $attributes_map[$item]['attribute'];
-        }
-        $attributes[] = $attributes_map[$search_result_title]['attribute'];
-        $attributes[] = $attributes_map[$search_result_sortby]['attribute'];
-
-        # Search for users
-        $search = ldap_search($ldap, $ldap_user_base, $ldap_filter, $attributes, 0, $ldap_size_limit);
-
-        $errno = ldap_errno($ldap);
-
-        if ( $errno == 4) {
-            $size_limit_reached = true;
-        }
-        if ( $errno != 0 and $errno !=4 ) {
-            $result = "ldaperror";
-            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
-        } else {
-
-            # Get search results
-            $nb_entries = ldap_count_entries($ldap, $search);
-
-            if ($nb_entries === 0) {
-                $result = "noentriesfound";
-            } else {
-                $entries = ldap_get_entries($ldap, $search);
-
-                # Sort entries
-                if (isset($search_result_sortby)) {
-                    $sortby = $attributes_map[$search_result_sortby]['attribute'];
-                    \Ltb\Ldap::ldapSort($entries, $sortby);
-                }
-
-                unset($entries["count"]);
-            }
-        }
-    }
-}
+[$ldap,$result,$nb_entries,$entries,$size_limit_reached]=ldap_search_util($ldap_filter,$attributes);
 
 if ( ! empty($entries) )
 {
         if ($nb_entries === 1) {
-                $entries = ldap_get_entries($ldap, $search);
                 $entry_dn = $entries[0]["dn"];
                 $page = "display";
                 include("display.php");
