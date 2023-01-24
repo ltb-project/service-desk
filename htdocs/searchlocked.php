@@ -1,7 +1,17 @@
 <?php
 /*
- * Search entries in LDAP directory
+ * Search locked entries in LDAP directory
  */
+
+require_once("../conf/config.inc.php");
+require __DIR__ . '/../vendor/autoload.php';
+require_once("../lib/date.inc.php");
+
+# Search filter
+$ldap_filter = "(&".$ldap_user_filter."(pwdAccountLockedTime=*))";
+
+# Search attributes
+$attributes = array('pwdAccountLockedTime', 'pwdPolicySubentry');
 
 $result = "";
 $nb_entries = 0;
@@ -9,10 +19,6 @@ $entries = array();
 $size_limit_reached = false;
 
 if ($result === "") {
-
-    require_once("../conf/config.inc.php");
-    require __DIR__ . '/../vendor/autoload.php';
-    require_once("../lib/date.inc.php");
 
     # Connect to LDAP
     $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw, $ldap_network_timeout);
@@ -22,11 +28,7 @@ if ($result === "") {
 
     if ($ldap) {
 
-        # Search filter
-        $ldap_filter = "(&".$ldap_user_filter."(pwdAccountLockedTime=*))";
 
-        # Search attributes
-        $attributes = array('pwdAccountLockedTime', 'pwdPolicySubentry');
         foreach( $search_result_items as $item ) {
             $attributes[] = $attributes_map[$item]['attribute'];
         }
@@ -61,7 +63,13 @@ if ($result === "") {
                 }
 
                 unset($entries["count"]);
+            }
+        }
+    }
+}
 
+if ( ! empty($entries) )
+{
                 # Register policies
                 $pwdPolicies = array();
 
@@ -134,9 +142,6 @@ if ($result === "") {
                     $smarty->assign("truncate_value_after", $search_result_truncate_value_after);
                     if ($use_unlockaccount) { $smarty->assign("display_unlock_button", true); }
                 }
-            }
-        }
-    }
 }
 
 ?>

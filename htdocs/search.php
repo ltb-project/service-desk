@@ -1,23 +1,42 @@
 <?php
 /*
  * Search entries in LDAP directory
- */ 
+ */
 
-$result = "";
+require_once("../conf/config.inc.php");
+require __DIR__ . '/../vendor/autoload.php';
+
 $search_query = "";
-$nb_entries = 0;
-$entries = array();
-$size_limit_reached = false;
+
 $filter_escape_chars = null;
 if (!$search_use_substring_match) { $filter_escape_chars = "*"; }
 
-if (isset($_POST["search"]) and $_POST["search"]) { $search_query = ldap_escape($_POST["search"], $filter_escape_chars, LDAP_ESCAPE_FILTER); }
- else { $result = "searchrequired"; }
+if (isset($_POST["search"]) and $_POST["search"]) {
+    $search_query = ldap_escape($_POST["search"], $filter_escape_chars, LDAP_ESCAPE_FILTER);
+} else {
+    $result = "searchrequired";
+}
+
+# Search filter
+$ldap_filter = "(&".$ldap_user_filter."(|";
+foreach ($search_attributes as $attr) {
+    $ldap_filter .= "($attr=";
+    if ($search_use_substring_match) { $ldap_filter .= "*"; }
+    $ldap_filter .= $search_query;
+    if ($search_use_substring_match) { $ldap_filter .= "*"; }
+    $ldap_filter .= ")";
+}
+$ldap_filter .= "))";
+
+# Search attributes
+$attributes = array();
+
+$result = "";
+$nb_entries = 0;
+$entries = array();
+$size_limit_reached = false;
 
 if ($result === "") {
-
-    require_once("../conf/config.inc.php");
-    require __DIR__ . '/../vendor/autoload.php';
 
     # Connect to LDAP
     $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw, $ldap_network_timeout);
@@ -27,19 +46,7 @@ if ($result === "") {
 
     if ($ldap) {
 
-        # Search filter
-        $ldap_filter = "(&".$ldap_user_filter."(|";
-        foreach ($search_attributes as $attr) {
-            $ldap_filter .= "($attr=";
-            if ($search_use_substring_match) { $ldap_filter .= "*"; }
-            $ldap_filter .= $search_query;
-            if ($search_use_substring_match) { $ldap_filter .= "*"; }
-            $ldap_filter .= ")";
-        }
-        $ldap_filter .= "))";
 
-        # Search attributes
-        $attributes = array();
         foreach( $search_result_items as $item ) {
             $attributes[] = $attributes_map[$item]['attribute'];
         }
@@ -64,11 +71,6 @@ if ($result === "") {
 
             if ($nb_entries === 0) {
                 $result = "noentriesfound";
-            } elseif ($nb_entries === 1) {
-                $entries = ldap_get_entries($ldap, $search);
-                $entry_dn = $entries[0]["dn"];
-                $page = "display";
-                include("display.php");
             } else {
                 $entries = ldap_get_entries($ldap, $search);
 
@@ -79,6 +81,21 @@ if ($result === "") {
                 }
 
                 unset($entries["count"]);
+            }
+        }
+    }
+}
+
+if ( ! empty($entries) )
+{
+        if ($nb_entries === 1) {
+                $entries = ldap_get_entries($ldap, $search);
+                $entry_dn = $entries[0]["dn"];
+                $page = "display";
+                include("display.php");
+        }
+        else {
+
                 $smarty->assign("nb_entries", $nb_entries);
                 $smarty->assign("entries", $entries);
                 $smarty->assign("size_limit_reached", $size_limit_reached);
@@ -90,9 +107,7 @@ if ($result === "") {
                 $smarty->assign("listing_sortby",  array_search($search_result_sortby, $columns));
                 $smarty->assign("show_undef", $search_result_show_undefined);
                 $smarty->assign("truncate_value_after", $search_result_truncate_value_after);
-            }
         }
-    }
 }
 
 ?>

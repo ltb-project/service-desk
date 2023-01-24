@@ -1,19 +1,26 @@
 <?php
 /*
- * Search entries in LDAP directory
- */ 
+ * Search entries expiring soon in LDAP directory
+ */
+
+require_once("../conf/config.inc.php");
+require __DIR__ . '/../vendor/autoload.php';
+require_once("../lib/date.inc.php");
+
+$ldapExpirationDate="";
+
+# Search filter
+$ldap_filter = "(&".$ldap_user_filter."(pwdChangedTime=*))";
+
+# Search attributes
+$attributes = array('pwdChangedTime', 'pwdPolicySubentry');
 
 $result = "";
 $nb_entries = 0;
 $entries = array();
 $size_limit_reached = false;
-$ldapExpirationDate="";
 
 if ($result === "") {
-
-    require_once("../conf/config.inc.php");
-    require __DIR__ . '/../vendor/autoload.php';
-    require_once("../lib/date.inc.php");
 
     # Connect to LDAP
     $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw, $ldap_network_timeout);
@@ -23,11 +30,7 @@ if ($result === "") {
 
     if ($ldap) {
 
-        # Search filter
-        $ldap_filter = "(&".$ldap_user_filter."(pwdChangedTime=*))";
 
-        # Search attributes
-        $attributes = array('pwdChangedTime', 'pwdPolicySubentry');
         foreach( $search_result_items as $item ) {
             $attributes[] = $attributes_map[$item]['attribute'];
         }
@@ -62,7 +65,13 @@ if ($result === "") {
                 }
 
                 unset($entries["count"]);
+            }
+        }
+    }
+}
 
+if ( ! empty($entries) )
+{
                 # Register policies
                 $pwdPolicies = array();
 
@@ -89,7 +98,7 @@ if ($result === "") {
                             } else {
                                 $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
                                 $pwdPolicies[$pwdPolicy]['pwdMaxAge'] = $ppolicy_entry[0]['pwdmaxage'][0];
-                           }
+                            }
                         }
 
                         # Expiration
@@ -132,9 +141,6 @@ if ($result === "") {
                     $smarty->assign("show_undef", $search_result_show_undefined);
                     $smarty->assign("truncate_value_after", $search_result_truncate_value_after);
                 }
-            }
-        }
-    }
 }
 
 ?>
