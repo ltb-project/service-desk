@@ -62,7 +62,7 @@ if ($result === "") {
                 # Sort entries
                 if (isset($search_result_sortby)) {
                     $sortby = $attributes_map[$search_result_sortby]['attribute'];
-                    \Ltb\Ldap::ldapSsort($entries, $sortby);
+                    \Ltb\Ldap::ldapSort($entries, $sortby);
                 }
 
                 unset($entries["count"]);
