@@ -28,8 +28,8 @@ if (file_exists("../conf/$lang.inc.php")) {
 #==============================================================================
 require_once(SMARTY);
 
-$compile_dir = $smarty_compile_dir ? $smarty_compile_dir : "../templates_c/";
-$cache_dir = $smarty_cache_dir ? $smarty_cache_dir : "../cache/";
+$compile_dir = isset($smarty_compile_dir) && $smarty_compile_dir ? $smarty_compile_dir : "../templates_c/" ;
+$cache_dir = isset($smarty_cache_dir) && $smarty_cache_dir ? $smarty_cache_dir : "../cache/";
 
 $smarty = new Smarty();
 $smarty->escape_html = true;
@@ -46,6 +46,7 @@ if ($debug) {
 }
 
 # Assign configuration variables
+$smarty->assign("page_title", false);
 $smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => $ldap_starttls, 'ldap_binddn' => $ldap_binddn, 'ldap_bindpw' => $ldap_bindpw, 'ldap_user_base' => $ldap_user_base, 'ldap_user_filter' => $ldap_user_filter));
 $smarty->assign('logo',$logo);
 $smarty->assign('background_image',$background_image);
@@ -58,7 +59,7 @@ $smarty->assign('datatables_page_length_default', $datatables_page_length_defaul
 $smarty->assign('datatables_auto_print', $datatables_auto_print);
 $smarty->assign('version',$version);
 $smarty->assign('display_footer',$display_footer);
-$smarty->assign('logout_link',$logout_link);
+$smarty->assign('logout_link',isset($logout_link) ? $logout_link : false);
 $smarty->assign('use_checkpassword',$use_checkpassword);
 $smarty->assign('use_resetpassword',$use_resetpassword);
 $smarty->assign('resetpassword_reset_default',$resetpassword_reset_default);

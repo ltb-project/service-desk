@@ -3,45 +3,42 @@
  * Search entries in LDAP directory
  */
 
-require_once("../conf/config.inc.php");
-require __DIR__ . '/../vendor/autoload.php';
-
-$search_query = "";
-
-$filter_escape_chars = null;
-if (!$search_use_substring_match) { $filter_escape_chars = "*"; }
-
 if (isset($_POST["search"]) and $_POST["search"]) {
+
+    $result="";
+
+    require_once("../conf/config.inc.php");
+    require __DIR__ . '/../vendor/autoload.php';
+
+    $filter_escape_chars = null;
+    if (!$search_use_substring_match) { $filter_escape_chars = "*"; }
+
     $search_query = ldap_escape($_POST["search"], $filter_escape_chars, LDAP_ESCAPE_FILTER);
-} else {
-    $result = "searchrequired";
-}
 
-# Search filter
-$ldap_filter = "(&".$ldap_user_filter."(|";
-foreach ($search_attributes as $attr) {
-    $ldap_filter .= "($attr=";
-    if ($search_use_substring_match) { $ldap_filter .= "*"; }
-    $ldap_filter .= $search_query;
-    if ($search_use_substring_match) { $ldap_filter .= "*"; }
-    $ldap_filter .= ")";
-}
-$ldap_filter .= "))";
+    # Search filter
+    $ldap_filter = "(&".$ldap_user_filter."(|";
+    foreach ($search_attributes as $attr) {
+        $ldap_filter .= "($attr=";
+        if ($search_use_substring_match) { $ldap_filter .= "*"; }
+        $ldap_filter .= $search_query;
+        if ($search_use_substring_match) { $ldap_filter .= "*"; }
+        $ldap_filter .= ")";
+    }
+    $ldap_filter .= "))";
 
-# Search attributes
-$attributes = array();
+    # Search attributes
+    $attributes = array();
 
-[$ldap,$result,$nb_entries,$entries,$size_limit_reached]=\Ltb\LtbUtil::search($ldap_filter,$attributes);
+    [$ldap,$result,$nb_entries,$entries,$size_limit_reached]=\Ltb\LtbUtil::search($ldap_filter,$attributes);
 
-if ( ! empty($entries) )
-{
+    if ( ! empty($entries) )
+    {
         if ($nb_entries === 1) {
                 $entry_dn = $entries[0]["dn"];
                 $page = "display";
                 include("display.php");
         }
         else {
-
                 $smarty->assign("nb_entries", $nb_entries);
                 $smarty->assign("entries", $entries);
                 $smarty->assign("size_limit_reached", $size_limit_reached);
@@ -54,6 +51,9 @@ if ( ! empty($entries) )
                 $smarty->assign("show_undef", $search_result_show_undefined);
                 $smarty->assign("truncate_value_after", $search_result_truncate_value_after);
         }
+    }
+} else {
+    $result = "searchrequired";
 }
 
 ?>
