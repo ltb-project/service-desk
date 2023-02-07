@@ -168,7 +168,8 @@
                              <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
                          </div>
                      </div>
-                     <div class="form-groupi row">
+                     {if $use_resetpassword_resetchoice}
+                     <div class="form-group row">
                          <div class="col-md-9"><p>{$msg_forcereset}</p></div>
                          <div class="col-md-3 text-right">
                              <div class="btn-group" data-toggle="buttons">
@@ -189,6 +190,13 @@
                              </div>
                          </div>
                      </div>
+                     {else}
+                         {if $resetpassword_reset_default}
+                         <input type="hidden" name="pwdreset" value="true" />
+                         {else}
+                         <input type="hidden" name="pwdreset" value="false" />
+                         {/if}
+                     {/if}
                      <div class="form-group">
                          <button type="submit" class="btn btn-success">
                              <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}

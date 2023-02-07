@@ -14,3 +14,11 @@ When changing the password, you can force the user to reset it at next connectio
 .. code-block:: php
 
     $resetpassword_reset_default = true;
+
+If you do not want to let the choice to reset at next connection, you can hide this button:
+
+.. code-block:: php
+
+    $use_resetpassword_resetchoice = false;
+
+In this case, the value set in ``$resetpassword_reset_default`` will be applied.
