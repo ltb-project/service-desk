@@ -17,10 +17,10 @@ if (isset($_POST["search"]) and $_POST["search"]) { $search_query = ldap_escape(
 if ($result === "") {
 
     require_once("../conf/config.inc.php");
-    require_once("../lib/ldap.inc.php");
+    require __DIR__ . '/../vendor/autoload.php';
 
     # Connect to LDAP
-    $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);
+    $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw, $ldap_network_timeout);
 
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
@@ -59,12 +59,6 @@ if ($result === "") {
             error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
         } else {
 
-            # Sort entries
-            if (isset($search_result_sortby)) {
-                $sortby = $attributes_map[$search_result_sortby]['attribute'];
-                ldap_sort($ldap, $search, $sortby);
-            }
-
             # Get search results
             $nb_entries = ldap_count_entries($ldap, $search);
 
@@ -77,6 +71,13 @@ if ($result === "") {
                 include("display.php");
             } else {
                 $entries = ldap_get_entries($ldap, $search);
+
+                # Sort entries
+                if (isset($search_result_sortby)) {
+                    $sortby = $attributes_map[$search_result_sortby]['attribute'];
+                    \Ltb\Ldap::ldapSort($entries, $sortby);
+                }
+
                 unset($entries["count"]);
                 $smarty->assign("nb_entries", $nb_entries);
                 $smarty->assign("entries", $entries);
