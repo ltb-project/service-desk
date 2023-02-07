@@ -95,6 +95,7 @@ $display_password_expiration_date = true;
 # Features
 $use_checkpassword = true;
 $use_resetpassword = true;
+$use_resetpassword_resetchoice = true;
 $resetpassword_reset_default = true;
 $use_unlockaccount = true;
 $use_lockaccount = true;
