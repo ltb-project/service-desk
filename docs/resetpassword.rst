@@ -22,3 +22,14 @@ If you do not want to let the choice to reset at next connection, you can hide t
     $use_resetpassword_resetchoice = false;
 
 In this case, the value set in ``$resetpassword_reset_default`` will be applied.
+
+Notify user by mail
+-------------------
+
+You can configure notify_on_change to true to notify password change to owner by mail.
+
+.. code-block:: php
+
+   $notify_on_change = true;
+
+To do so you need to configure mail (see :ref:`config_mail`).
