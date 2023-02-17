@@ -1,6 +1,6 @@
 {
     "require": {
-        "ltb-project/ldap": "v0.0.2-alpha"
+        "ltb-project/ldap": "v0.0.3-alpha"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"

@@ -66,6 +66,36 @@ if ($result === "") {
                 $posthook_message = $posthook_output[0];
             }
         }
+
+        #==============================================================================
+        # Notify password change
+        #==============================================================================
+        if ($result === "passwordchanged") {
+            # get mail for entry if any
+
+            # Get user email for notification
+            if ($notify_on_change) {
+                # Search for user
+                $search = ldap_read($ldap, $dn, '(objectClass=*)', $mail_attributes);
+                $errno = ldap_errno($ldap);
+                if ( $errno ) {
+                    $result = "ldaperror";
+                    error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
+                } else {
+                    # Get user DN
+                    $entry = ldap_first_entry($ldap, $search);
+
+                    $mail = \Ltb\AttributeValue::ldap_get_mail_for_notification($ldap, $entry);
+                    if ($mail) {
+                        $data = array( "login" => $login, "mail" => $mail, "password" => $newpassword);
+                        if ( !\Ltb\Mail::send_mail_global($mail, $mail_from, $mail_from_name, $messages["changesubject"], $messages["changemessage"].$mail_signature, $data) ) {
+                            error_log("Error while sending change email to $mail (user $login)");
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
 

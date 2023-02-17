@@ -106,6 +106,36 @@ $willexpiredays = 14;
 $use_searchidle = true;
 $idledays = 60;
 
+## Mail
+# LDAP mail attribute
+$mail_attributes = array( "mail", "gosaMailAlternateAddress", "proxyAddresses" );
+# Get mail address directly from LDAP (only first mail entry)
+# Who the email should come from
+$mail_from = "admin@example.com";
+$mail_from_name = "Service Desk";
+$mail_signature = "";
+# Notify users anytime their password is changed
+$notify_on_change = false;
+# PHPMailer configuration (see https://github.com/PHPMailer/PHPMailer)
+$mail_sendmailpath = '/usr/sbin/sendmail';
+$mail_protocol = 'smtp';
+$mail_smtp_debug = 0;
+$mail_debug_format = 'error_log';
+$mail_smtp_host = 'localhost';
+$mail_smtp_auth = false;
+$mail_smtp_user = '';
+$mail_smtp_pass = '';
+$mail_smtp_port = 25;
+$mail_smtp_timeout = 30;
+$mail_smtp_keepalive = false;
+$mail_smtp_secure = 'tls';
+$mail_smtp_autotls = true;
+$mail_smtp_options = array();
+$mail_contenttype = 'text/plain';
+$mail_wordwrap = 0;
+$mail_charset = 'utf-8';
+$mail_priority = 3;
+
 # Language
 $lang ="en";
 $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
