@@ -164,6 +164,12 @@ $debug = false;
 # The name of an HTTP Header that may hold a reference to an extra config file to include.
 #$header_name_extra_config="SSP-Extra-Config";
 
+# list of mail addresses of administrators to be notified of password changes
+# $notify_admin_by_mail_list=array( 'a@example.com','b@example.com' 'c@example.com');
+
+# http header bearing mail of administrator to be notified of password changes
+# $header_name_notify_admin_by_mail='ADMIN_MAIL';
+
 # Cache directory
 #$smarty_compile_dir = "/var/cache/service-desk/templates_c";
 #$smarty_cache_dir = "/var/cache/service-desk/cache";
@@ -189,6 +195,16 @@ if (isset($header_name_extra_config)) {
         if (strlen($extraConfig) > 0 && file_exists (__DIR__ . "/config.inc.".$extraConfig.".php")) {
             require  __DIR__ . "/config.inc.".$extraConfig.".php";
         }
+    }
+}
+
+# get $notify_admin_by_mail from header $header_name_notify_admin_by_mail
+if (isset($header_name_notify_admin_by_mail)) {
+    # cgi header passing
+    $cgi_admin_by_mail_var='HTTP_'.strtoupper(str_replace('-','_',$header_name_notify_admin_by_mail));
+    if (array_key_exists($cgi_admin_by_mail_var, $_SERVER))
+    {
+        $notify_admin_by_mail=filter_var($_SERVER[$cgi_admin_by_mail_var], FILTER_VALIDATE_EMAIL);
     }
 }
 

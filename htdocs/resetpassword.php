@@ -3,6 +3,37 @@
  * Reset password in LDAP directory
  */
 
+# notify administrator
+function notify_admin_by_mail($mail_from, $mail_from_name, $changesubject, $changemessage, $mail_signature, $data)
+{
+    global $notify_admin_by_mail;
+    global $notify_admin_by_mail_list;
+
+    $admin_mail_list=array();
+
+    if (isset($notify_admin_by_mail_list))
+    {
+        $admin_mail_list=$notify_admin_by_mail_list;
+    }
+
+    if (isset($notify_admin_by_mail))
+    {
+        // don't sent twice the mail if admin already in list
+        if ( ! in_array($notify_admin_by_mail,$admin_mail_list,true))
+        {
+            array_unshift($admin_mail_list,$notify_admin_by_mail);
+        }
+    }
+
+    if (! empty($admin_mail_list))
+    {
+        if ( !\Ltb\Mail::send_mail_global($admin_mail_list, $mail_from, $mail_from_name, $changesubject, $changemessage.$mail_signature, $data) ) {
+            error_log("Error while sending email to administrators $admin_mail_list");
+        }
+    }
+
+}
+
 $result = "";
 $dn = "";
 $password = "";
@@ -71,9 +102,7 @@ if ($result === "") {
         # Notify password change
         #==============================================================================
         if ($result === "passwordchanged") {
-            # get mail for entry if any
 
-            # Get user email for notification
             if ($notify_on_change) {
                 # Search for user
                 $search = ldap_read($ldap, $dn, '(objectClass=*)', $mail_attributes);
@@ -89,11 +118,17 @@ if ($result === "") {
                     if ($mail) {
                         $data = array( "login" => $login, "mail" => $mail, "password" => $newpassword);
                         if ( !\Ltb\Mail::send_mail_global($mail, $mail_from, $mail_from_name, $messages["changesubject"], $messages["changemessage"].$mail_signature, $data) ) {
-                            error_log("Error while sending change email to $mail (user $login)");
+                            error_log("Error while sending change email to $mail (user $dn)");
                         }
                     }
                 }
             }
+
+            # notify administrator if needed
+            # remark no password will be sent use REDACTED if template use password
+            $data = array( "dn" => $dn, "password" => 'REDACTED' );
+            notify_admin_by_mail($mail_from, $mail_from_name, $messages["changesubjectforadmin"], $messages["changemessageforadmin"], $mail_signature,$data);
+
         }
 
     }

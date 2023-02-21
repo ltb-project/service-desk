@@ -33,3 +33,23 @@ You can configure notify_on_change to true to notify password change to owner by
    $notify_on_change = true;
 
 To do so you need to configure mail (see :ref:`config_mail`).
+
+Notify administrator by mail
+----------------------------
+
+$notify_admin_by_mail_list is a a php array list of mails of admins to set directly in service-desk configuration.
+
+$header_name_notify_admin_by_mail is name of header that will be provided to cgi script as HTTP_$header_name_notify_admin_by_mail to set administrator mail from webserver.
+This setting allows webserver to select an administrator mail related to current http session.
+Its value should be a valid mail according to rfc822
+
+If those are set any administrator mail will receive a notification that user password was changed.
+
+Remark this is not controled by $notify_on_change, which is only for user.
+
+.. code-block:: php
+
+   $notify_admin_by_mail_list=array( 'a@example.com','b@example.com' 'c@example.com');
+   $header_name_notify_admin_by_mail=SD_ADMIN_MAIL;
+
+To do so you need to configure mail (see :ref:`config_mail`).

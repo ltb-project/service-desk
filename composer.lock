@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91abaae1bc87ab044d243158999ebfee",
+    "content-hash": "879dff7f8739e0f3e6463da81f988723",
     "packages": [
         {
             "name": "ltb-project/ldap",
-            "version": "v0.0.3-alpha",
+            "version": "v0.1.0-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ltb-project/ltb-ldap.git",
-                "reference": "6d950dd538ccf7a9bdf16b216b12f3fc27dc0589"
+                "reference": "8412207e84d5fd23a480007d297d5e68cafe34ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ltb-project/ltb-ldap/zipball/6d950dd538ccf7a9bdf16b216b12f3fc27dc0589",
-                "reference": "6d950dd538ccf7a9bdf16b216b12f3fc27dc0589",
+                "url": "https://api.github.com/repos/ltb-project/ltb-ldap/zipball/8412207e84d5fd23a480007d297d5e68cafe34ea",
+                "reference": "8412207e84d5fd23a480007d297d5e68cafe34ea",
                 "shasum": ""
             },
             "require": {
@@ -38,9 +38,9 @@
             "description": "ldap common tools for ltb-project self-service-password service-desk and white-pages white-pages.",
             "support": {
                 "issues": "https://github.com/ltb-project/ltb-ldap/issues",
-                "source": "https://github.com/ltb-project/ltb-ldap/tree/v0.0.3-alpha"
+                "source": "https://github.com/ltb-project/ltb-ldap/tree/v0.1.0-alpha"
             },
-            "time": "2023-02-17T10:15:04+00:00"
+            "time": "2023-02-21T11:42:07+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
