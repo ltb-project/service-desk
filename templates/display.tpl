@@ -124,7 +124,7 @@
                      <div class="form-group">
                          <div class="input-group">
                              <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                             <input type="password" name="currentpassword" id="currentpassword" class="form-control" placeholder="{$msg_currentpassword}" />
+                             <input type="password" name="currentpassword" id="currentpassword" autocomplete="current-password" class="form-control" placeholder="{$msg_currentpassword}" />
                          </div>
                      </div>
                      <div class="form-group">
@@ -165,7 +165,7 @@
                      <div class="form-group">
                          <div class="input-group">
                              <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                             <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
+                             <input type="password" name="newpassword" id="newpassword" autocomplete="new-password" class="form-control" placeholder="{$msg_newpassword}" />
                          </div>
                      </div>
                      {if $use_resetpassword_resetchoice}
