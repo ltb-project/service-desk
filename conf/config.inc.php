@@ -116,6 +116,8 @@ $mail_from_name = "Service Desk";
 $mail_signature = "";
 # Notify users anytime their password is changed
 $notify_on_change = false;
+# Attribute containing user name - used in mail
+$mail_username_attribute =  "cn";
 # List of mail addresses of administrators to be notified of password changes
 #$notify_admin_by_mail_list = array( 'a@example.com','b@example.com' 'c@example.com');
 # HTTP header bearing mail of administrator to be notified of password changes
