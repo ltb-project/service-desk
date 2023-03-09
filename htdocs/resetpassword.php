@@ -99,11 +99,9 @@ if ($result === "") {
                 }
             }
 
-            # notify administrator if needed
-            # remark no password will be sent use REDACTED if template use password
-            $data = array( "dn" => $dn, "password" => 'REDACTED' );
-            notify_admin_by_mail($mail_from, $mail_from_name, $messages["changesubjectforadmin"], $messages["changemessageforadmin"], $mail_signature,$data);
-
+            # Notify administrator if needed
+            $data = array( "dn" => $dn );
+            notify_admin_by_mail($mail_from, $mail_from_name, $messages["changesubjectforadmin"], $messages["changemessageforadmin"], $mail_signature, $data);
         }
 
     }
