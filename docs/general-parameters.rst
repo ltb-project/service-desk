@@ -48,7 +48,7 @@ Using Nginx, we could use instead:
    server {
        [...]
        location ~ \.php {
-           fastcgi_param SSP-Extra-Config domain1;
+           fastcgi_param HTTP_SSP_EXTRA_CONFIG domain1;
            [...]
        }
 
