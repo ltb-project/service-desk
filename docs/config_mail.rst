@@ -3,8 +3,8 @@
 Mail
 ====
 
-LDAP Attribute
---------------
+LDAP Attributes
+---------------
 
 Set the LDAP attributes where user email may be stored:
 
@@ -14,6 +14,12 @@ Set the LDAP attributes where user email may be stored:
 
 .. tip:: Only the first value of this attribute will be used to get the
   mail address.
+
+You can also define which LDAP attribute contains the user name (will be used in mail body content):
+
+.. code-block:: php
+
+   $mail_username_attribute = "cn";
 
 Sender name
 -----------

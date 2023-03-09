@@ -26,7 +26,7 @@ In this case, the value set in ``$resetpassword_reset_default`` will be applied.
 Notify user by mail
 -------------------
 
-You can configure notify_on_change to true to notify password change to owner by mail.
+You can notify the user by mail when the password is reset:
 
 .. code-block:: php
 
