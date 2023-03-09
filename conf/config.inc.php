@@ -116,6 +116,10 @@ $mail_from_name = "Service Desk";
 $mail_signature = "";
 # Notify users anytime their password is changed
 $notify_on_change = false;
+# List of mail addresses of administrators to be notified of password changes
+#$notify_admin_by_mail_list = array( 'a@example.com','b@example.com' 'c@example.com');
+# HTTP header bearing mail of administrator to be notified of password changes
+#$header_name_notify_admin_by_mail='ADMIN_MAIL';
 # PHPMailer configuration (see https://github.com/PHPMailer/PHPMailer)
 $mail_sendmailpath = '/usr/sbin/sendmail';
 $mail_protocol = 'smtp';
@@ -163,12 +167,6 @@ $debug = false;
 
 # The name of an HTTP Header that may hold a reference to an extra config file to include.
 #$header_name_extra_config="SSP-Extra-Config";
-
-# list of mail addresses of administrators to be notified of password changes
-# $notify_admin_by_mail_list=array( 'a@example.com','b@example.com' 'c@example.com');
-
-# http header bearing mail of administrator to be notified of password changes
-# $header_name_notify_admin_by_mail='ADMIN_MAIL';
 
 # Cache directory
 #$smarty_compile_dir = "/var/cache/service-desk/templates_c";
