@@ -3,6 +3,8 @@
  * Reset password in LDAP directory
  */
 
+require_once("../lib/mail.inc.php");
+
 $result = "";
 $dn = "";
 $password = "";
@@ -66,6 +68,42 @@ if ($result === "") {
                 $posthook_message = $posthook_output[0];
             }
         }
+
+        #==============================================================================
+        # Notify password change
+        #==============================================================================
+        if ($result === "passwordchanged") {
+
+            if ($notify_on_change) {
+                # Search for user
+                $attributes = $mail_attributes;
+                $attributes[] = $mail_username_attribute;
+                $search = ldap_read($ldap, $dn, '(objectClass=*)', $attributes);
+                $errno = ldap_errno($ldap);
+                if ( $errno ) {
+                    $result = "ldaperror";
+                    error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
+                } else {
+                    # Get user DN
+                    $entry = ldap_first_entry($ldap, $search);
+
+                    $mail = \Ltb\AttributeValue::ldap_get_mail_for_notification($ldap, $entry);
+                    $username_values = ldap_get_values( $ldap, $entry, $mail_username_attribute );
+                    $username = $username_values[0];
+                    if ($mail) {
+                        $data = array( "name" => $username, "mail" => $mail, "password" => $newpassword);
+                        if ( !\Ltb\Mail::send_mail_global($mail, $mail_from, $mail_from_name, $messages["changesubject"], $messages["changemessage"].$mail_signature, $data) ) {
+                            error_log("Error while sending change email to $mail (user $dn)");
+                        }
+                    }
+                }
+            }
+
+            # Notify administrator if needed
+            $data = array( "dn" => $dn );
+            notify_admin_by_mail($mail_from, $mail_from_name, $messages["changesubjectforadmin"], $messages["changemessageforadmin"], $mail_signature, $data);
+        }
+
     }
 }
 

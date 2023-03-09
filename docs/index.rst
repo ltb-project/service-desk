@@ -26,3 +26,4 @@ LDAP Tool Box Service Desk documentation
    unlockaccount.rst
    posthook.rst
    dashboards.rst
+   config_mail.rst
