@@ -37,3 +37,9 @@
     <a href="index.php?page=display&dn={$value|escape:'url'}&search={$search}">{$link}</a><br />
     {/if}
 {/if}
+
+{if $type eq 'address'}
+    {foreach split_value($value,'$') as $fragment}
+    {$fragment|truncate:{$truncate_value_after}}<br />
+    {/foreach}
+{/if}
