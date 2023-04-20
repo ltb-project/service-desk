@@ -32,6 +32,10 @@ img.menu-logo {
   margin-bottom: 0;
 }
 
+table.table td {
+ line-break: anywhere;
+}
+
 .display img {
   margin-bottom: 20px;
 }
