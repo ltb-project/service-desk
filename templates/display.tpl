@@ -165,7 +165,7 @@
                      <div class="form-group">
                          <div class="input-group">
                              <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                             <input type="password" name="newpassword" id="newpassword" autocomplete="new-password" class="form-control" placeholder="{$msg_newpassword}" />
+                             <input type="password" name="newpassword" id="newpassword" readonly autocomplete="new-password" class="form-control" placeholder="{$msg_newpassword}" />
                          </div>
                      </div>
                      {if $use_resetpassword_resetchoice}
