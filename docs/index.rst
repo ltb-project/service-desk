@@ -27,3 +27,4 @@ LDAP Tool Box Service Desk documentation
    posthook.rst
    dashboards.rst
    config_mail.rst
+   audit.rst
