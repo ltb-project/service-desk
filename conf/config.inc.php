@@ -153,6 +153,10 @@ $custom_css = "";
 $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
 
+# Audit
+#$audit_log_file = "/var/log/service-desk/audit.log";
+#$header_name_audit_admin = "AUTH_USER";
+
 # Debug mode
 $debug = false;
 
@@ -198,7 +202,7 @@ if (isset($header_name_extra_config)) {
     }
 }
 
-# get $notify_admin_by_mail from header $header_name_notify_admin_by_mail
+# Get $notify_admin_by_mail from header $header_name_notify_admin_by_mail
 if (isset($header_name_notify_admin_by_mail)) {
     # cgi header passing
     $cgi_admin_by_mail_var='HTTP_'.strtoupper(str_replace('-','_',$header_name_notify_admin_by_mail));
