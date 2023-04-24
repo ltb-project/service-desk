@@ -1,3 +1,37 @@
+ltb-project-service-desk (0.5-1) unstable; urgency=low
+
+    * gh#45: Do not enable lockout feature if no ppolicy associated to account or ppolicy has pwdLockout value to FALSE
+    * gh#47: Don't lock account until a valid ppolicy with pwdLockout=TRUE is associated (#45)
+    * gh#49: Timestamp value displayer
+    * gh#51: Displaying Items Manager & Secretary
+    * gh#54: Add prehook
+    * gh#55: Function ldap_sort is deprecated in PHP8+
+    * gh#56: Split debug and debug_smarty
+    * gh#60: PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string
+    * gh#61: Check that values is an array before parsing it
+    * gh#62: Provide CSS map files for minified version
+    * gh#63: Smarty debug
+    * gh#64: CSS map files and bootstrap 3.4.1
+    * gh#65: Update Docker image with PHP 8.1 and Smarty 4
+    * gh#69: Ltb ldap integration providing ldapSort support for php >= 8
+    * gh#70: Factorize search
+    * gh#71: Send a mail to user after password reset
+    * gh#72: Log who has done the action (audit trail)
+    * gh#73: Send a mail to administrator
+    * gh#75: Append an option to enable/disable "Force user to reset its password at next login" button
+    * gh#77: Run composer when building distribution archive
+    * gh#79: Disable reset choice button
+    * gh#81: Update general-parameters.rst
+    * gh#82: Notify user and administrators by mail when password is changed
+    * gh#84: Display DN links
+    * gh#85: Displayer for address
+    * gh#86: Force line return for long values
+    * gh#88: Force line break
+    * gh#89: Address displayer
+    * gh#90: Prehook feature
+
+ -- Clement Oudot <clem@ltb-project.org>  Mon, 24 Apr 2023 12:00:00 +0200
+
 ltb-project-service-desk (0.4-1) unstable; urgency=low
 
     * gh#19: Display expiration date
