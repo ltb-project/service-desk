@@ -64,6 +64,7 @@ mkdir -p %{buildroot}/%{sd_destdir}/lang
 mkdir -p %{buildroot}/%{sd_destdir}/lib
 mkdir -p %{buildroot}/%{sd_destdir}/templates
 mkdir -p %{buildroot}/%{sd_cachedir}/templates_c
+mkdir -p %{buildroot}/%{sd_cachedir}/vendor
 mkdir -p %{buildroot}/etc/httpd/conf.d
 
 # Copy files
@@ -76,6 +77,7 @@ cp -a          htdocs/vendor  %{buildroot}/%{sd_destdir}/htdocs
 install -m 644 lang/*         %{buildroot}/%{sd_destdir}/lang
 install -m 644 lib/*          %{buildroot}/%{sd_destdir}/lib
 install -m 644 templates/*    %{buildroot}/%{sd_destdir}/templates
+cp -a          vendor/*       %{buildroot}/%{sd_destdir}/vendor
 ## Apache configuration
 install -m 644 %{SOURCE1}     %{buildroot}/etc/httpd/conf.d/service-desk.conf
 
