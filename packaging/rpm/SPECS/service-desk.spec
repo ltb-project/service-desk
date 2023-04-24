@@ -37,7 +37,7 @@ Source1: service-desk-apache.conf
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Prereq: coreutils
-Requires: php, php-ldap, php-Smarty
+Requires: php, php-ldap
 
 %description
 Service Desk is a PHP application that allows administrators to check, unlock and reset user passwords in an LDAP directory.
