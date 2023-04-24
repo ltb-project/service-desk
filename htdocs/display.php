@@ -11,6 +11,7 @@ $checkpasswordresult= "";
 $resetpasswordresult= "";
 $accountunlockresult= "";
 $accountlockresult= "";
+$prehookresult= "";
 $posthookresult= "";
 $ldapExpirationDate="";
 
@@ -36,6 +37,10 @@ if (isset($_GET["accountunlockresult"]) and $_GET["accountunlockresult"]) {
 
 if (isset($_GET["accountlockresult"]) and $_GET["accountlockresult"]) {
     $accountlockresult = $_GET["accountlockresult"];
+}
+
+if (isset($_GET["prehookresult"]) and $_GET["prehookresult"]) {
+    $prehookresult = $_GET["prehookresult"];
 }
 
 if (isset($_GET["posthookresult"]) and $_GET["posthookresult"]) {
@@ -173,6 +178,7 @@ $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);
 $smarty->assign("accountunlockresult", $accountunlockresult);
 $smarty->assign("accountlockresult", $accountlockresult);
+$smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
 if ($pwdLockout == false) $smarty->assign("use_lockaccount", $pwdLockout);
 ?>

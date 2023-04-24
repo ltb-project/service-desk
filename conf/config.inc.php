@@ -160,6 +160,21 @@ $display_footer = true;
 # Debug mode
 $debug = false;
 
+## Pre Hook
+# Launch a prehook script before changing password.
+# Script should return with 0, to allow password change.
+# Any other exit code would abort password modification
+#$prehook = "/usr/share/service-desk/prehook.sh";
+# LDAP attribute used as login in posthook script
+#$prehook_login = "uid";
+# Display prehook error
+#$display_prehook_error = true;
+# Encode passwords sent to prehook script as base64. This will prevent alteration of the passwords if set to true.
+# To read the actual password in the prehook script, use a base64_decode function/tool
+#$prehook_password_encodebase64 = false;
+# Ignore prehook error. This will allow to change password even if prehook script fails.
+#$ignore_prehook_error = true;
+
 ## Post Hook
 # Launch a posthook script after successful password change
 #$posthook = "/usr/share/service-desk/posthook.sh";
