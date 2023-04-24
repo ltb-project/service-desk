@@ -64,7 +64,7 @@ mkdir -p %{buildroot}/%{sd_destdir}/lang
 mkdir -p %{buildroot}/%{sd_destdir}/lib
 mkdir -p %{buildroot}/%{sd_destdir}/templates
 mkdir -p %{buildroot}/%{sd_cachedir}/templates_c
-mkdir -p %{buildroot}/%{sd_cachedir}/vendor
+mkdir -p %{buildroot}/%{sd_destdir}/vendor
 mkdir -p %{buildroot}/etc/httpd/conf.d
 
 # Copy files
