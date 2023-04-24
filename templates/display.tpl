@@ -158,6 +158,9 @@
                      {if $resetpasswordresult eq 'passwordchanged'}
                      <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordchanged}</div>
                      {/if}
+                     {if $prehookresult}
+                     <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookresult}</div>
+                     {/if}
                      {if $posthookresult}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookresult}</div>
                      {/if}
