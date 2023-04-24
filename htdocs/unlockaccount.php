@@ -40,8 +40,4 @@ if ($result === "") {
     }
 }
 
-if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "unlockaccount", $result);
-}
-
 header('Location: index.php?page='.$returnto.'&dn='.$dn.'&unlockaccountresult='.$result);

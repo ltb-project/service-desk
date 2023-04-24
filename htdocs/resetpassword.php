@@ -107,10 +107,6 @@ if ($result === "") {
     }
 }
 
-if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "resetpassword", $result);
-}
-
 $location = 'index.php?page=display&dn='.$dn.'&resetpasswordresult='.$result;
 if ( isset($posthook_return) and $display_posthook_error and $posthook_return > 0 ) {
     $location .= '&posthookresult='.$posthook_message;

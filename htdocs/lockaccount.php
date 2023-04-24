@@ -70,8 +70,4 @@ if ($result === "") {
     }
 }
 
-if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result);
-}
-
 header('Location: index.php?page=display&dn='.$dn.'&lockaccountresult='.$result);

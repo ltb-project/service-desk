@@ -91,24 +91,6 @@ $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
 $smarty->registerPlugin("function", "split_value", "split_value");
 
 #==============================================================================
-# Audit
-#==============================================================================
-if (isset($audit_log_file)) { require_once("../lib/audit.inc.php"); }
-
-$audit_admin = "";
-if (isset($header_name_audit_admin)) {
-    $cgi_audit_admin='HTTP_'.strtoupper(str_replace('-','_',$header_name_audit_admin));
-    if (array_key_exists($cgi_audit_admin, $_SERVER))
-    {
-        $audit_admin = $_SERVER[$cgi_audit_admin];
-    } else {
-        $audit_admin = "anonymous";
-    }
-} else {
-    $audit_admin = "anonymous";
-}
-
-#==============================================================================
 # Route to page
 #==============================================================================
 $result = "";
