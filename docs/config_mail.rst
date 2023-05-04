@@ -47,7 +47,7 @@ This option is false by default.
 PHPMailer
 ---------
 
-You have to set all parameters for PHPMailer if you use mail notificaiton.
+You have to set all parameters for PHPMailer if you use mail notification.
 
 .. code-block:: php
 
