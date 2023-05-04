@@ -96,7 +96,7 @@ You are now ready to install:
 Docker
 ------
 
-Prepare a local configuration file for Self Service Password, for example ``/home/test/servicedesk.conf.php``.
+Prepare a local configuration file for Service Desk, for example ``/home/test/servicedesk.conf.php``.
 
 Start container, mounting that configuration file:
 
