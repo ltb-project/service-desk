@@ -26,8 +26,14 @@ The admin name must be set into an HTTP header.
    $header_name_audit_admin = "Auth-User";
 
 Using Nginx, we could use instead:
- 
-.. code:: nginx
+
+.. code-block:: php
+
+    $header_name_audit_admin = "AUTH_USER";
+
+In nginx.conf:
+
+.. code-block:: nginx
   
    server {
        [...]
@@ -38,9 +44,6 @@ Using Nginx, we could use instead:
        [...]
    }
 
-.. code:: php
-    $header_name_audit_admin = "AUTH_USER";
- 
 .. warning:: Using Nginx, headers with underscores in their names are discarded by default. In order for these headers to be considered valid, we need to add ``underscores_in_headers on`` to ``nginx.conf``.
 
 .. tip:: If no header defined or if header is empty, actions will be logged as "anonymous"
