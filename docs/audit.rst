@@ -5,6 +5,28 @@ Audit
 
 You can enable audit to log all actions done through Service Desk.
 
+The items provided in the audit log are:
+
+* Date
+* IP of connected admin
+* DN of account being updated
+* Who has done the action (see Admin name below)
+* Action
+* Result of the action
+
+Example:
+
+.. code-block:: json
+
+   {
+    "date":"Wed, 17 May 2023 11:12:59",
+    "ip":"127.0.0.1",
+    "user_dn":"uid=donald,ou=users,dc=example,dc=com",
+    "done_by":"Mickey",
+    "action":"lockaccount",
+    "result":"accountlocked"
+   }
+
 Audit log file
 --------------
 
