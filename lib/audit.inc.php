@@ -2,6 +2,7 @@
 function auditlog($file, $dn, $admin, $action, $result) {
   $log = array (
     "date" => date_format(date_create(), "D, d M Y H:i:s"),
+    "ip" => $_SERVER['REMOTE_ADDR'],
     "user_dn" => $dn,
     "done_by" => $admin,
     "action" => $action,
