@@ -15,7 +15,7 @@
 #=================================================
 %define sd_name      service-desk
 %define sd_realname  ltb-project-%{name}
-%define sd_version   0.5
+%define sd_version   0.5.1
 %define sd_destdir   /usr/share/%{name}
 %define sd_cachedir  /var/cache/%{name}
 
@@ -115,6 +115,13 @@ rm -rf %{buildroot}
 # Changelog
 #=================================================
 %changelog
+* Wed May 17 2023 - Clement Oudot <clem@ltb-project.org> - 0.5.1-1
+- gh#92: Message override broken in 0.5
+- gh#94: Missing replacement for lang value (issue #92)
+- gh#95: Some documentation improvements
+- gh#96: Add source IP in audit
+- gh#98: Add IP in audit
+- gh#99: Provide result codes for lock/unlock account actions
 * Mon Apr 24 2023 - Clement Oudot <clem@ltb-project.org> - 0.5-1
 - gh#45: Do not enable lockout feature if no ppolicy associated to account or ppolicy has pwdLockout value to FALSE
 - gh#47: Don't lock account until a valid ppolicy with pwdLockout=TRUE is associated (#45)
