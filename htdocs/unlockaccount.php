@@ -36,6 +36,8 @@ if ($result === "") {
         $errno = ldap_errno($ldap);
         if ( $errno ) {
             $result = "ldaperror";
+        } else {
+            $result = "accountunlocked";
         }
     }
 }
