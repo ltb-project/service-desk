@@ -33,6 +33,7 @@ $ldap_user_base = "ou=users,".$ldap_base;
 $ldap_user_filter = "(objectClass=inetOrgPerson)";
 $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
+#$ldap_lastauth_attribute = "pwdLastSuccess"; # For OpenLDAP >= 2.5
 #$ldap_network_timeout = 10;
 
 # How display attributes
@@ -65,6 +66,7 @@ $attributes_map = array(
     'pwdaccountlockedtime' => array( 'attribute' => 'pwdaccountlockedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date' ),
+    'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdreset' => array( 'attribute' => 'pwdreset', 'faclass' => 'lock', 'type' => 'boolean' ),
     'secretary' => array( 'attribute' => 'secretary', 'faclass' => 'user-circle-o', 'type' => 'dn_link' ),
     'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
@@ -89,7 +91,7 @@ $datatables_auto_print = true;
 $display_items = array('identifier', 'firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary' );
 $display_title = "fullname";
 $display_show_undefined = false;
-$display_password_items = array('pwdchangedtime', 'pwdreset', 'pwdaccountlockedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'created', 'modified');
+$display_password_items = array('pwdchangedtime', 'pwdreset', 'pwdaccountlockedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdlastsuccess', 'created', 'modified');
 $display_password_expiration_date = true;
 
 # Features
