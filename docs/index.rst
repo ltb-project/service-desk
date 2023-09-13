@@ -14,6 +14,7 @@ LDAP Tool Box Service Desk documentation
 
    presentation.rst
    installation.rst
+   upgrade.rst
    configuration-apache.rst
    general-parameters.rst
    ldap-parameters.rst
