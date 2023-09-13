@@ -15,8 +15,7 @@ date_sub( $dateIdle, new DateInterval('P'.$idledays.'D') );
 $dateIdleLdap = string2ldapDate( $dateIdle->format('d/m/Y') );
 
 # Search filter
-$lastauth_attr = $ldap_lastauth_attribute ? $ldap_lastauth_attribute : "authTimestamp";
-$ldap_filter = "(&".$ldap_user_filter."(|(!(".$lastauth_attr."=*))(".$lastauth_attr."<=".$dateIdleLdap.")))";
+$ldap_filter = "(&".$ldap_user_filter."(|(!(".$ldap_lastauth_attr."=*))(".$ldap_lastauth_attr."<=".$dateIdleLdap.")))";
 
 # Search attributes
 $attributes = array();

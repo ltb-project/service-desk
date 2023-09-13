@@ -33,7 +33,7 @@ $ldap_user_base = "ou=users,".$ldap_base;
 $ldap_user_filter = "(objectClass=inetOrgPerson)";
 $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
-#$ldap_lastauth_attribute = "pwdLastSuccess"; # For OpenLDAP >= 2.5
+$ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
 
 # How display attributes
