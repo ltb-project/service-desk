@@ -34,6 +34,7 @@
                       {if $use_searchidle}
                       <li><a href="index.php?page=searchidle"><i class="fa fa-fw fa-hourglass-o"></i> {$msg_idleaccounts}</a></li>
                       {/if}
+                      <li><a href="index.php?page=sqlrequest"><i class="fa fa-fw fa-hourglass-o"></i> {$msg_sqlrequest}</a></li>
                     </ul>
                   </a>
                 </li>

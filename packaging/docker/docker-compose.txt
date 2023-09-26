@@ -1,0 +1,22 @@
+networks:
+  my-network:
+    driver: bridge
+services:
+  frontend:
+    image: $LTB_IMAGE
+    ports:
+      - "7180:80"
+    volumes:
+      - $CONFIG_DIR/config.inc.local.dev.php:/var/www/conf/config.inc.local.php
+      - $LOG_DIR:/var/log/service-desk
+      - $HTDOCS/sqlrequest.php:/var/www/html/sqlrequest.php
+      - $TEMPLATES/sqlrequest.tpl:/var/www/templates/sqlrequest.tpl
+      - $TEMPLATES/sqlrequest.tpl:/var/www/templates/listing_table_sql.tpl
+      - $CONFIG_DIR/sqlrequest/config.inc.dev.php:/var/www/conf/sqlrequest/config.inc.php
+    networks:
+      - my-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+volumes:
+  openldap_data:
+    driver: local

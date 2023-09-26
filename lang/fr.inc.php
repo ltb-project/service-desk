@@ -92,5 +92,9 @@ $messages['unlockdate'] = "Date de déblocage automatique :";
 $messages['welcome'] = "Bienvenue sur le guichet de service LDAP Tool Box";
 $messages['willexpireaccounts'] = "Mots de passe bientôt expirés";
 $messages['willexpireaccountstitle'] = "Mots de passe allant expirer dans moins de $willexpiredays jours";
-
+$messages['sqlrequest'] = "Quotas";
+$messages['sqlrequesttile'] = "Quotas";
+$messages['label_quota'] = "Quota";
+$messages['label_used'] = "Utilisé";
+$messages['label_percent_used'] = "Ratio utilisé";
 ?>
