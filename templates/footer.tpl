@@ -40,7 +40,7 @@
         { extend: 'print', autoPrint: {/literal}{if $datatables_auto_print}true{else}false{/if}{literal}, exportOptions: {modifier:{page: 'current'}}, text: "{/literal}<i class=\"fa fa-print\"></i> {$msg_print_page}{literal}", className: "btn-info" },
       ],
       "order": [
-        [ {/literal}{$listing_sortby|default:0 + 1}{literal}, "asc" ]
+        [ {/literal}{if is_int($listing_sortby)}{$listing_sortby}{else}1{/if}{literal}, "asc" ]
       ],
       "aoColumnDefs": [
         { "bSortable": false, "aTargets": ['nosort'] },
