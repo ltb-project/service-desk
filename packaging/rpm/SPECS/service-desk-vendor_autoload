@@ -1,0 +1,7 @@
+<?php
+require_once "/usr/share/php/Smarty/Smarty.class.php";
+#require_once "/usr/share/php/Smarty/Autoloader.php";
+require_once "/usr/share/php/PHPMailer/PHPMailer6/autoload.php";
+require_once "/usr/share/php/Ltb/LtbUtil.php";
+require_once "/usr/share/php/Ltb/Ldap.php";
+?>
