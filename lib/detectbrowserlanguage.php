@@ -15,7 +15,7 @@
  */
 function detectLanguage($defaultLanguage, $availableLanguages) 
 {
-    $acceptedLanguages = htmlspecialchars($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+    $acceptedLanguages = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ? htmlspecialchars($_SERVER['HTTP_ACCEPT_LANGUAGE']) : "";
     $languageList      = explode(',', $acceptedLanguages);
     $choosenLanguage= $defaultLanguage;
     foreach($languageList as $currentLanguage) {
