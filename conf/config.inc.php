@@ -212,7 +212,7 @@ if (!defined("SMARTY")) {
 if (isset($header_name_extra_config)) {
     $extraConfigKey = "HTTP_".strtoupper(str_replace('-','_',$header_name_extra_config));
     if (array_key_exists($extraConfigKey, $_SERVER)) {
-        $extraConfig = preg_replace("/[^a-zA-Z0-9-_]+/", "", filter_var($_SERVER[$extraConfigKey], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH));
+        $extraConfig = preg_replace("/[^a-zA-Z0-9-_]+/", "", htmlspecialchars($_SERVER[$extraConfigKey]));
         if (strlen($extraConfig) > 0 && file_exists (__DIR__ . "/config.inc.".$extraConfig.".php")) {
             require  __DIR__ . "/config.inc.".$extraConfig.".php";
         }
