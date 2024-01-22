@@ -147,6 +147,7 @@ $mail_priority = 3;
 # Language
 $lang ="en";
 $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
+$date_timezone = "UTC";
 
 # Graphics
 $logo = "images/ltb-logo.png";

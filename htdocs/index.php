@@ -91,6 +91,12 @@ $smarty->registerPlugin("function", "convert_ldap_date", "convert_ldap_date");
 $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
 $smarty->registerPlugin("function", "split_value", "split_value");
 
+# Set default timezone
+if( isset($date_timezone) && !empty($date_timezone) )
+{
+    date_default_timezone_set($date_timezone);
+}
+
 #==============================================================================
 # Audit
 #==============================================================================
