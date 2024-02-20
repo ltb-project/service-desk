@@ -54,7 +54,7 @@ You are now ready to install:
 
 .. prompt:: bash #
 
-    apt install service-desk
+    apt install service-desk smarty3
 
 CentOS / RedHat
 ---------------
