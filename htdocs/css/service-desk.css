@@ -73,6 +73,10 @@ div#footer {
   width:100%;
 }
 
+input#newpassword {
+  -webkit-text-security: circle;
+}
+
 @media print {
 
   html, body {
