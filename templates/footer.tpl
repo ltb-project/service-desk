@@ -7,7 +7,6 @@
 <script src="vendor/jquery/js/jquery-1.10.2.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="vendor/datatables/datatables.min.js"></script>
-<script src="js/service-desk.js"></script>
 
 {literal}
     <script type="text/javascript">
