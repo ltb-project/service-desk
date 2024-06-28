@@ -116,6 +116,17 @@ You can hide the footer bar:
 
     $display_footer = false;
 
+Password inputs
+---------------
+
+When testing or resetting a password, the browser will prompt to remember the password. You can disable this behavior in your browser for Service Desk page, but if you need to change this on server side, a trick is needed. Password inputs are converted into text inputs but value is kept hidden.
+
+To enable this trick:
+
+.. code-block:: php
+
+   $fake_password_inputs = true;
+
 Debug
 -----
 
