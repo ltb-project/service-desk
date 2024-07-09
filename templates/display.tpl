@@ -1,15 +1,15 @@
 <div class="row">
     <div class="display col-md-6">
 
-        <div class="panel panel-info">
-            <div class="panel-heading text-center">
-                <p class="panel-title">
+        <div class="card mb-3 shadow card-info">
+            <div class="card-header text-center">
+                <p class="card-title">
                     <i class="fa fa-fw fa-{$attributes_map.{$card_title}.faclass}"></i>
                     {$entry.{$attributes_map.{$card_title}.attribute}.0}
                 </p>
             </div>
 
-            <div class="panel-body">
+            <div class="card-body">
 
                 <div class="table-responsive">
                 <table class="table table-striped table-hover">
@@ -45,15 +45,15 @@
             </div>
         </div>
 
-        <div class="panel panel-info">
-            <div class="panel-heading text-center">
-                <p class="panel-title">
+        <div class="card mb-3 shadow card-info">
+            <div class="card-header text-center">
+                <p class="card-title">
                     <i class="fa fa-fw fa-info-circle"></i>
                     {$msg_accountstatus}
                 </p>
             </div>
 
-            <div class="panel-body">
+            <div class="card-body">
 
                 <div class="table-responsive">
                 <table class="table table-striped table-hover">
@@ -100,15 +100,15 @@
     <div class="col-md-6">
 
         {if $use_checkpassword}
-        <div class="panel panel-info">
-            <div class="panel-heading text-center">
-                <p class="panel-title">
+        <div class="card mb-3 shadow card-info">
+            <div class="card-header text-center">
+                <p class="card-title">
                     <i class="fa fa-fw fa-check-circle"></i>
                     {$msg_checkpassword}
                 </p>
             </div>
     
-             <div class="panel-body">
+             <div class="card-body">
     
                  <form id="checkpassword" method="post" action="index.php?page=checkpassword">
                      {if $checkpasswordresult eq 'passwordrequired'}
@@ -138,15 +138,15 @@
         {/if}
 
         {if $use_resetpassword}
-        <div class="panel panel-info">
-            <div class="panel-heading text-center">
-                <p class="panel-title">
+        <div class="card mb-3 shadow card-info">
+            <div class="card-header text-center">
+                <p class="card-title">
                     <i class="fa fa-fw fa-repeat"></i>
                     {$msg_resetpassword}
                 </p>
             </div>
 
-             <div class="panel-body">
+             <div class="card-body">
 
                  <form id="resetpassword" method="post" action="index.php?page=resetpassword">
                      {if $resetpasswordresult eq 'passwordrequired'}
@@ -211,15 +211,15 @@
         {/if}
 
         {if $isLocked}
-        <div class="panel panel-danger">
-            <div class="panel-heading text-center">
-                <p class="panel-title">
+        <div class="card mb-3 shadow card-danger">
+            <div class="card-header text-center">
+                <p class="card-title">
                     <i class="fa fa-fw fa-exclamation-triangle"></i>
                     {$msg_accountlocked}
                 </p>
             </div>
 
-             <div class="panel-body">
+             <div class="card-body">
                  {if $unlockDate}
                  <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
                  {/if}
@@ -241,16 +241,16 @@
         {/if}
 
         {if !$isLocked}
-        <div class="panel panel-success">
-            <div class="panel-heading text-center">
-                <p class="panel-title">
+        <div class="card mb-3 shadow card-success">
+            <div class="card-header text-center">
+                <p class="card-title">
                     <i class="fa fa-fw fa-check-square-o"></i>
                     {$msg_accountunlocked}
                 </p>
             </div>
 
              {if $use_lockaccount}
-             <div class="panel-body">
+             <div class="card-body">
                  <form id="lockaccount" method="post" action="index.php?page=lockaccount">
                      {if $lockaccountresult eq 'ldaperror'}
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
@@ -268,9 +268,9 @@
         {/if}
 
         {if $isExpired}
-        <div class="panel panel-danger">
-            <div class="panel-heading text-center">
-                <p class="panel-title">
+        <div class="card mb-3 shadow card-danger">
+            <div class="card-header text-center">
+                <p class="card-title">
                     <i class="fa fa-fw fa-exclamation-triangle"></i>
                     {$msg_passwordexpired}
                 </p>
