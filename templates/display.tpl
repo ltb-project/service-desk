@@ -1,8 +1,8 @@
 <div class="row">
     <div class="display col-md-6">
 
-        <div class="card mb-3 shadow card-info">
-            <div class="card-header text-center">
+        <div class="card mb-3 shadow">
+            <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
                     <i class="fa fa-fw fa-{$attributes_map.{$card_title}.faclass}"></i>
                     {$entry.{$attributes_map.{$card_title}.attribute}.0}
@@ -45,8 +45,8 @@
             </div>
         </div>
 
-        <div class="card mb-3 shadow card-info">
-            <div class="card-header text-center">
+        <div class="card mb-3 shadow ">
+            <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
                     <i class="fa fa-fw fa-info-circle"></i>
                     {$msg_accountstatus}
@@ -100,8 +100,8 @@
     <div class="col-md-6">
 
         {if $use_checkpassword}
-        <div class="card mb-3 shadow card-info">
-            <div class="card-header text-center">
+        <div class="card mb-3 shadow ">
+            <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
                     <i class="fa fa-fw fa-check-circle"></i>
                     {$msg_checkpassword}
@@ -138,8 +138,8 @@
         {/if}
 
         {if $use_resetpassword}
-        <div class="card mb-3 shadow card-info">
-            <div class="card-header text-center">
+        <div class="card mb-3 shadow">
+            <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
                     <i class="fa fa-fw fa-repeat"></i>
                     {$msg_resetpassword}
@@ -211,8 +211,8 @@
         {/if}
 
         {if $isLocked}
-        <div class="card mb-3 shadow card-danger">
-            <div class="card-header text-center">
+        <div class="card mb-3 shadow border-danger">
+            <div class="card-header text-bg-danger text-center">
                 <p class="card-title">
                     <i class="fa fa-fw fa-exclamation-triangle"></i>
                     {$msg_accountlocked}
@@ -241,8 +241,8 @@
         {/if}
 
         {if !$isLocked}
-        <div class="card mb-3 shadow card-success">
-            <div class="card-header text-center">
+        <div class="card mb-3 shadow border-success">
+            <div class="card-header text-bg-success text-center">
                 <p class="card-title">
                     <i class="fa fa-fw fa-check-square-o"></i>
                     {$msg_accountunlocked}
@@ -268,8 +268,8 @@
         {/if}
 
         {if $isExpired}
-        <div class="card mb-3 shadow card-danger">
-            <div class="card-header text-center">
+        <div class="card mb-3 shadow border-danger">
+            <div class="card-header text-bg-danger text-center">
                 <p class="card-title">
                     <i class="fa fa-fw fa-exclamation-triangle"></i>
                     {$msg_passwordexpired}
