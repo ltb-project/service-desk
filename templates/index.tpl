@@ -6,8 +6,8 @@
 {include file="menu.tpl"}
 
 {if $page_title}
-<div class="alert alert-info">
-    <p class="lead text-center">{$msg_{$page_title}}</p>
+<div class="alert alert-info text-center fs-5">
+    {$msg_{$page_title}}
 </div>
 {/if}
 
