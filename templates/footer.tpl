@@ -6,7 +6,10 @@
 
 <script src="vendor/jquery/js/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="vendor/datatables/datatables.min.js"></script>
+<script src="vendor/datatables/dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap5.min.js"></script>
+<script src="vendor/datatables/dataTables.buttons.min.js"></script>
+<script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
 
 {literal}
     <script type="text/javascript">
@@ -35,10 +38,10 @@
         "<'row dt-main'<'col-sm-12'tr>>" +
         "<'row dt-foot'<'col-sm-6'i><'col-sm-6'p>>" +
         "<'row dt-foot'<'col-sm-12'B>>",
-      "buttons": [
+      /* "buttons": [
         { extend: 'print', autoPrint: {/literal}{if $datatables_auto_print}true{else}false{/if}{literal}, text: "{/literal}<i class=\"fa fa-print\"></i> {$msg_print_all}{literal}", className: "btn-info" },
         { extend: 'print', autoPrint: {/literal}{if $datatables_auto_print}true{else}false{/if}{literal}, exportOptions: {modifier:{page: 'current'}}, text: "{/literal}<i class=\"fa fa-print\"></i> {$msg_print_page}{literal}", className: "btn-info" },
-      ],
+      ],*/
       "order": [
         [ {/literal}{if is_int($listing_sortby)}{$listing_sortby}{else}1{/if}{literal}, "asc" ]
       ],
