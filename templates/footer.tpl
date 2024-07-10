@@ -4,8 +4,8 @@
 <div id="footer">LDAP Tool Box Service Desk - version {$version}</div>
 {/if}
 
-<script src="vendor/jquery/js/jquery-1.10.2.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery/js/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/datatables/datatables.min.js"></script>
 
 {literal}
