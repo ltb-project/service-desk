@@ -41,10 +41,8 @@
               </ul>
               <form class="d-flex" role="search" action="index.php?page=search" method="post">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="{$msg_search}" name="search" value="{$search}" />
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">&nbsp;<i class="fa fa-fw fa-search"></i></button>
-                  </span>
+                  <input type="text" class="form-control border-secondary" placeholder="{$msg_search}" name="search" value="{$search}" />
+                  <button class="btn btn-outline-secondary" type="submit">&nbsp;<i class="fa fa-fw fa-search"></i></button>
                 </div>
               </form>
             </div>

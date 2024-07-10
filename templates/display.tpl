@@ -121,17 +121,13 @@
                      <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordok}</div>
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
-                     <div class="form-group">
-                         <div class="input-group">
-                             <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                             <input type="password" name="currentpassword" id="currentpassword" class="form-control" placeholder="{$msg_currentpassword}" />
-                         </div>
+                     <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-fw fa-lock"></i></span>
+                        <input type="password" name="currentpassword" id="currentpassword" class="form-control" placeholder="{$msg_currentpassword}" />
                      </div>
-                     <div class="form-group">
-                         <button type="submit" class="btn btn-success">
-                             <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
-                         </button>
-                     </div>
+                     <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
+                     </button>
                 </form>
             </div>
         </div>
@@ -165,33 +161,14 @@
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookresult}</div>
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
-                     <div class="form-group">
-                         <div class="input-group">
-                             <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
-                             <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
-                         </div>
+                     <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-fw fa-lock"></i></span>
+                        <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
                      </div>
                      {if $use_resetpassword_resetchoice}
-                     <div class="form-group row">
-                         <div class="col-md-9"><p>{$msg_forcereset}</p></div>
-                         <div class="col-md-3 text-right">
-                             <div class="btn-group" data-toggle="buttons">
-                                 <label class="btn btn-primary{if $resetpassword_reset_default} active{/if}">
-                                 {if $resetpassword_reset_default}
-                                     <input type="radio" name="pwdreset" id="true" value="true" checked /> {$msg_true}
-                                 {else}
-                                     <input type="radio" name="pwdreset" id="true" value="true" /> {$msg_true}
-                                 {/if}
-                                 </label>
-                                 <label class="btn btn-primary{if !$resetpassword_reset_default} active{/if}">
-                                 {if !$resetpassword_reset_default}
-                                     <input type="radio" name="pwdreset" id="false" value="false" checked /> {$msg_false}
-                                 {else}
-                                     <input type="radio" name="pwdreset" id="false" value="false" /> {$msg_false}
-                                 {/if}
-                                 </label>
-                             </div>
-                         </div>
+                     <div class="form-check form-switch mb-3">
+                       <input class="form-check-input" type="checkbox" role="switch" name="pwdreset" id="pwdresetcheckbox"{if $resetpassword_reset_default} checked{/if} value="{if $resetpassword_reset_default}true{else}false{/if}" >
+                       <label class="form-check-label" for="pwdresetcheckbox">{$msg_forcereset}</label>
                      </div>
                      {else}
                          {if $resetpassword_reset_default}
@@ -200,11 +177,9 @@
                          <input type="hidden" name="pwdreset" value="false" />
                          {/if}
                      {/if}
-                     <div class="form-group">
-                         <button type="submit" class="btn btn-success">
-                             <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
-                         </button>
-                     </div>
+                     <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
+                     </button>
                 </form>
             </div>
         </div>
@@ -229,11 +204,9 @@
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
-                     <div class="form-group">
-                         <button type="submit" class="btn btn-success">
-                             <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
-                         </button>
-                     </div>
+                     <button type="submit" class="btn btn-success">
+                         <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
+                     </button>
                  </form>
                  {/if}
             </div>
@@ -256,11 +229,9 @@
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
-                     <div class="form-group">
-                         <button type="submit" class="btn btn-success">
-                             <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
-                         </button>
-                     </div>
+                     <button type="submit" class="btn btn-success">
+                         <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
+                     </button>
                  </form>
             </div>
             {/if}
