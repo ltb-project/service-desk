@@ -38,6 +38,12 @@
     {/if}
 {/if}
 
+{if $type eq 'ppolicy_dn'}
+    {assign var="name" value="{{get_attribute dn="{$value}" attribute="cn" ldap_url="{$ldap_params.ldap_url}" ldap_starttls="{$ldap_params.ldap_starttls}" ldap_binddn="{$ldap_params.ldap_binddn}" ldap_bindpw="{$ldap_params.ldap_bindpw}" ldap_filter="{$ldap_params.ldap_ppolicy_filter}" ldap_network_timeout="{$ldap_params.ldap_network_timeout}"}|truncate:{$truncate_value_after}}"}
+    {if $name}{$name}<br />{/if}
+{/if}
+
+
 {if $type eq 'address'}
     {foreach split_value($value,'$') as $fragment}
     {$fragment|truncate:{$truncate_value_after}}<br />

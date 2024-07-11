@@ -48,7 +48,7 @@ if ($debug) {
 
 # Assign configuration variables
 $smarty->assign("page_title", false);
-$smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => $ldap_starttls, 'ldap_binddn' => $ldap_binddn, 'ldap_bindpw' => $ldap_bindpw, 'ldap_user_base' => $ldap_user_base, 'ldap_user_filter' => $ldap_user_filter));
+$smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => $ldap_starttls, 'ldap_binddn' => $ldap_binddn, 'ldap_bindpw' => $ldap_bindpw, 'ldap_user_base' => $ldap_user_base, 'ldap_user_filter' => $ldap_user_filter, 'ldap_ppolicy_filter' => $ldap_ppolicy_filter, 'ldap_default_ppolicy' => $ldap_default_ppolicy));
 $smarty->assign('logo',$logo);
 $smarty->assign('background_image',$background_image);
 $smarty->assign('custom_css',$custom_css);
