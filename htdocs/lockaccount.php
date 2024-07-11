@@ -66,8 +66,14 @@ if ($result === "") {
         $errno = ldap_errno($ldap);
         if ( $errno ) {
             $result = "ldaperror";
+        } else {
+            $result = "accountlocked";
         }
     }
+}
+
+if ($audit_log_file) {
+    auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result);
 }
 
 header('Location: index.php?page=display&dn='.$dn.'&lockaccountresult='.$result);

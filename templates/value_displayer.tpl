@@ -3,7 +3,7 @@
 {/if}
 
 {if $type eq 'mailto'}
-    {mailto address="{$value|escape:"html"}" encode="javascript" text="{$value|truncate:{$truncate_value_after}}" extra='class="link-email" title="'|cat:$msg_tooltip_emailto:'"'}<br />
+    {mailto address="{$value|escape:"html"}" encode="hex" text="{$value|truncate:{$truncate_value_after}}" extra='class="link-email" title="'|cat:$msg_tooltip_emailto:'"'}<br />
 {/if}
 
 {if $type eq 'tel'}
@@ -29,4 +29,17 @@
 
 {if $type eq 'timestamp'}
     {$value|date_format:{$date_specifiers}|truncate:{$truncate_value_after}}<br />
+{/if}
+
+{if $type eq 'dn_link'}
+    {assign var="link" value="{{get_attribute dn="{$value}" attribute="cn" ldap_url="{$ldap_params.ldap_url}" ldap_starttls="{$ldap_params.ldap_starttls}" ldap_binddn="{$ldap_params.ldap_binddn}" ldap_bindpw="{$ldap_params.ldap_bindpw}" ldap_filter="{$ldap_params.ldap_user_filter}" ldap_network_timeout="{$ldap_params.ldap_network_timeout}"}|truncate:{$truncate_value_after}}"}
+    {if $link}
+    <a href="index.php?page=display&dn={$value|escape:'url'}&search={$search}">{$link}</a><br />
+    {/if}
+{/if}
+
+{if $type eq 'address'}
+    {foreach split_value($value,'$') as $fragment}
+    {$fragment|truncate:{$truncate_value_after}}<br />
+    {/foreach}
 {/if}

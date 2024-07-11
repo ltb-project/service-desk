@@ -85,3 +85,12 @@ Set ``$ldap_default_ppolicy`` value if a default policy is configured in your LD
     $ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
 
 .. tip:: Password policy is first searched in ``pwdPolicySubentry`` attribute of user entry, then fallback to default policy.
+
+Last authentication attribute
+-----------------------------
+
+The last authentication date can be stored in different attributes depending on your OpenLDAP version or configuration.
+
+.. code-block:: php
+
+    $ldap_lastauth_attribute = "pwdLastSuccess";

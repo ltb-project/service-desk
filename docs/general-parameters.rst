@@ -69,6 +69,9 @@ Set default language in ``$lang``:
 Dates
 -----
 
+Format
+^^^^^^
+
 You can adapt how dates are displayed with specifiers (see `strftime reference`_):
 
 .. _strftime reference: https://www.php.net/strftime
@@ -76,6 +79,15 @@ You can adapt how dates are displayed with specifiers (see `strftime reference`_
 .. code-block:: php
 
     $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
+
+Timezone
+^^^^^^^^
+
+You can adapt the default timezone for displaying all the dates (see the `complete list of timezones <https://www.php.net/manual/en/timezones.php>`_):
+
+.. code-block:: php
+
+    $date_timezone = "UTC";
 
 Graphics
 --------

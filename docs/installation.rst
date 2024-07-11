@@ -26,6 +26,13 @@ You need to install these prerequisites:
 Debian / Ubuntu
 ---------------
 
+Import the PGP key:
+
+.. prompt:: bash #
+
+    apt install curl gpg
+    curl https://ltb-project.org/documentation/_static/RPM-GPG-KEY-LTB-project | gpg --dearmor > /usr/share/keyrings/ltb-project-openldap-archive-keyring.gpg
+
 Configure the repository:
 
 .. prompt:: bash #
@@ -34,13 +41,8 @@ Configure the repository:
 
 .. code-block:: ini
 
-    deb [arch=amd64] https://ltb-project.org/debian/stable stable main
 
-Import repository key:
-
-.. prompt:: bash #
-
-    wget -O - https://ltb-project.org/documentation/_static/RPM-GPG-KEY-LTB-project | sudo apt-key add -
+    deb [arch=amd64 signed-by=/usr/share/keyrings/ltb-project-openldap-archive-keyring.gpg] https://ltb-project.org/debian/stable stable main
 
 Then update:
 
@@ -52,7 +54,7 @@ You are now ready to install:
 
 .. prompt:: bash #
 
-    apt install service-desk
+    apt install service-desk smarty3
 
 CentOS / RedHat
 ---------------
@@ -96,7 +98,7 @@ You are now ready to install:
 Docker
 ------
 
-Prepare a local configuration file for Self Service Password, for example ``/home/test/servicedesk.conf.php``.
+Prepare a local configuration file for Service Desk, for example ``/home/test/servicedesk.conf.php``.
 
 Start container, mounting that configuration file:
 

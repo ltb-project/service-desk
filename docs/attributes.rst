@@ -19,6 +19,8 @@ Available types:
 * ``list``: value from a list
 * ``bytes``: bytes converted in KB/MB/GB/TB
 * ``timestamp``: timestamp converted to full date
+* ``dn_link``: convert DN into link to account display page
+* ``address``: convert address string to multi-lines
 
 .. tip:: See LDAP Tool Box White Pages documentation to get more information.
 

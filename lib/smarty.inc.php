@@ -58,4 +58,10 @@ function convert_bytes($bytes) {
     return FileSizeConvert( $bytes );
 
 }
+
+function split_value($value,$separator) {
+
+    return explode( $separator, $value );
+
+}
 ?>

@@ -36,8 +36,14 @@ if ($result === "") {
         $errno = ldap_errno($ldap);
         if ( $errno ) {
             $result = "ldaperror";
+        } else {
+            $result = "accountunlocked";
         }
     }
+}
+
+if ($audit_log_file) {
+    auditlog($audit_log_file, $dn, $audit_admin, "unlockaccount", $result);
 }
 
 header('Location: index.php?page='.$returnto.'&dn='.$dn.'&unlockaccountresult='.$result);

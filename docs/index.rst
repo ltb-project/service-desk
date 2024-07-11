@@ -14,6 +14,7 @@ LDAP Tool Box Service Desk documentation
 
    presentation.rst
    installation.rst
+   upgrade.rst
    configuration-apache.rst
    general-parameters.rst
    ldap-parameters.rst
@@ -24,6 +25,7 @@ LDAP Tool Box Service Desk documentation
    resetpassword.rst
    lockaccount.rst
    unlockaccount.rst
-   posthook.rst
+   hook.rst
    dashboards.rst
    config_mail.rst
+   audit.rst

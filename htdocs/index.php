@@ -3,7 +3,7 @@
 #==============================================================================
 # Version
 #==============================================================================
-$version = 0.4;
+$version = "0.5.1";
 
 #==============================================================================
 # Configuration
@@ -17,6 +17,7 @@ require_once("../lib/detectbrowserlanguage.php");
 # Available languages
 $files = glob("../lang/*.php");
 $languages = str_replace(".inc.php", "", $files);
+$languages = str_replace("../lang/", "", $languages);
 $lang = detectLanguage($lang, $languages);
 require_once("../lang/$lang.inc.php");
 if (file_exists("../conf/$lang.inc.php")) {
@@ -89,6 +90,31 @@ require_once("../lib/smarty.inc.php");
 $smarty->registerPlugin("function", "get_attribute", "get_attribute");
 $smarty->registerPlugin("function", "convert_ldap_date", "convert_ldap_date");
 $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
+$smarty->registerPlugin("function", "split_value", "split_value");
+
+# Set default timezone
+if( isset($date_timezone) && !empty($date_timezone) )
+{
+    date_default_timezone_set($date_timezone);
+}
+
+#==============================================================================
+# Audit
+#==============================================================================
+if (isset($audit_log_file)) { require_once("../lib/audit.inc.php"); }
+
+$audit_admin = "";
+if (isset($header_name_audit_admin)) {
+    $cgi_audit_admin='HTTP_'.strtoupper(str_replace('-','_',$header_name_audit_admin));
+    if (array_key_exists($cgi_audit_admin, $_SERVER))
+    {
+        $audit_admin = $_SERVER[$cgi_audit_admin];
+    } else {
+        $audit_admin = "anonymous";
+    }
+} else {
+    $audit_admin = "anonymous";
+}
 
 #==============================================================================
 # Route to page
