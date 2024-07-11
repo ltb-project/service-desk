@@ -155,6 +155,7 @@ $background_image = "images/unsplash-space.jpeg";
 $custom_css = "";
 $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
+$fake_password_inputs = false;
 
 # Audit
 #$audit_log_file = "/var/log/service-desk/audit.log";

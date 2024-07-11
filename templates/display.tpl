@@ -123,7 +123,11 @@
                      <input type="hidden" name="dn" value="{$dn}" />
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa fa-fw fa-lock"></i></span>
-                        <input type="password" name="currentpassword" id="currentpassword" class="form-control" placeholder="{$msg_currentpassword}" />
+                        {if $fake_password_inputs}
+                            <input type="text" name="currentpassword" id="currentpassword" autocomplete="current-password" class="form-control fake-password" placeholder="{$msg_currentpassword}" />
+                        {else}
+                            <input type="password" name="currentpassword" id="currentpassword" autocomplete="current-password" class="form-control" placeholder="{$msg_currentpassword}" />
+                        {/if}
                      </div>
                      <button type="submit" class="btn btn-success">
                         <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
@@ -163,7 +167,11 @@
                      <input type="hidden" name="dn" value="{$dn}" />
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa fa-fw fa-lock"></i></span>
-                        <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="{$msg_newpassword}" />
+                        {if $fake_password_inputs}
+                           <input type="text" name="newpassword" id="newpassword" autocomplete="new-password" class="form-control fake-password" placeholder="{$msg_newpassword}" />
+                        {else}
+                           <input type="password" name="newpassword" id="newpassword" autocomplete="new-password" class="form-control" placeholder="{$msg_newpassword}" />
+                        {/if}
                      </div>
                      {if $use_resetpassword_resetchoice}
                      <div class="form-check form-switch mb-3">

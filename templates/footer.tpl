@@ -10,6 +10,7 @@
 <script src="vendor/datatables/dataTables.bootstrap5.min.js"></script>
 <script src="vendor/datatables/dataTables.buttons.min.js"></script>
 <script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
+<script src="js/service-desk.js"></script>
 
 {literal}
     <script type="text/javascript">
