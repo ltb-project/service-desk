@@ -167,7 +167,7 @@
                      </div>
                      {if $use_resetpassword_resetchoice}
                      <div class="form-check form-switch mb-3">
-                       <input class="form-check-input" type="checkbox" role="switch" name="pwdreset" id="pwdresetcheckbox"{if $resetpassword_reset_default} checked{/if} value="{if $resetpassword_reset_default}true{else}false{/if}" >
+                       <input class="form-check-input" type="checkbox" role="switch" name="pwdreset" id="pwdresetcheckbox"{if $resetpassword_reset_default} checked{/if} value="true" >
                        <label class="form-check-label" for="pwdresetcheckbox">{$msg_forcereset}</label>
                      </div>
                      {else}
