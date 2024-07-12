@@ -68,6 +68,7 @@ $smarty->assign('resetpassword_reset_default',$resetpassword_reset_default);
 $smarty->assign('show_lockstatus',$show_lockstatus);
 $smarty->assign('use_unlockaccount',$use_unlockaccount);
 $smarty->assign('use_lockaccount',$use_lockaccount);
+$smarty->assign('show_expirestatus',$show_expirestatus);
 $smarty->assign('display_password_expiration_date',$display_password_expiration_date);
 $smarty->assign('use_searchlocked',$use_searchlocked);
 $smarty->assign('use_searchexpired',$use_searchexpired);

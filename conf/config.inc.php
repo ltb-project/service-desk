@@ -105,6 +105,7 @@ $resetpassword_reset_default = true;
 $show_lockstatus = true;
 $use_unlockaccount = true;
 $use_lockaccount = true;
+$show_expirestatus = true;
 $use_searchlocked = true;
 $use_searchexpired = true;
 $use_searchwillexpire = true;

@@ -248,6 +248,7 @@
         {/if}
         {/if}
 
+        {if $show_expirestatus}
         {if $isExpired}
         <div class="card mb-3 shadow border-danger">
             <div class="card-header text-bg-danger text-center">
@@ -258,5 +259,7 @@
             </div>
         </div>
         {/if}
+        {/if}
+
    </div>
 </div>
