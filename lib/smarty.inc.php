@@ -16,8 +16,19 @@ function get_attribute($params) {
     $ldap_bindpw = $params["ldap_bindpw"];
     $ldap_filter = $params["ldap_filter"];
 
+    $ldapInstance = new \Ltb\Ldap(
+                                 $ldap_url,
+                                 $ldap_starttls,
+                                 isset($ldap_binddn) ? $ldap_binddn : null,
+                                 isset($ldap_bindpw) ? $ldap_bindpw : null,
+                                 isset($ldap_network_timeout) ? $ldap_network_timeout : null,
+                                 $dn,
+                                 null,
+                                 isset($ldap_krb5ccname) ? $ldap_krb5ccname : null
+                             );
+
     # Connect to LDAP
-    $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw, $ldap_network_timeout);
+    $ldap_connection = $ldapInstance->connect();
 
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
