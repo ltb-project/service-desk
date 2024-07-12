@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c98dcd38cdd5282785625d28c440e2a7",
+    "content-hash": "15e6cbc1d32cce34408fded8f296353a",
     "packages": [
         {
             "name": "components/jquery",
@@ -286,16 +286,16 @@
         },
         {
             "name": "ltb-project/ldap",
-            "version": "v0.2.0",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ltb-project/ltb-ldap.git",
-                "reference": "bd4259e7e3f5a00ac163dfd3bbcb6700bb9a9c74"
+                "reference": "0ca06f8aafd116f214418efe9e3f22609c94f431"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ltb-project/ltb-ldap/zipball/bd4259e7e3f5a00ac163dfd3bbcb6700bb9a9c74",
-                "reference": "bd4259e7e3f5a00ac163dfd3bbcb6700bb9a9c74",
+                "url": "https://api.github.com/repos/ltb-project/ltb-ldap/zipball/0ca06f8aafd116f214418efe9e3f22609c94f431",
+                "reference": "0ca06f8aafd116f214418efe9e3f22609c94f431",
                 "shasum": ""
             },
             "require": {
@@ -320,9 +320,9 @@
             "description": "PHP framework for LTB project applications",
             "support": {
                 "issues": "https://github.com/ltb-project/ltb-ldap/issues",
-                "source": "https://github.com/ltb-project/ltb-ldap/tree/v0.2.0"
+                "source": "https://github.com/ltb-project/ltb-ldap/tree/v0.2.1"
             },
-            "time": "2024-04-24T13:16:19+00:00"
+            "time": "2024-04-26T10:05:38+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
