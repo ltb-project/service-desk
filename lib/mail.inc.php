@@ -24,7 +24,7 @@ function notify_admin_by_mail($mail_from, $mail_from_name, $changesubject, $chan
 
     if (! empty($admin_mail_list))
     {
-        if ( !\Ltb\Mail::send_mail_global($admin_mail_list, $mail_from, $mail_from_name, $changesubject, $changemessage.$mail_signature, $data) ) {
+        if ( !$mailer->send_mail($admin_mail_list, $mail_from, $mail_from_name, $changesubject, $changemessage.$mail_signature, $data) ) {
             error_log("Error while sending email to administrators $admin_mail_list");
         }
     }

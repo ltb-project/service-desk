@@ -121,7 +121,7 @@ if ($result === "") {
                     $username = $username_values[0];
                     if ($mail) {
                         $data = array( "name" => $username, "mail" => $mail, "password" => $newpassword);
-                        if ( !\Ltb\Mail::send_mail_global($mail, $mail_from, $mail_from_name, $messages["changesubject"], $messages["changemessage"].$mail_signature, $data) ) {
+                        if ( !$mailer-send_mail($mail, $mail_from, $mail_from_name, $messages["changesubject"], $messages["changemessage"].$mail_signature, $data) ) {
                             error_log("Error while sending change email to $mail (user $dn)");
                         }
                     }

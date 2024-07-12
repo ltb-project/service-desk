@@ -25,6 +25,30 @@ if (file_exists("../conf/$lang.inc.php")) {
 }
 
 #==============================================================================
+# Email Config
+#==============================================================================
+$mailer = new \Ltb\Mail(
+                           $mail_priority,
+                           $mail_charset,
+                           $mail_contenttype,
+                           $mail_wordwrap,
+                           $mail_sendmailpath,
+                           $mail_protocol,
+                           $mail_smtp_debug,
+                           $mail_debug_format,
+                           $mail_smtp_host,
+                           $mail_smtp_port,
+                           $mail_smtp_secure,
+                           $mail_smtp_autotls,
+                           $mail_smtp_auth,
+                           $mail_smtp_user,
+                           $mail_smtp_pass,
+                           $mail_smtp_keepalive,
+                           $mail_smtp_options,
+                           $mail_smtp_timeout
+                       );
+
+#==============================================================================
 # Smarty
 #==============================================================================
 require_once(SMARTY);
