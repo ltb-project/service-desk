@@ -84,6 +84,12 @@ Configure the filter to match password policy configuration objects:
 
    $ldap_ppolicy_filter = "(objectClass=pwdPolicy)";
 
+Define which attribute value will be displayed as password policy name:
+
+.. code-block:: php
+
+   $ldap_ppolicy_name_attribute = "cn";
+
 Set ``$ldap_default_ppolicy`` value if a default policy is configured in your LDAP directory.
 
 .. code-block:: php
