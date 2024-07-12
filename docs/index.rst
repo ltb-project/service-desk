@@ -24,7 +24,6 @@ LDAP Tool Box Service Desk documentation
    checkpassword.rst
    resetpassword.rst
    lockaccount.rst
-   unlockaccount.rst
    hook.rst
    dashboards.rst
    config_mail.rst

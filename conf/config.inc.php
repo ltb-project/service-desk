@@ -102,6 +102,7 @@ $use_checkpassword = true;
 $use_resetpassword = true;
 $use_resetpassword_resetchoice = true;
 $resetpassword_reset_default = true;
+$show_lockstatus = true;
 $use_unlockaccount = true;
 $use_lockaccount = true;
 $use_searchlocked = true;

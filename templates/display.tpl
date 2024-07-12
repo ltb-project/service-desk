@@ -193,6 +193,7 @@
         </div>
         {/if}
 
+        {if $show_lockstatus}
         {if $isLocked}
         <div class="card mb-3 shadow border-danger">
             <div class="card-header text-bg-danger text-center">
@@ -244,6 +245,7 @@
             </div>
             {/if}
         </div>
+        {/if}
         {/if}
 
         {if $isExpired}
