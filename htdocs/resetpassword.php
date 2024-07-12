@@ -116,7 +116,7 @@ if ($result === "") {
                     # Get user DN
                     $entry = ldap_first_entry($ldap, $search);
 
-                    $mail = \Ltb\AttributeValue::ldap_get_mail_for_notification($ldap, $entry);
+                    $mail = \Ltb\AttributeValue::ldap_get_mail_for_notification($ldap, $entry, $mail_attributes);
                     $username_values = ldap_get_values( $ldap, $entry, $mail_username_attribute );
                     $username = $username_values[0];
                     if ($mail) {
