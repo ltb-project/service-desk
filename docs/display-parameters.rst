@@ -36,3 +36,21 @@ You can also display the password expiration date in this panel by enabling this
 .. code-block:: php
 
     $display_password_expiration_date = true;
+
+Lock status
+-----------
+
+You can disable the lock status panel:
+
+.. code-block:: php
+
+    $show_lockstatus = false;
+
+Expire status
+-------------
+
+You can disable the expire status panel:
+
+.. code-block:: php
+
+    $show_expirestatus = false;
