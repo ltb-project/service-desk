@@ -1,10 +1,8 @@
 <?php
 
-# Notify administrators
-function notify_admin_by_mail($mail_from, $mail_from_name, $changesubject, $changemessage, $mail_signature, $data)
+# Get administrators mail list but remove duplicates
+function get_admin_mail_list($notify_admin_by_mail, $notify_admin_by_mail_list)
 {
-    global $notify_admin_by_mail;
-    global $notify_admin_by_mail_list;
 
     $admin_mail_list=array();
 
@@ -22,13 +20,7 @@ function notify_admin_by_mail($mail_from, $mail_from_name, $changesubject, $chan
         }
     }
 
-    if (! empty($admin_mail_list))
-    {
-        if ( !$mailer->send_mail($admin_mail_list, $mail_from, $mail_from_name, $changesubject, $changemessage.$mail_signature, $data) ) {
-            error_log("Error while sending email to administrators $admin_mail_list");
-        }
-    }
-
+    return $admin_mail_list;
 }
 
 ?>

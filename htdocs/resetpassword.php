@@ -130,7 +130,8 @@ if ($result === "") {
 
             # Notify administrator if needed
             $data = array( "dn" => $dn );
-            notify_admin_by_mail($mail_from, $mail_from_name, $messages["changesubjectforadmin"], $messages["changemessageforadmin"], $mail_signature, $data);
+            $admin_mail_list = get_admin_mail_list($notify_admin_by_mail, $notify_admin_by_mail_list);
+            $mailer->send_mail($admin_mail_list, $mail_from, $mail_from_name, $messages["changesubjectforadmin"], $messages["changemessageforadmin"], $mail_signature, $data);
         }
 
     }
