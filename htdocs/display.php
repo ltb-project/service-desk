@@ -93,6 +93,11 @@ if ($result === "") {
             $entry[0][$attr] = $values;
         }
 
+        # Include default password policy
+        if ( !$entry[0]['pwdpolicysubentry'] and $ldap_default_ppolicy) {
+            $entry[0]['pwdpolicysubentry'][] = $ldap_default_ppolicy;
+        }
+
         if ($display_edit_link) {
             # Replace {dn} in URL
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);

@@ -75,8 +75,20 @@ It is advised to set a search limit on client side if no limit is set by the ser
 
     $ldap_size_limit = 100;
 
-Default password policy
------------------------
+Password policies
+-----------------
+
+Configure the filter to match password policy configuration objects:
+
+.. code-block:: php
+
+   $ldap_ppolicy_filter = "(objectClass=pwdPolicy)";
+
+Define which attribute value will be displayed as password policy name:
+
+.. code-block:: php
+
+   $ldap_ppolicy_name_attribute = "cn";
 
 Set ``$ldap_default_ppolicy`` value if a default policy is configured in your LDAP directory.
 

@@ -58,6 +58,7 @@ $messages['label_postalcode'] = "Code postal";
 $messages['label_pwdaccountlockedtime'] = "Date de blocage";
 $messages['label_pwdchangedtime'] = "Dernier changement de mot de passe";
 $messages['label_pwdfailuretime'] = "Derniers échecs d'authentification";
+$messages['label_pwdpolicysubentry'] = "Politique des mots de passe associée";
 $messages['label_pwdreset'] = "Réinitialisation du mot de passe à la prochaine connexion";
 $messages['label_secretary'] = "Secrétaire";
 $messages['label_state'] = "État";
