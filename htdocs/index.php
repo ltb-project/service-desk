@@ -10,6 +10,16 @@ $version = "0.5.1";
 #==============================================================================
 require_once("../conf/config.inc.php");
 
+# Load specific directory settings
+switch($ldap_type) {
+  case "openldap":
+    $attributes_map = array_merge($attributes_map, $openldap_attributes_map);
+  break;
+  case "activedirectory":
+    $attributes_map = array_merge($attributes_map, $activedirectory_attributes_map);
+  break;
+}
+
 #==============================================================================
 # Includes
 #==============================================================================
@@ -134,6 +144,7 @@ $smarty->assign('search',$search);
 require_once("../lib/smarty.inc.php");
 $smarty->registerPlugin("function", "get_attribute", "get_attribute");
 $smarty->registerPlugin("function", "convert_ldap_date", "convert_ldap_date");
+$smarty->registerPlugin("function", "convert_ad_date", "convert_ad_date");
 $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
 $smarty->registerPlugin("function", "split_value", "split_value");
 

@@ -37,6 +37,7 @@ $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
 $ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
+$ldap_type = "openldap";
 
 # How display attributes
 $attributes_map = array(
@@ -66,7 +67,6 @@ $attributes_map = array(
     'postaladdress' => array( 'attribute' => 'postaladdress', 'faclass' => 'map-marker', 'type' => 'address' ),
     'postalcode' => array( 'attribute' => 'postalcode', 'faclass' => 'globe', 'type' => 'text' ),
     'pwdaccountlockedtime' => array( 'attribute' => 'pwdaccountlockedtime', 'faclass' => 'lock', 'type' => 'date' ),
-    'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdpolicysubentry' => array( 'attribute' => 'pwdpolicysubentry', 'faclass' => 'lock', 'type' => 'ppolicy_dn' ),
@@ -75,6 +75,14 @@ $attributes_map = array(
     'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
     'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
     'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' ),
+);
+
+# Directory specific attributes
+$openldap_attributes_map = array(
+    'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date' ),
+);
+$activedirectory_attributes_map = array(
+    'pwdchangedtime' => array( 'attribute' => 'pwdlastset', 'faclass' => 'lock', 'type' => 'ad_date' ),
 );
 
 # Search
