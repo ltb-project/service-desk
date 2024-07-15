@@ -64,6 +64,11 @@ function convert_ldap_date($date) {
 
 }
 
+function convert_ad_date($date) {
+
+    return adDate2phpDate( $date );
+
+}
 function convert_bytes($bytes) {
 
     return FileSizeConvert( $bytes );
