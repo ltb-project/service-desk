@@ -51,7 +51,6 @@ $attributes_map = array(
     'fax' => array( 'attribute' => 'facsimiletelephonenumber', 'faclass' => 'fax', 'type' => 'tel' ),
     'firstname' => array( 'attribute' => 'givenname', 'faclass' => 'user-o', 'type' => 'text' ),
     'fullname' => array( 'attribute' => 'cn', 'faclass' => 'user-circle', 'type' => 'text' ),
-    'identifier' => array( 'attribute' => 'uid', 'faclass' => 'user-o', 'type' => 'text' ),
     'l' => array( 'attribute' => 'l', 'faclass' => 'globe', 'type' => 'text' ),
     'lastname' => array( 'attribute' => 'sn', 'faclass' => 'user-o', 'type' => 'text' ),
     'mail' => array( 'attribute' => 'mail', 'faclass' => 'envelope-o', 'type' => 'mailto' ),
@@ -77,12 +76,14 @@ $attributes_map = array(
 # Directory specific attributes
 $openldap_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'authtimestamp', 'faclass' => 'lock', 'type' => 'date' ),
+    'identifier' => array( 'attribute' => 'uid', 'faclass' => 'user-o', 'type' => 'text' ),
     'pwdaccountlockedtime' => array( 'attribute' => 'pwdaccountlockedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date' ),
 );
 $activedirectory_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'lastlogon', 'faclass' => 'lock', 'type' => 'ad_date' ),
+    'identifier' => array( 'attribute' => 'samaccountname', 'faclass' => 'user-o', 'type' => 'text' ),
     'pwdaccountlockedtime' => array( 'attribute' => 'lockouttime', 'faclass' => 'lock', 'type' => 'ad_date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdlastset', 'faclass' => 'lock', 'type' => 'ad_date' ),
     'pwdfailuretime' => array( 'attribute' => 'badpasswordtime', 'faclass' => 'lock', 'type' => 'ad_date' ),
