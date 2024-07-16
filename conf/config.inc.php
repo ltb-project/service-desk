@@ -64,9 +64,6 @@ $attributes_map = array(
     'phone' => array( 'attribute' => 'telephonenumber', 'faclass' => 'phone', 'type' => 'tel' ),
     'postaladdress' => array( 'attribute' => 'postaladdress', 'faclass' => 'map-marker', 'type' => 'address' ),
     'postalcode' => array( 'attribute' => 'postalcode', 'faclass' => 'globe', 'type' => 'text' ),
-    'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
-    'pwdpolicysubentry' => array( 'attribute' => 'pwdpolicysubentry', 'faclass' => 'lock', 'type' => 'ppolicy_dn' ),
-    'pwdreset' => array( 'attribute' => 'pwdreset', 'faclass' => 'lock', 'type' => 'boolean' ),
     'secretary' => array( 'attribute' => 'secretary', 'faclass' => 'user-circle-o', 'type' => 'dn_link' ),
     'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
     'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
@@ -80,6 +77,9 @@ $openldap_attributes_map = array(
     'pwdaccountlockedtime' => array( 'attribute' => 'pwdaccountlockedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date' ),
+    'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
+    'pwdpolicysubentry' => array( 'attribute' => 'pwdpolicysubentry', 'faclass' => 'lock', 'type' => 'ppolicy_dn' ),
+    'pwdreset' => array( 'attribute' => 'pwdreset', 'faclass' => 'lock', 'type' => 'boolean' ),
 );
 $activedirectory_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'lastlogon', 'faclass' => 'lock', 'type' => 'ad_date' ),
