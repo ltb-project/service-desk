@@ -66,6 +66,13 @@ Set default language in ``$lang``:
 
 .. tip:: You can override messages by creating lang files in ``conf/``, for example ``conf/en.inc.php``.
 
+Language is picked according to browser choice among the available ones. All languages
+are allowed by default, to restrict them add ``$allowed_lang`` array:
+
+.. code-block:: php
+
+   $allowed_lang = array("en");
+
 Dates
 -----
 
