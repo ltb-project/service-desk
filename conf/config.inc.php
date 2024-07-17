@@ -151,7 +151,7 @@ $mail_priority = 3;
 
 # Language
 $lang = "en";
-$allowed_lang = array("");
+$allowed_lang = array();
 $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
 $date_timezone = "UTC";
 
