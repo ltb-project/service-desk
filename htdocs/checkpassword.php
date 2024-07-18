@@ -27,13 +27,15 @@ if ($result === "") {
     require __DIR__ . '/../vendor/autoload.php';
 
     # Connect to LDAP
-    $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $dn, $password, $ldap_network_timeout);
+    $ldap_connection = $ldapInstance->connect();
 
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
     if( !$result ) {
-        $result = "passwordok";
+
+        $bind = \Ltb\PhpLDAP::ldap_bind($ldap, $dn, $password);
+        $result = $bind ? "passwordok" : "ldaperror";
     }
 
 }

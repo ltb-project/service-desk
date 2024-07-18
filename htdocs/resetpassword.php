@@ -37,7 +37,7 @@ if ($result === "") {
     require_once("../lib/hook.inc.php");
 
     # Connect to LDAP
-    $ldap_connection = \Ltb\Ldap::connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw, $ldap_network_timeout);
+    $ldap_connection = $ldapInstance->connect();
 
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
@@ -116,12 +116,12 @@ if ($result === "") {
                     # Get user DN
                     $entry = ldap_first_entry($ldap, $search);
 
-                    $mail = \Ltb\AttributeValue::ldap_get_mail_for_notification($ldap, $entry);
+                    $mail = \Ltb\AttributeValue::ldap_get_mail_for_notification($ldap, $entry, $mail_attributes);
                     $username_values = ldap_get_values( $ldap, $entry, $mail_username_attribute );
                     $username = $username_values[0];
                     if ($mail) {
                         $data = array( "name" => $username, "mail" => $mail, "password" => $newpassword);
-                        if ( !\Ltb\Mail::send_mail_global($mail, $mail_from, $mail_from_name, $messages["changesubject"], $messages["changemessage"].$mail_signature, $data) ) {
+                        if ( !$mailer->send_mail($mail, $mail_from, $mail_from_name, $messages["changesubject"], $messages["changemessage"].$mail_signature, $data) ) {
                             error_log("Error while sending change email to $mail (user $dn)");
                         }
                     }
@@ -130,7 +130,8 @@ if ($result === "") {
 
             # Notify administrator if needed
             $data = array( "dn" => $dn );
-            notify_admin_by_mail($mail_from, $mail_from_name, $messages["changesubjectforadmin"], $messages["changemessageforadmin"], $mail_signature, $data);
+            $admin_mail_list = get_admin_mail_list($notify_admin_by_mail, $notify_admin_by_mail_list);
+            $mailer->send_mail($admin_mail_list, $mail_from, $mail_from_name, $messages["changesubjectforadmin"], $messages["changemessageforadmin"], $mail_signature, $data);
         }
 
     }
