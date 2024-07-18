@@ -68,7 +68,6 @@ if ($result === "") {
             $attributes[] = $attributes_map[$item]['attribute'];
         }
         $attributes[] = $attributes_map[$display_title]['attribute'];
-        $attributes[] = "pwdPolicySubentry";
 
         # Search entry
         $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
@@ -97,52 +96,26 @@ if ($result === "") {
         if ( !$entry[0]['pwdpolicysubentry'] and $ldap_default_ppolicy) {
             $entry[0]['pwdpolicysubentry'][] = $ldap_default_ppolicy;
         }
+        $pwdPolicy = $entry[0]['pwdpolicysubentry'][0];
 
         if ($display_edit_link) {
             # Replace {dn} in URL
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
         }
 
-        # Search user active password policy
-        $pwdPolicy = "";
-        if (isset($entry[0]['pwdpolicysubentry'][0])) {
-            $pwdPolicy = $entry[0]['pwdpolicysubentry'][0];
-        } elseif (isset($ldap_default_ppolicy)) {
-            $pwdPolicy = $ldap_default_ppolicy;
-        }
-
-        $isLocked = false;
         $unlockDate = "";
         $isExpired = false;
-        $ppolicy_entry = "";
+
+        $isLocked = $directory->isLocked($ldap, $dn, array( 'pwdpolicy' => $pwdPolicy ));
 
         if ($pwdPolicy) {
-            $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge', 'pwdLockoutDuration', 'pwdLockout'));
+            $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge'));
 
+            $ppolicy_entry = "";
             if ( $errno ) {
                 error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
             } else {
                 $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
-            }
-
-            # Lock
-            $pwdLockout = strtolower($ppolicy_entry[0]['pwdlockout'][0]) == "true" ? true : false;
-            $pwdLockoutDuration = $ppolicy_entry[0]['pwdlockoutduration'][0];
-            $pwdAccountLockedTime = $entry[0]['pwdaccountlockedtime'][0];
-
-            if ( $pwdAccountLockedTime === "000001010000Z" ) {
-                $isLocked = true;
-                unset($entry[0]['pwdaccountlockedtime']);
-            } else if (isset($pwdAccountLockedTime)) {
-                if (isset($pwdLockoutDuration) and ($pwdLockoutDuration > 0)) {
-                    $lockDate = ldapDate2phpDate($pwdAccountLockedTime);
-                    $unlockDate = date_add( $lockDate, new DateInterval('PT'.$pwdLockoutDuration.'S'));
-                    if ( time() <= $unlockDate->getTimestamp() ) {
-                        $isLocked = true;
-                    }
-                } else {
-                    $isLocked = true;
-                }
             }
 
             # Expiration

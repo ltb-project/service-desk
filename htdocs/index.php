@@ -10,16 +10,6 @@ $version = "0.5.1";
 #==============================================================================
 require_once("../conf/config.inc.php");
 
-# Load specific directory settings
-switch($ldap_type) {
-  case "openldap":
-    $attributes_map = array_merge($attributes_map, $openldap_attributes_map);
-  break;
-  case "activedirectory":
-    $attributes_map = array_merge($attributes_map, $activedirectory_attributes_map);
-  break;
-}
-
 #==============================================================================
 # Includes
 #==============================================================================
@@ -76,6 +66,23 @@ $ldapInstance = new \Ltb\Ldap(
                                  null,
                                  isset($ldap_krb5ccname) ? $ldap_krb5ccname : null
                              );
+
+#==============================================================================
+# Directory instance
+#==============================================================================
+$directory;
+
+# Load specific directory settings
+switch($ldap_type) {
+  case "openldap":
+    $attributes_map = array_merge($attributes_map, $openldap_attributes_map);
+    $directory = new \Ltb\Directory\OpenLDAP();
+  break;
+  case "activedirectory":
+    $attributes_map = array_merge($attributes_map, $activedirectory_attributes_map);
+    $directory = new \Ltb\Directory\ActiveDirectory();
+  break;
+}
 
 #==============================================================================
 # Smarty
