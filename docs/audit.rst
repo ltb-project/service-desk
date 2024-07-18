@@ -13,6 +13,7 @@ The items provided in the audit log are:
 * Who has done the action (see Admin name below)
 * Action
 * Result of the action
+* Additional comment (Optionally entered by Admin)
 
 Example:
 
@@ -25,6 +26,7 @@ Example:
     "done_by":"Mickey",
     "action":"lockaccount",
     "result":"accountlocked"
+    "comment":"Security breach"
    }
 
 Audit log file
