@@ -34,7 +34,7 @@ if ($result === "") {
 
     if( !$result ) {
 
-        $bind = \Ltb\PhpLDAP::ldap_bind($ldap, $dn, $password);
+        $bind = ldap_bind($ldap, $dn, $password);
         $result = $bind ? "passwordok" : "ldaperror";
     }
 
