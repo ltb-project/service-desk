@@ -204,19 +204,37 @@
             </div>
 
              <div class="card-body">
-                 {if $unlockDate}
-                 <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
-                 {/if}
-                 {if $use_unlockaccount}
-                 <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
-                     {if $unlockaccountresult eq 'ldaperror'}
-                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
-                     {/if}
-                     <input type="hidden" name="dn" value="{$dn}" />
-                     <button type="submit" class="btn btn-success">
-                         <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
-                     </button>
-                 </form>
+                {if $unlockDate}
+                <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
+                {/if}
+                {if $use_unlockaccount}
+                <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
+                {if $unlockaccountresult eq 'ldaperror'}
+                <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
+                {/if}
+                <input type="hidden" name="dn" value="{$dn}" />
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
+                    <i class="fa fa-fw fa-lock"></i> {$msg_unlockaccount}
+                </button>
+                <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="CommentModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="CommentModal">{$msg_label_comment}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" name="comment" id="comment" class="form-control" placeholder="{$msg_comment}" />
+                    </div>
+                    <div class="modal-footer">
+                    <button type="close" class="btn-close" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
+                        </button>
+                    </div>
+                    </div>
+                </div>
+                </form>
                  {/if}
             </div>
         </div>
@@ -231,16 +249,35 @@
                 </p>
             </div>
 
-             {if $use_lockaccount}
-             <div class="card-body">
+            {if $use_lockaccount}
+            <div class="card-body">
                  <form id="lockaccount" method="post" action="index.php?page=lockaccount">
-                     {if $lockaccountresult eq 'ldaperror'}
-                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
-                     {/if}
-                     <input type="hidden" name="dn" value="{$dn}" />
-                     <button type="submit" class="btn btn-success">
-                         <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
-                     </button>
+                    {if $lockaccountresult eq 'ldaperror'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
+                    {/if}
+                    <input type="hidden" name="dn" value="{$dn}" />
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
+                        <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
+                    </button>
+                    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="CommentModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="CommentModal">{$msg_label_comment}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" name="comment" id="comment" class="form-control" placeholder="{$msg_comment}" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="close" class="btn-close" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                  </form>
             </div>
             {/if}

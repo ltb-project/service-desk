@@ -6,6 +6,7 @@
 $result = "";
 $dn = "";
 $password = "";
+$comment = $_POST["comment"];
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
@@ -73,7 +74,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result);
+    auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result, $comment);
 }
 
 header('Location: index.php?page=display&dn='.$dn.'&lockaccountresult='.$result);
