@@ -66,6 +66,14 @@ The filter can be set in ``$ldap_user_filter``:
 
     $ldap_user_filter = "(objectClass=inetOrgPerson)";
 
+You can set the scope for each search in ``$ldap_scope``:
+
+.. code-block:: php
+
+   $ldap_scope = "sub";
+
+.. tip:: sub is the default value. Possible values are sub, one, or base
+
 Size limit
 ----------
 
