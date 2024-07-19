@@ -29,7 +29,7 @@ if (isset($_POST["search"]) and $_POST["search"]) {
     # Search attributes
     $attributes = array();
 
-    [$ldap,$result,$nb_entries,$entries,$size_limit_reached]=$ldapInstance->search($ldap_filter, $attributes, $attributes_map, $search_result_title, $search_result_sortby, $search_result_items);
+    [$ldap,$result,$nb_entries,$entries,$size_limit_reached]=$ldapInstance->search($ldap_filter, $attributes, $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
 
     if ( ! empty($entries) )
     {

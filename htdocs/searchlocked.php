@@ -15,7 +15,7 @@ $ldap_filter = "(&".$ldap_user_filter."(pwdAccountLockedTime=*))";
 # Search attributes
 $attributes = array('pwdAccountLockedTime', 'pwdPolicySubentry');
 
-[$ldap,$result,$nb_entries,$entries,$size_limit_reached]=$ldapInstance->search($ldap_filter, $attributes, $attributes_map, $search_result_title, $search_result_sortby, $search_result_items);
+[$ldap,$result,$nb_entries,$entries,$size_limit_reached]=$ldapInstance->search($ldap_filter, $attributes, $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
 
 if ( ! empty($entries) )
 {
