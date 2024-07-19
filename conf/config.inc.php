@@ -162,7 +162,8 @@ $mail_charset = 'utf-8';
 $mail_priority = 3;
 
 # Language
-$lang ="en";
+$lang = "en";
+$allowed_lang = array();
 $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
 $date_timezone = "UTC";
 

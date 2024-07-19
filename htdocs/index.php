@@ -23,7 +23,7 @@ require_once("../lib/detectbrowserlanguage.php");
 $files = glob("../lang/*.php");
 $languages = str_replace(".inc.php", "", $files);
 $languages = str_replace("../lang/", "", $languages);
-$lang = detectLanguage($lang, $languages);
+$lang = detectLanguage($lang, $allowed_lang ? array_intersect($languages, $allowed_lang) : $languages);
 require_once("../lang/$lang.inc.php");
 if (file_exists("../conf/$lang.inc.php")) {
     require_once("../conf/$lang.inc.php");
@@ -62,7 +62,7 @@ $ldapInstance = new \Ltb\Ldap(
                                  isset($ldap_binddn) ? $ldap_binddn : null,
                                  isset($ldap_bindpw) ? $ldap_bindpw : null,
                                  isset($ldap_network_timeout) ? $ldap_network_timeout : null,
-                                 $ldap_base,
+                                 $ldap_user_base,
                                  null,
                                  isset($ldap_krb5ccname) ? $ldap_krb5ccname : null
                              );

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15e6cbc1d32cce34408fded8f296353a",
+    "content-hash": "2ffb8e112bf5f10bd6eb4e8db16e4bfe",
     "packages": [
         {
             "name": "components/jquery",
@@ -57,16 +57,16 @@
         },
         {
             "name": "datatables.net/datatables.net",
-            "version": "2.0.8",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DataTables/Dist-DataTables.git",
-                "reference": "fd6230ad1839034e468982e4551a322114103128"
+                "reference": "5dcb88d52c3b29c2fd86ba2073f3b95258fd0b61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables/zipball/fd6230ad1839034e468982e4551a322114103128",
-                "reference": "fd6230ad1839034e468982e4551a322114103128",
+                "url": "https://api.github.com/repos/DataTables/Dist-DataTables/zipball/5dcb88d52c3b29c2fd86ba2073f3b95258fd0b61",
+                "reference": "5dcb88d52c3b29c2fd86ba2073f3b95258fd0b61",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
                 "forum": "https://datatables.net/forums",
                 "source": "https://github.com/DataTables/Dist-DataTables"
             },
-            "time": "2024-05-28T15:35:23+00:00"
+            "time": "2024-07-19T08:20:23+00:00"
         },
         {
             "name": "datatables.net/datatables.net-bs5",
@@ -143,16 +143,16 @@
         },
         {
             "name": "datatables.net/datatables.net-buttons",
-            "version": "3.0.2",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DataTables/Dist-DataTables-Buttons.git",
-                "reference": "d2ba899f25470d4ab0d12a99162cdf02611c7bb3"
+                "reference": "68fc52d0385f164024686b456c84c387cca595fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Buttons/zipball/d2ba899f25470d4ab0d12a99162cdf02611c7bb3",
-                "reference": "d2ba899f25470d4ab0d12a99162cdf02611c7bb3",
+                "url": "https://api.github.com/repos/DataTables/Dist-DataTables-Buttons/zipball/68fc52d0385f164024686b456c84c387cca595fa",
+                "reference": "68fc52d0385f164024686b456c84c387cca595fa",
                 "shasum": ""
             },
             "require": {
@@ -186,7 +186,7 @@
                 "forum": "https://datatables.net/forums",
                 "source": "https://github.com/DataTables/Dist-DataTables-Buttons"
             },
-            "time": "2024-04-16T12:05:36+00:00"
+            "time": "2024-07-19T08:00:18+00:00"
         },
         {
             "name": "datatables.net/datatables.net-buttons-bs5",
@@ -285,16 +285,16 @@
             "time": "2024-04-02T18:54:47+00:00"
         },
         {
-            "name": "ltb-project/ldap",
+            "name": "ltb-project/ltb-common",
             "version": "v0.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ltb-project/ltb-ldap.git",
+                "url": "https://github.com/ltb-project/ltb-common.git",
                 "reference": "0ca06f8aafd116f214418efe9e3f22609c94f431"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ltb-project/ltb-ldap/zipball/0ca06f8aafd116f214418efe9e3f22609c94f431",
+                "url": "https://api.github.com/repos/ltb-project/ltb-common/zipball/0ca06f8aafd116f214418efe9e3f22609c94f431",
                 "reference": "0ca06f8aafd116f214418efe9e3f22609c94f431",
                 "shasum": ""
             },
@@ -319,8 +319,8 @@
             ],
             "description": "PHP framework for LTB project applications",
             "support": {
-                "issues": "https://github.com/ltb-project/ltb-ldap/issues",
-                "source": "https://github.com/ltb-project/ltb-ldap/tree/v0.2.1"
+                "issues": "https://github.com/ltb-project/ltb-common/issues",
+                "source": "https://github.com/ltb-project/ltb-common/tree/v0.2.1"
             },
             "time": "2024-04-26T10:05:38+00:00"
         },
