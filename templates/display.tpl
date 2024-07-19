@@ -214,25 +214,10 @@
                 {/if}
                 <input type="hidden" name="dn" value="{$dn}" />
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
-                    <i class="fa fa-fw fa-lock"></i> {$msg_unlockaccount}
+                    <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
                 </button>
-                <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="CommentModal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="CommentModal">{$msg_label_comment}</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" name="comment" id="comment" class="form-control" placeholder="{$msg_comment}" />
-                    </div>
-                    <div class="modal-footer">
-                    <button type="close" class="btn-close" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">
-                            <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
-                        </button>
-                    </div>
-                    </div>
+                <div>
+                    <span class="commentModal"></span>
                 </div>
                 </form>
                  {/if}
@@ -259,24 +244,8 @@
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
                         <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
                     </button>
-                    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="CommentModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="CommentModal">{$msg_label_comment}</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="text" name="comment" id="comment" class="form-control" placeholder="{$msg_comment}" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="close" class="btn-close" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
-                            </button>
-                        </div>
-                        </div>
-                    </div>
+                    <div>
+                        <span class="commentModal"></span>
                     </div>
                  </form>
             </div>
@@ -298,5 +267,25 @@
         {/if}
         {/if}
 
+        <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="CommentModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="CommentModal">{$msg_label_comment}</h1>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="comment" id="comment" class="form-control" placeholder="{$msg_comment}" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa fa-fw fa-window-close-o"></i> {$msg_close}
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
    </div>
 </div>
