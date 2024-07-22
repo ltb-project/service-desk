@@ -7,7 +7,7 @@ $result = "";
 $dn = "";
 $password = "";
 $returnto = "display";
-$comment = $_POST["comment"];
+$comment = "";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
@@ -41,6 +41,10 @@ if ($result === "") {
             $result = "accountunlocked";
         }
     }
+}
+
+if (isset($_POST["comment"])) {
+    $comment = $_POST["comment"];
 }
 
 if ($audit_log_file) {

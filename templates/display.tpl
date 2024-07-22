@@ -211,13 +211,22 @@
                 {if $unlockaccountresult eq 'ldaperror'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
                 {/if}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
-                    <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
-                </button>
-                <div>
-                    {include 'comment.tpl' method=unlock page=unlockaccount}
-                </div>
-                 {/if}
+                {if $use_unlockcomment}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
+                        <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
+                    </button>
+                    <div>
+                        {include 'comment.tpl' method=unlock page=unlockaccount}
+                    </div>
+                {else}
+                    <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
+                    <input type="hidden" name="dn" value="{$dn}" />
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
+                        </button>
+                    </form>
+                {/if}
+                {/if}
             </div>
         </div>
         {/if}
@@ -236,13 +245,21 @@
                 {if $lockaccountresult eq 'ldaperror'}
                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
                 {/if}
-                <input type="hidden" name="dn" value="{$dn}" />
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
-                    <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
-                </button>
-                <div>
-                    {include 'comment.tpl' method=lock page=lockaccount}
-                </div>
+                {if $use_lockcomment}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
+                        <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
+                    </button>
+                    <div>
+                        {include 'comment.tpl' method=lock page=lockaccount}
+                    </div>
+                {else}
+                    <form id="lockaccount" method="post" action="index.php?page=lockaccount">
+                    <input type="hidden" name="dn" value="{$dn}" />
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
+                        </button>
+                    </form>
+                {/if}
             </div>
             {/if}
         </div>
