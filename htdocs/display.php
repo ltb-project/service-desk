@@ -14,6 +14,7 @@ $accountlockresult= "";
 $prehookresult= "";
 $posthookresult= "";
 $ldapExpirationDate="";
+$canLockAccount="";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -71,7 +72,6 @@ if ($result === "") {
 
         # Search entry
         $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
-
         $errno = ldap_errno($ldap);
 
         if ( $errno ) {
@@ -103,10 +103,12 @@ if ($result === "") {
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
         }
 
-        $unlockDate = "";
-        $isExpired = false;
+        $lockoutDuration = $directory->getLockoutDuration($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'lockoutDuration' => $ldap_lockout_duration));
+        $unlockDate = $directory->getUnlockDate($ldap, $dn, array('lockoutDuration' => $lockoutDuration));
+        $isLocked = $directory->isLocked($ldap, $dn, array('lockoutDuration'  => $lockoutDuration));
+        $canLockAccount = $directory->canLockAccount($ldap, $dn, array('pwdPolicy' => $pwdPolicy));
 
-        $isLocked = $directory->isLocked($ldap, $dn, array( 'pwdpolicy' => $pwdPolicy ));
+        $isExpired = false;
 
         if ($pwdPolicy) {
             $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge'));
@@ -158,5 +160,5 @@ $smarty->assign("accountunlockresult", $accountunlockresult);
 $smarty->assign("accountlockresult", $accountlockresult);
 $smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
-if ($pwdLockout == false) $smarty->assign("use_lockaccount", $pwdLockout);
+if ($canLockAccount == false) $smarty->assign("use_lockaccount", $canLockAccount);
 ?>

@@ -38,6 +38,7 @@ $ldap_size_limit = 100;
 $ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
 $ldap_type = "openldap";
+#$ldap_lockout_duration = 3600;
 
 # How display attributes
 $attributes_map = array(
