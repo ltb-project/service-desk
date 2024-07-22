@@ -29,6 +29,7 @@ $messages['false'] = "No";
 $messages['forcereset'] = "Force reset at next connection";
 $messages['idleaccounts'] = "Idle accounts";
 $messages['idleaccountstitle'] = "Accounts idle for more than $idledays days";
+$messages['insert_comment'] = "Insert comment";
 $messages['pager_all'] = "All";
 $messages['print_all'] = "Print all results";
 $messages['print_page'] = "Print this page";
