@@ -73,12 +73,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    if (isset($_POST["comment"])) {
-        auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result, $_POST["comment"]);
-    }
-    else {
-        auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result, null);
-    }
+    auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result, $_POST["comment"]);
 }
 
 header('Location: index.php?page=display&dn='.$dn.'&lockaccountresult='.$result);

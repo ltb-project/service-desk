@@ -43,12 +43,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    if (isset($_POST["comment"])) {
-        auditlog($audit_log_file, $dn, $audit_admin, "unlockaccount", $result, $_POST["comment"]);
-    }
-    else {
-        auditlog($audit_log_file, $dn, $audit_admin, "unlockaccount", $result, null);
-    }
+    auditlog($audit_log_file, $dn, $audit_admin, "unlockaccount", $result, $_POST["comment"]);
 }
 
 header('Location: index.php?page='.$returnto.'&dn='.$dn.'&unlockaccountresult='.$result);
