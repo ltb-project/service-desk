@@ -25,7 +25,7 @@ Example:
     "user_dn":"uid=donald,ou=users,dc=example,dc=com",
     "done_by":"Mickey",
     "action":"lockaccount",
-    "result":"accountlocked"
+    "result":"accountlocked",
     "comment":"Security breach"
    }
 

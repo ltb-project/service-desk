@@ -4,10 +4,10 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="CommentModal">{$msg_label_comment}</h1>
+                    <h1 class="modal-title fs-5" id="CommentModal">{$msg_comment}</h1>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="comment" id="comment" class="form-control" placeholder="{$msg_comment}" />
+                    <input type="text" name="comment" id="comment" class="form-control" placeholder="{$msg_insert_comment}" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
