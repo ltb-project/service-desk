@@ -216,7 +216,7 @@
                         <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
                     </button>
                     <div>
-                        {include 'comment.tpl' method=unlock page=unlockaccount}
+                        {include 'comment.tpl' method=unlock page=unlockaccount title=$msg_unlockaccount}
                     </div>
                 {else}
                     <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
@@ -250,7 +250,7 @@
                         <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
                     </button>
                     <div>
-                        {include 'comment.tpl' method=lock page=lockaccount}
+                        {include 'comment.tpl' method=lock page=lockaccount title=$msg_lockaccount}
                     </div>
                 {else}
                     <form id="lockaccount" method="post" action="index.php?page=lockaccount">

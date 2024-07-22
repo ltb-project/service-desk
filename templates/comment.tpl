@@ -4,10 +4,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="CommentModal">{$msg_comment}</h1>
+                    <h1 class="modal-title fs-5" id="CommentModal">{$title}</h1>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="comment" id="comment" class="form-control" placeholder="{$msg_insert_comment}" />
+                    {if $use_lockcomment_required || $use_unlockcomment_required}
+                    <input type="text" name="comment" id="comment" class="form-control"
+                        placeholder="{$msg_insert_comment}" required/>
+                    {else}
+                    <input type="text" name="comment" id="comment" class="form-control"
+                        placeholder="{$msg_insert_comment}"/>
+                    {/if}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
