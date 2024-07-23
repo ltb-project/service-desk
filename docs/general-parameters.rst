@@ -172,7 +172,7 @@ You need to define where Smarty is installed:
 
 .. code-block:: php
 
-    define("SMARTY", "/usr/share/php/smarty3/Smarty.class.php");
+    define("SMARTY", "/usr/share/php/smarty4/Smarty.class.php");
 
 Notify administrator by mail
 ----------------------------

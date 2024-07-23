@@ -21,7 +21,7 @@ You need to install these prerequisites:
 * Apache or another web server
 * php
 * php-ldap
-* Smarty (version 3)
+* Smarty (version 4)
 
 Debian / Ubuntu
 ---------------
@@ -54,14 +54,14 @@ You are now ready to install:
 
 .. prompt:: bash #
 
-    apt install service-desk smarty3
+    apt install service-desk smarty4
 
 CentOS / RedHat
 ---------------
 
-.. warning:: You may need to install first the package `php-Smarty`_ which is not in official repositories.
+.. warning:: You may need to install first the package `smarty4` which is not in official repositories.
 
-.. _php-Smarty: https://pkgs.org/download/php-Smarty
+.. _smarty4: https://pkgs.org/download/smarty4
 
 Configure the yum repository:
 

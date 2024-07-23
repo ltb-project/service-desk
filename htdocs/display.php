@@ -126,7 +126,7 @@ if ($result === "") {
             }
 
             # Lock
-            $pwdLockout = strtolower($ppolicy_entry[0]['pwdlockout'][0]) == "true" ? true : false;
+            $pwdLockout = strtolower(isset($ppolicy_entry[0]['pwdlockout'][0])) == "true" ? true : false;
             $pwdLockoutDuration = $ppolicy_entry[0]['pwdlockoutduration'][0];
             $pwdAccountLockedTime = $entry[0]['pwdaccountlockedtime'][0];
 

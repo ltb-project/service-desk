@@ -82,6 +82,9 @@ $smarty->setCompileDir($compile_dir);
 $smarty->setCacheDir($cache_dir);
 $smarty->debugging = $smarty_debug;
 
+# Muting warnings due to PHP 8+
+$smarty->muteUndefinedOrNullWarnings();
+
 error_reporting(0);
 if ($debug) {
     error_reporting(E_ALL);
