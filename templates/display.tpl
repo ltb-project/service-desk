@@ -212,8 +212,9 @@
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
                 {/if}
                 {if $use_unlockcomment}
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
-                        <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModal">
+                        <i class="fa fa-fw fa-unlock me-2"></i>{$msg_unlockaccount}
+                        <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
                     <div>
                         {include 'comment.tpl' method=unlock page=unlockaccount title=$msg_unlockaccount}
@@ -246,8 +247,9 @@
                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
                 {/if}
                 {if $use_lockcomment}
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">
-                        <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModal">
+                        <i class="fa fa-fw fa-lock me-2"></i>{$msg_lockaccount}
+                        <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
                     <div>
                         {include 'comment.tpl' method=lock page=lockaccount title=$msg_lockaccount}

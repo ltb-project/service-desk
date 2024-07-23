@@ -15,6 +15,7 @@ $messages['changemessage'] = "Bonjour {name},\n\nVotre mot de passe a été chan
 $messages['changemessageforadmin'] = "Bonjour,\n\nLe mot de passe du compte {dn} a été changé.";
 $messages['checkpassword'] = "Vérification du mot de passe";
 $messages['close'] = "Fermer";
+$messages['comment_needed'] = "Un commentaire sera demandé";
 $messages['currentpassword'] = "Mot de passe actuel";
 $messages['dashboards'] = "Tableaux de bord";
 $messages['displayentry'] = "Afficher l'entrée";

@@ -15,6 +15,7 @@ $messages['changemessage'] = "Hello {name},\n\nYour password has been changed.\n
 $messages['changemessageforadmin'] = "Hello,\n\nThe password of account {dn} has been changed.\n.";
 $messages['checkpassword'] = "Check password";
 $messages['close'] = "Close";
+$messages['comment_needed'] = "A comment will be asked";
 $messages['currentpassword'] = "Current password";
 $messages['dashboards'] = "Dashboards";
 $messages['displayentry'] = "Display entry";
