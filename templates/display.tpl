@@ -204,20 +204,30 @@
             </div>
 
              <div class="card-body">
-                 {if $unlockDate}
-                 <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
-                 {/if}
-                 {if $use_unlockaccount}
-                 <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
-                     {if $unlockaccountresult eq 'ldaperror'}
-                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
-                     {/if}
-                     <input type="hidden" name="dn" value="{$dn}" />
-                     <button type="submit" class="btn btn-success">
-                         <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
-                     </button>
-                 </form>
-                 {/if}
+                {if $unlockDate}
+                <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
+                {/if}
+                {if $use_unlockaccount}
+                {if $unlockaccountresult eq 'ldaperror'}
+                <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
+                {/if}
+                {if $use_unlockcomment}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModal">
+                        <i class="fa fa-fw fa-unlock me-2"></i>{$msg_unlockaccount}
+                        <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
+                    </button>
+                    <div>
+                        {include 'comment.tpl' method=unlock page=unlockaccount title=$msg_unlockaccount}
+                    </div>
+                {else}
+                    <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
+                    <input type="hidden" name="dn" value="{$dn}" />
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-unlock"></i> {$msg_unlockaccount}
+                        </button>
+                    </form>
+                {/if}
+                {/if}
             </div>
         </div>
         {/if}
@@ -231,17 +241,27 @@
                 </p>
             </div>
 
-             {if $use_lockaccount}
-             <div class="card-body">
-                 <form id="lockaccount" method="post" action="index.php?page=lockaccount">
-                     {if $lockaccountresult eq 'ldaperror'}
-                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
-                     {/if}
-                     <input type="hidden" name="dn" value="{$dn}" />
-                     <button type="submit" class="btn btn-success">
-                         <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
-                     </button>
-                 </form>
+            {if $use_lockaccount}
+            <div class="card-body">
+                {if $lockaccountresult eq 'ldaperror'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
+                {/if}
+                {if $use_lockcomment}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModal">
+                        <i class="fa fa-fw fa-lock me-2"></i>{$msg_lockaccount}
+                        <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
+                    </button>
+                    <div>
+                        {include 'comment.tpl' method=lock page=lockaccount title=$msg_lockaccount}
+                    </div>
+                {else}
+                    <form id="lockaccount" method="post" action="index.php?page=lockaccount">
+                    <input type="hidden" name="dn" value="{$dn}" />
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-lock"></i> {$msg_lockaccount}
+                        </button>
+                    </form>
+                {/if}
             </div>
             {/if}
         </div>
@@ -260,6 +280,5 @@
         </div>
         {/if}
         {/if}
-
    </div>
 </div>

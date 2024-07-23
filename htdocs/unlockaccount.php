@@ -5,7 +5,7 @@
 
 $result = "";
 $dn = "";
-$password = "";
+$comment = "";
 $returnto = "display";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
@@ -18,6 +18,10 @@ if (isset($_POST["dn"]) and $_POST["dn"]) {
 
 if (isset($_GET["returnto"]) and $_GET["returnto"]) {
     $returnto = $_GET["returnto"];
+}
+
+if (isset($_POST["comment"]) and $_POST["comment"]) {
+    $comment = $_POST["comment"];
 }
 
 if ($result === "") {
@@ -43,7 +47,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "unlockaccount", $result);
+    auditlog($audit_log_file, $dn, $audit_admin, "unlockaccount", $result, $comment);
 }
 
 header('Location: index.php?page='.$returnto.'&dn='.$dn.'&unlockaccountresult='.$result);
