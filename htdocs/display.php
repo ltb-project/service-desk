@@ -64,7 +64,7 @@ if ($result === "") {
 
         # Search attributes
         $attributes = array();
-        $search_items = array_merge( $display_items, $display_password_items);
+        $search_items = array_merge($display_items, $display_password_items);
         foreach( $search_items as $item ) {
             $attributes[] = $attributes_map[$item]['attribute'];
         }
@@ -101,6 +101,12 @@ if ($result === "") {
         if ($display_edit_link) {
             # Replace {dn} in URL
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
+        }
+
+        # Remove lockout date if special value
+        $lockoutDateAttribute = $attributes_map['pwdaccountlockedtime']['attribute'];
+        if ( isset($entry[0][$lockoutDateAttribute]) and $entry[0][$lockoutDateAttribute][0] === "000001010000Z") {
+            unset($entry[0][$lockoutDateAttribute]);
         }
 
         $lockoutDuration = $directory->getLockoutDuration($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'lockoutDuration' => $ldap_lockout_duration));
