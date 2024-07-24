@@ -90,6 +90,16 @@
                         </td>
                     </tr>
                 {/if}
+                {if $resetAtNextConnection}
+                    <tr>
+                        <th class="col-md-6">
+                            {$msg_label_pwdreset}
+                        </th>
+                        <td class="col-md-6">
+                            {$msg_true}
+                        </td>
+                    </tr>
+                {/if}
                 </table>
                 </div>
 

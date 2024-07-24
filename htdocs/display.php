@@ -117,6 +117,8 @@ if ($result === "") {
         $pwdMaxAge = $directory->getPasswordMaxAge($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'pwdMaxAge' => $ldap_password_max_age));
         $expirationDate = $directory->getPasswordExpirationDate($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
         $isExpired = $directory->isPasswordExpired($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
+
+        $resetAtNextConnection = $directory->resetAtNextConnection($ldap, $dn);
     }
 }
 
@@ -132,6 +134,7 @@ $smarty->assign("isLocked", $isLocked);
 $smarty->assign("unlockDate", $unlockDate);
 $smarty->assign("isExpired", $isExpired);
 $smarty->assign("ldapExpirationDate", $expirationDate ? $expirationDate->getTimestamp(): NULL);
+$smarty->assign("resetAtNextConnection", $resetAtNextConnection);
 
 $smarty->assign("edit_link", $edit_link);
 
