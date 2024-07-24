@@ -86,7 +86,7 @@
                             {$msg_label_expirationdate}
                         </th>
                         <td class="col-md-6">
-                            {include 'value_displayer.tpl' value=$ldapExpirationDate type="date" truncate_value_after=10000}
+                            {$ldapExpirationDate|date_format:{$date_specifiers}|truncate:10000}
                         </td>
                     </tr>
                 {/if}

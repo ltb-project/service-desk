@@ -114,34 +114,9 @@ if ($result === "") {
         $isLocked = $directory->isLocked($ldap, $dn, array('lockoutDuration'  => $lockoutDuration));
         $canLockAccount = $directory->canLockAccount($ldap, $dn, array('pwdPolicy' => $pwdPolicy));
 
-        $isExpired = false;
-
-        if ($pwdPolicy) {
-            $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge'));
-
-            $ppolicy_entry = "";
-            if ( $errno ) {
-                error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
-            } else {
-                $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
-            }
-
-            # Expiration
-            $pwdMaxAge = $ppolicy_entry[0]['pwdmaxage'][0];
-            $pwdChangedTime = $entry[0]['pwdchangedtime'][0];
-
-            if (isset($pwdChangedTime) and isset($pwdMaxAge) and ($pwdMaxAge > 0)) {
-                $changedDate = ldapDate2phpDate($pwdChangedTime);
-                $expirationDate = date_add( $changedDate, new DateInterval('PT'.$pwdMaxAge.'S'));
-                if ( time() >= $expirationDate->getTimestamp() ) {
-                    $isExpired = true;
-                }
-                if ( $display_password_expiration_date ) {
-                    $ldapExpirationDate = $expirationDate->format('YmdHis\Z');
-                }
-            }
-        }
-
+        $pwdMaxAge = $directory->getPasswordMaxAge($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'pwdMaxAge' => $ldap_password_max_age));
+        $expirationDate = $directory->getPasswordExpirationDate($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
+        $isExpired = $directory->isPasswordExpired($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
     }
 }
 
@@ -156,7 +131,7 @@ $smarty->assign("show_undef", $display_show_undefined);
 $smarty->assign("isLocked", $isLocked);
 $smarty->assign("unlockDate", $unlockDate);
 $smarty->assign("isExpired", $isExpired);
-$smarty->assign("ldapExpirationDate", $ldapExpirationDate);
+$smarty->assign("ldapExpirationDate", $expirationDate ? $expirationDate->getTimestamp(): NULL);
 
 $smarty->assign("edit_link", $edit_link);
 
