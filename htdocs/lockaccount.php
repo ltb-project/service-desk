@@ -24,9 +24,7 @@ if ($result === "") {
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
-
-    # Consider pwdLockout = false by default
-    $pwdLockout = false;
+    $pwdPolicy = NULL;
 
     # Search pwdLockout in associated ppolicy
     if ($ldap)
@@ -61,13 +59,11 @@ if ($result === "") {
     }
 
     # apply the modification only if a password policy set with pwdLockout=TRUE is associated to the account
-    if ($ldap and $pwdLockout == true) {
-        $modification = ldap_mod_replace($ldap, $dn, array("pwdAccountLockedTime" => array("000001010000Z")));
-        $errno = ldap_errno($ldap);
-        if ( $errno ) {
-            $result = "ldaperror";
-        } else {
+    if ($ldap and $directory->canLockAccount($ldap, $dn, array('pwdPolicy' => $pwdPolicy))) {
+        if ( $directory->lockAccount($ldap, $dn) ) {
             $result = "accountlocked";
+        } else {
+            $result = "ldaperror";
         }
     }
 }

@@ -32,12 +32,10 @@ if ($result === "") {
     $result = $ldap_connection[1];
 
     if ($ldap) {
-        $modification = ldap_mod_del($ldap, $dn, array("pwdAccountLockedTime" => array()));
-        $errno = ldap_errno($ldap);
-        if ( $errno ) {
-            $result = "ldaperror";
-        } else {
+        if ( $directory->unlockAccount($ldap, $dn) ) {
             $result = "accountunlocked";
+        } else {
+            $result = "ldaperror";
         }
     }
 }
