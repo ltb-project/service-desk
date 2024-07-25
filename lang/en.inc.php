@@ -9,6 +9,7 @@ $messages['accountnotlocked'] = "Fail to lock account";
 $messages['accountnotunlocked'] = "Fail to unlock account";
 $messages['accountunlocked'] = "Account is not locked";
 $messages['accountstatus'] = "Account status";
+$messages['allaccounts'] = "All accounts";
 $messages['changesubject'] = "Your password has been changed";
 $messages['changesubjectforadmin'] = "User password has been changed";
 $messages['changemessage'] = "Hello {name},\n\nYour password has been changed.\n\nIf you didn't request a password reset, please contact your administrator for details.";
