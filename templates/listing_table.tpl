@@ -14,12 +14,12 @@
             </a>
         {if $display_unlock_button}
             {if $entry.isLocked || !isset($entry.isLocked)}
-                <a href="index.php?page=unlockaccount&dn={$entry.dn|escape:'url'}&returnto=searchlocked" class="btn btn-success btn-sm" role="button" title="{$msg_unlockaccount}">
-                    <i class="fa fa-fw fa-unlock"></i>
+                <a href="index.php?page=unlockaccount&dn={$entry.dn|escape:'url'}&returnto=searchlocked" class="btn btn-danger btn-sm" role="button" title="{$msg_unlockaccount}">
+                    <i class="fa fa-fw fa-lock"></i>
                 </a>
             {elif isset($entry.isLocked) && !$entry.isLocked}
-                <a href="index.php?page=lockaccount&dn={$entry.dn|escape:'url'}&returnto=searchlocked" class="btn btn-danger btn-sm" role="button" title="{$msg_lockaccount}">
-                    <i class="fa fa-fw fa-lock"></i>
+                <a href="index.php?page=lockaccount&dn={$entry.dn|escape:'url'}&returnto=searchlocked" class="btn btn-success btn-sm" role="button" title="{$msg_lockaccount}">
+                    <i class="fa fa-fw fa-unlock"></i>
                 </a>
             {/if}
         {/if}
