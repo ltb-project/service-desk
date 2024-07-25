@@ -12,34 +12,36 @@
 
 %global sd_destdir   %{_datadir}/%{name}
 %global sd_cachedir  %{_localstatedir}/cache/%{name}
+%define sd_realname  ltb-project-%{name}
 
 Name:      service-desk
-Version:   0.5.1
+Version:   0.6.0
 Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
-URL:       https://github.com/ltb-project/service-desk
+URL:       https://ltb-project.org/
 License:   GPL-3.0-only
 
 BuildArch: noarch
 
-Source0:   https://github.com/ltb-project/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:   https://ltb-project.org/archives/%{sd_realname}-%{version}.tar.gz
 Source1:   service-desk-apache.conf
-Source2:   service-desk-vendor_autoload
-Source3:   service-desk-config_inc_local
 
 %{?fedora:BuildRequires: phpunit9}
-Requires(pre):  httpd
 Requires:  coreutils
-Requires:  php(language) >= 5.6
+Requires:  php(language) >= 7.3
 Requires:  php-ldap
 Requires:  php-Smarty
-Requires:  php-ltb-project-ldap
-Requires:  php-phpmailer6
+Requires:  php-fpm
 
-Provides:  bundled(js-bootstrap) = 3.4.1
-Provides:  bundled(js-datatables) = 1.10.16
-Provides:  bundled(js-jquery) = 1.10.2
-Provides:  bundled(fontawesome-fonts) = 4.7.0
+Provides:  bundled(js-bootstrap) = v5.3.2
+Provides:  bundled(js-jquery) = v3.7.1
+Provides:  bundled(js-datatables.net-datatables.net) = 2.1.2
+Provides:  bundled(js-datatables.net-datatables.net-bs5) = 2.0.8
+Provides:  bundled(js-datatables.net-datatables.net-buttons) = 3.1.0
+Provides:  bundled(js-datatables.net-datatables.net-buttons-bs5) = 3.0.2
+Provides:  bundled(fontawesome-fonts) = 6.5.2
+Provides:  bundled(php-ltb-project-ltb-common) = 0.3.0
+Provides:  bundled(php-phpmailer) = v6.9.1
 
 
 %description
@@ -49,7 +51,11 @@ Service Desk is provided by LDAP Tool Box project: https://ltb-project.org
 
 
 %prep
-%setup -q
+%setup -q -n %{sd_realname}-%{version}
+# Clean hidden files in bundled php libs
+find . \
+  \( -name .gitignore -o -name .travis.yml -o -name .pullapprove.yml \) \
+  -delete
 
 
 %install
@@ -69,13 +75,12 @@ mkdir -p %{buildroot}/%{sd_cachedir}/templates_c
 install -p -m 644 htdocs/*.php   %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/css     %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/images  %{buildroot}/%{sd_destdir}/htdocs
+cp -a             htdocs/js      %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/vendor  %{buildroot}/%{sd_destdir}/htdocs
 install -p -m 644 lang/*         %{buildroot}/%{sd_destdir}/lang
 install -p -m 644 lib/*          %{buildroot}/%{sd_destdir}/lib
 install -p -m 644 templates/*    %{buildroot}/%{sd_destdir}/templates
-
-install -p -m 0644 %{SOURCE2} \
-  %{buildroot}%{_datadir}/%{name}/vendor/autoload.php
+cp -a             vendor/*       %{buildroot}/%{sd_destdir}/vendor
 
 ## Apache configuration
 mkdir -p %{buildroot}/%{_sysconfdir}/httpd/conf.d
@@ -93,32 +98,47 @@ sed -i \
 mkdir -p %{buildroot}/%{_sysconfdir}/%{name}
 install -p -m 644 conf/config.inc.php \
   %{buildroot}/%{_sysconfdir}/%{name}/
-ln -s %{_sysconfdir}/%{name}/config.inc.php \
-  %{buildroot}%{sd_destdir}/conf/config.inc.php
-install -p -m 644 %{SOURCE3} \
-  %{buildroot}/%{_sysconfdir}/%{name}/config.inc.local.php
+
+# Load configuration files from /etc/service-desk/
+for file in $( grep -r -l -E "\([^(]+\/conf\/[^)]+\)" %{buildroot}/%{sd_destdir} ) ; do
+  sed -i -e \
+    's#([^(]\+/conf/\([^")]\+\)")#("%{_sysconfdir}/%{name}/\1")#' \
+    ${file}
+done
 
 
-%check
-%{?fedora:phpunit9 --verbose --testdox --do-not-cache-result tests}
+%pre
+# Backup old configuration to /etc/service-desk
+for file in $( find %{sd_destdir}/conf -name "*.php" -type f ! -name 'config.inc.php' -printf "%f\n" 2>/dev/null );
+do
+    # move conf file to /etc/service-desk/*.save
+    mkdir -p %{_sysconfdir}/%{name}
+    mv %{sd_destdir}/conf/${file} %{_sysconfdir}/%{name}/${file}.save
+done
+# Move specific file config.inc.php to /etc/service-desk/config.inc.php.bak
+if [[ -f "%{sd_destdir}/conf/config.inc.php"  ]]; then
+    mkdir -p %{_sysconfdir}/%{name}
+    mv %{sd_destdir}/conf/config.inc.php \
+       %{_sysconfdir}/%{name}/config.inc.php.bak
+fi
 
 
 %post
-if [ -f "%{sd_destdir}/conf/config.inc.php" ]; then
-    mv %{sd_destdir}/conf/config.inc.php %{_sysconfdir}/%{name}/config.inc.php
-fi
-# Move configuration override too
-if [ -f "%{sd_destdir}/conf/config.inc.local.php" ]; then
-    mv %{sd_destdir}/conf/config.inc.local.php \
-      %{_sysconfdir}/%{name}/config.inc.local.php
-fi
+# Move old configuration to /etc/self-service-password
+for file in $( find %{_sysconfdir}/%{name} -name "*.save" -type f );
+do
+    # move previously created *.save file into its equivalent without .save
+    mv ${file} ${file%.save}
+done
+# Clean cache
+rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %files
 %license LICENSE
 %doc AUTHORS README.md
-%config(noreplace) %{_sysconfdir}/%{name}/config.inc.php
-%config(noreplace) %{_sysconfdir}/%{name}/config.inc.local.php
+%dir %{_sysconfdir}/%{name}
+%config %{_sysconfdir}/%{name}/config.inc.php
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/service-desk.conf
 %{sd_destdir}
 %dir %{sd_cachedir}
