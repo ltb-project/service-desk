@@ -3,3 +3,5 @@ cache/*
 docs/_build
 /vendor/
 /htdocs/vendor/bootstrap/
+composer.lock
+tests/.phpunit.result.cache
