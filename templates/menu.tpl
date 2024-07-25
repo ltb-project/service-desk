@@ -30,6 +30,9 @@
                       {if $use_searchidle}
                       <li><a href="index.php?page=searchidle" class="dropdown-item"><i class="fa fa-fw fa-hourglass-o"></i> {$msg_idleaccounts}</a></li>
                       {/if}
+                      {if $use_searchall}
+                      <li><a href="index.php?page=searchall"><i class="fa fa-fw fa-users"></i> {$msg_allaccounts}</a></li>
+                      {/if}
                   </ul>
                 </li>
                 {/if}
