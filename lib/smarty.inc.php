@@ -7,7 +7,7 @@ require_once("filesize.inc.php");
 
 function get_attribute($params) {
 
-    $return = "";
+    $value = "";
     $dn = $params["dn"];
     $attribute = $params["attribute"];
     $ldap_url = $params["ldap_url"];
@@ -27,35 +27,11 @@ function get_attribute($params) {
                                  isset($ldap_krb5ccname) ? $ldap_krb5ccname : null
                              );
 
-    # Connect to LDAP
     $ldap_connection = $ldapInstance->connect();
 
-    $ldap = $ldap_connection[0];
-    $result = $ldap_connection[1];
+    $value = $ldapInstance->get_first_value($dn, "base", $ldap_filter, $attribute);
 
-    if ($ldap) {
-
-        # Search entry
-        $search = ldap_read($ldap, $dn, $ldap_filter, explode(",", $attribute));
-
-        $errno = ldap_errno($ldap);
-
-        if ( $errno ) {
-            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
-        } else {
-            $entry = ldap_get_entries($ldap, $search);
-
-	    # Loop over attribute
-	    foreach ( explode(",", $attribute) as $ldap_attribute ) {
-                if ( isset ($entry[0][$ldap_attribute]) ) {
-		     $return = $entry[0][$ldap_attribute][0];
-		     break;
-	        }
-	    }
-        }
-    }
-
-    return $return;
+    return $value;
 }
 
 function convert_ldap_date($date) {

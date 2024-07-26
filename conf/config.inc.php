@@ -30,6 +30,7 @@ $ldap_binddn = "cn=manager,dc=example,dc=com";
 $ldap_bindpw = "secret";
 $ldap_base = "dc=example,dc=com";
 $ldap_user_base = "ou=users,".$ldap_base;
+$ldap_scope = "sub"; # possible values: sub, one, base
 $ldap_user_filter = "(objectClass=inetOrgPerson)";
 $ldap_ppolicy_filter = "(objectClass=pwdPolicy)";
 $ldap_ppolicy_name_attribute = "cn";
@@ -119,7 +120,12 @@ $resetpassword_reset_default = true;
 
 $show_lockstatus = true;
 $use_unlockaccount = true;
+$use_unlockcomment = false;
+$use_unlockcomment_required = false;
 $use_lockaccount = true;
+
+$use_lockcomment = false;
+$use_lockcomment_required = false;
 
 $show_expirestatus = true;
 

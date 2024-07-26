@@ -33,3 +33,25 @@ To enable this feature:
 .. code-block:: php
 
     $use_unlockaccount = true;
+
+Insert comment
+--------------
+
+A feature to enable comments when locking and unlocking user accounts can be enabled.
+
+To enable this feature:
+
+.. code-block:: php
+
+    $use_lockcomment = true;
+    $use_unlockcomment = true;
+
+Comment required
+----------------
+
+This features ensure a comment is required before locking/unlocking a user.
+
+.. code-block:: php
+
+    $use_lockcomment_required = true;
+    $use_unlockcomment_required = true;
