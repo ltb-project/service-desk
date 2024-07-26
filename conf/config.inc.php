@@ -110,20 +110,32 @@ $display_password_items = array('pwdchangedtime', 'pwdaccountlockedtime', 'pwdfa
 $display_password_expiration_date = true;
 
 # Features
+
 $use_checkpassword = true;
+
 $use_resetpassword = true;
 $use_resetpassword_resetchoice = true;
 $resetpassword_reset_default = true;
+
 $show_lockstatus = true;
 $use_unlockaccount = true;
 $use_lockaccount = true;
+
 $show_expirestatus = true;
+
 $use_searchlocked = true;
+
 $use_searchexpired = true;
+
 $use_searchwillexpire = true;
 $willexpiredays = 14;
+
 $use_searchidle = true;
 $idledays = 60;
+
+$use_enableaccount = false;
+$use_disableaccount = false;
+$show_enablestatus = false;
 
 ## Mail
 # LDAP mail attribute

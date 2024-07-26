@@ -15,6 +15,7 @@ $prehookresult= "";
 $posthookresult= "";
 $ldapExpirationDate="";
 $canLockAccount="";
+$isAccountEnabled = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -119,6 +120,10 @@ if ($result === "") {
         $isExpired = $directory->isPasswordExpired($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
 
         $resetAtNextConnection = $directory->resetAtNextConnection($ldap, $dn);
+
+        if ($show_enablestatus) {
+            $isAccountEnabled = $directory->isAccountEnabled($ldap, $dn);
+        }
     }
 }
 
@@ -145,4 +150,6 @@ $smarty->assign("accountlockresult", $accountlockresult);
 $smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
 if ($canLockAccount == false) $smarty->assign("use_lockaccount", $canLockAccount);
+
+$smarty->assign("isAccountEnabled", $isAccountEnabled);
 ?>

@@ -135,6 +135,9 @@ $smarty->assign('use_searchexpired',$use_searchexpired);
 $smarty->assign('use_searchwillexpire',$use_searchwillexpire);
 $smarty->assign('use_searchidle',$use_searchidle);
 $smarty->assign('fake_password_inputs',$fake_password_inputs);
+$smarty->assign('use_enableaccount',$use_enableaccount);
+$smarty->assign('use_disableaccount',$use_disableaccount);
+$smarty->assign('show_enablestatus',$show_enablestatus);
 
 # Assign messages
 $smarty->assign('lang',$lang);

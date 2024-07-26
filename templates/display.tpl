@@ -271,5 +271,53 @@
         {/if}
         {/if}
 
+        {if $show_enablestatus}
+        {if $isAccountEnabled}
+        <div class="card mb-3 shadow border-success">
+            <div class="card-header text-bg-success text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-check-square-o"></i>
+                    {$msg_accountenabled}
+                </p>
+            </div>
+            {if $use_disableaccount}
+            <div class="card-body">
+                <form id="disableaccount" method="post" action="index.php?page=disableaccount">
+                    {if $disableaccountresult eq 'ldaperror' or $disableaccountresult eq 'actionforbidden'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotdisabled}</div>
+                    {/if}
+                    <input type="hidden" name="dn" value="{$dn}" />
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-user-slash"></i> {$msg_disableaccount}
+                    </button>
+                </form>
+            </div>
+            {/if}
+        </div>
+        {else}
+        <div class="card mb-3 shadow border-danger">
+            <div class="card-header text-bg-danger text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-exclamation-triangle"></i>
+                    {$msg_accountdisabled}
+                </p>
+            </div>
+            {if $use_enableaccount}
+            <div class="card-body">
+                <form id="disableaccount" method="post" action="index.php?page=enableaccount">
+                    {if $enableaccountresult eq 'ldaperror' or $enableaccountresult eq 'actionforbidden'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotenabled}</div>
+                    {/if}
+                    <input type="hidden" name="dn" value="{$dn}" />
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-user-check"></i> {$msg_enableaccount}
+                    </button>
+                </form>
+            </div>
+            {/if}
+        </div>
+       {/if}
+       {/if}
+
    </div>
 </div>

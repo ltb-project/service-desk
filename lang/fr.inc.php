@@ -4,11 +4,16 @@
 # French
 #==============================================================================
 
+$messages['accountenabled'] = "Le compte est activé";
+$messages['accountdisabled'] = "Le compte est désactivé";
 $messages['accountlocked'] = "Le compte est bloqué";
+$messages['accountnotdisabled'] = "Échec de la désactivation du compte";
+$messages['accountnotenabled'] = "Échec de l'activation du compte";
 $messages['accountnotlocked'] = "Échec de blocage du compte";
 $messages['accountnotunlocked'] = "Échec de déblocage du compte";
 $messages['accountstatus'] = "Statut du compte";
 $messages['accountunlocked'] = "Le compte n'est pas bloqué";
+$messages['actionforbidden'] = "Action interdite";
 $messages['changesubject'] = "Votre mot de passe a été changé";
 $messages['changesubjectforadmin'] = "Le mot de passe d'un utilisateur a été changé";
 $messages['changemessage'] = "Bonjour {name},\n\nVotre mot de passe a été changé.\nSi vous n'êtes pas à l'origine de cette demande, contactez votre administrateur pour obtenir des précisions.";
@@ -16,9 +21,11 @@ $messages['changemessageforadmin'] = "Bonjour,\n\nLe mot de passe du compte {dn}
 $messages['checkpassword'] = "Vérification du mot de passe";
 $messages['currentpassword'] = "Mot de passe actuel";
 $messages['dashboards'] = "Tableaux de bord";
+$messages['disableaccount'] = "Désactiver le compte";
 $messages['displayentry'] = "Afficher l'entrée";
 $messages['dnrequired'] = "L'identifiant de l'entrée est requis";
 $messages['editentry'] = "Modifier l'entrée";
+$messages['enableaccount'] = "Activer le compte";
 $messages['entriesfound'] = "entrées trouvées";
 $messages['entryfound'] = "entrée trouvée";
 $messages['expiredaccounts'] = "Mots de passe expirés";
