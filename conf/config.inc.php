@@ -76,6 +76,15 @@ $attributes_map = array(
     'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
     'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
     'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' ),
+
+    # Audit log elements
+    'date' => array( 'attribute' => 'date', 'faclass' => 'clock-o', 'type' => 'text' ),
+    'ip' => array( 'attribute' => 'ip', 'faclass' => 'user-o', 'type' => 'text' ),
+    'dn' => array( 'attribute' => 'dn', 'faclass' => 'user-o', 'type' => 'text' ),
+    'done_by' => array( 'attribute' => 'done_by', 'faclass' => 'user-o', 'type' => 'text' ),
+    'action' => array( 'attribute' => 'action', 'faclass' => 'lock', 'type' => 'text' ),
+    'result' => array( 'attribute' => 'result', 'faclass' => 'certificate', 'type' => 'text' ),
+    'comment' => array( 'attribute' => 'comment', 'faclass' => 'certificate', 'type' => 'text' ),
 );
 
 # Search
@@ -169,7 +178,15 @@ $display_footer = true;
 $fake_password_inputs = false;
 
 # Audit
-#$audit_log_file = "/var/log/service-desk/audit.log";
+$audit_log_file = "../audit.log";
+$use_showauditlog = true;
+$auditlogdays = 5;
+$audit_log_items = array('date','ip','dn','done_by','action','result','comment');
+$audit_log_title = "date";
+$audit_log_sortby = "date";
+$audit_log_linkto = array("user_dn");
+$audit_log_show_undefined = true;
+$audit_log_truncate_value_after = 50;
 #$header_name_audit_admin = "AUTH_USER";
 
 # Debug mode

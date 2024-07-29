@@ -4,6 +4,8 @@
 # English
 #==============================================================================
 
+$messages['auditlogs'] = "Audit logs";
+$messages['auditlogtitle'] = "Audit log for the last $auditlogdays days";
 $messages['accountlocked'] = "Account is locked";
 $messages['accountnotlocked'] = "Fail to lock account";
 $messages['accountnotunlocked'] = "Fail to unlock account";
@@ -67,6 +69,15 @@ $messages['label_secretary'] = "Secretary";
 $messages['label_state'] = "State";
 $messages['label_street'] = "Street";
 $messages['label_title'] = "Title";
+
+$messages['label_date'] = "Date";
+$messages['label_ip'] = "IP Address";
+$messages['label_dn'] = "User";
+$messages['label_done_by'] = "Done By";
+$messages['label_action'] = "Action";
+$messages['label_result'] = "Result";
+$messages['label_comment'] = "Comment";
+
 $messages['ldaperror'] = "LDAP communication error";
 $messages['lockaccount'] = "Lock account";
 $messages['lockedaccounts'] = "Locked accounts";
