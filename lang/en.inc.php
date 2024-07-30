@@ -5,7 +5,7 @@
 #==============================================================================
 
 $messages['auditlogs'] = "Audit logs";
-$messages['auditlogtitle'] = "Audit log for the last $auditlogdays days";
+$messages['auditlogtitle'] = "Audit log for the last $audit_log_days days";
 $messages['accountlocked'] = "Account is locked";
 $messages['accountnotlocked'] = "Fail to lock account";
 $messages['accountnotunlocked'] = "Fail to unlock account";
