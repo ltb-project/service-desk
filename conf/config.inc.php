@@ -180,7 +180,7 @@ $fake_password_inputs = false;
 # Audit
 $audit_log_file = "../audit.log";
 $use_showauditlog = true;
-$auditlogdays = 5;
+$audit_log_days = 5;
 $audit_log_items = array('date','ip','dn','done_by','action','result','comment');
 $audit_log_title = "date";
 $audit_log_sortby = "date";
