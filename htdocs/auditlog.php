@@ -6,7 +6,6 @@ require_once("../lib/date.inc.php");
 require_once("../lib/audit.inc.php");
 
 #TODO: Order based on newest to oldest
-#TODO: Test comments and results to appear correctly
 
 $entries = array();
 [$entries,$nb_entries] = displayauditlog($audit_log_file, $audit_log_days);
