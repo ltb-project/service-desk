@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Collect audit logs to be displayed.
+ */
 require_once("../conf/config.inc.php");
 require __DIR__ . '/../vendor/autoload.php';
 require_once("../lib/date.inc.php");
