@@ -182,7 +182,6 @@ $audit_log_file = "../audit.log";
 $use_showauditlog = true;
 $audit_log_days = 5;
 $audit_log_items = array('date','ip','dn','done_by','action','result','comment');
-$audit_log_title = "date";
 $audit_log_sortby = "date";
 $audit_log_linkto = array("dn");
 $audit_log_show_undefined = true;
