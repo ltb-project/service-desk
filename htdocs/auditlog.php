@@ -17,4 +17,5 @@ if (!empty($entries)) {
     $smarty->assign("listing_columns", $audit_log_items);
     $smarty->assign("truncate_value_after", $audit_log_truncate_value_after);
 }
+
 ?>

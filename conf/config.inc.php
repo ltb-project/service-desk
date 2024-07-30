@@ -75,16 +75,7 @@ $attributes_map = array(
     'secretary' => array( 'attribute' => 'secretary', 'faclass' => 'user-circle-o', 'type' => 'dn_link' ),
     'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
     'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
-    'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' ),
-
-    # Audit log elements
-    'date' => array( 'attribute' => 'date', 'faclass' => 'clock-o', 'type' => 'text' ),
-    'ip' => array( 'attribute' => 'ip', 'faclass' => 'user-o', 'type' => 'text' ),
-    'dn' => array( 'attribute' => 'dn', 'faclass' => 'user-o', 'type' => 'text' ),
-    'done_by' => array( 'attribute' => 'done_by', 'faclass' => 'user-o', 'type' => 'text' ),
-    'action' => array( 'attribute' => 'action', 'faclass' => 'lock', 'type' => 'text' ),
-    'result' => array( 'attribute' => 'result', 'faclass' => 'certificate', 'type' => 'text' ),
-    'comment' => array( 'attribute' => 'comment', 'faclass' => 'certificate', 'type' => 'text' ),
+    'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' )
 );
 
 # Search
