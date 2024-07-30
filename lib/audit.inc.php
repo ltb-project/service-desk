@@ -30,6 +30,7 @@ function displayauditlog($audit_log_file, $audit_log_days) {
     $json = json_decode($line, true);
     $logdate = DateTimeImmutable::createFromFormat("D, d M Y H:i:s", $json['date']);
     if ($logdate > $olddatelog) {
+      $json['date'] = date_format($logdate, "Y-m-d H:i:s");
       array_push($entries, $json);
     }
   }
