@@ -6,7 +6,6 @@ require_once("../lib/date.inc.php");
 require_once("../lib/audit.inc.php");
 
 #TODO: Order based on newest to oldest
-#TODO: Highlight user with Name and link rather than full CN
 #TODO: Test comments and results to appear correctly
 
 $entries = array();

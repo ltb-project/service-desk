@@ -42,7 +42,14 @@
             {/if}
             {/if}
             {if $display == "audit"}
+            {if $column == "result" or $column == "action"}
+            {$msg_{$entry.$column}}
+            {elseif $column == "dn"}
+            <a href="index.php?page=display&dn={$entry.dn|escape:'url'}&search={$search}" title="{$msg_displayentry}"\>
+            {{$entry.$column|regex_replace:"/(cn=)/":""}|regex_replace:"/(,ou=.*)/":""}
+            {else}
             {$entry.$column}
+            {/if}
             {/if}
         </td>
         {/foreach}
