@@ -7,10 +7,8 @@ require __DIR__ . '/../vendor/autoload.php';
 require_once("../lib/date.inc.php");
 require_once("../lib/audit.inc.php");
 
-#TODO: Order based on newest to oldest
-
 $entries = array();
-[$entries,$nb_entries] = displayauditlog($audit_log_file, $audit_log_days);
+[$entries,$nb_entries] = displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $audit_log_reverse);
 
 if (!empty($entries)) {
     $smarty->assign("page_title", "auditlogtitle");

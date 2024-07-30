@@ -18,11 +18,11 @@ function auditlog($file, $dn, $admin, $action, $result, $comment) {
   file_put_contents($file, json_encode($log, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL, FILE_APPEND | LOCK_EX);
 }
 
-function displayauditlog($audit_log_file, $audit_log_days) {
+function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $audit_log_reverse) {
 
   $entries = array();
 
-  #Date calculation to limit oldest audit logs
+  # Date calculation to limit oldest audit logs
   $olddatelog = new DateTime();
   date_sub( $olddatelog, new DateInterval('P'.$audit_log_days.'D') );
 
@@ -35,9 +35,26 @@ function displayauditlog($audit_log_file, $audit_log_days) {
     }
   }
 
+  # Sort audit log with sort key and normal/reverse order
+  dateSort($entries, $audit_log_sortby, $audit_log_reverse);
+
   $nb_entries = sizeof($entries);
 
   return [$entries,$nb_entries];
+}
+
+function dateSort(array &$entries, $sortkey, $audit_log_reverse) {
+  $reverse_order = fn($a, $b) => strtotime($a[$sortkey]) < strtotime($b[$sortkey]);
+  $normal_order = fn($a, $b) => strtotime($a[$sortkey]) > strtotime($b[$sortkey]);
+
+  if ($audit_log_reverse) {
+    usort($entries, $reverse_order);
+  }
+  else {
+    usort($entries, $normal_order);
+  }
+
+  return true;
 }
 
 ?>

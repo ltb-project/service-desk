@@ -76,7 +76,7 @@ Display Audit logs
 ==================
 
 Enabling audit logs display
---------------------------
+---------------------------
 
 When the audit logs are enabled, they can be displayed in a table by setting the following variable:
 
@@ -94,7 +94,7 @@ The number of days that can be displayed in the table can be configured as follo
    $audit_log_days = 5;
 
 Display table columns
-------------------
+---------------------
 
 The table columns to be displayed can be configured with the following variable:
 
@@ -102,8 +102,8 @@ The table columns to be displayed can be configured with the following variable:
 
    $audit_log_items = array('date','ip','dn','done_by','action','result','comment');
 
-Audit table sorting 
-------------------
+Audit table sorting
+-------------------
 
 The table can be sorted by default by the setting:
 
@@ -111,8 +111,18 @@ The table can be sorted by default by the setting:
 
    $audit_log_sortby = "date";
 
+Audit table sorting order
+-------------------------
+
+Audit logs are usually display with the oldest first as they are being parsed from a file.
+In order to have the newest audit log entries first the following configuration can reverse the order:
+
+.. code-block:: php
+
+   $audit_log_reverse = true;
+
 Audit user link
-------------------
+---------------
 
 Users present in the audit table can be linked by setting:
 
