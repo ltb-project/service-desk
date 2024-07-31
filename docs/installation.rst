@@ -19,9 +19,9 @@ Install files in ``/usr/share/``:
 You need to install these prerequisites:
 
 * Apache or another web server
-* php
 * php-ldap
-* Smarty (version 3)
+* php-fpm
+* smarty (version 3 or 4)
 
 Debian / Ubuntu
 ---------------
@@ -54,12 +54,14 @@ You are now ready to install:
 
 .. prompt:: bash #
 
-    apt install service-desk smarty3
+    apt install service-desk
+
+You should now proceed to :ref:`webserver installation and configuration <apache_configuration>`
 
 CentOS / RedHat
 ---------------
 
-.. warning:: You may need to install first the package `php-Smarty`_ which is not in official repositories.
+.. warning::  You must install the package `php-Smarty`_. You can get it from EPEL repositories.
 
 .. _php-Smarty: https://pkgs.org/download/php-Smarty
 
@@ -81,7 +83,7 @@ Then update:
 
 .. prompt:: bash #
 
-    yum update
+    dnf update
 
 Import repository key:
 
@@ -93,7 +95,9 @@ You are now ready to install:
 
 .. prompt:: bash #
 
-    yum install service-desk
+    dnf install service-desk
+
+You should now proceed to :ref:`webserver installation and configuration <apache_configuration>`
 
 Docker
 ------
