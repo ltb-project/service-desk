@@ -209,6 +209,7 @@ $debug = false;
 #$smarty_cache_dir = "/var/cache/service-desk/cache";
 
 # Smarty debug mode - will popup debug information on web interface
+# and add many smarty debug messages in error logs
 $smarty_debug = false;
 
 # Allow to override current settings with local configuration
