@@ -34,5 +34,10 @@
             "cp -R vendor/fortawesome/font-awesome/webfonts htdocs/vendor/font-awesome",
             "rm -rf vendor/fortawesome/font-awesome"
         ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=8",
+        "php-mock/php-mock-phpunit": "*",
+        "mockery/mockery": ">=1.4"
     }
 }

@@ -12,7 +12,7 @@ class LangTest extends TestCase
 
         # Available languages
         $languages = array();
-        if ($handle = opendir('lang')) {
+        if ($handle = opendir(__DIR__ . '/../lang')) {
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {
                     array_push($languages, str_replace(".inc.php", "", $entry));
@@ -21,14 +21,14 @@ class LangTest extends TestCase
             closedir($handle);
 	}
 
-        require("conf/config.inc.php");
-        require("lang/en.inc.php");
+        require(__DIR__ . "/../conf/config.inc.php");
+        require(__DIR__ . "/../lang/en.inc.php");
         $reference = $messages;
         $error = '';
 
         foreach ($languages as $lang) {
             $messages = array();
-            require("lang/$lang.inc.php");
+            require(__DIR__ . "/../lang/$lang.inc.php");
 
             $missing = array_diff(array_keys($reference), array_keys($messages));
             if (!empty($missing)) {
