@@ -57,11 +57,6 @@ if ($result === "") {
             }
         }
 
-        $entry["userPassword"] = $password;
-        if ( $pwdreset === "true" ) {
-            $entry["pwdReset"] = "TRUE";
-        }
-
         if ( isset($prehook) ) {
 
             if ( !isset($prehook_login_value) ) {
@@ -77,12 +72,11 @@ if ($result === "") {
         if ( $prehook_return > 0 and !$ignore_prehook_return) {
             $result = "passwordrefused";
         } else {
-            $modification = ldap_mod_replace($ldap, $dn, $entry);
-            $errno = ldap_errno($ldap);
-            if ( $errno ) {
-                $result = "passwordrefused";
-            } else {
+            $reset = ($pwdreset === "true") ? true : false;
+            if ($directory->modifyPassword($ldap, $dn, $password, $reset)) {
                 $result = "passwordchanged";
+            } else {
+                $result = "passwordrefused";
             }
         }
 

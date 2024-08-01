@@ -14,6 +14,8 @@ $accountlockresult= "";
 $prehookresult= "";
 $posthookresult= "";
 $ldapExpirationDate="";
+$canLockAccount="";
+$isAccountEnabled = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -63,16 +65,14 @@ if ($result === "") {
 
         # Search attributes
         $attributes = array();
-        $search_items = array_merge( $display_items, $display_password_items);
+        $search_items = array_merge($display_items, $display_password_items);
         foreach( $search_items as $item ) {
             $attributes[] = $attributes_map[$item]['attribute'];
         }
         $attributes[] = $attributes_map[$display_title]['attribute'];
-        $attributes[] = "pwdPolicySubentry";
 
         # Search entry
         $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
-
         $errno = ldap_errno($ldap);
 
         if ( $errno ) {
@@ -97,70 +97,33 @@ if ($result === "") {
         if ( !$entry[0]['pwdpolicysubentry'] and $ldap_default_ppolicy) {
             $entry[0]['pwdpolicysubentry'][] = $ldap_default_ppolicy;
         }
+        $pwdPolicy = $entry[0]['pwdpolicysubentry'][0];
 
         if ($display_edit_link) {
             # Replace {dn} in URL
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
         }
 
-        # Search user active password policy
-        $pwdPolicy = "";
-        if (isset($entry[0]['pwdpolicysubentry'][0])) {
-            $pwdPolicy = $entry[0]['pwdpolicysubentry'][0];
-        } elseif (isset($ldap_default_ppolicy)) {
-            $pwdPolicy = $ldap_default_ppolicy;
+        # Remove lockout date if special value
+        $lockoutDateAttribute = $attributes_map['pwdaccountlockedtime']['attribute'];
+        if ( isset($entry[0][$lockoutDateAttribute]) and $entry[0][$lockoutDateAttribute][0] === "000001010000Z") {
+            unset($entry[0][$lockoutDateAttribute]);
         }
 
-        $isLocked = false;
-        $unlockDate = "";
-        $isExpired = false;
-        $ppolicy_entry = "";
+        $lockoutDuration = $directory->getLockoutDuration($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'lockoutDuration' => $ldap_lockout_duration));
+        $unlockDate = $directory->getUnlockDate($ldap, $dn, array('lockoutDuration' => $lockoutDuration));
+        $isLocked = $directory->isLocked($ldap, $dn, array('lockoutDuration'  => $lockoutDuration));
+        $canLockAccount = $directory->canLockAccount($ldap, $dn, array('pwdPolicy' => $pwdPolicy));
 
-        if ($pwdPolicy) {
-            $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdMaxAge', 'pwdLockoutDuration', 'pwdLockout'));
+        $pwdMaxAge = $directory->getPasswordMaxAge($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'pwdMaxAge' => $ldap_password_max_age));
+        $expirationDate = $directory->getPasswordExpirationDate($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
+        $isExpired = $directory->isPasswordExpired($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
 
-            if ( $errno ) {
-                error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
-            } else {
-                $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
-            }
+        $resetAtNextConnection = $directory->resetAtNextConnection($ldap, $dn);
 
-            # Lock
-            $pwdLockout = strtolower($ppolicy_entry[0]['pwdlockout'][0]) == "true" ? true : false;
-            $pwdLockoutDuration = $ppolicy_entry[0]['pwdlockoutduration'][0];
-            $pwdAccountLockedTime = $entry[0]['pwdaccountlockedtime'][0];
-
-            if ( $pwdAccountLockedTime === "000001010000Z" ) {
-                $isLocked = true;
-                unset($entry[0]['pwdaccountlockedtime']);
-            } else if (isset($pwdAccountLockedTime)) {
-                if (isset($pwdLockoutDuration) and ($pwdLockoutDuration > 0)) {
-                    $lockDate = ldapDate2phpDate($pwdAccountLockedTime);
-                    $unlockDate = date_add( $lockDate, new DateInterval('PT'.$pwdLockoutDuration.'S'));
-                    if ( time() <= $unlockDate->getTimestamp() ) {
-                        $isLocked = true;
-                    }
-                } else {
-                    $isLocked = true;
-                }
-            }
-
-            # Expiration
-            $pwdMaxAge = $ppolicy_entry[0]['pwdmaxage'][0];
-            $pwdChangedTime = $entry[0]['pwdchangedtime'][0];
-
-            if (isset($pwdChangedTime) and isset($pwdMaxAge) and ($pwdMaxAge > 0)) {
-                $changedDate = ldapDate2phpDate($pwdChangedTime);
-                $expirationDate = date_add( $changedDate, new DateInterval('PT'.$pwdMaxAge.'S'));
-                if ( time() >= $expirationDate->getTimestamp() ) {
-                    $isExpired = true;
-                }
-                if ( $display_password_expiration_date ) {
-                    $ldapExpirationDate = $expirationDate->format('YmdHis\Z');
-                }
-            }
+        if ($show_enablestatus) {
+            $isAccountEnabled = $directory->isAccountEnabled($ldap, $dn);
         }
-
     }
 }
 
@@ -175,7 +138,8 @@ $smarty->assign("show_undef", $display_show_undefined);
 $smarty->assign("isLocked", $isLocked);
 $smarty->assign("unlockDate", $unlockDate);
 $smarty->assign("isExpired", $isExpired);
-$smarty->assign("ldapExpirationDate", $ldapExpirationDate);
+$smarty->assign("ldapExpirationDate", $expirationDate ? $expirationDate->getTimestamp(): NULL);
+$smarty->assign("resetAtNextConnection", $resetAtNextConnection);
 
 $smarty->assign("edit_link", $edit_link);
 
@@ -185,5 +149,7 @@ $smarty->assign("accountunlockresult", $accountunlockresult);
 $smarty->assign("accountlockresult", $accountlockresult);
 $smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
-if ($pwdLockout == false) $smarty->assign("use_lockaccount", $pwdLockout);
+if ($canLockAccount == false) $smarty->assign("use_lockaccount", $canLockAccount);
+
+$smarty->assign("isAccountEnabled", $isAccountEnabled);
 ?>

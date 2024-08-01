@@ -19,6 +19,10 @@
     {convert_ldap_date($value)|date_format:{$date_specifiers}|truncate:{$truncate_value_after}}<br />
 {/if}
 
+{if $type eq 'ad_date'}
+    {convert_ad_date($value)|date_format:{$date_specifiers}|truncate:{$truncate_value_after}}<br />
+{/if}
+
 {if $type eq 'list'}
     {$value|truncate:{$truncate_value_after}}<br />
 {/if}

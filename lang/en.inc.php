@@ -4,11 +4,16 @@
 # English
 #==============================================================================
 
+$messages['accountenabled'] = "Account is enabled";
+$messages['accountdisabled'] = "Account is disabled";
 $messages['accountlocked'] = "Account is locked";
+$messages['accountnotdisabled'] = "Fail to disable account";
+$messages['accountnotenabled'] = "Fail to enable account";
 $messages['accountnotlocked'] = "Fail to lock account";
 $messages['accountnotunlocked'] = "Fail to unlock account";
 $messages['accountunlocked'] = "Account is not locked";
 $messages['accountstatus'] = "Account status";
+$messages['actionforbidden'] = "Action forbidden";
 $messages['changesubject'] = "Your password has been changed";
 $messages['changesubjectforadmin'] = "User password has been changed";
 $messages['changemessage'] = "Hello {name},\n\nYour password has been changed.\n\nIf you didn't request a password reset, please contact your administrator for details.";
@@ -18,9 +23,11 @@ $messages['close'] = "Close";
 $messages['comment_needed'] = "A comment will be asked";
 $messages['currentpassword'] = "Current password";
 $messages['dashboards'] = "Dashboards";
+$messages['disableaccount'] = "Disable account";
 $messages['displayentry'] = "Display entry";
 $messages['dnrequired'] = "Entry identifier required";
 $messages['editentry'] = "Edit entry";
+$messages['enableaccount'] = "Enable account";
 $messages['entriesfound'] = "entries found";
 $messages['entryfound'] = "entry found";
 $messages['expiredaccounts'] = "Passwords expired";
