@@ -1,10 +1,11 @@
 <?php
+
 function auditlog($file, $dn, $admin, $action, $result, $comment) {
 
   $log = array(
     "date" => date_format(date_create(), "D, d M Y H:i:s"),
     "ip" => $_SERVER['REMOTE_ADDR'],
-    "user_dn" => $dn,
+    "dn" => $dn,
     "done_by" => $admin,
     "action" => $action,
     "result" => $result
@@ -16,4 +17,44 @@ function auditlog($file, $dn, $admin, $action, $result, $comment) {
 
   file_put_contents($file, json_encode($log, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL, FILE_APPEND | LOCK_EX);
 }
+
+function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $audit_log_reverse) {
+
+  $entries = array();
+
+  # Date calculation to limit oldest audit logs
+  $olddatelog = new DateTime();
+  date_sub( $olddatelog, new DateInterval('P'.$audit_log_days.'D') );
+
+  foreach(file($audit_log_file) as $line) {
+    $json = json_decode($line, true);
+    $logdate = DateTimeImmutable::createFromFormat("D, d M Y H:i:s", $json['date']);
+    if ($logdate > $olddatelog) {
+      $json['date'] = date_format($logdate, "Y-m-d H:i:s");
+      array_push($entries, $json);
+    }
+  }
+
+  # Sort audit log with sort key and normal/reverse order
+  dateSort($entries, $audit_log_sortby, $audit_log_reverse);
+
+  $nb_entries = sizeof($entries);
+
+  return [$entries,$nb_entries];
+}
+
+function dateSort(array &$entries, $sortkey, $audit_log_reverse) {
+  $reverse_order = fn($a, $b) => strtotime($a[$sortkey]) < strtotime($b[$sortkey]);
+  $normal_order = fn($a, $b) => strtotime($a[$sortkey]) > strtotime($b[$sortkey]);
+
+  if ($audit_log_reverse) {
+    usort($entries, $reverse_order);
+  }
+  else {
+    usort($entries, $normal_order);
+  }
+
+  return true;
+}
+
 ?>

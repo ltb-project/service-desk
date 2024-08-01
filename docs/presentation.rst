@@ -23,3 +23,4 @@ Features
   * Accounts with a password that will soon expire
   * Accounts with an expired password
   * Accounts idle (never connected or not connected since a number of days)
+  * Audit logs
