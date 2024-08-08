@@ -26,6 +26,12 @@ if (isset($_POST["newpassword"]) and $_POST["newpassword"]) {
     $result = "passwordrequired";
 }
 
+if (isset($_POST["oldpassword"]) and $_POST["oldpassword"]) {
+    $oldpassword = $_POST["oldpassword"];
+} else {
+    $result = "oldpasswordrequired";
+}
+
 if (isset($_POST["pwdreset"]) and $_POST["pwdreset"]) {
     $pwdreset = $_POST["pwdreset"];
 }
@@ -37,6 +43,18 @@ if ($result === "") {
     require_once("../lib/hook.inc.php");
 
     # Connect to LDAP
+    if ($audit_admin === "anonymous") {
+        $ldapInstance = new \Ltb\Ldap(
+            $ldap_url,
+            $ldap_starttls,
+            $dn,
+            $oldpassword,
+            isset($ldap_network_timeout) ? $ldap_network_timeout : null,
+            null,
+            null,
+            null
+        );
+    }
     $ldap_connection = $ldapInstance->connect();
 
     $ldap = $ldap_connection[0];
@@ -77,12 +95,18 @@ if ($result === "") {
         if ( $prehook_return > 0 and !$ignore_prehook_return) {
             $result = "passwordrefused";
         } else {
-            $modification = ldap_mod_replace($ldap, $dn, $entry);
-            $errno = ldap_errno($ldap);
-            if ( $errno ) {
-                $result = "passwordrefused";
-            } else {
-                $result = "passwordchanged";
+            $modification = ldap_mod_replace_ext($ldap, $dn, $entry);
+            $userdn = $dn;
+            $errcode = $errmsg = $refs =  null;
+            if (ldap_parse_result($ldap, $modification, $errcode, $userdn, $errmsg, $refs)) {
+                $errno = ldap_errno($ldap);
+                if ( $errmsg ) {
+                    $result = "passwordreused";
+                } else if ( $errno ) {
+                    $result = "passwordrefused";
+                } else {
+                    $result = "passwordchanged";
+                }
             }
         }
 
@@ -103,7 +127,7 @@ if ($result === "") {
         #==============================================================================
         if ($result === "passwordchanged") {
 
-            if ($notify_on_change) {
+            if (isset($notify_on_change) && $notify_on_change) {
                 # Search for user
                 $attributes = $mail_attributes;
                 $attributes[] = $mail_username_attribute;

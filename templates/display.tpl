@@ -149,11 +149,17 @@
              <div class="card-body">
 
                  <form id="resetpassword" method="post" action="index.php?page=resetpassword">
+                    {if $resetpasswordresult eq 'oldpasswordrequired'}
+                    <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_oldpasswordrequired}</div>
+                    {/if}
                      {if $resetpasswordresult eq 'passwordrequired'}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrequired}</div>
                      {/if}
                      {if $resetpasswordresult eq 'passwordrefused'}
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrefused}</div>
+                     {/if}
+                     {if $resetpasswordresult eq 'passwordreused'}
+                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordreused}</div>
                      {/if}
                      {if $resetpasswordresult eq 'passwordchanged'}
                      <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordchanged}</div>
@@ -165,6 +171,12 @@
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookresult}</div>
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
+                     {if $audit_admin eq 'anonymous'}
+                     <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-fw fa-lock"></i></span>
+                        <input type="password" name="oldpassword" id="oldpassword" autocomplete="old-password" class="form-control" placeholder="{$msg_oldpassword}" />
+                     </div>
+                     {/if}
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa fa-fw fa-lock"></i></span>
                         {if $fake_password_inputs}
