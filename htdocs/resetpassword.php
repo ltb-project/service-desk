@@ -26,10 +26,10 @@ if (isset($_POST["newpassword"]) and $_POST["newpassword"]) {
     $result = "passwordrequired";
 }
 
-if (isset($_POST["oldpassword"]) and $_POST["oldpassword"]) {
-    $oldpassword = $_POST["oldpassword"];
-} else {
+if ($audit_admin === "anonymous" and !isset($_POST["oldpassword"]) and !$_POST["oldpassword"]) {
     $result = "oldpasswordrequired";
+} else {
+    $oldpassword = $_POST["oldpassword"];
 }
 
 if (isset($_POST["pwdreset"]) and $_POST["pwdreset"]) {
