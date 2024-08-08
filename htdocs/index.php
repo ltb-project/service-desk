@@ -174,6 +174,7 @@ if (isset($header_name_audit_admin)) {
 } else {
     $audit_admin = "anonymous";
 }
+$smarty->assign("audit_admin", $audit_admin);
 
 #==============================================================================
 # Route to page
