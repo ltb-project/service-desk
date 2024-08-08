@@ -120,6 +120,9 @@
                      {if $checkpasswordresult eq 'passwordok'}
                      <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordok}</div>
                      {/if}
+                     {if $checkpasswordresult eq 'passwordinhistory'}
+                     <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordinhistory}</div>
+                     {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa fa-fw fa-lock"></i></span>
