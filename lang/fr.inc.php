@@ -99,6 +99,7 @@ $messages['passwordexpired'] = "Le mot de passe est expiré";
 $messages['passwordinvalid'] = "Authentification en échec";
 $messages['passwordok'] = "Authentification réussie !";
 $messages['passwordrefused'] = "Le mot de passe a été refusé";
+$messages['passwordinhistory'] = "Mot de passe déjà dans l'histoire";
 $messages['passwordrequired'] = "Merci de saisir le mot de passe";
 $messages['resetpassword'] = "Réinitialisation du mot de passe";
 $messages['search'] = "Rechercher";

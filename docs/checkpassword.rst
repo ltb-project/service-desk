@@ -11,3 +11,14 @@ To enable this feature:
 .. code-block:: php
 
     $use_checkpassword = true;
+
+Check password history
+----------------------
+
+The password history can be checked by enabling this feature.
+
+To enable this feature:
+
+.. code-block:: php
+
+    $use_checkpasswordhistory = true;

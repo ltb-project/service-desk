@@ -165,6 +165,7 @@ $smarty->assign('version',$version);
 $smarty->assign('display_footer',$display_footer);
 $smarty->assign('logout_link',isset($logout_link) ? $logout_link : false);
 $smarty->assign('use_checkpassword',$use_checkpassword);
+$smarty->assign('use_checkpasswordhistory',$use_checkpasswordhistory);
 $smarty->assign('use_resetpassword',$use_resetpassword);
 $smarty->assign('use_resetpassword_resetchoice',$use_resetpassword_resetchoice);
 $smarty->assign('resetpassword_reset_default',$resetpassword_reset_default);
