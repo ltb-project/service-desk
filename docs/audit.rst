@@ -40,33 +40,36 @@ Set the file where actions are logged:
 
 .. tip:: The file must be writable by the PHP or WebServer process
 
+
 Admin name
 ----------
 
 The admin name must be set into an HTTP header.
 
+Using Apache, we could use instead:
+
 .. code-block:: php
 
-   $header_name_audit_admin = "Auth-User";
+  $header_name_audit_admin = "Auth-User";
 
 Using Nginx, we could use instead:
 
 .. code-block:: php
 
-    $header_name_audit_admin = "AUTH_USER";
+  $header_name_audit_admin = "AUTH_USER";
 
 In nginx.conf:
 
 .. code-block:: nginx
-  
-   server {
-       [...]
-       location ~ \.php {
-           fastcgi_param HTTP_AUTH_USER $http_auth_user;
-           [...]
-       }
-       [...]
-   }
+
+  server {
+          [...]
+          location ~ \.php$ {
+                  fastcgi_param HTTP_AUTH_USER $http_auth_user;
+                  [...]
+          }
+          [...]
+  }
 
 .. warning:: Using Nginx, headers with underscores in their names are discarded by default. In order for these headers to be considered valid, we need to add ``underscores_in_headers on`` to ``nginx.conf``.
 

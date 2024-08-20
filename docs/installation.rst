@@ -1,6 +1,16 @@
 Installation
 ============
 
+Prerequisites
+------------
+
+You need to install these prerequisites:
+
+* Apache or another web server
+* php-ldap
+* php-fpm
+* smarty (version 3 or 4)
+
 From tarball
 ------------
 
@@ -15,13 +25,6 @@ Install files in ``/usr/share/``:
 .. prompt:: bash #
 
     mv ltb-project-service-desk-* /usr/share/service-desk
-
-You need to install these prerequisites:
-
-* Apache or another web server
-* php-ldap
-* php-fpm
-* smarty (version 3 or 4)
 
 Debian / Ubuntu
 ---------------
