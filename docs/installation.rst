@@ -1,16 +1,6 @@
 Installation
 ============
 
-Prerequisites
-------------
-
-You need to install these prerequisites:
-
-* Apache or another web server
-* php-ldap
-* php-fpm
-* smarty (version 3 or 4)
-
 From tarball
 ------------
 
@@ -25,6 +15,13 @@ Install files in ``/usr/share/``:
 .. prompt:: bash #
 
     mv ltb-project-service-desk-* /usr/share/service-desk
+
+You need to install these prerequisites:
+
+* Apache or another web server
+* php-ldap
+* php-fpm
+* smarty (version 3 or 4)
 
 Debian / Ubuntu
 ---------------
@@ -44,7 +41,6 @@ Configure the repository:
 
 .. code-block:: ini
 
-
     deb [arch=amd64 signed-by=/usr/share/keyrings/ltb-project-openldap-archive-keyring.gpg] https://ltb-project.org/debian/stable stable main
 
 Then update:
@@ -59,7 +55,8 @@ You are now ready to install:
 
     apt install service-desk
 
-You should now proceed to :ref:`webserver installation and configuration <apache_configuration>`
+You should now proceed to :ref:`Apache installation and configuration <apache_configuration>`
+You should now proceed to :ref:`Nginx installation and configuration <nginx_configuration>`
 
 CentOS / RedHat
 ---------------
@@ -100,7 +97,8 @@ You are now ready to install:
 
     dnf install service-desk
 
-You should now proceed to :ref:`webserver installation and configuration <apache_configuration>`
+You should now proceed to :ref:`Apache installation and configuration <apache_configuration>`
+You should now proceed to :ref:`Nginx installation and configuration <nginx_configuration>`
 
 Docker
 ------
