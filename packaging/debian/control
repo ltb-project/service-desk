@@ -7,8 +7,18 @@ Standards-Version: 3.8.3
 Homepage: http://ltb-project.org/wiki/documentation/service-desk
 
 Package: service-desk
-Depends: php5|php, php5-ldap|php-ldap
+Depends: php-ldap, php-fpm (>= 7.3), smarty4 | smarty3
 Architecture: all
 Description: LDAP Tool Box Service Desk web interface
  Service Desk is a PHP application that allows administrators to check, unlock and reset user passwords in an LDAP directory.
  Service Desk is provided by LDAP Tool Box project: https://ltb-project.org
+ Service Desk bundles some dependencies:
+ - js-bootstrap = v5.3.2
+ - js-jquery = v3.7.1
+ - js-datatables.net-datatables.net = 2.1.2
+ - js-datatables.net-datatables.net-bs5 = 2.0.8
+ - js-datatables.net-datatables.net-buttons = 3.1.0
+ - js-datatables.net-datatables.net-buttons-bs5 = 3.0.2
+ - fontawesome-fonts = 6.5.2
+ - php-ltb-project-ltb-common = 0.3.0
+ - php-phpmailer = v6.9.1

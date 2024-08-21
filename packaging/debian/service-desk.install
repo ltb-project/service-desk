@@ -1,5 +1,5 @@
 # Program files
-../conf/*      usr/share/service-desk/conf/
+../conf/*      etc/service-desk/
 ../htdocs/*    usr/share/service-desk/htdocs/
 ../lang/*      usr/share/service-desk/lang/
 ../lib/*       usr/share/service-desk/lib/

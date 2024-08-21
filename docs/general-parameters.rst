@@ -4,8 +4,8 @@ General parameters
 Configuration files
 -------------------
 
-The default configuration file is ``conf/config.inc.php``, it contains all default values.
-To edit configuration, you should create ``conf/config.inc.local.php`` and override needed parameters:
+The default configuration file is ``/etc/service-desk/config.inc.php``, it contains all default values.
+To edit configuration, you should create ``/etc/service-desk/config.inc.local.php`` and override needed parameters:
 
 .. code-block:: php
 
@@ -29,7 +29,7 @@ This feature is disable by default. To enable it:
    $header_name_extra_config = "SSP-Extra-Config";
 
 Then if you send the header ``SSP-Extra-Config: domain1``, the file
-``conf/config.inc.domain1.php`` will be loaded.
+``/etc/service-desk/config.inc.domain1.php`` will be loaded.
 
 Using Apache, we may set such header using the following:
 
@@ -64,7 +64,12 @@ Set default language in ``$lang``:
     $lang = "en";
 
 
-.. tip:: You can override messages by creating lang files in ``conf/``, for example ``conf/en.inc.php``.
+.. tip:: You can override messages by creating lang files in configuration directory:
+
+* ``conf/`` directory for service-desk archive
+* ``/etc/service-desk`` directory for rpm/deb packages
+
+For example, you can create a customized file: ``/etc/service-desk/en.inc.php``.
 
 Language is picked according to browser choice among the available ones. All languages
 are allowed by default, to restrict them add ``$allowed_lang`` array:
@@ -164,6 +169,7 @@ This is also possible to enable Smarty debug, for web interface issues:
    $smarty_debug = true;
 
 .. tip:: Debug messages will appear on web interface.
+   You will also have many more messages in error logs.
 
 Smarty
 ------

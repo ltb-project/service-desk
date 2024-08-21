@@ -9,10 +9,17 @@
     },
     "scripts": {
         "post-update-cmd": [
+
             "rm -rf htdocs/vendor/bootstrap",
             "cp -R vendor/twbs/bootstrap/dist htdocs/vendor/bootstrap",
+            "rm -rf htdocs/vendor/bootstrap/site htdocs/vendor/bootstrap/js/bootstrap.esm* htdocs/vendor/bootstrap/js/bootstrap.js*  htdocs/vendor/bootstrap/package-lock.json htdocs/vendor/bootstrap/scss",
+            "rm -rf vendor/twbs/bootstrap",
+
             "rm -f htdocs/vendor/jquery/js/*",
+            "mkdir -p htdocs/vendor/jquery/js",
             "cp vendor/components/jquery/jquery.min.* htdocs/vendor/jquery/js/",
+            "rm -rf vendor/components/jquery",
+
             "rm -f htdocs/vendor/datatables/*.js htdocs/vendor/datatables/*.css",
             "cp vendor/datatables.net/datatables.net/js/dataTables.min.js htdocs/vendor/datatables/",
             "cp vendor/datatables.net/datatables.net-bs5/css/dataTables.bootstrap5.min.css htdocs/vendor/datatables/",
@@ -20,9 +27,17 @@
             "cp vendor/datatables.net/datatables.net-buttons/js/dataTables.buttons.min.js htdocs/vendor/datatables/",
             "cp vendor/datatables.net/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css htdocs/vendor/datatables/",
             "cp vendor/datatables.net/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js htdocs/vendor/datatables/",
+            "rm -rf vendor/datatables.net",
+
             "rm -rf htdocs/vendor/font-awesome/*",
             "cp -R vendor/fortawesome/font-awesome/css htdocs/vendor/font-awesome",
-            "cp -R vendor/fortawesome/font-awesome/webfonts htdocs/vendor/font-awesome"
+            "cp -R vendor/fortawesome/font-awesome/webfonts htdocs/vendor/font-awesome",
+            "rm -rf vendor/fortawesome/font-awesome"
         ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=8",
+        "php-mock/php-mock-phpunit": "*",
+        "mockery/mockery": ">=1.4"
     }
 }
