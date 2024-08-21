@@ -16,6 +16,7 @@ $posthookresult= "";
 $ldapExpirationDate="";
 $canLockAccount="";
 $isAccountEnabled = "";
+$lockDate = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -104,13 +105,8 @@ if ($result === "") {
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
         }
 
-        # Remove lockout date if special value
-        $lockoutDateAttribute = $attributes_map['pwdaccountlockedtime']['attribute'];
-        if ( isset($entry[0][$lockoutDateAttribute]) and $entry[0][$lockoutDateAttribute][0] === "000001010000Z") {
-            unset($entry[0][$lockoutDateAttribute]);
-        }
-
         $lockoutDuration = $directory->getLockoutDuration($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'lockoutDuration' => $ldap_lockout_duration));
+        $lockDate = $directory->getLockDate($ldap, $dn);
         $unlockDate = $directory->getUnlockDate($ldap, $dn, array('lockoutDuration' => $lockoutDuration));
         $isLocked = $directory->isLocked($ldap, $dn, array('lockoutDuration'  => $lockoutDuration));
         $canLockAccount = $directory->canLockAccount($ldap, $dn, array('pwdPolicy' => $pwdPolicy));
@@ -136,6 +132,7 @@ $smarty->assign("password_items", $display_password_items);
 $smarty->assign("show_undef", $display_show_undefined);
 
 $smarty->assign("isLocked", $isLocked);
+$smarty->assign("lockDate", $lockDate);
 $smarty->assign("unlockDate", $unlockDate);
 $smarty->assign("isExpired", $isExpired);
 $smarty->assign("ldapExpirationDate", $expirationDate ? $expirationDate->getTimestamp(): NULL);

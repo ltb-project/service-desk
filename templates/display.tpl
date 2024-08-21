@@ -80,6 +80,16 @@
                         </td>
                     </tr>
                 {/foreach}
+                {if $lockDate}
+                    <tr>
+                        <th class="col-md-6">
+                            {$msg_label_pwdaccountlockedtime}
+                        </th>
+                        <td class="col-md-6">
+                            {$lockDate|date_format:{$date_specifiers}|truncate:10000}
+                        </td>
+                    </tr>
+                {/if}
                 {if {$display_password_expiration_date} and {$ldapExpirationDate}}
                     <tr>
                         <th class="col-md-6">

@@ -107,7 +107,7 @@ $datatables_auto_print = true;
 $display_items = array('identifier', 'firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary' );
 $display_title = "fullname";
 $display_show_undefined = false;
-$display_password_items = array('pwdchangedtime', 'pwdaccountlockedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdlastsuccess', 'created', 'modified');
+$display_password_items = array('pwdchangedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdlastsuccess', 'created', 'modified');
 $display_password_expiration_date = true;
 
 # Features
