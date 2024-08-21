@@ -56,7 +56,7 @@ You are now ready to install:
     apt install service-desk
 
 You should now proceed to :ref:`Apache installation and configuration <apache_configuration>`
-You should now proceed to :ref:`Nginx installation and configuration <nginx_configuration>`
+or to :ref:`Nginx installation and configuration <nginx_configuration>`
 
 CentOS / RedHat
 ---------------
