@@ -56,5 +56,5 @@ Here is a sample block server configuration:
 External authentication
 -----------------------
 
-You can use any authentication source and authentication protocols, like CAS, SAML or OpenID Connect.
+You can use any authentication source and authentication protocols supported by Nginx.
 Configuring these solutions is out of scope of the current documentation.
