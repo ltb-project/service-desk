@@ -29,7 +29,7 @@ On RHEL systems:
 
   dnf install nginx php-fpm
 
-Block server
+Virtual host configuration
 ------------
 
 Here is a sample block server configuration:
