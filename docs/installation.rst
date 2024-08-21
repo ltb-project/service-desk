@@ -41,7 +41,6 @@ Configure the repository:
 
 .. code-block:: ini
 
-
     deb [arch=amd64 signed-by=/usr/share/keyrings/ltb-project-openldap-archive-keyring.gpg] https://ltb-project.org/debian/stable stable main
 
 Then update:
@@ -56,7 +55,8 @@ You are now ready to install:
 
     apt install service-desk
 
-You should now proceed to :ref:`webserver installation and configuration <apache_configuration>`
+You should now proceed to :ref:`Apache installation and configuration <apache_configuration>`
+or to :ref:`Nginx installation and configuration <nginx_configuration>`
 
 CentOS / RedHat
 ---------------
@@ -97,7 +97,8 @@ You are now ready to install:
 
     dnf install service-desk
 
-You should now proceed to :ref:`webserver installation and configuration <apache_configuration>`
+You should now proceed to :ref:`Apache installation and configuration <apache_configuration>`
+or to :ref:`Nginx installation and configuration <nginx_configuration>`
 
 Docker
 ------

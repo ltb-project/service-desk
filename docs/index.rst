@@ -16,6 +16,7 @@ LDAP Tool Box Service Desk documentation
    installation.rst
    upgrade.rst
    configuration-apache.rst
+   configuration-nginx.rst
    general-parameters.rst
    ldap-parameters.rst
    attributes.rst
@@ -26,5 +27,5 @@ LDAP Tool Box Service Desk documentation
    lockaccount.rst
    hook.rst
    dashboards.rst
-   config_mail.rst
+   configuration-mail.rst
    audit.rst
