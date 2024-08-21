@@ -138,7 +138,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "resetpassword", $result);
+    auditlog($audit_log_file, $dn, $audit_admin, "resetpassword", $result, NULL);
 }
 
 $location = 'index.php?page=display&dn='.$dn.'&resetpasswordresult='.$result;

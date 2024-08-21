@@ -41,7 +41,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "checkpassword", $result);
+    auditlog($audit_log_file, $dn, $audit_admin, "checkpassword", $result, NULL);
 }
 
 header('Location: index.php?page=display&dn='.$dn.'&checkpasswordresult='.$result);
