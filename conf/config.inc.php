@@ -75,7 +75,7 @@ $attributes_map = array(
     'secretary' => array( 'attribute' => 'secretary', 'faclass' => 'user-circle-o', 'type' => 'dn_link' ),
     'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
     'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
-    'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' ),
+    'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' )
 );
 
 # Search
@@ -170,6 +170,12 @@ $fake_password_inputs = false;
 
 # Audit
 #$audit_log_file = "/var/log/service-desk/audit.log";
+$use_showauditlog = false;
+$audit_log_days = 5;
+$audit_log_items = array('date','ip','user_dn','done_by','action','result','comment');
+$audit_log_sortby = "date";
+$audit_log_reverse = true;
+$audit_log_truncate_value_after = 40;
 #$header_name_audit_admin = "AUTH_USER";
 
 # Debug mode

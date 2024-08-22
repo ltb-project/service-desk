@@ -32,6 +32,11 @@
                       {/if}
                   </ul>
                 </li>
+                {if $use_showauditlog}
+                <li class="nav-item">
+                  <a href="index.php?page=auditlog" class="nav-link"><i class="fa fa-fw fa-list"></i> {$msg_auditlogs}</a>
+                </li>
+                {/if}
                 {/if}
                 {if $logout_link}
                 <li class="nav_item">
