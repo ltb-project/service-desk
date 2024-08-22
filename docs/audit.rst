@@ -72,7 +72,7 @@ In nginx.conf:
 
 .. tip:: If no header defined or if header is empty, actions will be logged as "anonymous"
 
-Display Audit logs
+Display audit logs
 ==================
 
 Enabling audit logs display
@@ -84,7 +84,7 @@ When the audit logs are enabled, they can be displayed in a table by setting the
 
    $use_showauditlog = true;
 
-Days of Audit logs
+Days of audit logs
 ------------------
 
 The number of days that can be displayed in the table can be configured as follows:
@@ -124,12 +124,3 @@ In order to have the newest audit log entries first the following configuration 
 .. code-block:: php
 
    $audit_log_reverse = true;
-
-Audit user link
----------------
-
-Users present in the audit table can be linked by setting:
-
-.. code-block:: php
-
-   $audit_log_linkto = array("dn");
