@@ -9,6 +9,7 @@ $messages['accountnotlocked'] = "Échec de blocage du compte";
 $messages['accountnotunlocked'] = "Échec de déblocage du compte";
 $messages['accountstatus'] = "Statut du compte";
 $messages['accountunlocked'] = "Le compte n'est pas bloqué";
+$messages['allaccounts'] = "Tous les comptes";
 $messages['changesubject'] = "Votre mot de passe a été changé";
 $messages['changesubjectforadmin'] = "Le mot de passe d'un utilisateur a été changé";
 $messages['changemessage'] = "Bonjour {name},\n\nVotre mot de passe a été changé.\nSi vous n'êtes pas à l'origine de cette demande, contactez votre administrateur pour obtenir des précisions.";
