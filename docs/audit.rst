@@ -93,6 +93,11 @@ The number of days that can be displayed in the table can be configured as follo
 
    $audit_log_days = 5;
 
+.. note::
+
+   Audit logs are not natively rotated by Service Desk. You will need to configure
+    logrotate to ensure file sizes don't grow too large.
+
 Display table columns
 ---------------------
 
