@@ -14,7 +14,7 @@
 
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
-                {if $use_searchlocked or $use_searchwillexpire or $use_searchexpired or $use_searchidle or $use_showauditlog}
+                {if $use_searchlocked or $use_searchwillexpire or $use_searchexpired or $use_searchidle}
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-dashboard"></i> {$msg_dashboards}<span class="caret"></span></a>
                   <ul class="dropdown-menu">
