@@ -48,7 +48,7 @@
         {foreach $events as $event}
         <tr{if ! $listing_linkto|is_array} class="clickable" title="{$msg_displayentry}" {/if}>
             <th class="hidden-print">
-                <a href="index.php?page=display&dn={$event.dn|escape:'url'}&search={$search}"
+                <a href="index.php?page=display&dn={$event.user_dn|escape:'url'}&search={$search}"
                     class="btn btn-info btn-sm{if $listing_linkto===false} hidden{/if}" role="button"
                     title="{$msg_displayentry}">
                     <i class="fa fa-fw fa-id-card"></i>
