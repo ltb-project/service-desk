@@ -30,11 +30,13 @@
                       {if $use_searchidle}
                       <li><a href="index.php?page=searchidle" class="dropdown-item"><i class="fa fa-fw fa-hourglass-o"></i> {$msg_idleaccounts}</a></li>
                       {/if}
-                      {if $use_showauditlog}
-                      <li><a href="index.php?page=auditlog" class="dropdown-item"><i class="fa fa-fw fa-list"></i> {$msg_auditlogs}</a></li>
-                      {/if}
                   </ul>
                 </li>
+                {if $use_showauditlog}
+                <li class="nav-item">
+                  <a href="index.php?page=auditlog" class="nav-link"><i class="fa fa-fw fa-list"></i> {$msg_auditlogs}</a>
+                </li>
+                {/if}
                 {/if}
                 {if $logout_link}
                 <li class="nav_item">

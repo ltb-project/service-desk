@@ -41,14 +41,34 @@
             {if $show_undef}<i>{$msg_notdefined}</i>{else}&nbsp;{/if}
             {/if}
             {/if}
+        </td>
+        {/foreach}
+    </tr>
+    {/foreach}
+        {foreach $events as $event}
+        <tr{if ! $listing_linkto|is_array} class="clickable" title="{$msg_displayentry}" {/if}>
+            <th class="hidden-print">
+                <a href="index.php?page=display&dn={$event.dn|escape:'url'}&search={$search}"
+                    class="btn btn-info btn-sm{if $listing_linkto===false} hidden{/if}" role="button"
+                    title="{$msg_displayentry}">
+                    <i class="fa fa-fw fa-id-card"></i>
+                </a>
+                {if $display_unlock_button}
+                <a href="index.php?page=unlockaccount&dn={$event.dn|escape:'url'}&returnto=searchlocked"
+                    class="btn btn-success btn-sm" role="button" title="{$msg_unlockaccount}">
+                    <i class="fa fa-fw fa-unlock"></i>
+                </a>
+                {/if}
+            </th>
+            {foreach $listing_columns as $column}
+            <td>
             {if $display == "audit"}
             {if $column == "result" or $column == "action"}
-            {$msg_{$entry.$column}}
-            {elseif $column == "dn"}
-            <a href="index.php?page=display&dn={$entry.dn|escape:'url'}&search={$search}" title="{$msg_displayentry}"\>
-            {{$entry.$column|regex_replace:"/(cn=)/":""}|regex_replace:"/(,ou=.*)/":""}
+            {$msg_{$event.$column}}
+            {elseif $column == "user_dn"}
+            {include 'value_displayer.tpl' value={$event.user_dn} type="dn_link"}
             {else}
-            {$entry.$column}
+            {$event.$column}
             {/if}
             {/if}
         </td>
