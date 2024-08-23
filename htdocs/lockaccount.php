@@ -30,12 +30,10 @@ if ($result === "") {
 
     $pwdPolicy = NULL;
 
-    # Search pwdLockout in associated ppolicy
     if ($ldap)
     {
         $search_ppolicysubentry = ldap_read($ldap, $dn, "(objectClass=*)", array('pwdpolicysubentry'));
         $user_entry = ldap_get_entries($ldap, $search_ppolicysubentry);
-
 
         # Search active password policy
         $pwdPolicy = "";
@@ -44,25 +42,9 @@ if ($result === "") {
         } elseif (isset($ldap_default_ppolicy)) {
             $pwdPolicy = $ldap_default_ppolicy;
         }
-
-        # Search pwdLockout attribute
-        if ($pwdPolicy) {
-                $search_ppolicy = ldap_read($ldap, $pwdPolicy, "(objectClass=pwdPolicy)", array('pwdlockout'));
-
-                if ( $errno ) {
-                    error_log("LDAP - PPolicy search error $errno  (".ldap_error($ldap).")");
-                } else {
-                    $ppolicy_entry = ldap_get_entries($ldap, $search_ppolicy);
-                    $pwdLockout = strtolower($ppolicy_entry[0]['pwdlockout'][0]) == "true" ? true : false;
-                    if( $pwdLockout == false )
-                    {
-                        error_log("No pwdLockout or pwdLockout=FALSE in associated ppolicy: ".$pwdPolicy.". Account locking disabled");
-                    }
-                }
-        }
     }
 
-    # apply the modification only if a password policy set with pwdLockout=TRUE is associated to the account
+    # Apply the modification only the password can be locked
     if ($ldap and $directory->canLockAccount($ldap, $dn, array('pwdPolicy' => $pwdPolicy))) {
         if ( $directory->lockAccount($ldap, $dn) ) {
             $result = "accountlocked";
