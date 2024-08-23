@@ -148,6 +148,7 @@ $smarty->assign('use_searchlocked',$use_searchlocked);
 $smarty->assign('use_searchexpired',$use_searchexpired);
 $smarty->assign('use_searchwillexpire',$use_searchwillexpire);
 $smarty->assign('use_searchidle',$use_searchidle);
+$smarty->assign('use_showauditlog',$use_showauditlog);
 $smarty->assign('fake_password_inputs',$fake_password_inputs);
 $smarty->assign('use_enableaccount',$use_enableaccount);
 $smarty->assign('use_disableaccount',$use_disableaccount);
@@ -209,6 +210,7 @@ if ( $page === "searchlocked" and !$use_searchlocked ) { $page = "welcome"; }
 if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
 if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
 if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
+if ( $page === "auditlog" and !$use_showauditlog ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 

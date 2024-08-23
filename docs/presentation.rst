@@ -17,6 +17,7 @@ Features
 * Test current password
 * Reset password and force password change at next connection
 * Lock and unlock account
+* Create and view audit logs
 * Dashboards:
 
   * Accounts locked
