@@ -81,6 +81,7 @@ switch($ldap_type) {
   case "activedirectory":
     $attributes_map = array_merge($attributes_map, $activedirectory_attributes_map);
     $directory = new \Ltb\Directory\ActiveDirectory();
+    $ldap_lastauth_attribute = "lastLogon";
   break;
 }
 
