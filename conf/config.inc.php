@@ -39,7 +39,10 @@ $ldap_size_limit = 100;
 $ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
 $ldap_type = "openldap";
-#$ldap_lockout_duration = 3600;
+
+# Override LDAP password policy configuration
+#$ldap_lockout_duration = 3600; # 1 hour
+#$ldap_password_max_age = 7889400; # 3 months
 
 # How display attributes
 $attributes_map = array(

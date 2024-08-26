@@ -28,28 +28,20 @@ if ($result === "") {
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
-    $pwdPolicy = NULL;
-
     if ($ldap)
     {
-        $search_ppolicysubentry = ldap_read($ldap, $dn, "(objectClass=*)", array('pwdpolicysubentry'));
-        $user_entry = ldap_get_entries($ldap, $search_ppolicysubentry);
+        # Get password policy configuration
+        $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $dn, $ldap_default_ppolicy);
+        if ($ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_durantion; }
+        if ($ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
-        # Search active password policy
-        $pwdPolicy = "";
-        if (isset($user_entry[0]['pwdpolicysubentry'][0])) {
-            $pwdPolicy = $user_entry[0]['pwdpolicysubentry'][0];
-        } elseif (isset($ldap_default_ppolicy)) {
-            $pwdPolicy = $ldap_default_ppolicy;
-        }
-    }
-
-    # Apply the modification only the password can be locked
-    if ($ldap and $directory->canLockAccount($ldap, $dn, array('pwdPolicy' => $pwdPolicy))) {
-        if ( $directory->lockAccount($ldap, $dn) ) {
-            $result = "accountlocked";
-        } else {
-            $result = "ldaperror";
+        # Apply the modification only the password can be locked
+        if ($pwdPolicyConfiguration["lockout_enabled"]) {
+            if ( $directory->lockAccount($ldap, $dn) ) {
+                $result = "accountlocked";
+            } else {
+                $result = "ldaperror";
+            }
         }
     }
 }

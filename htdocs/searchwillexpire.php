@@ -6,24 +6,20 @@
 require_once("../conf/config.inc.php");
 require __DIR__ . '/../vendor/autoload.php';
 
-[$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search($ldap_user_filter, array('pwdpolicysubentry'), $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
+[$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search($ldap_user_filter, array(), $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
 
 if ( !empty($entries) )
 {
     # Check if entry will soon expire
     foreach($entries as $entry_key => $entry) {
 
-        # Search active password policy
-        $pwdPolicy = "";
-        if (isset($entry['pwdpolicysubentry'][0])) {
-            $pwdPolicy = $entry['pwdpolicysubentry'][0];
-        } elseif (isset($ldap_default_ppolicy)) {
-            $pwdPolicy = $ldap_default_ppolicy;
-        }
+        # Get password policy configuration
+        $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $entry["dn"], $ldap_default_ppolicy);
+        if ($ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_durantion; }
+        if ($ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
         $isWillExpire = false;
-        $pwdMaxAge = $directory->getPasswordMaxAge($ldap, $entry["dn"], array('pwdPolicy' => $pwdPolicy, 'pwdMaxAge' => $ldap_password_max_age));
-        $expirationDate = $directory->getPasswordExpirationDate($ldap, $entry["dn"], array('pwdMaxAge' => $pwdMaxAge));
+        $expirationDate = $directory->getPasswordExpirationDate($ldap, $entry["dn"], $pwdPolicyConfiguration);
 
         if ($expirationDate) {
             $expirationDateClone = clone $expirationDate;

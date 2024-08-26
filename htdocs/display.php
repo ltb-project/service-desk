@@ -94,26 +94,23 @@ if ($result === "") {
             $entry[0][$attr] = $values;
         }
 
-        # Include default password policy
-        if ( !$entry[0]['pwdpolicysubentry'] and $ldap_default_ppolicy) {
-            $entry[0]['pwdpolicysubentry'][] = $ldap_default_ppolicy;
-        }
-        $pwdPolicy = $entry[0]['pwdpolicysubentry'][0];
+        # Get password policy configuration
+        $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $dn, $ldap_default_ppolicy);
+        if ($ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_durantion; }
+        if ($ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
         if ($display_edit_link) {
             # Replace {dn} in URL
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
         }
 
-        $lockoutDuration = $directory->getLockoutDuration($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'lockoutDuration' => $ldap_lockout_duration));
         $lockDate = $directory->getLockDate($ldap, $dn);
-        $unlockDate = $directory->getUnlockDate($ldap, $dn, array('lockoutDuration' => $lockoutDuration));
-        $isLocked = $directory->isLocked($ldap, $dn, array('lockoutDuration'  => $lockoutDuration));
-        $canLockAccount = $directory->canLockAccount($ldap, $dn, array('pwdPolicy' => $pwdPolicy));
+        $unlockDate = $directory->getUnlockDate($ldap, $dn, $pwdPolicyConfiguration);
+        $isLocked = $directory->isLocked($ldap, $dn, $pwdPolicyConfiguration);
+        $canLockAccount = $pwdPolicyConfiguration["lockout_enabled"];
 
-        $pwdMaxAge = $directory->getPasswordMaxAge($ldap, $dn, array('pwdPolicy' => $pwdPolicy, 'pwdMaxAge' => $ldap_password_max_age));
-        $expirationDate = $directory->getPasswordExpirationDate($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
-        $isExpired = $directory->isPasswordExpired($ldap, $dn, array('pwdMaxAge' => $pwdMaxAge));
+        $expirationDate = $directory->getPasswordExpirationDate($ldap, $dn, $pwdPolicyConfiguration);
+        $isExpired = $directory->isPasswordExpired($ldap, $dn, $pwdPolicyConfiguration);
 
         $resetAtNextConnection = $directory->resetAtNextConnection($ldap, $dn);
 
