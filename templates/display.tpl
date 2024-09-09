@@ -21,7 +21,7 @@
                 {if !({$entry.$attribute.0}) && ! $show_undef}
                     {continue}
                 {/if}
-                    <tr>
+                    <tr id="info_{$item}">
                         <th class="text-center">
                             <i class="fa fa-fw fa-{$faclass}"></i>
                         </th>
@@ -151,18 +151,22 @@
                  <form id="resetpassword" method="post" action="index.php?page=resetpassword">
                      {if $resetpasswordresult eq 'passwordrequired'}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrequired}</div>
-                     {/if}
-                     {if $resetpasswordresult eq 'passwordrefused'}
+                     {elseif $resetpasswordresult eq 'passwordrefused'}
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrefused}</div>
-                     {/if}
-                     {if $resetpasswordresult eq 'passwordchanged'}
+                     {elseif $resetpasswordresult eq 'passwordchanged'}
                      <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordchanged}</div>
+                     {elseif $resetpasswordresult eq ''}
+                     {else}
+                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_resetpasswordresult}</div>
                      {/if}
                      {if $prehookresult}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookresult}</div>
                      {/if}
                      {if $posthookresult}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookresult}</div>
+                     {/if}
+                     {if $pwd_show_policy !== "never" and $pwd_show_policy_pos === 'above'}
+                        {include file="policy.tpl"}
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
                      <div class="input-group mb-3">
@@ -188,6 +192,9 @@
                      <button type="submit" class="btn btn-success">
                         <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
                      </button>
+                     {if $pwd_show_policy !== "never" and $pwd_show_policy_pos === 'below'}
+                        {include file="policy.tpl"}
+                     {/if}
                 </form>
             </div>
         </div>
