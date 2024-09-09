@@ -63,9 +63,40 @@ $ldapInstance = new \Ltb\Ldap(
                                  isset($ldap_bindpw) ? $ldap_bindpw : null,
                                  isset($ldap_network_timeout) ? $ldap_network_timeout : null,
                                  $ldap_user_base,
-                                 null,
+                                 isset($ldap_size_limit) ? $ldap_size_limit : 0,
                                  isset($ldap_krb5ccname) ? $ldap_krb5ccname : null
                              );
+
+#==============================================================================
+# Other default values
+#==============================================================================
+if (!isset($pwd_forbidden_chars)) { $pwd_forbidden_chars = ""; }
+
+# Password policy array
+$pwd_policy_config = array(
+    "pwd_show_policy"           => $pwd_show_policy,
+    "pwd_min_length"            => $pwd_min_length,
+    "pwd_max_length"            => $pwd_max_length,
+    "pwd_min_lower"             => $pwd_min_lower,
+    "pwd_min_upper"             => $pwd_min_upper,
+    "pwd_min_digit"             => $pwd_min_digit,
+    "pwd_min_special"           => $pwd_min_special,
+    "pwd_special_chars"         => $pwd_special_chars,
+    "pwd_no_reuse"              => false, # old password not available
+    "pwd_forbidden_chars"       => $pwd_forbidden_chars,
+    "pwd_diff_last_min_chars"   => 0, # old password not available
+    "pwd_diff_login"            => $pwd_diff_login,
+    "pwd_complexity"            => $pwd_complexity,
+    "use_pwnedpasswords"        => $use_pwnedpasswords,
+    "pwd_no_special_at_ends"    => $pwd_no_special_at_ends,
+    "pwd_forbidden_words"       => $pwd_forbidden_words,
+    "pwd_forbidden_ldap_fields" => $pwd_forbidden_ldap_fields,
+    "pwd_display_entropy"       => $pwd_display_entropy,
+    "pwd_check_entropy"         => $pwd_check_entropy,
+    "pwd_min_entropy"           => $pwd_min_entropy
+);
+
+if (!isset($pwd_show_policy_pos)) { $pwd_show_policy_pos = "above"; }
 
 #==============================================================================
 # Smarty
@@ -134,6 +165,7 @@ $smarty->assign('use_searchidle',$use_searchidle);
 $smarty->assign('use_showauditlog',$use_showauditlog);
 $smarty->assign('fake_password_inputs',$fake_password_inputs);
 
+
 # Assign messages
 $smarty->assign('lang',$lang);
 foreach ($messages as $key => $message) {
@@ -192,6 +224,8 @@ if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
 if ( $page === "auditlog" and !$use_showauditlog ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
+
+\Ltb\Ppolicy::smarty_assign_ppolicy($smarty, $pwd_show_policy_pos, $pwd_show_policy, $result, $pwd_policy_config);
 
 if ($result) {
     $smarty->assign('error',$messages[$result]);

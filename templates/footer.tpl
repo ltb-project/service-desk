@@ -4,6 +4,8 @@
 <div id="footer">LDAP Tool Box Service Desk - version {$version}</div>
 {/if}
 
+<div id="ltb-component" hidden>sd</div>
+
 <script src="vendor/jquery/js/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/datatables/dataTables.min.js"></script>
@@ -11,6 +13,7 @@
 <script src="vendor/datatables/dataTables.buttons.min.js"></script>
 <script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
 <script src="js/service-desk.js"></script>
+<script src="js/ppolicy.js"></script>
 
 {literal}
     <script type="text/javascript">

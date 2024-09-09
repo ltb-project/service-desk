@@ -118,6 +118,53 @@ $willexpiredays = 14;
 $use_searchidle = true;
 $idledays = 60;
 
+
+# Local password policy
+# This is applied before directory password policy
+# Minimal length
+$pwd_min_length = 0;
+# Maximal length
+$pwd_max_length = 0;
+# Minimal lower characters
+$pwd_min_lower = 0;
+# Minimal upper characters
+$pwd_min_upper = 0;
+# Minimal digit characters
+$pwd_min_digit = 0;
+# Minimal special characters
+$pwd_min_special = 0;
+# Definition of special characters
+$pwd_special_chars = "^a-zA-Z0-9";
+# Forbidden characters
+#$pwd_forbidden_chars = "@%";
+# Check that password is different than login
+$pwd_diff_login = true;
+# Forbidden words which must not appear in the password
+$pwd_forbidden_words = array();
+# Forbidden ldap fields
+# Respective values of the user's entry must not appear in the password
+# example: $pwd_forbidden_ldap_fields = array('cn', 'givenName', 'sn', 'mail');
+$pwd_forbidden_ldap_fields = array();
+# Complexity: number of different class of character required
+$pwd_complexity = 0;
+# use pwnedpasswords api v2 to securely check if the password has been on a leak
+$use_pwnedpasswords = false;
+# show password entropy bar (require php zxcvbn module)
+$pwd_display_entropy = false;
+# enforce password entropy check
+$pwd_check_entropy = false;
+# minimum entropy level required (when $pwd_check_entropy enabled)
+$pwd_min_entropy = 3;
+# Show policy constraints message:
+# always
+# never
+# onerror
+$pwd_show_policy = "never";
+# Position of password policy constraints message:
+# above - the form
+# below - the form
+$pwd_show_policy_pos = "above";
+
 ## Mail
 # LDAP mail attribute
 $mail_attributes = array( "mail", "gosaMailAlternateAddress", "proxyAddresses" );

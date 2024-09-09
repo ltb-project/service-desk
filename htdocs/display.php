@@ -126,9 +126,26 @@ if ($result === "") {
             }
 
             # Lock
-            $pwdLockout = strtolower($ppolicy_entry[0]['pwdlockout'][0]) == "true" ? true : false;
-            $pwdLockoutDuration = $ppolicy_entry[0]['pwdlockoutduration'][0];
-            $pwdAccountLockedTime = $entry[0]['pwdaccountlockedtime'][0];
+            if(isset($ppolicy_entry[0]['pwdlockout'][0]))
+            {
+                $pwdLockout = strtolower($ppolicy_entry[0]['pwdlockout'][0]) == "true" ? true : false;
+            }
+            else
+            {
+                $pwdLockout = false;
+            }
+            if(isset($ppolicy_entry[0]['pwdlockoutduration'][0]))
+            {
+                $pwdLockoutDuration = $ppolicy_entry[0]['pwdlockoutduration'][0];
+            }
+            if(isset($entry[0]['pwdaccountlockedtime'][0]))
+            {
+                $pwdAccountLockedTime = $entry[0]['pwdaccountlockedtime'][0];
+            }
+            else
+            {
+                $pwdAccountLockedTime = null;
+            }
 
             if ( $pwdAccountLockedTime === "000001010000Z" ) {
                 $isLocked = true;
@@ -146,8 +163,14 @@ if ($result === "") {
             }
 
             # Expiration
-            $pwdMaxAge = $ppolicy_entry[0]['pwdmaxage'][0];
-            $pwdChangedTime = $entry[0]['pwdchangedtime'][0];
+            if(isset($ppolicy_entry[0]['pwdmaxage'][0]))
+            {
+                $pwdMaxAge = $ppolicy_entry[0]['pwdmaxage'][0];
+            }
+            if(isset($entry[0]['pwdchangedtime'][0]))
+            {
+                $pwdChangedTime = $entry[0]['pwdchangedtime'][0];
+            }
 
             if (isset($pwdChangedTime) and isset($pwdMaxAge) and ($pwdMaxAge > 0)) {
                 $changedDate = ldapDate2phpDate($pwdChangedTime);
@@ -186,4 +209,12 @@ $smarty->assign("accountlockresult", $accountlockresult);
 $smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
 if ($pwdLockout == false) $smarty->assign("use_lockaccount", $pwdLockout);
+if(isset($messages[$resetpasswordresult]))
+{
+    $smarty->assign('msg_resetpasswordresult',$messages[$resetpasswordresult]);
+}
+else
+{
+    $smarty->assign('msg_resetpasswordresult','');
+}
 ?>

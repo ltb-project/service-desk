@@ -29,6 +29,20 @@ Please take in consideration that ``config.inc.php`` is now replaced systematica
 
 Avoid as much as possible editing the ``/etc/service-desk/config.inc.php`` file. Prefer modifying the ``/etc/service-desk/config.inc.local.php``.
 
+password policy
+~~~~~~~~~~~~~~~
+
+When you change the password for a user, you can now configure a local password policy for ensuring the password strength is sufficient.
+
+Most of the criteria are checked dynamically, while the password is being typed, and they are also enforced at server side.
+
+You can give a look to the :doc:`password policy documentation <ppolicy>` for more information.
+
+.. tip::
+
+   The local password policy is now defined in a library: `ltb-common <https://github.com/ltb-project/ltb-common>`_.
+
+
 cache cleaning
 ~~~~~~~~~~~~~~
 
@@ -62,6 +76,28 @@ Bundled dependencies:
 * fontawesome-fonts has been updated from version 4.7.0 to version 6.5.2
 * php-ltb-project-ltb-common has been updated from version 0.1 to version 0.3.0
 * php-phpmailer has been updated from version 6.8.0 to version v6.9.1
+* php-bjeavons-zxcvbn-php version 1.3.1 has been added
+* php-guzzlehttp-guzzle version 7.8.1 has been added
+* php-guzzlehttp-promises version 2.0.2 has been added
+* php-guzzlehttp-psr7 version 2.6.2 has been added
+* php-mxrxdxn-pwned-passwords version 2.1.0 has been added
+* php-phpmailer version 6.9.1 has been added
+* php-psr-http-client version 1.0.3 has been added
+* php-psr-http-factory version 1.0.2 has been added
+* php-psr-http-message version 2.0 has been added
+* php-ralouphie-getallheaders version 3.0.3 has been added
+* php-symfony-deprecation-contracts version 2.5.1 has been added
+* php-symfony-finder version 7.0.0 has been added
+* php-symfony-polyfill version v1.31.0 has been added
+* php-symfony-deprecation-contracts version v2.5.3 has been added
+* php-symfony-var-exporter version v5.4.40 has been added
+* php-psr-container version 1.1.2 has been added
+* php-symfony-service-contracts version v2.5.3 has been added
+* php-psr-cache version 1.0.1 has been added
+* php-symfony-cache-contracts version v2.5.3 has been added
+* php-psr-log version 1.1.4 has been added
+* php-symfony-cache version v5.4.42 has been added
+* php-predis-predis version v2.2.2 has been added
 
 Removed bundled dependencies:
 

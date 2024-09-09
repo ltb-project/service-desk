@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="vendor/datatables/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/datatables/buttons.bootstrap5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/service-desk.css" />
+    <link rel="stylesheet" type="text/css" href="css/ppolicy.css" />
 {if $custom_css}
     <link rel="stylesheet" type="text/css" href="{$custom_css}" />
 {/if}
