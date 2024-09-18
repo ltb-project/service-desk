@@ -130,3 +130,15 @@ If you are using the new lastbind feature from OpenLDAP 2.5, then you must updat
 .. code-block:: php
 
     $ldap_lastauth_attribute = "pwdLastSuccess";
+
+
+New ldap parameter
+~~~~~~~~~~~~~~~~~~
+
+You can now retrieve users with a paged search, for example if your directory does not allow you to get all entries at once.
+
+You can enable this feature by setting a non-zero value to the page size parameter:
+
+.. code-block:: php
+
+   $ldap_page_size = 100;
