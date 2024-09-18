@@ -38,6 +38,7 @@ $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
 $ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
+$ldap_page_size = 0;
 
 # How display attributes
 $attributes_map = array(
