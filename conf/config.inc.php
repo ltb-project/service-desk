@@ -40,6 +40,7 @@ $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
 $ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
+$ldap_page_size = 0;
 
 # Override LDAP password policy configuration
 #$ldap_lockout_duration = 3600; # 1 hour
