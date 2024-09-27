@@ -23,7 +23,9 @@
 # All the default values are kept here, you should not modify it but use
 # config.inc.local.php file instead to override the settings from here.
 #==============================================================================
+
 # LDAP
+$ldap_type = "openldap";
 $ldap_url = "ldap://localhost";
 $ldap_starttls = false;
 $ldap_binddn = "cn=manager,dc=example,dc=com";
@@ -38,7 +40,6 @@ $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
 $ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
-$ldap_type = "openldap";
 
 # Override LDAP password policy configuration
 #$ldap_lockout_duration = 3600; # 1 hour
