@@ -32,7 +32,11 @@
             "rm -rf htdocs/vendor/font-awesome/*",
             "cp -R vendor/fortawesome/font-awesome/css htdocs/vendor/font-awesome",
             "cp -R vendor/fortawesome/font-awesome/webfonts htdocs/vendor/font-awesome",
-            "rm -rf vendor/fortawesome/font-awesome"
+            "rm -rf vendor/fortawesome/font-awesome",
+
+            "cp -f vendor/ltb-project/ltb-common/src/ppolicy/html/policy.tpl templates/policy.tpl",
+            "cp -f vendor/ltb-project/ltb-common/src/ppolicy/js/ppolicy.js htdocs/js/ppolicy.js",
+            "cp -f vendor/ltb-project/ltb-common/src/ppolicy/css/ppolicy.css htdocs/css/ppolicy.css"
         ]
     },
     "require-dev": {

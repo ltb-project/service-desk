@@ -14,11 +14,7 @@ On Debian:
 
 .. code-block:: shell
 
-  apt install nginx php-fpm
-
-  # configure php-fpm for Nginx
-  a2enmod proxy_fcgi setenvif
-  a2enconf php*-fpm.conf
+  apt install nginx
 
   # enable the default website
   cd /etc/nginx/sites-enabled/ && ln -s ../sites-availables/service-desk
@@ -27,7 +23,7 @@ On RHEL systems:
 
 .. code-block:: shell
 
-  dnf install nginx php-fpm
+  dnf install nginx
 
 Virtual host configuration
 ------------

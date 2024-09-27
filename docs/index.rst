@@ -19,6 +19,7 @@ LDAP Tool Box Service Desk documentation
    configuration-nginx.rst
    general-parameters.rst
    ldap-parameters.rst
+   ppolicy.rst
    attributes.rst
    search-parameters.rst
    display-parameters.rst

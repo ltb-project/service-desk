@@ -41,7 +41,28 @@ Provides:  bundled(js-datatables.net-datatables.net-buttons) = 3.1.0
 Provides:  bundled(js-datatables.net-datatables.net-buttons-bs5) = 3.0.2
 Provides:  bundled(fontawesome-fonts) = 6.5.2
 Provides:  bundled(php-ltb-project-ltb-common) = 0.3.0
-Provides:  bundled(php-phpmailer) = v6.9.1
+Provides:  bundled(php-bjeavons-zxcvbn-php) = 1.3.1
+Provides:  bundled(php-guzzlehttp-guzzle) = 7.8.1
+Provides:  bundled(php-guzzlehttp-promises) = 2.0.2
+Provides:  bundled(php-guzzlehttp-psr7) = 2.6.2
+Provides:  bundled(php-mxrxdxn-pwned-passwords) = 2.1.0
+Provides:  bundled(php-phpmailer) = 6.9.1
+Provides:  bundled(php-psr-http-client) = 1.0.3
+Provides:  bundled(php-psr-http-factory) = 1.0.2
+Provides:  bundled(php-psr-http-message) = 2.0
+Provides:  bundled(php-ralouphie-getallheaders) = 3.0.3
+Provides:  bundled(php-symfony-deprecation-contracts) = 3.4.0
+Provides:  bundled(php-symfony-finder) = 7.0.0
+Provides:  bundled(php-symfony-polyfill) = v1.31.0
+Provides:  bundled(php-symfony-deprecation-contracts) = v2.5.3
+Provides:  bundled(php-symfony-var-exporter) = v5.4.40
+Provides:  bundled(php-psr-container) = 1.1.2
+Provides:  bundled(php-symfony-service-contracts) = v2.5.3
+Provides:  bundled(php-psr-cache) = 1.0.1
+Provides:  bundled(php-symfony-cache-contracts) = v2.5.3
+Provides:  bundled(php-psr-log) = 1.1.4
+Provides:  bundled(php-symfony-cache) = v5.4.42
+Provides:  bundled(php-predis-predis) = v2.2.2
 
 
 %description
