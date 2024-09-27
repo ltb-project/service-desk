@@ -111,9 +111,9 @@ if ($result === "") {
             } else {
             $reset = ($pwdreset === "true") ? true : false;
             if ($directory->modifyPassword($ldap, $dn, $password, $reset)) {
-                    $result = "passwordrefused";
-                } else {
                     $result = "passwordchanged";
+                } else {
+                    $result = "passwordrefused";
                 }
             }
         }
