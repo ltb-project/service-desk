@@ -217,19 +217,12 @@ $smarty->assign("accountunlockresult", $accountunlockresult);
 $smarty->assign("accountlockresult", $accountlockresult);
 $smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
-<<<<<<< HEAD
-if ($canLockAccount == false) $smarty->assign("use_lockaccount", $canLockAccount);
-
+if ($canLockAccount == false) { $smarty->assign("use_lockaccount", $canLockAccount); }
 $smarty->assign("isAccountEnabled", $isAccountEnabled);
-=======
-if ($pwdLockout == false) $smarty->assign("use_lockaccount", $pwdLockout);
-if(isset($messages[$resetpasswordresult]))
-{
-    $smarty->assign('msg_resetpasswordresult',$messages[$resetpasswordresult]);
-}
-else
-{
+if (isset($messages[$resetpasswordresult])) {
+    $smarty->assign('msg_resetpasswordresult', $messages[$resetpasswordresult]);
+} else {
     $smarty->assign('msg_resetpasswordresult','');
 }
->>>>>>> master
+
 ?>
