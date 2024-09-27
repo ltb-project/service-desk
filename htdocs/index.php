@@ -68,6 +68,24 @@ $ldapInstance = new \Ltb\Ldap(
                              );
 
 #==============================================================================
+# Directory instance
+#==============================================================================
+$directory;
+
+# Load specific directory settings
+switch($ldap_type) {
+  case "openldap":
+    $attributes_map = array_merge($attributes_map, $openldap_attributes_map);
+    $directory = new \Ltb\Directory\OpenLDAP();
+  break;
+  case "activedirectory":
+    $attributes_map = array_merge($attributes_map, $activedirectory_attributes_map);
+    $directory = new \Ltb\Directory\ActiveDirectory();
+    $ldap_lastauth_attribute = "lastLogon";
+  break;
+}
+
+#==============================================================================
 # Other default values
 #==============================================================================
 if (!isset($pwd_forbidden_chars)) { $pwd_forbidden_chars = ""; }
@@ -164,6 +182,9 @@ $smarty->assign('use_searchwillexpire',$use_searchwillexpire);
 $smarty->assign('use_searchidle',$use_searchidle);
 $smarty->assign('use_showauditlog',$use_showauditlog);
 $smarty->assign('fake_password_inputs',$fake_password_inputs);
+$smarty->assign('use_enableaccount',$use_enableaccount);
+$smarty->assign('use_disableaccount',$use_disableaccount);
+$smarty->assign('show_enablestatus',$show_enablestatus);
 
 
 # Assign messages
@@ -181,6 +202,7 @@ $smarty->assign('search',$search);
 require_once("../lib/smarty.inc.php");
 $smarty->registerPlugin("function", "get_attribute", "get_attribute");
 $smarty->registerPlugin("function", "convert_ldap_date", "convert_ldap_date");
+$smarty->registerPlugin("function", "convert_ad_date", "convert_ad_date");
 $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
 $smarty->registerPlugin("function", "split_value", "split_value");
 

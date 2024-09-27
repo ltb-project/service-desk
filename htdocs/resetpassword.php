@@ -57,12 +57,6 @@ if ($result === "") {
             }
         }
 
-        # save LDAP modifications to apply in $entry variable
-        $entry["userPassword"] = $password;
-        if ( $pwdreset === "true" ) {
-            $entry["pwdReset"] = "TRUE";
-        }
-
         # Get current entry first
         $entries_search = $ldapInstance->search_with_scope("base", $dn, '(objectClass=*)');
         $errno = ldap_errno($ldap);
@@ -115,12 +109,11 @@ if ($result === "") {
             if ( $prehook_return > 0 and !$ignore_prehook_return) {
                 $result = "passwordrefused";
             } else {
-                $modification = ldap_mod_replace($ldap, $dn, $entry);
-                $errno = ldap_errno($ldap);
-                if ( $errno ) {
-                    $result = "passwordrefused";
-                } else {
+            $reset = ($pwdreset === "true") ? true : false;
+            if ($directory->modifyPassword($ldap, $dn, $password, $reset)) {
                     $result = "passwordchanged";
+                } else {
+                    $result = "passwordrefused";
                 }
             }
         }

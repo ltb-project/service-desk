@@ -1,5 +1,5 @@
-Lock account
-============
+Lock and unlock account
+=======================
 
 Show lock status
 ----------------

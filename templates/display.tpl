@@ -80,13 +80,33 @@
                         </td>
                     </tr>
                 {/foreach}
+                {if $lockDate}
+                    <tr>
+                        <th class="col-md-6">
+                            {$msg_label_pwdaccountlockedtime}
+                        </th>
+                        <td class="col-md-6">
+                            {$lockDate|date_format:{$date_specifiers}|truncate:10000}
+                        </td>
+                    </tr>
+                {/if}
                 {if {$display_password_expiration_date} and {$ldapExpirationDate}}
                     <tr>
                         <th class="col-md-6">
                             {$msg_label_expirationdate}
                         </th>
                         <td class="col-md-6">
-                            {include 'value_displayer.tpl' value=$ldapExpirationDate type="date" truncate_value_after=10000}
+                            {$ldapExpirationDate|date_format:{$date_specifiers}|truncate:10000}
+                        </td>
+                    </tr>
+                {/if}
+                {if $resetAtNextConnection}
+                    <tr>
+                        <th class="col-md-6">
+                            {$msg_label_pwdreset}
+                        </th>
+                        <td class="col-md-6">
+                            {$msg_true}
                         </td>
                     </tr>
                 {/if}
@@ -287,5 +307,54 @@
         </div>
         {/if}
         {/if}
+
+        {if $show_enablestatus}
+        {if $isAccountEnabled}
+        <div class="card mb-3 shadow border-success">
+            <div class="card-header text-bg-success text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-check-square-o"></i>
+                    {$msg_accountenabled}
+                </p>
+            </div>
+            {if $use_disableaccount}
+            <div class="card-body">
+                <form id="disableaccount" method="post" action="index.php?page=disableaccount">
+                    {if $disableaccountresult eq 'ldaperror' or $disableaccountresult eq 'actionforbidden'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotdisabled}</div>
+                    {/if}
+                    <input type="hidden" name="dn" value="{$dn}" />
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-user-slash"></i> {$msg_disableaccount}
+                    </button>
+                </form>
+            </div>
+            {/if}
+        </div>
+        {else}
+        <div class="card mb-3 shadow border-danger">
+            <div class="card-header text-bg-danger text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-exclamation-triangle"></i>
+                    {$msg_accountdisabled}
+                </p>
+            </div>
+            {if $use_enableaccount}
+            <div class="card-body">
+                <form id="disableaccount" method="post" action="index.php?page=enableaccount">
+                    {if $enableaccountresult eq 'ldaperror' or $enableaccountresult eq 'actionforbidden'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotenabled}</div>
+                    {/if}
+                    <input type="hidden" name="dn" value="{$dn}" />
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-user-check"></i> {$msg_enableaccount}
+                    </button>
+                </form>
+            </div>
+            {/if}
+        </div>
+       {/if}
+       {/if}
+
    </div>
 </div>
