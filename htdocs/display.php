@@ -118,7 +118,6 @@ if ($result === "") {
             $isAccountEnabled = $directory->isAccountEnabled($ldap, $dn);
         }
 
-        $isLocked = false;
         $unlockDate = "";
         $isExpired = false;
         $ppolicy_entry = "";
@@ -144,29 +143,6 @@ if ($result === "") {
             if(isset($ppolicy_entry[0]['pwdlockoutduration'][0]))
             {
                 $pwdLockoutDuration = $ppolicy_entry[0]['pwdlockoutduration'][0];
-            }
-            if(isset($entry[0]['pwdaccountlockedtime'][0]))
-            {
-                $pwdAccountLockedTime = $entry[0]['pwdaccountlockedtime'][0];
-            }
-            else
-            {
-                $pwdAccountLockedTime = null;
-            }
-
-            if ( $pwdAccountLockedTime === "000001010000Z" ) {
-                $isLocked = true;
-                unset($entry[0]['pwdaccountlockedtime']);
-            } else if (isset($pwdAccountLockedTime)) {
-                if (isset($pwdLockoutDuration) and ($pwdLockoutDuration > 0)) {
-                    $lockDate = ldapDate2phpDate($pwdAccountLockedTime);
-                    $unlockDate = date_add( $lockDate, new DateInterval('PT'.$pwdLockoutDuration.'S'));
-                    if ( time() <= $unlockDate->getTimestamp() ) {
-                        $isLocked = true;
-                    }
-                } else {
-                    $isLocked = true;
-                }
             }
 
             # Expiration
