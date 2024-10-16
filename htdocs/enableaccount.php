@@ -6,12 +6,18 @@
 $result = "";
 $dn = "";
 $password = "";
+$comment = "";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
 } else {
     $result = "dnrequired";
 }
+
+if (isset($_POST["comment"]) and $_POST["comment"]) {
+    $comment = $_POST["comment"];
+}
+
 
 if (!$use_enableaccount) {
     $result = "actionforbidden";
@@ -38,7 +44,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "enableaccount", $result);
+    auditlog($audit_log_file, $dn, $audit_admin, "enableaccount", $result, $comment);
 }
 
 header('Location: index.php?page=display&dn='.$dn.'&enableaccountresult='.$result);
