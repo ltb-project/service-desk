@@ -22,3 +22,5 @@ To enable this feature:
 .. code-block:: php
 
     $use_checkpasswordhistory = true;
+    
+.. tip:: This feature only works with OpenLDAP.
