@@ -15,10 +15,12 @@ To enable this feature:
 Check password history
 ----------------------
 
-The password history can be checked by enabling this feature.
+When verifying the password, Service Desk can parse the password history to check if the current is part of it. This can be useful to tell a user that the password was working before but has been changed since.
 
 To enable this feature:
 
 .. code-block:: php
 
     $use_checkpasswordhistory = true;
+
+.. tip:: This feature only works with OpenLDAP.
