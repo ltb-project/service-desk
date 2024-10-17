@@ -16,15 +16,18 @@ LDAP Tool Box Service Desk documentation
    installation.rst
    upgrade.rst
    configuration-apache.rst
+   configuration-nginx.rst
    general-parameters.rst
    ldap-parameters.rst
+   ppolicy.rst
    attributes.rst
    search-parameters.rst
    display-parameters.rst
    checkpassword.rst
    resetpassword.rst
    lockaccount.rst
+   enableaccount.rst
    hook.rst
    dashboards.rst
-   config_mail.rst
+   configuration-mail.rst
    audit.rst

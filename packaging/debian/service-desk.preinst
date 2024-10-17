@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Backup old configuration to /etc/service-desk
+for file in $( find /usr/share/service-desk/conf -name "*.php" -type f ! -name 'config.inc.php' -printf "%f\n" 2>/dev/null );
+do
+    # move conf file to /etc/service-desk/*.save
+    mkdir -p /etc/service-desk
+    mv /usr/share/service-desk/conf/${file} /etc/service-desk/${file}.save
+done
+
+if [[ -f "/usr/share/service-desk/conf/config.inc.php"  ]]; then
+    # move specific file config.inc.php to /etc/service-desk/*.bak
+    mkdir -p /etc/service-desk
+    mv /usr/share/service-desk/conf/config.inc.php \
+       /etc/service-desk/config.inc.php.bak
+fi

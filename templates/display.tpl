@@ -21,7 +21,7 @@
                 {if !({$entry.$attribute.0}) && ! $show_undef}
                     {continue}
                 {/if}
-                    <tr>
+                    <tr id="info_{$item}">
                         <th class="text-center">
                             <i class="fa fa-fw fa-{$faclass}"></i>
                         </th>
@@ -80,13 +80,33 @@
                         </td>
                     </tr>
                 {/foreach}
+                {if $lockDate}
+                    <tr>
+                        <th class="col-md-6">
+                            {$msg_label_pwdaccountlockedtime}
+                        </th>
+                        <td class="col-md-6">
+                            {$lockDate|date_format:{$date_specifiers}|truncate:10000}
+                        </td>
+                    </tr>
+                {/if}
                 {if {$display_password_expiration_date} and {$ldapExpirationDate}}
                     <tr>
                         <th class="col-md-6">
                             {$msg_label_expirationdate}
                         </th>
                         <td class="col-md-6">
-                            {include 'value_displayer.tpl' value=$ldapExpirationDate type="date" truncate_value_after=10000}
+                            {$ldapExpirationDate|date_format:{$date_specifiers}|truncate:10000}
+                        </td>
+                    </tr>
+                {/if}
+                {if $resetAtNextConnection}
+                    <tr>
+                        <th class="col-md-6">
+                            {$msg_label_pwdreset}
+                        </th>
+                        <td class="col-md-6">
+                            {$msg_true}
                         </td>
                     </tr>
                 {/if}
@@ -154,18 +174,22 @@
                  <form id="resetpassword" method="post" action="index.php?page=resetpassword">
                      {if $resetpasswordresult eq 'passwordrequired'}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrequired}</div>
-                     {/if}
-                     {if $resetpasswordresult eq 'passwordrefused'}
+                     {elseif $resetpasswordresult eq 'passwordrefused'}
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrefused}</div>
-                     {/if}
-                     {if $resetpasswordresult eq 'passwordchanged'}
+                     {elseif $resetpasswordresult eq 'passwordchanged'}
                      <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_passwordchanged}</div>
+                     {elseif $resetpasswordresult eq ''}
+                     {else}
+                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_resetpasswordresult}</div>
                      {/if}
                      {if $prehookresult}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookresult}</div>
                      {/if}
                      {if $posthookresult}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookresult}</div>
+                     {/if}
+                     {if $pwd_show_policy !== "never" and $pwd_show_policy_pos === 'above'}
+                        {include file="policy.tpl"}
                      {/if}
                      <input type="hidden" name="dn" value="{$dn}" />
                      <div class="input-group mb-3">
@@ -191,6 +215,9 @@
                      <button type="submit" class="btn btn-success">
                         <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
                      </button>
+                     {if $pwd_show_policy !== "never" and $pwd_show_policy_pos === 'below'}
+                        {include file="policy.tpl"}
+                     {/if}
                 </form>
             </div>
         </div>
@@ -283,5 +310,54 @@
         </div>
         {/if}
         {/if}
+
+        {if $show_enablestatus}
+        {if $isAccountEnabled}
+        <div class="card mb-3 shadow border-success">
+            <div class="card-header text-bg-success text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-check-square-o"></i>
+                    {$msg_accountenabled}
+                </p>
+            </div>
+            {if $use_disableaccount}
+            <div class="card-body">
+                <form id="disableaccount" method="post" action="index.php?page=disableaccount">
+                    {if $disableaccountresult eq 'ldaperror' or $disableaccountresult eq 'actionforbidden'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotdisabled}</div>
+                    {/if}
+                    <input type="hidden" name="dn" value="{$dn}" />
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-user-slash"></i> {$msg_disableaccount}
+                    </button>
+                </form>
+            </div>
+            {/if}
+        </div>
+        {else}
+        <div class="card mb-3 shadow border-danger">
+            <div class="card-header text-bg-danger text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-exclamation-triangle"></i>
+                    {$msg_accountdisabled}
+                </p>
+            </div>
+            {if $use_enableaccount}
+            <div class="card-body">
+                <form id="disableaccount" method="post" action="index.php?page=enableaccount">
+                    {if $enableaccountresult eq 'ldaperror' or $enableaccountresult eq 'actionforbidden'}
+                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotenabled}</div>
+                    {/if}
+                    <input type="hidden" name="dn" value="{$dn}" />
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-fw fa-user-check"></i> {$msg_enableaccount}
+                    </button>
+                </form>
+            </div>
+            {/if}
+        </div>
+       {/if}
+       {/if}
+
    </div>
 </div>

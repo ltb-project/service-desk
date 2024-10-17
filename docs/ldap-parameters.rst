@@ -1,6 +1,17 @@
 LDAP parameters
 ===============
 
+Type of directory
+-----------------
+
+You can define the type of LDAP directory (``openldap`` or ``activedirectory``). The default value is ``openldap``.
+
+.. code-block:: php
+
+    $ldap_type = "openldap";
+
+.. tip:: Other configuration parameters could be impacted by this choice, check their documentation.
+
 Server address
 --------------
 
@@ -40,7 +51,7 @@ Configure DN and password in ``$ldap_bindn`` and ``$ldap_bindpw``:
     $ldap_binddn = "cn=manager,dc=example,dc=com";
     $ldap_bindpw = "secret";
 
-.. tip:: You can use the LDAP admin account or any service account. The account needs to read users, password policy entries and write ``userPassword`` and ``pwdReset`` attributes in user entries. Note that using the LDAP admin account will bypass any password policy like minimal size or password history when reseting the password.
+.. tip:: You can use the LDAP admin account or any service account. The account needs to read users, password policy entries and write password and some other related attributes in user entries. On OpenLDAP, using the LDAP admin account will bypass any password policy like minimal size or password history when reseting the password.
 
 LDAP Base
 ---------
@@ -74,6 +85,16 @@ You can set the scope for each search in ``$ldap_scope``:
 
 .. tip:: sub is the default value. Possible values are sub, one, or base
 
+You can retrieve users with a paged search, for example if your directory does not allow you to get all entries at once.
+You can enable this feature by setting a non-zero value to the page size parameter:
+
+.. code-block:: php
+
+   $ldap_page_size = 100;
+
+.. tip:: when setting a ``$ldap_page_size`` value > 0, service-desk sends a ``LDAP_CONTROL_PAGEDRESULTS`` control along with the search, and loop for each page
+
+
 Size limit
 ----------
 
@@ -106,6 +127,13 @@ Set ``$ldap_default_ppolicy`` value if a default policy is configured in your LD
 
 .. tip:: Password policy is first searched in ``pwdPolicySubentry`` attribute of user entry, then fallback to default policy.
 
+You can override some policies, like lockout duration or password maximal age:
+
+.. code-block:: php
+
+    $ldap_lockout_duration = 3600; # 1 hour
+    $ldap_password_max_age = 7889400; # 3 months
+
 Last authentication attribute
 -----------------------------
 
@@ -114,3 +142,5 @@ The last authentication date can be stored in different attributes depending on 
 .. code-block:: php
 
     $ldap_lastauth_attribute = "pwdLastSuccess";
+
+.. tip:: This attribute is automatically configured for Active Directory.

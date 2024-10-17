@@ -10,7 +10,7 @@ if (isset($_POST["search"]) and $_POST["search"]) {
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
 
-    $filter_escape_chars = null;
+    $filter_escape_chars = "";
     if (!$search_use_substring_match) { $filter_escape_chars = "*"; }
 
     $search_query = ldap_escape($_POST["search"], $filter_escape_chars, LDAP_ESCAPE_FILTER);

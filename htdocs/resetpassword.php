@@ -57,32 +57,64 @@ if ($result === "") {
             }
         }
 
-        $entry["userPassword"] = $password;
-        if ( $pwdreset === "true" ) {
-            $entry["pwdReset"] = "TRUE";
+        # Get current entry first
+        $entries_search = $ldapInstance->search_with_scope("base", $dn, '(objectClass=*)');
+        $errno = ldap_errno($ldap);
+        if ( $errno ) {
+            $result = "ldaperror";
+            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
+        }
+        $entry_search = ldap_first_entry($ldap, $entries_search);
+        $entry_array = ldap_get_attributes($ldap, $entry_search);
+        # Get identifier attribute
+        $identifiers = ldap_get_values( $ldap,
+                                        $entry_search,
+                                        $attributes_map['identifier']['attribute']
+                                      );
+        $identifier = $identifiers[0];
+        if ( !isset($identifier) || $identifier == "" ) {
+            $result = "ldaperror";
+            error_log("LDAP - Unable to find identifier for LDAP entry ".
+                      var_export($entry_array, true));
         }
 
-        if ( isset($prehook) ) {
+        #==============================================================================
+        # Check password strength
+        #==============================================================================
+        if( $result != "ldaperror" )
+        {
+            $result = \Ltb\Ppolicy::check_password_strength( $password,
+                                                             "",
+                                                             $pwd_policy_config,
+                                                             $identifier,
+                                                             $entry_array,
+                                                             array()
+                                                           );
+        }
 
-            if ( !isset($prehook_login_value) ) {
-                $prehook_return = 255;
-                $prehook_message = "No login found, cannot execute prehook script";
-            } else {
-                $command = hook_command($prehook, $prehook_login_value, $password, null, $prehook_password_encodebase64);
-                exec($command, $prehook_output, $prehook_return);
-                $prehook_message = $prehook_output[0];
+        if( $result === "")
+        {
+            if ( isset($prehook) ) {
+
+                if ( !isset($prehook_login_value) ) {
+                    $prehook_return = 255;
+                    $prehook_message = "No login found, cannot execute prehook script";
+                } else {
+                    $command = hook_command($prehook, $prehook_login_value, $password, null, $prehook_password_encodebase64);
+                    exec($command, $prehook_output, $prehook_return);
+                    $prehook_message = $prehook_output[0];
+                }
             }
-        }
 
-        if ( $prehook_return > 0 and !$ignore_prehook_return) {
-            $result = "passwordrefused";
-        } else {
-            $modification = ldap_mod_replace($ldap, $dn, $entry);
-            $errno = ldap_errno($ldap);
-            if ( $errno ) {
+            if ( $prehook_return > 0 and !$ignore_prehook_return) {
                 $result = "passwordrefused";
             } else {
-                $result = "passwordchanged";
+            $reset = ($pwdreset === "true") ? true : false;
+            if ($directory->modifyPassword($ldap, $dn, $password, $reset)) {
+                    $result = "passwordchanged";
+                } else {
+                    $result = "passwordrefused";
+                }
             }
         }
 
@@ -138,7 +170,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "resetpassword", $result);
+    auditlog($audit_log_file, $dn, $audit_admin, "resetpassword", $result, NULL);
 }
 
 $location = 'index.php?page=display&dn='.$dn.'&resetpasswordresult='.$result;

@@ -63,9 +63,59 @@ $ldapInstance = new \Ltb\Ldap(
                                  isset($ldap_bindpw) ? $ldap_bindpw : null,
                                  isset($ldap_network_timeout) ? $ldap_network_timeout : null,
                                  $ldap_user_base,
-                                 null,
-                                 isset($ldap_krb5ccname) ? $ldap_krb5ccname : null
+                                 isset($ldap_size_limit) ? $ldap_size_limit : 0,
+                                 isset($ldap_krb5ccname) ? $ldap_krb5ccname : null,
+                                 isset($ldap_page_size) ? $ldap_page_size : 0
                              );
+
+#==============================================================================
+# Directory instance
+#==============================================================================
+$directory;
+
+# Load specific directory settings
+switch($ldap_type) {
+  case "openldap":
+    $attributes_map = array_merge($attributes_map, $openldap_attributes_map);
+    $directory = new \Ltb\Directory\OpenLDAP();
+  break;
+  case "activedirectory":
+    $attributes_map = array_merge($attributes_map, $activedirectory_attributes_map);
+    $directory = new \Ltb\Directory\ActiveDirectory();
+    $ldap_lastauth_attribute = "lastLogon";
+  break;
+}
+
+#==============================================================================
+# Other default values
+#==============================================================================
+if (!isset($pwd_forbidden_chars)) { $pwd_forbidden_chars = ""; }
+
+# Password policy array
+$pwd_policy_config = array(
+    "pwd_show_policy"           => $pwd_show_policy,
+    "pwd_min_length"            => $pwd_min_length,
+    "pwd_max_length"            => $pwd_max_length,
+    "pwd_min_lower"             => $pwd_min_lower,
+    "pwd_min_upper"             => $pwd_min_upper,
+    "pwd_min_digit"             => $pwd_min_digit,
+    "pwd_min_special"           => $pwd_min_special,
+    "pwd_special_chars"         => $pwd_special_chars,
+    "pwd_no_reuse"              => false, # old password not available
+    "pwd_forbidden_chars"       => $pwd_forbidden_chars,
+    "pwd_diff_last_min_chars"   => 0, # old password not available
+    "pwd_diff_login"            => $pwd_diff_login,
+    "pwd_complexity"            => $pwd_complexity,
+    "use_pwnedpasswords"        => $use_pwnedpasswords,
+    "pwd_no_special_at_ends"    => $pwd_no_special_at_ends,
+    "pwd_forbidden_words"       => $pwd_forbidden_words,
+    "pwd_forbidden_ldap_fields" => $pwd_forbidden_ldap_fields,
+    "pwd_display_entropy"       => $pwd_display_entropy,
+    "pwd_check_entropy"         => $pwd_check_entropy,
+    "pwd_min_entropy"           => $pwd_min_entropy
+);
+
+if (!isset($pwd_show_policy_pos)) { $pwd_show_policy_pos = "above"; }
 
 #==============================================================================
 # Smarty
@@ -81,6 +131,16 @@ $smarty->setTemplateDir('../templates/');
 $smarty->setCompileDir($compile_dir);
 $smarty->setCacheDir($cache_dir);
 $smarty->debugging = $smarty_debug;
+
+if(isset($smarty_debug) && $smarty_debug == true )
+{
+    $smarty->error_reporting = E_ALL;
+}
+else
+{
+    # Do not report smarty stuff unless $smarty_debug == true
+    $smarty->error_reporting = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING;
+}
 
 error_reporting(0);
 if ($debug) {
@@ -122,7 +182,12 @@ $smarty->assign('use_searchlocked',$use_searchlocked);
 $smarty->assign('use_searchexpired',$use_searchexpired);
 $smarty->assign('use_searchwillexpire',$use_searchwillexpire);
 $smarty->assign('use_searchidle',$use_searchidle);
+$smarty->assign('use_showauditlog',$use_showauditlog);
 $smarty->assign('fake_password_inputs',$fake_password_inputs);
+$smarty->assign('use_enableaccount',$use_enableaccount);
+$smarty->assign('use_disableaccount',$use_disableaccount);
+$smarty->assign('show_enablestatus',$show_enablestatus);
+
 
 # Assign messages
 $smarty->assign('lang',$lang);
@@ -139,6 +204,7 @@ $smarty->assign('search',$search);
 require_once("../lib/smarty.inc.php");
 $smarty->registerPlugin("function", "get_attribute", "get_attribute");
 $smarty->registerPlugin("function", "convert_ldap_date", "convert_ldap_date");
+$smarty->registerPlugin("function", "convert_ad_date", "convert_ad_date");
 $smarty->registerPlugin("function", "convert_bytes", "convert_bytes");
 $smarty->registerPlugin("function", "split_value", "split_value");
 
@@ -179,8 +245,11 @@ if ( $page === "searchlocked" and !$use_searchlocked ) { $page = "welcome"; }
 if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
 if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
 if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
+if ( $page === "auditlog" and !$use_showauditlog ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
+
+\Ltb\Ppolicy::smarty_assign_ppolicy($smarty, $pwd_show_policy_pos, $pwd_show_policy, $result, $pwd_policy_config);
 
 if ($result) {
     $smarty->assign('error',$messages[$result]);

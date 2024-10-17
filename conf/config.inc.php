@@ -23,7 +23,9 @@
 # All the default values are kept here, you should not modify it but use
 # config.inc.local.php file instead to override the settings from here.
 #==============================================================================
+
 # LDAP
+$ldap_type = "openldap";
 $ldap_url = "ldap://localhost";
 $ldap_starttls = false;
 $ldap_binddn = "cn=manager,dc=example,dc=com";
@@ -38,10 +40,14 @@ $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
 $ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
+$ldap_page_size = 0;
+
+# Override LDAP password policy configuration
+#$ldap_lockout_duration = 3600; # 1 hour
+#$ldap_password_max_age = 7889400; # 3 months
 
 # How display attributes
 $attributes_map = array(
-    'authtimestamp' => array( 'attribute' => 'authtimestamp', 'faclass' => 'lock', 'type' => 'date' ),
     'businesscategory' => array( 'attribute' => 'businesscategory', 'faclass' => 'briefcase', 'type' => 'text' ),
     'carlicense' => array( 'attribute' => 'carlicense', 'faclass' => 'car', 'type' => 'text' ),
     'created' => array( 'attribute' => 'createtimestamp', 'faclass' => 'clock-o', 'type' => 'date' ),
@@ -52,7 +58,6 @@ $attributes_map = array(
     'fax' => array( 'attribute' => 'facsimiletelephonenumber', 'faclass' => 'fax', 'type' => 'tel' ),
     'firstname' => array( 'attribute' => 'givenname', 'faclass' => 'user-o', 'type' => 'text' ),
     'fullname' => array( 'attribute' => 'cn', 'faclass' => 'user-circle', 'type' => 'text' ),
-    'identifier' => array( 'attribute' => 'uid', 'faclass' => 'user-o', 'type' => 'text' ),
     'l' => array( 'attribute' => 'l', 'faclass' => 'globe', 'type' => 'text' ),
     'lastname' => array( 'attribute' => 'sn', 'faclass' => 'user-o', 'type' => 'text' ),
     'mail' => array( 'attribute' => 'mail', 'faclass' => 'envelope-o', 'type' => 'mailto' ),
@@ -66,16 +71,28 @@ $attributes_map = array(
     'phone' => array( 'attribute' => 'telephonenumber', 'faclass' => 'phone', 'type' => 'tel' ),
     'postaladdress' => array( 'attribute' => 'postaladdress', 'faclass' => 'map-marker', 'type' => 'address' ),
     'postalcode' => array( 'attribute' => 'postalcode', 'faclass' => 'globe', 'type' => 'text' ),
+    'secretary' => array( 'attribute' => 'secretary', 'faclass' => 'user-circle-o', 'type' => 'dn_link' ),
+    'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
+    'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
+    'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' ),
+);
+
+# Directory specific attributes
+$openldap_attributes_map = array(
+    'authtimestamp' => array( 'attribute' => 'authtimestamp', 'faclass' => 'lock', 'type' => 'date' ),
+    'identifier' => array( 'attribute' => 'uid', 'faclass' => 'user-o', 'type' => 'text' ),
     'pwdaccountlockedtime' => array( 'attribute' => 'pwdaccountlockedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdpolicysubentry' => array( 'attribute' => 'pwdpolicysubentry', 'faclass' => 'lock', 'type' => 'ppolicy_dn' ),
-    'pwdreset' => array( 'attribute' => 'pwdreset', 'faclass' => 'lock', 'type' => 'boolean' ),
-    'secretary' => array( 'attribute' => 'secretary', 'faclass' => 'user-circle-o', 'type' => 'dn_link' ),
-    'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
-    'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
-    'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' ),
+);
+$activedirectory_attributes_map = array(
+    'authtimestamp' => array( 'attribute' => 'lastlogon', 'faclass' => 'lock', 'type' => 'ad_date' ),
+    'identifier' => array( 'attribute' => 'samaccountname', 'faclass' => 'user-o', 'type' => 'text' ),
+    'pwdaccountlockedtime' => array( 'attribute' => 'lockouttime', 'faclass' => 'lock', 'type' => 'ad_date' ),
+    'pwdchangedtime' => array( 'attribute' => 'pwdlastset', 'faclass' => 'lock', 'type' => 'ad_date' ),
+    'pwdfailuretime' => array( 'attribute' => 'badpasswordtime', 'faclass' => 'lock', 'type' => 'ad_date' ),
 );
 
 # Search
@@ -95,29 +112,88 @@ $datatables_auto_print = true;
 $display_items = array('identifier', 'firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary' );
 $display_title = "fullname";
 $display_show_undefined = false;
-$display_password_items = array('pwdchangedtime', 'pwdreset', 'pwdaccountlockedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdlastsuccess', 'created', 'modified');
+$display_password_items = array('pwdchangedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdlastsuccess', 'created', 'modified');
 $display_password_expiration_date = true;
 
 # Features
+
 $use_checkpassword = true;
 $use_checkpasswordhistory = false;
+
 $use_resetpassword = true;
 $use_resetpassword_resetchoice = true;
 $resetpassword_reset_default = true;
+
 $show_lockstatus = true;
 $use_unlockaccount = true;
 $use_unlockcomment = false;
 $use_unlockcomment_required = false;
 $use_lockaccount = true;
+
 $use_lockcomment = false;
 $use_lockcomment_required = false;
+
 $show_expirestatus = true;
+
 $use_searchlocked = true;
+
 $use_searchexpired = true;
+
 $use_searchwillexpire = true;
 $willexpiredays = 14;
+
 $use_searchidle = true;
 $idledays = 60;
+
+$use_enableaccount = false;
+$use_disableaccount = false;
+$show_enablestatus = false;
+
+# Local password policy
+# This is applied before directory password policy
+# Minimal length
+$pwd_min_length = 0;
+# Maximal length
+$pwd_max_length = 0;
+# Minimal lower characters
+$pwd_min_lower = 0;
+# Minimal upper characters
+$pwd_min_upper = 0;
+# Minimal digit characters
+$pwd_min_digit = 0;
+# Minimal special characters
+$pwd_min_special = 0;
+# Definition of special characters
+$pwd_special_chars = "^a-zA-Z0-9";
+# Forbidden characters
+#$pwd_forbidden_chars = "@%";
+# Check that password is different than login
+$pwd_diff_login = true;
+# Forbidden words which must not appear in the password
+$pwd_forbidden_words = array();
+# Forbidden ldap fields
+# Respective values of the user's entry must not appear in the password
+# example: $pwd_forbidden_ldap_fields = array('cn', 'givenName', 'sn', 'mail');
+$pwd_forbidden_ldap_fields = array();
+# Complexity: number of different class of character required
+$pwd_complexity = 0;
+# use pwnedpasswords api v2 to securely check if the password has been on a leak
+$use_pwnedpasswords = false;
+# show password entropy bar (require php zxcvbn module)
+$pwd_display_entropy = false;
+# enforce password entropy check
+$pwd_check_entropy = false;
+# minimum entropy level required (when $pwd_check_entropy enabled)
+$pwd_min_entropy = 3;
+# Show policy constraints message:
+# always
+# never
+# onerror
+$pwd_show_policy = "never";
+# Position of password policy constraints message:
+# above - the form
+# below - the form
+$pwd_show_policy_pos = "above";
 
 ## Mail
 # LDAP mail attribute
@@ -171,6 +247,12 @@ $fake_password_inputs = false;
 
 # Audit
 #$audit_log_file = "/var/log/service-desk/audit.log";
+$use_showauditlog = false;
+$audit_log_days = 5;
+$audit_log_items = array('date','ip','user_dn','done_by','action','result','comment');
+$audit_log_sortby = "date";
+$audit_log_reverse = true;
+$audit_log_truncate_value_after = 40;
 #$header_name_audit_admin = "AUTH_USER";
 
 # Debug mode
@@ -210,6 +292,7 @@ $debug = false;
 #$smarty_cache_dir = "/var/cache/service-desk/cache";
 
 # Smarty debug mode - will popup debug information on web interface
+# and add many smarty debug messages in error logs
 $smarty_debug = false;
 
 # Allow to override current settings with local configuration

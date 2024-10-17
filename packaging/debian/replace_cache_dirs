@@ -1,4 +1,18 @@
 #!/bin/sh
 
-sed -i 's:^#$smarty_cache_dir.*:$smarty_cache_dir = "/var/cache/service-desk/cache";:' debian/service-desk/usr/share/service-desk/conf/config.inc.php
-sed -i 's:^#$smarty_compile_dir.*:$smarty_compile_dir = "/var/cache/service-desk/templates_c";:' debian/service-desk/usr/share/service-desk/conf/config.inc.php
+sed -i \
+  -e 's:^#$smarty_cache_dir.*:$smarty_cache_dir = "/var/cache/service-desk/cache";:' \
+  -e 's:^#$smarty_compile_dir.*:$smarty_compile_dir = "/var/cache/service-desk/templates_c";:' \
+  debian/service-desk/etc/service-desk/config.inc.php
+
+# Load configuration files from /etc/service-desk/
+for file in $( grep -r -l -E "\([^(]+\/conf\/[^)]+\)" debian/service-desk ) ; do
+  sed -i -e \
+    's#([^(]\+/conf/\([^")]\+\)")#("/etc/service-desk/\1")#' \
+    ${file}
+done
+
+# Clean hidden files in bundled php libs
+find debian/service-desk/usr/share/service-desk \
+  \( -name .gitignore -o -name .travis.yml -o -name .pullapprove.yml \) \
+  -delete
