@@ -5,22 +5,23 @@
 
 $result = "";
 $dn = "";
-$password = "";
 $comment = "";
+$returnto = "display";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
+} else if (isset($_GET["dn"]) and $_GET["dn"]) {
+    $dn = $_GET["dn"];
 } else {
     $result = "dnrequired";
 }
 
-if (isset($_POST["comment"]) and $_POST["comment"]) {
-    $comment = $_POST["comment"];
+if (isset($_GET["returnto"]) and $_GET["returnto"]) {
+    $returnto = $_GET["returnto"];
 }
 
-
-if (!$use_enableaccount) {
-    $result = "actionforbidden";
+if (isset($_POST["comment"]) and $_POST["comment"]) {
+    $comment = $_POST["comment"];
 }
 
 if ($result === "") {
@@ -47,4 +48,4 @@ if ($audit_log_file) {
     auditlog($audit_log_file, $dn, $audit_admin, "enableaccount", $result, $comment);
 }
 
-header('Location: index.php?page=display&dn='.$dn.'&enableaccountresult='.$result);
+header('Location: index.php?page='.$returnto.'&dn='.$dn.'&enableaccountresult='.$result);

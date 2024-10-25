@@ -26,6 +26,7 @@ $messages['comment_needed'] = "Un commentaire sera demandé";
 $messages['currentpassword'] = "Mot de passe actuel";
 $messages['dashboards'] = "Tableaux de bord";
 $messages['disableaccount'] = "Désactiver le compte";
+$messages['disabledaccounts'] = "Comptes désactivés";
 $messages['displayentry'] = "Afficher l'entrée";
 $messages['dnrequired'] = "L'identifiant de l'entrée est requis";
 $messages['editentry'] = "Modifier l'entrée";
