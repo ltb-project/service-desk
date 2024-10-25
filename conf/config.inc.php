@@ -96,6 +96,7 @@ $activedirectory_attributes_map = array(
     'pwdaccountlockedtime' => array( 'attribute' => 'lockouttime', 'faclass' => 'lock', 'type' => 'ad_date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdlastset', 'faclass' => 'lock', 'type' => 'ad_date' ),
     'pwdfailuretime' => array( 'attribute' => 'badpasswordtime', 'faclass' => 'lock', 'type' => 'ad_date' ),
+    'endtime' => array( 'attribute' => 'accountexpires', 'faclass' => 'lock', 'type' => 'ad_date' ),
 );
 
 # Search
