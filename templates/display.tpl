@@ -241,6 +241,9 @@
                 {if $unlockaccountresult eq 'ldaperror'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
                 {/if}
+                {if $enableaccountresult eq 'ldaperror'}
+                <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotenabled}</div>
+                {/if}
                 {if $use_unlockcomment}
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModal">
                         <i class="fa fa-fw fa-unlock me-2"></i>{$msg_unlockaccount}

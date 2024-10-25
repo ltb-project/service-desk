@@ -26,6 +26,7 @@ $messages['comment_needed'] = "A comment will be asked";
 $messages['currentpassword'] = "Current password";
 $messages['dashboards'] = "Dashboards";
 $messages['disableaccount'] = "Disable account";
+$messages['disabledaccounts'] = "Disabled accounts";
 $messages['displayentry'] = "Display entry";
 $messages['dnrequired'] = "Entry identifier required";
 $messages['editentry'] = "Edit entry";

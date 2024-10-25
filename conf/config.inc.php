@@ -137,6 +137,8 @@ $show_expirestatus = true;
 
 $use_searchlocked = true;
 
+$use_searchdisabled = true;
+
 $use_searchexpired = true;
 
 $use_searchwillexpire = true;

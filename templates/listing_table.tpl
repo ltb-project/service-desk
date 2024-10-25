@@ -20,6 +20,12 @@
                 <i class="fa fa-fw fa-unlock"></i>
             </a>
             {/if}
+            {if $display_enable_button}
+            <a href="index.php?page=enableaccount&dn={$entry.dn|escape:'url'}&returnto=searchdisabled"
+                class="btn btn-success btn-sm" role="button" title="{$msg_enableaccount}">
+                <i class="fa fa-fw fa-person-circle-check"></i>
+            </a>
+            {/if}
         </th>
         {foreach $listing_columns as $column}
         <td>
@@ -57,6 +63,12 @@
                 <a href="index.php?page=unlockaccount&dn={$event.dn|escape:'url'}&returnto=searchlocked"
                     class="btn btn-success btn-sm" role="button" title="{$msg_unlockaccount}">
                     <i class="fa fa-fw fa-unlock"></i>
+                </a>
+                {/if}
+                {if $display_enable_button}
+                <a href="index.php?page=enableaccount&dn={$event.dn|escape:'url'}&returnto=searchdisabled"
+                    class="btn btn-success btn-sm" role="button" title="{$msg_enableaccount}">
+                    <i class="fa fa-fw fa-person-circle-check"></i>
                 </a>
                 {/if}
             </th>

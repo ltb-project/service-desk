@@ -179,6 +179,7 @@ $smarty->assign('use_lockcomment_required',$use_lockcomment_required);
 $smarty->assign('show_expirestatus',$show_expirestatus);
 $smarty->assign('display_password_expiration_date',$display_password_expiration_date);
 $smarty->assign('use_searchlocked',$use_searchlocked);
+$smarty->assign('use_searchdisabled',$use_searchdisabled);
 $smarty->assign('use_searchexpired',$use_searchexpired);
 $smarty->assign('use_searchwillexpire',$use_searchwillexpire);
 $smarty->assign('use_searchidle',$use_searchidle);
@@ -241,7 +242,9 @@ if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
 if ( $page === "checkpassword" and !$use_checkpassword ) { $page = "welcome"; }
 if ( $page === "resetpassword" and !$use_resetpassword ) { $page = "welcome"; }
 if ( $page === "unlockaccount" and !$use_unlockaccount ) { $page = "welcome"; }
+if ( $page === "enableaccount" and !$use_enableaccount ) { $page = "welcome"; }
 if ( $page === "searchlocked" and !$use_searchlocked ) { $page = "welcome"; }
+if ( $page === "searchdisabled" and !$use_searchdisabled ) { $page = "welcome"; }
 if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
 if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
 if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
