@@ -187,6 +187,10 @@ $smarty->assign('fake_password_inputs',$fake_password_inputs);
 $smarty->assign('use_enableaccount',$use_enableaccount);
 $smarty->assign('use_disableaccount',$use_disableaccount);
 $smarty->assign('show_enablestatus',$show_enablestatus);
+$smarty->assign('use_enablecomment',$use_enablecomment);
+$smarty->assign('use_enablecomment_required',$use_enablecomment_required);
+$smarty->assign('use_disablecomment',$use_disablecomment);
+$smarty->assign('use_disablecomment_required',$use_disablecomment_required);
 
 
 # Assign messages

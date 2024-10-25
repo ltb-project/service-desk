@@ -23,7 +23,7 @@
             {if $display_enable_button}
             <a href="index.php?page=enableaccount&dn={$entry.dn|escape:'url'}&returnto=searchdisabled"
                 class="btn btn-success btn-sm" role="button" title="{$msg_enableaccount}">
-                <i class="fa fa-fw fa-person-circle-check"></i>
+                <i class="fa fa-fw fa-user-check"></i>
             </a>
             {/if}
         </th>

@@ -155,6 +155,12 @@ $use_enableaccount = false;
 $use_disableaccount = false;
 $show_enablestatus = false;
 
+$use_enablecomment = false;
+$use_enablecomment_required = false;
+$use_disablecomment = false;
+$use_disablecomment_required = false;
+
+
 # Local password policy
 # This is applied before directory password policy
 # Minimal length
