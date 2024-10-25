@@ -86,6 +86,9 @@ $openldap_attributes_map = array(
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdpolicysubentry' => array( 'attribute' => 'pwdpolicysubentry', 'faclass' => 'lock', 'type' => 'ppolicy_dn' ),
+    'pwdgraceusetime' => array( 'attribute' => ' pwdgraceusetime', 'faclass' => 'lock', 'type' => 'date' ),
+    'starttime' => array( 'attribute' => ' pwdstarttime', 'faclass' => 'lock', 'type' => 'date' ),
+    'endtime' => array( 'attribute' => ' pwdendtime', 'faclass' => 'lock', 'type' => 'date' ),
 );
 $activedirectory_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'lastlogon', 'faclass' => 'lock', 'type' => 'ad_date' ),
@@ -112,7 +115,7 @@ $datatables_auto_print = true;
 $display_items = array('identifier', 'firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary' );
 $display_title = "fullname";
 $display_show_undefined = false;
-$display_password_items = array('pwdchangedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdlastsuccess', 'created', 'modified');
+$display_password_items = array('pwdchangedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdlastsuccess', 'pwdgraceusetime', 'starttime', 'endtime', 'created', 'modified');
 $display_password_expiration_date = true;
 
 # Features
