@@ -258,13 +258,18 @@ $audit_log_truncate_value_after = 40;
 # Debug mode
 $debug = false;
 
-## Pre Hook
-# Launch a prehook script before changing password.
-# Script should return with 0, to allow password change.
-# Any other exit code would abort password modification
-#$prehook = "/usr/share/service-desk/prehook.sh";
+### Prehooks
+
+# Launch a prehook script before an action.
+# Script should return with 0, else action will be aborted, unless error is ignored
+
 # LDAP attribute used as login in posthook script
-#$prehook_login = "uid";
+$prehook_login = "uid";
+
+## Password reset
+
+#$prehook = "/usr/share/service-desk/prehook.sh";
+
 # Display prehook error
 #$display_prehook_error = true;
 # Encode passwords sent to prehook script as base64. This will prevent alteration of the passwords if set to true.
@@ -273,16 +278,33 @@ $debug = false;
 # Ignore prehook error. This will allow to change password even if prehook script fails.
 #$ignore_prehook_error = true;
 
-## Post Hook
-# Launch a posthook script after successful password change
-#$posthook = "/usr/share/service-desk/posthook.sh";
+## Unlock
+
+#$prehook_unlock = "/usr/share/service-desk/prehook_unlock.sh";
+#$display_prehook_unlock_error = true;
+#$ignore_prehook_unlock_error = true;
+
+### Posthooks
+
+# The posthook is only launched if the action was successful
+
 # LDAP attribute used as login in posthook script
-#$posthook_login = "uid";
+$posthook_login = "uid";
+
+## Password reset
+
+#$posthook = "/usr/share/service-desk/posthook.sh";
+
 # Display posthook error
 #$display_posthook_error = true;
 # Encode passwords sent to posthook script as base64. This will prevent alteration of the passwords if set to true.
 # To read the actual password in the posthook script, use a base64_decode function/tool
 #$posthook_password_encodebase64 = false;
+
+## Unlock
+
+#$posthook_unlock = "/usr/share/service-desk/posthook_unlock.sh";
+#$display_posthook_unlock_error = true;
 
 # The name of an HTTP Header that may hold a reference to an extra config file to include.
 #$header_name_extra_config="SSP-Extra-Config";
