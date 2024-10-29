@@ -28,8 +28,11 @@ if ($result === "") {
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
-    if ($ldap)
-    {
+    # DN match
+    if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
+        $result = "noentriesfound";
+        error_log("LDAP - $dn not found using the configured search settings, reject request");
+    } else {
         # Get password policy configuration
         $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $dn, $ldap_default_ppolicy);
         if ($ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_durantion; }
