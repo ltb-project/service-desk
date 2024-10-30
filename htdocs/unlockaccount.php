@@ -65,7 +65,7 @@ if ($result === "") {
             }
         }
 
-        if ( $prehook_return > 0 and !$ignore_prehook_unlock_return) {
+        if ( $prehook_return > 0 and !$ignore_prehook_unlock_error) {
             $result = "hookerror";
         } else {
             if ( $directory->unlockAccount($ldap, $dn) ) {

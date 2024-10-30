@@ -37,6 +37,7 @@ $messages['eventsfound'] = "events found";
 $messages['expiredaccounts'] = "Passwords expired";
 $messages['false'] = "No";
 $messages['forcereset'] = "Force reset at next connection";
+$messages['hookerror'] = "An error occured in the hook";
 $messages['idleaccounts'] = "Idle accounts";
 $messages['idleaccountstitle'] = "Accounts idle for more than $idledays days";
 $messages['insert_comment'] = "Insert comment";

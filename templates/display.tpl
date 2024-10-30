@@ -224,12 +224,6 @@
         {/if}
 
         {if $show_lockstatus}
-        {if $prehookunlockresult}
-        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookunlockresult}</div>
-        {/if}
-        {if $posthookunlockresult}
-        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookunlockresult}</div>
-        {/if}
         {if $isLocked}
         <div class="card mb-3 shadow border-danger">
             <div class="card-header text-bg-danger text-center">
@@ -240,6 +234,12 @@
             </div>
 
              <div class="card-body">
+                {if $prehookunlockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookunlockresult}</div>
+                {/if}
+                {if $posthookunlockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookunlockresult}</div>
+                {/if}
                 {if $unlockDate}
                 <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
                 {/if}
@@ -277,8 +277,14 @@
                 </p>
             </div>
 
-            {if $use_lockaccount}
+            {if $use_lockaccount || $prehookunlockresult || $posthookunlockresult}
             <div class="card-body">
+                {if $prehookunlockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookunlockresult}</div>
+                {/if}
+                {if $posthookunlockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookunlockresult}</div>
+                {/if}
                 {if $lockaccountresult eq 'ldaperror'}
                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
                 {/if}
