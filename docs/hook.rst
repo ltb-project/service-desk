@@ -3,6 +3,7 @@ Hook
 
 Hook feature allows to run a script before or after an action:
 * Password reset
+* Password lock
 * Password unlock
 
 The script must return 0 if no error occured. Any text printed on STDOUT
@@ -56,6 +57,31 @@ if it fails, but still try to update password in the directory.
 .. code-block:: php
 
     $ignore_prehook_error = true;
+
+Password lock
+-------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and enable the feature):
+
+.. code-block:: php
+
+    $prehook_lock = "/usr/share/service-desk/prehook_lock.sh";
+    $posthook_lock = "/usr/share/service-desk/posthook_lock.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_lock_error = true;
+   $display_posthook_lock_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_lock_error = true;
 
 Password unlock
 ---------------

@@ -234,6 +234,12 @@
             </div>
 
              <div class="card-body">
+                {if $prehooklockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehooklockresult}</div>
+                {/if}
+                {if $posthooklockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthooklockresult}</div>
+                {/if}
                 {if $prehookunlockresult}
                 <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookunlockresult}</div>
                 {/if}
@@ -277,8 +283,14 @@
                 </p>
             </div>
 
-            {if $use_lockaccount || $prehookunlockresult || $posthookunlockresult}
+            {if $use_lockaccount || $prehooklockresult || $posthooklockresult || $prehookunlockresult || $posthookunlockresult}
             <div class="card-body">
+                {if $prehooklockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehooklockresult}</div>
+                {/if}
+                {if $posthooklockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthooklockresult}</div>
+                {/if}
                 {if $prehookunlockresult}
                 <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookunlockresult}</div>
                 {/if}

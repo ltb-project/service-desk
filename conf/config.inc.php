@@ -278,6 +278,12 @@ $prehook_login = "uid";
 # Ignore prehook error. This will allow to change password even if prehook script fails.
 #$ignore_prehook_error = true;
 
+## Lock
+
+#$prehook_lock = "/usr/share/service-desk/prehook_lock.sh";
+#$display_prehook_lock_error = true;
+#$ignore_prehook_lock_error = true;
+
 ## Unlock
 
 #$prehook_unlock = "/usr/share/service-desk/prehook_unlock.sh";
@@ -300,6 +306,11 @@ $posthook_login = "uid";
 # Encode passwords sent to posthook script as base64. This will prevent alteration of the passwords if set to true.
 # To read the actual password in the posthook script, use a base64_decode function/tool
 #$posthook_password_encodebase64 = false;
+
+## Lock
+
+#$posthook_lock = "/usr/share/service-desk/posthook_lock.sh";
+#$display_posthook_lock_error = true;
 
 ## Unlock
 
