@@ -1,12 +1,27 @@
 Hook
 ====
 
-Hook feature allows to run a script before or after the password modification.
+Hook feature allows to run a script before or after an action:
+* Password reset
+* Password unlock
+
+The script must return 0 if no error occured. Any text printed on STDOUT
+will be displayed as an error message (see options).
+
+Login
+-----
+
+Define which attribute will be used as login in prehook and posthook scripts:
+
+.. code-block:: php
+
+    $prehook_login = "uid";
+    $posthook_login = "uid";
+
+Password reset
+--------------
 
 The script is called with two parameters: login and new password.
-
-Parameters
-----------
 
 Define prehook or posthook script (and enable the feature):
 
@@ -14,13 +29,6 @@ Define prehook or posthook script (and enable the feature):
 
     $prehook = "/usr/share/service-desk/prehook.sh";
     $posthook = "/usr/share/service-desk/posthook.sh";
-
-Define which attribute will be used as login:
-
-.. code-block:: php
-
-    $prehook_login = "uid";
-    $posthook_login = "uid";
 
 You can choose to display an error if the script return code is greater
 than 0:
@@ -48,3 +56,28 @@ if it fails, but still try to update password in the directory.
 .. code-block:: php
 
     $ignore_prehook_error = true;
+
+Password unlock
+---------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and enable the feature):
+
+.. code-block:: php
+
+    $prehook_unlock = "/usr/share/service-desk/prehook_unlock.sh";
+    $posthook_unlock = "/usr/share/service-desk/posthook_unlock.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_unlock_error = true;
+   $display_posthook_unlock_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_unlock_error = true;
