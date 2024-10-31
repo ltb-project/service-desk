@@ -1,6 +1,7 @@
 <form id={$method} method="post" action="index.php?page={$page}">
     <input type="hidden" name="dn" value="{$dn}" />
-    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="CommentModal" aria-hidden="true">
+    <input type="hidden" name="returnto" value="{$returnto}" />
+    <div class="modal fade" id="commentModal{$method}{$dn|sha1}" tabindex="-1" aria-labelledby="CommentModal{$method}{$dn|sha1}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
