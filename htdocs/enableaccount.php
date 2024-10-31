@@ -8,6 +8,10 @@ $dn = "";
 $comment = "";
 $returnto = "display";
 
+if (isset($_POST["returnto"]) and $_POST["returnto"]) {
+    $returnto = $_POST["returnto"];
+}
+
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
 } else if (isset($_GET["dn"]) and $_GET["dn"]) {

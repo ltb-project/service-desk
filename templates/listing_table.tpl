@@ -15,16 +15,38 @@
                 <i class="fa fa-fw fa-id-card"></i>
             </a>
             {if $display_unlock_button}
-            <a href="index.php?page=unlockaccount&dn={$entry.dn|escape:'url'}&returnto=searchlocked"
-                class="btn btn-success btn-sm" role="button" title="{$msg_unlockaccount}">
-                <i class="fa fa-fw fa-unlock"></i>
-            </a>
+                {if $use_unlockcomment}
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#commentModalunlock{$entry.dn|sha1}">
+                        <i class="fa fa-fw fa-unlock"></i>{$msg_unlockaccount}
+                        <i class="fa fa-fw fa-info-circle text-body-tertiary" title="{$msg_comment_needed}"></i>
+                    </button>
+                    <div>
+                        {include 'comment.tpl' method=unlock page=unlockaccount title=$msg_unlockaccount dn=$entry.dn returnto=$page}
+                    </div>
+                {else}
+                    <a href="index.php?page=unlockaccount&dn={$entry.dn|escape:'url'}&returnto=searchlocked"
+                       class="btn btn-success btn-sm" role="button" title="{$msg_unlockaccount}">
+                        <i class="fa fa-fw fa-unlock"></i>
+                    </a>
+                {/if}
             {/if}
             {if $display_enable_button}
-            <a href="index.php?page=enableaccount&dn={$entry.dn|escape:'url'}&returnto=searchdisabled"
-                class="btn btn-success btn-sm" role="button" title="{$msg_enableaccount}">
-                <i class="fa fa-fw fa-user-check"></i>
-            </a>
+                {if $use_enablecomment}
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#commentModalenable{$entry.dn|sha1}">
+                        <i class="fa fa-fw fa-user-check"></i>{$msg_enableaccount}
+                        <i class="fa fa-fw fa-info-circle text-body-tertiary" title="{$msg_comment_needed}"></i>
+                    </button>
+                    <div>
+                        {include 'comment.tpl' method=enable page=enableaccount title=$msg_enableaccount dn=$entry.dn returnto=$page}
+                    </div>
+                {else}
+                    <a href="index.php?page=enableaccount&dn={$entry.dn|escape:'url'}&returnto=searchdisabled"
+                       class="btn btn-success btn-sm" role="button" title="{$msg_enableaccount}">
+                        <i class="fa fa-fw fa-user-check"></i>
+                    </a>
+                {/if}
+
+
             {/if}
         </th>
         {foreach $listing_columns as $column}
