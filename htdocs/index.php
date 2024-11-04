@@ -130,6 +130,12 @@ $smarty->setTemplateDir('../templates/');
 $smarty->setCompileDir($compile_dir);
 $smarty->setCacheDir($cache_dir);
 $smarty->debugging = $smarty_debug;
+function sha256($string)
+{
+    return hash("sha256",$string);
+}
+$smarty->registerPlugin("modifier","sha256", "sha256");
+$smarty->registerPlugin("modifier","is_array", "is_array");
 
 if(isset($smarty_debug) && $smarty_debug == true )
 {

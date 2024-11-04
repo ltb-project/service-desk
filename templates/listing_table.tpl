@@ -16,7 +16,7 @@
             </a>
             {if $display_unlock_button}
                 {if $use_unlockcomment}
-                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#commentModalunlock{$entry.dn|sha1}">
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#commentModalunlock{$entry.dn|sha256}">
                         <i class="fa fa-fw fa-unlock"></i>{$msg_unlockaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary" title="{$msg_comment_needed}"></i>
                     </button>
@@ -32,7 +32,7 @@
             {/if}
             {if $display_enable_button}
                 {if $use_enablecomment}
-                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#commentModalenable{$entry.dn|sha1}">
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#commentModalenable{$entry.dn|sha256}">
                         <i class="fa fa-fw fa-user-check"></i>{$msg_enableaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary" title="{$msg_comment_needed}"></i>
                     </button>

@@ -44,8 +44,8 @@ function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $a
 }
 
 function dateSort(array &$events, $sortkey, $audit_log_reverse) {
-  $reverse_order = fn($a, $b) => strtotime($a[$sortkey]) < strtotime($b[$sortkey]);
-  $normal_order = fn($a, $b) => strtotime($a[$sortkey]) > strtotime($b[$sortkey]);
+  $reverse_order = fn($a, $b) => strtotime($b[$sortkey]) <=> strtotime($a[$sortkey]);
+  $normal_order =  fn($a, $b) => strtotime($a[$sortkey]) <=> strtotime($b[$sortkey]);
 
   if ($audit_log_reverse) {
     usort($events, $reverse_order);
