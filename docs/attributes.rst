@@ -6,6 +6,7 @@ Attributes are defined in ``$attributes_map``, where each item is an array with 
 * ``attribute``: name of LDAP attribute, in lower case
 * ``faclass``: name of Font Awesome icon class
 * ``type``: type of attribute (text, mailto, tel or date)
+* ``sort``: optional, when attribute is multi-valued, sort them. Two possible values: ``ascending`` (default) or ``descending``
 
 This is used to configure how attribute is displayed.
 

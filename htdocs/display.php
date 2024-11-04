@@ -86,7 +86,24 @@ if ($result === "") {
         # Sort attributes values
         foreach ($entry[0] as $attr => $values) {
             if ( is_array($values) && $values['count'] > 1 ) {
-                asort($values);
+                if(isset($attributes_map[$attr]['sort']))
+                {
+                    if($attributes_map[$attr]['sort'] == "descending" )
+                    {
+                        # descending sort
+                        arsort($values);
+                    }
+                    else
+                    {
+                        # ascending sort
+                        asort($values);
+                    }
+                }
+                else
+                {
+                    # if 'sort' param unset: default to ascending sort
+                    asort($values);
+                }
             }
             if ( isset($values['count']) ) {
                 unset($values['count']);
