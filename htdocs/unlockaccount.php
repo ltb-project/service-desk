@@ -14,6 +14,10 @@ $posthook_login_value = "";
 $posthook_message = "";
 $posthook_return = 0;
 
+if (isset($_POST["returnto"]) and $_POST["returnto"]) {
+    $returnto = $_POST["returnto"];
+}
+
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
 } else if (isset($_GET["dn"]) and $_GET["dn"]) {
@@ -43,47 +47,53 @@ if ($result === "") {
     $result = $ldap_connection[1];
 
     if ($ldap) {
-
-        if ( isset($prehook_unlock) || isset($posthook_unlock) ) {
-            if ( isset($prehook_login) ) {
-                $prehook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $prehook_login);
-            }
-            if ( isset($posthook_login) ) {
-                $posthook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $posthook_login);
-            }
-        }
-
-        if ( isset($prehook_unlock) ) {
-
-            if ( !isset($prehook_login_value) ) {
-                $prehook_return = 255;
-                $prehook_message = "No login found, cannot execute prehook script";
-            } else {
-                $command = hook_command($prehook_unlock, $prehook_login_value);
-                exec($command, $prehook_output, $prehook_return);
-                $prehook_message = $prehook_output[0];
-            }
-        }
-
-        if ( $prehook_return > 0 and !$ignore_prehook_unlock_error) {
-            $result = "hookerror";
+        # DN match
+        if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
+            $result = "noentriesfound";
+            error_log("LDAP - $dn not found using the configured search settings, reject request");
         } else {
-            if ( $directory->unlockAccount($ldap, $dn) ) {
-                $result = "accountunlocked";
-            } else {
-                $result = "ldaperror";
+
+            if ( isset($prehook_unlock) || isset($posthook_unlock) ) {
+                if ( isset($prehook_login) ) {
+                    $prehook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $prehook_login);
+                }
+                if ( isset($posthook_login) ) {
+                    $posthook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $posthook_login);
+                }
             }
-        }
 
-        if ( $result === "accountunlocked" && isset($posthook_unlock) ) {
+            if ( isset($prehook_unlock) ) {
 
-            if ( !isset($posthook_login_value) ) {
-                $posthook_return = 255;
-                $posthook_message = "No login found, cannot execute posthook script";
+                if ( !isset($prehook_login_value) ) {
+                    $prehook_return = 255;
+                    $prehook_message = "No login found, cannot execute prehook script";
+                } else {
+                    $command = hook_command($prehook_unlock, $prehook_login_value);
+                    exec($command, $prehook_output, $prehook_return);
+                    $prehook_message = $prehook_output[0];
+                }
+            }
+
+            if ( $prehook_return > 0 and !$ignore_prehook_unlock_error) {
+                $result = "hookerror";
             } else {
-                $command = hook_command($posthook_unlock, $posthook_login_value);
-                exec($command, $posthook_output, $posthook_return);
-                $posthook_message = $posthook_output[0];
+                if ( $directory->unlockAccount($ldap, $dn) ) {
+                    $result = "accountunlocked";
+                } else {
+                    $result = "ldaperror";
+                }
+            }
+
+            if ( $result === "accountunlocked" && isset($posthook_unlock) ) {
+
+                if ( !isset($posthook_login_value) ) {
+                    $posthook_return = 255;
+                    $posthook_message = "No login found, cannot execute posthook script";
+                } else {
+                    $command = hook_command($posthook_unlock, $posthook_login_value);
+                    exec($command, $posthook_output, $posthook_return);
+                    $posthook_message = $posthook_output[0];
+                }
             }
         }
     }

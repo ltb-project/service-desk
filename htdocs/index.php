@@ -18,12 +18,11 @@ require_once("../vendor/autoload.php");
 #==============================================================================
 # Language
 #==============================================================================
-require_once("../lib/detectbrowserlanguage.php");
 # Available languages
 $files = glob("../lang/*.php");
 $languages = str_replace(".inc.php", "", $files);
 $languages = str_replace("../lang/", "", $languages);
-$lang = detectLanguage($lang, $allowed_lang ? array_intersect($languages, $allowed_lang) : $languages);
+$lang = \Ltb\Language::detect_language($lang, $allowed_lang ? array_intersect($languages,$allowed_lang) : $languages);
 require_once("../lang/$lang.inc.php");
 if (file_exists("../conf/$lang.inc.php")) {
     require_once("../conf/$lang.inc.php");
@@ -86,6 +85,8 @@ switch($ldap_type) {
   break;
 }
 
+$dnAttribute = $directory->getDnAttribute();
+
 #==============================================================================
 # Other default values
 #==============================================================================
@@ -131,6 +132,12 @@ $smarty->setTemplateDir('../templates/');
 $smarty->setCompileDir($compile_dir);
 $smarty->setCacheDir($cache_dir);
 $smarty->debugging = $smarty_debug;
+function sha256($string)
+{
+    return hash("sha256",$string);
+}
+$smarty->registerPlugin("modifier","sha256", "sha256");
+$smarty->registerPlugin("modifier","is_array", "is_array");
 
 if(isset($smarty_debug) && $smarty_debug == true )
 {
@@ -179,6 +186,7 @@ $smarty->assign('use_lockcomment_required',$use_lockcomment_required);
 $smarty->assign('show_expirestatus',$show_expirestatus);
 $smarty->assign('display_password_expiration_date',$display_password_expiration_date);
 $smarty->assign('use_searchlocked',$use_searchlocked);
+$smarty->assign('use_searchdisabled',$use_searchdisabled);
 $smarty->assign('use_searchexpired',$use_searchexpired);
 $smarty->assign('use_searchwillexpire',$use_searchwillexpire);
 $smarty->assign('use_searchidle',$use_searchidle);
@@ -187,6 +195,10 @@ $smarty->assign('fake_password_inputs',$fake_password_inputs);
 $smarty->assign('use_enableaccount',$use_enableaccount);
 $smarty->assign('use_disableaccount',$use_disableaccount);
 $smarty->assign('show_enablestatus',$show_enablestatus);
+$smarty->assign('use_enablecomment',$use_enablecomment);
+$smarty->assign('use_enablecomment_required',$use_enablecomment_required);
+$smarty->assign('use_disablecomment',$use_disablecomment);
+$smarty->assign('use_disablecomment_required',$use_disablecomment_required);
 
 
 # Assign messages
@@ -241,7 +253,9 @@ if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
 if ( $page === "checkpassword" and !$use_checkpassword ) { $page = "welcome"; }
 if ( $page === "resetpassword" and !$use_resetpassword ) { $page = "welcome"; }
 if ( $page === "unlockaccount" and !$use_unlockaccount ) { $page = "welcome"; }
+if ( $page === "enableaccount" and !$use_enableaccount ) { $page = "welcome"; }
 if ( $page === "searchlocked" and !$use_searchlocked ) { $page = "welcome"; }
+if ( $page === "searchdisabled" and !$use_searchdisabled ) { $page = "welcome"; }
 if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
 if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
 if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }

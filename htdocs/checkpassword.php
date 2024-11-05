@@ -30,21 +30,29 @@ if ($result === "") {
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
-    if ($use_checkpasswordhistory) {
-        $password_history = $ldapInstance->get_attribute_values($dn, "pwdHistory");
-        foreach ($password_history as $previous_password) {
-            preg_match("/(?<={).*(?=})/", $previous_password, $algorithm);
-            preg_match("/{(?<={).*/", $previous_password, $hash);
-            if (\Ltb\Password::check_password($password, $hash[0], $algorithm[0])) {
-                $result = "passwordinhistory";
+    # DN match
+    if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
+        $result = "noentriesfound";
+        error_log("LDAP - $dn not found using the configured search settings, reject request");
+    } else {
+
+        if ($use_checkpasswordhistory) {
+            $password_history = $ldapInstance->get_attribute_values($dn, "pwdHistory");
+            foreach ($password_history as $previous_password) {
+                preg_match("/(?<={).*(?=})/", $previous_password, $algorithm);
+                preg_match("/{(?<={).*/", $previous_password, $hash);
+                if (\Ltb\Password::check_password($password, $hash[0], $algorithm[0])) {
+                    $result = "passwordinhistory";
+                }
             }
         }
-    }
-    if (!$result) {
-        $bind = ldap_bind($ldap, $dn, $password);
-        $result = $bind ? "passwordok" : "ldaperror";
-    }
 
+        if (!$result) {
+            $bind = ldap_bind($ldap, $dn, $password);
+            $result = $bind ? "passwordok" : "ldaperror";
+        }
+
+    }
 }
 
 if ($audit_log_file) {

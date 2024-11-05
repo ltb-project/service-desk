@@ -1,6 +1,6 @@
 <?php
 /*
- * Search entries expiring soon in LDAP directory
+ * Search disabled entries in LDAP directory
  */
 
 require_once("../conf/config.inc.php");
@@ -10,32 +10,20 @@ require __DIR__ . '/../vendor/autoload.php';
 
 if ( !empty($entries) )
 {
-    # Check if entry will soon expire
+
+    # Check if entry is still locked
     foreach($entries as $entry_key => $entry) {
 
-        # Get password policy configuration
-        $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $entry["dn"], $ldap_default_ppolicy);
-        if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
-        if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
+        $isEnabled = $directory->isAccountEnabled($ldap, $entry['dn']);
 
-        $isWillExpire = false;
-        $expirationDate = $directory->getPasswordExpirationDate($ldap, $entry["dn"], $pwdPolicyConfiguration);
-
-        if ($expirationDate) {
-            $expirationDateClone = clone $expirationDate;
-            $willExpireDate = date_sub( $expirationDateClone, new DateInterval('P'.$willexpiredays.'D'));
-            $time = time();
-            if ( $time >= $willExpireDate->getTimestamp() and $time < $expirationDate->getTimestamp() ) {
-                $isWillExpire = true;
-            }
-        }
-
-        if ( $isWillExpire === false ) {
+        if ( $isEnabled === true ) {
             unset($entries[$entry_key]);
             $nb_entries--;
         }
+
     }
-    $smarty->assign("page_title", "willexpireaccountstitle");
+
+    $smarty->assign("page_title", "disabledaccounts");
     if ($nb_entries === 0) {
         $result = "noentriesfound";
     } else {
@@ -50,6 +38,7 @@ if ( !empty($entries) )
         $smarty->assign("listing_sortby",  array_search($search_result_sortby, $columns));
         $smarty->assign("show_undef", $search_result_show_undefined);
         $smarty->assign("truncate_value_after", $search_result_truncate_value_after);
+        if ($use_enableaccount) { $smarty->assign("display_enable_button", true); }
     }
 }
 
