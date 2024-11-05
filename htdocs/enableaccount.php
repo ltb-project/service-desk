@@ -39,7 +39,11 @@ if ($result === "") {
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
-    if ($ldap) {
+    # DN match
+    if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
+        $result = "noentriesfound";
+        error_log("LDAP - $dn not found using the configured search settings, reject request");
+    } else {
         if ( $directory->enableAccount($ldap, $dn) ) {
             $result = "accountenabled";
         } else {
