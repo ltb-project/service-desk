@@ -14,12 +14,15 @@
 
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
-                {if $use_searchlocked or $use_searchwillexpire or $use_searchexpired or $use_searchidle}
+                {if $use_searchlocked or $use_searchdisabled or $use_searchwillexpire or $use_searchexpired or $use_searchidle}
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-dashboard"></i> {$msg_dashboards}<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                       {if $use_searchlocked}
                       <li><a href="index.php?page=searchlocked" class="dropdown-item"><i class="fa fa-fw fa-lock"></i> {$msg_lockedaccounts}</a></li>
+                      {/if}
+                      {if $use_searchdisabled}
+                      <li><a href="index.php?page=searchdisabled" class="dropdown-item"><i class="fa fa-fw fa-user-slash"></i> {$msg_disabledaccounts}</a></li>
                       {/if}
                       {if $use_searchwillexpire}
                       <li><a href="index.php?page=searchwillexpire" class="dropdown-item"><i class="fa fa-fw fa-hourglass-half"></i> {$msg_willexpireaccounts}</a></li>

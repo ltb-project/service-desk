@@ -64,6 +64,12 @@ if ($result === "") {
 
     if ($ldap) {
 
+        # DN match
+        if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
+            $result = "noentriesfound";
+            error_log("LDAP - $dn not found using the configured search settings, reject request");
+        } else {
+
         # Search attributes
         $attributes = array();
         $search_items = array_merge($display_items, $display_password_items);
@@ -80,8 +86,8 @@ if ($result === "") {
             $result = "ldaperror";
             error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
         } else {
-            $entry = ldap_get_entries($ldap, $search);
-        }
+
+        $entry = ldap_get_entries($ldap, $search);
 
         # Sort attributes values
         foreach ($entry[0] as $attr => $values) {
@@ -96,8 +102,8 @@ if ($result === "") {
 
         # Get password policy configuration
         $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $dn, $ldap_default_ppolicy);
-        if ($ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_durantion; }
-        if ($ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
+        if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
+        if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
         if ($display_edit_link) {
             # Replace {dn} in URL
@@ -118,7 +124,7 @@ if ($result === "") {
             $isAccountEnabled = $directory->isAccountEnabled($ldap, $dn);
         }
 
-    }
+    }}}
 }
 
 $smarty->assign("entry", $entry[0]);

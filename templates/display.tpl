@@ -242,7 +242,7 @@
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotunlocked}</div>
                 {/if}
                 {if $use_unlockcomment}
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModal">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModalunlock{$dn|sha256}">
                         <i class="fa fa-fw fa-unlock me-2"></i>{$msg_unlockaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
@@ -277,7 +277,7 @@
                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
                 {/if}
                 {if $use_lockcomment}
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModal">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModallock{$dn|sha256}">
                         <i class="fa fa-fw fa-lock me-2"></i>{$msg_lockaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
@@ -322,15 +322,25 @@
             </div>
             {if $use_disableaccount}
             <div class="card-body">
-                <form id="disableaccount" method="post" action="index.php?page=disableaccount">
-                    {if $disableaccountresult eq 'ldaperror' or $disableaccountresult eq 'actionforbidden'}
-                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotdisabled}</div>
-                    {/if}
-                    <input type="hidden" name="dn" value="{$dn}" />
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-fw fa-user-slash"></i> {$msg_disableaccount}
+                {if $disableaccountresult eq 'ldaperror' or $disableaccountresult eq 'actionforbidden'}
+                <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotdisabled}</div>
+                {/if}
+                {if $use_disablecomment}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModaldisable{$dn|sha256}">
+                        <i class="fa fa-fw fa-user-slash me-2"></i>{$msg_disableaccount}
+                        <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                </form>
+                    <div>
+                        {include 'comment.tpl' method=disable page=disableaccount title=$msg_lockaccount}
+                    </div>
+                {else}
+                    <form id="disableaccount" method="post" action="index.php?page=disableaccount">
+                        <input type="hidden" name="dn" value="{$dn}" />
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-user-slash"></i> {$msg_disableaccount}
+                        </button>
+                    </form>
+                {/if}
             </div>
             {/if}
         </div>
@@ -344,15 +354,25 @@
             </div>
             {if $use_enableaccount}
             <div class="card-body">
-                <form id="disableaccount" method="post" action="index.php?page=enableaccount">
-                    {if $enableaccountresult eq 'ldaperror' or $enableaccountresult eq 'actionforbidden'}
-                    <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotenabled}</div>
-                    {/if}
-                    <input type="hidden" name="dn" value="{$dn}" />
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa fa-fw fa-user-check"></i> {$msg_enableaccount}
+                {if $enableaccountresult eq 'ldaperror' or $enableaccountresult eq 'actionforbidden'}
+                <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotenabled}</div>
+                {/if}
+                {if $use_enablecomment}
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModalenable{$dn|sha256}">
+                        <i class="fa fa-fw fa-user-check me-2"></i>{$msg_enableaccount}
+                        <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                </form>
+                    <div>
+                        {include 'comment.tpl' method=enable page=enableaccount title=$msg_enableaccount}
+                    </div>
+                {else}
+                    <form id="disableaccount" method="post" action="index.php?page=enableaccount">
+                        <input type="hidden" name="dn" value="{$dn}" />
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-user-check"></i> {$msg_enableaccount}
+                        </button>
+                    </form>
+                {/if}
             </div>
             {/if}
         </div>

@@ -8,6 +8,10 @@ $dn = "";
 $comment = "";
 $returnto = "display";
 
+if (isset($_POST["returnto"]) and $_POST["returnto"]) {
+    $returnto = $_POST["returnto"];
+}
+
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
 } else if (isset($_GET["dn"]) and $_GET["dn"]) {
@@ -35,7 +39,11 @@ if ($result === "") {
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
-    if ($ldap) {
+    # DN match
+    if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
+        $result = "noentriesfound";
+        error_log("LDAP - $dn not found using the configured search settings, reject request");
+    } else {
         if ( $directory->unlockAccount($ldap, $dn) ) {
             $result = "accountunlocked";
         } else {

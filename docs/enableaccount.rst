@@ -31,3 +31,25 @@ To enable this feature:
 .. code-block:: php
 
     $use_disableaccount = true;
+
+Insert comment
+--------------
+
+This feature displays a comment pop-up when enabling and disabling user accounts.
+
+To enable this feature:
+
+.. code-block:: php
+
+    $use_enablecomment = true;
+    $use_disablecomment = true;
+
+Comment required
+----------------
+
+This feature ensures a comment is required before enabling/disabling a user.
+
+.. code-block:: php
+
+    $use_enablecomment_required = true;
+    $use_disablecomment_required = true;

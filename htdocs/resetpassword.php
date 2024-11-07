@@ -42,8 +42,11 @@ if ($result === "") {
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
-    if ($ldap) {
-
+    # DN match
+    if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
+        $result = "noentriesfound";
+        error_log("LDAP - $dn not found using the configured search settings, reject request");
+    } else {
         if ( isset($prehook) || isset($posthook) ) {
             $login_search = ldap_read($ldap, $dn, '(objectClass=*)', array($prehook_login, $posthook_login));
             $login_entry = ldap_first_entry( $ldap, $login_search );

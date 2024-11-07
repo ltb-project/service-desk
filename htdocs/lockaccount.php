@@ -6,6 +6,11 @@
 $result = "";
 $dn = "";
 $comment = "";
+$returnto = "display";
+
+if (isset($_POST["returnto"]) and $_POST["returnto"]) {
+    $returnto = $_POST["returnto"];
+}
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
@@ -28,11 +33,14 @@ if ($result === "") {
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
 
-    if ($ldap)
-    {
+    # DN match
+    if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
+        $result = "noentriesfound";
+        error_log("LDAP - $dn not found using the configured search settings, reject request");
+    } else {
         # Get password policy configuration
         $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $dn, $ldap_default_ppolicy);
-        if ($ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_durantion; }
+        if ($ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
         if ($ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
         # Apply the modification only the password can be locked
@@ -50,4 +58,4 @@ if ($audit_log_file) {
     auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result, $comment);
 }
 
-header('Location: index.php?page=display&dn='.$dn.'&lockaccountresult='.$result);
+header('Location: index.php?page='.$returnto.'&dn='.$dn.'&lockaccountresult='.$result);
