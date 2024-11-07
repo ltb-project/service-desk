@@ -26,7 +26,7 @@
 {/literal}
 {if $datatables_page_length_choices}
           pageLength: {
-            menu: [ {$datatables_page_length_choices} ]
+            menu: [ {$datatables_page_length_choices nofilter} ]
           }
 {/if}
 {literal}
