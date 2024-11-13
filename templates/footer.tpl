@@ -29,9 +29,12 @@
             menu: [ {$datatables_page_length_choices nofilter} ]
           }
 {/if}
-{literal}
 	},
       },
+{if $datatables_page_length_default}
+      pageLength: {$datatables_page_length_default},
+{/if
+{literal}
       language: {
         url: "vendor/datatables/i18n/{/literal}{$lang|default:'en'}{literal}.json"
       }
