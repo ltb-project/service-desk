@@ -42,7 +42,7 @@
       },
 {if $datatables_page_length_default}
       pageLength: {$datatables_page_length_default},
-{/if
+{/if}
 {literal}
       language: {
         url: "vendor/datatables/i18n/{/literal}{$lang|default:'en'}{literal}.json"
