@@ -11,6 +11,9 @@
 <script src="vendor/datatables/dataTables.min.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap5.min.js"></script>
 <script src="vendor/datatables/dataTables.buttons.min.js"></script>
+<script src="vendor/datatables/buttons.colVis.min.js"></script>
+<script src="vendor/datatables/buttons.html5.min.js"></script>
+<script src="vendor/datatables/buttons.print.min.js"></script>
 <script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
