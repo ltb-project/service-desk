@@ -32,7 +32,13 @@
             menu: [ {$datatables_page_length_choices nofilter} ]
           }
 {/if}
-	},
+        },
+        bottom2Start: {
+            buttons: [
+                { extend: 'print', text: '{$msg_print_all}', autoPrint: {if $datatables_auto_print}true{else}false{/if} },
+                { extend: 'print', text: '{$msg_print_page}', exportOptions: { modifier: { page: 'current' } }, autoPrint: {if $datatables_auto_print}true{else}false{/if} }
+            ]
+        }
       },
 {if $datatables_page_length_default}
       pageLength: {$datatables_page_length_default},
