@@ -111,6 +111,8 @@ $search_result_truncate_value_after = 20;
 
 $datatables_page_length_choices = array(10, 25, 50, 100, -1);
 $datatables_page_length_default = 10;
+$datatables_print_all = true;
+$datatables_print_page = true;
 $datatables_auto_print = true;
 
 $display_items = array('identifier', 'firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary' );

@@ -172,6 +172,8 @@ if (is_array($datatables_page_length_choices)) {
 }
 $smarty->assign('datatables_page_length_choices', $datatables_page_length_choices);
 $smarty->assign('datatables_page_length_default', $datatables_page_length_default);
+$smarty->assign('datatables_print_all', $datatables_print_all);
+$smarty->assign('datatables_print_page', $datatables_print_page);
 $smarty->assign('datatables_auto_print', $datatables_auto_print);
 $smarty->assign('version',$version);
 $smarty->assign('display_footer',$display_footer);
