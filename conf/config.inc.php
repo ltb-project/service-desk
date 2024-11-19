@@ -162,6 +162,9 @@ $use_enablecomment_required = false;
 $use_disablecomment = false;
 $use_disablecomment_required = false;
 
+$show_validitystatus = true;
+$use_updatestarttime = true;
+$use_updateendtime = true;
 
 # Local password policy
 # This is applied before directory password policy

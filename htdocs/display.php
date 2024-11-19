@@ -17,6 +17,7 @@ $ldapExpirationDate="";
 $canLockAccount="";
 $isAccountEnabled = "";
 $lockDate = "";
+$isAccountValid = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -161,6 +162,10 @@ if ($result === "") {
             $isAccountEnabled = $directory->isAccountEnabled($ldap, $dn);
         }
 
+        if ($show_validitystatus) {
+            $isAccountValid = $directory->isAccountValid($ldap, $dn);
+        }
+
     }}}
 }
 
@@ -194,5 +199,6 @@ if (isset($messages[$resetpasswordresult])) {
 } else {
     $smarty->assign('msg_resetpasswordresult','');
 }
+$smarty->assign("isAccountValid", $isAccountValid);
 
 ?>

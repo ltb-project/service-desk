@@ -207,7 +207,9 @@ $smarty->assign('use_enablecomment',$use_enablecomment);
 $smarty->assign('use_enablecomment_required',$use_enablecomment_required);
 $smarty->assign('use_disablecomment',$use_disablecomment);
 $smarty->assign('use_disablecomment_required',$use_disablecomment_required);
-
+$smarty->assign('show_validitystatus',$show_validitystatus);
+$smarty->assign('use_updatestarttime',$attributes_map['starttime'] ? $use_updatestarttime : false);
+$smarty->assign('use_updateendtime',$attributes_map['endtime'] ? $use_updateendtime : false);
 
 # Assign messages
 $smarty->assign('lang',$lang);
