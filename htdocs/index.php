@@ -164,9 +164,16 @@ $smarty->assign('background_image',$background_image);
 $smarty->assign('custom_css',$custom_css);
 $smarty->assign('attributes_map',$attributes_map);
 $smarty->assign('date_specifiers',$date_specifiers);
-if (is_array($datatables_page_length_choices)) $datatables_page_length_choices = implode(', ', $datatables_page_length_choices);
+if (is_array($datatables_page_length_choices)) {
+    if ( $all = array_search('-1', $datatables_page_length_choices)) {
+        $datatables_page_length_choices[$all] = '{"value":"-1","label":"'.$messages["pager_all"].'"}';
+    }
+    $datatables_page_length_choices = implode(', ', $datatables_page_length_choices);
+}
 $smarty->assign('datatables_page_length_choices', $datatables_page_length_choices);
 $smarty->assign('datatables_page_length_default', $datatables_page_length_default);
+$smarty->assign('datatables_print_all', $datatables_print_all);
+$smarty->assign('datatables_print_page', $datatables_print_page);
 $smarty->assign('datatables_auto_print', $datatables_auto_print);
 $smarty->assign('version',$version);
 $smarty->assign('display_footer',$display_footer);
