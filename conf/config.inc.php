@@ -86,9 +86,9 @@ $openldap_attributes_map = array(
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date', 'sort' => 'descending' ),
     'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdpolicysubentry' => array( 'attribute' => 'pwdpolicysubentry', 'faclass' => 'lock', 'type' => 'ppolicy_dn' ),
-    'pwdgraceusetime' => array( 'attribute' => ' pwdgraceusetime', 'faclass' => 'lock', 'type' => 'date' ),
-    'starttime' => array( 'attribute' => ' pwdstarttime', 'faclass' => 'lock', 'type' => 'date' ),
-    'endtime' => array( 'attribute' => ' pwdendtime', 'faclass' => 'lock', 'type' => 'date' ),
+    'pwdgraceusetime' => array( 'attribute' => 'pwdgraceusetime', 'faclass' => 'lock', 'type' => 'date' ),
+    'starttime' => array( 'attribute' => 'pwdstarttime', 'faclass' => 'lock', 'type' => 'date' ),
+    'endtime' => array( 'attribute' => 'pwdendtime', 'faclass' => 'lock', 'type' => 'date' ),
 );
 $activedirectory_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'lastlogon', 'faclass' => 'lock', 'type' => 'ad_date' ),
