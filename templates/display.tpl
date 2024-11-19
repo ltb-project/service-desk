@@ -380,25 +380,14 @@
         {/if}
 
         {if $show_validitystatus}
-        {if $isAccountValid}
-        <div class="card mb-3 shadow border-success">
-            <div class="card-header text-bg-success text-center">
+        <div class="card mb-3 shadow border-{if $isAccountValid}success{else}danger{/if}">
+            <div class="card-header text-bg-{if $isAccountValid}success{else}danger{/if} text-center">
                 <p class="card-title">
-                    <i class="fa fa-fw fa-check-square-o"></i>
-                    {$msg_accountvalid}
+                    <i class="fa fa-fw fa-{if $isAccountValid}check-square-o{else}exclamation-triangle{/if}"></i>
+                    {if $isAccountValid}{$msg_accountvalid}{else}{$msg_accountnotvalid}{/if}
                 </p>
             </div>
         </div>
-        {else}
-        <div class="card mb-3 shadow border-danger">
-            <div class="card-header text-bg-danger text-center">
-                <p class="card-title">
-                    <i class="fa fa-fw fa-exclamation-triangle"></i>
-                    {$msg_accountnotvalid}
-                </p>
-            </div>
-        </div>
-        {/if}
         {/if}
 
    </div>
