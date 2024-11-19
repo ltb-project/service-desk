@@ -18,6 +18,8 @@ $canLockAccount="";
 $isAccountEnabled = "";
 $lockDate = "";
 $isAccountValid = "";
+$startDate = "";
+$endDate = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -164,6 +166,14 @@ if ($result === "") {
 
         if ($show_validitystatus) {
             $isAccountValid = $directory->isAccountValid($ldap, $dn);
+            if ($use_updatestarttime and isset($entry[0][ $attributes_map['starttime']['attribute'] ])) {
+                $starttime = $entry[0][ $attributes_map['starttime']['attribute'] ][0];
+                $startDate = $directory->getPhpDate( $starttime );
+            }
+            if ($use_updateendtime and isset($entry[0][ $attributes_map['endtime']['attribute'] ])) {
+                $endtime = $entry[0][ $attributes_map['endtime']['attribute'] ][0];
+                $endDate = $directory->getPhpDate( $endtime );
+            }
         }
 
     }}}
@@ -200,5 +210,7 @@ if (isset($messages[$resetpasswordresult])) {
     $smarty->assign('msg_resetpasswordresult','');
 }
 $smarty->assign("isAccountValid", $isAccountValid);
+$smarty->assign("startDate", $startDate);
+$smarty->assign("endDate", $endDate);
 
 ?>

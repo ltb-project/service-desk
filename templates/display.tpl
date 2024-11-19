@@ -387,6 +387,28 @@
                     {if $isAccountValid}{$msg_accountvalid}{else}{$msg_accountnotvalid}{/if}
                 </p>
             </div>
+            {if $use_updatestarttime or $use_updateendtime}
+            <div class="card-body">
+                <form id="updatevaliditydates" method="post" action="index.php?page=updatevaliditydates" class="row g-3">
+                        <input type="hidden" name="dn" value="{$dn}" />
+                        {if $use_updatestarttime}
+                        <div class="col-md-6">
+                            <label for="startDate" class="form-label">{$msg_startdate}</label>
+                            <input type="date" class="form-control" id="startDate" name="start_date" value="{$startDate|date_format:"%Y-%m-%d"}"/>
+                        </div>
+                        {/if}
+                        {if $use_updateendtime}
+                        <div class="col-md-6">
+                            <label for="endDate" class="form-label">{$msg_enddate}</label>
+                            <input type="date" class="form-control" id="endDate" name="end_date" value="{$endDate|date_format:"%Y-%m-%d"}"/>
+                        </div>
+                        {/if}
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-calendar-check"></i> {$msg_updatevaliditydates}
+                        </button>
+                </form>
+            </div>
+            {/if}
         </div>
         {/if}
 

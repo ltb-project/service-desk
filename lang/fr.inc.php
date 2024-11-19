@@ -33,6 +33,7 @@ $messages['displayentry'] = "Afficher l'entrée";
 $messages['dnrequired'] = "L'identifiant de l'entrée est requis";
 $messages['editentry'] = "Modifier l'entrée";
 $messages['enableaccount'] = "Activer le compte";
+$messages['enddate'] = "Date de fin";
 $messages['entriesfound'] = "entrées trouvées";
 $messages['entryfound'] = "entrée trouvée";
 $messages['eventfound'] = "événement trouvé";
@@ -112,6 +113,7 @@ $messages['resetpassword'] = "Réinitialisation du mot de passe";
 $messages['search'] = "Rechercher";
 $messages['searchrequired'] = "Veuillez saisir votre recherche";
 $messages['sizelimit'] = "La limite de recherche a été atteinte, certaines entrées n'ont pas pu être affichées";
+$messages['startdate'] = "Date de début";
 $messages['submit'] = "Envoyer";
 $messages['title'] = "Guichet de service";
 $messages['title_search'] = "Résultats de la recherche :";
@@ -166,5 +168,6 @@ $messages['policydifflogin'] = "Votre nouveau mot de passe ne doit pas être ide
 $messages['policypwned'] = "Votre nouveau mot de passe ne doit pas être connu d'une base publique de mots de passe compromis";
 $messages['policyspecialatends'] = "Votre nouveau mot de passe ne doit pas avoir son seul caractère spécial en première ou dernière position.";
 $messages['policyentropy'] = "Force du mot de passe";
+$messages['updatevaliditydates'] = "Modifier les dates de validité";
 
 ?>
