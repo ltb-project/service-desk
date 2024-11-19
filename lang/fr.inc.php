@@ -80,6 +80,7 @@ $messages['label_pwdaccountlockedtime'] = "Date de verrouillage";
 $messages['label_pwdchangedtime'] = "Dernier changement de mot de passe";
 $messages['label_pwdfailuretime'] = "Derniers échecs d'authentification";
 $messages['label_pwdgraceusetime'] = "Dernières authentifications en grâce";
+$messages['label_pwdlastsuccess'] = $messages['label_authtimestamp'];
 $messages['label_pwdpolicysubentry'] = "Politique des mots de passe associée";
 $messages['label_pwdreset'] = "Réinitialisation du mot de passe à la prochaine connexion";
 $messages['label_result'] = "Résultat";
