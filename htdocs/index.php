@@ -75,6 +75,7 @@ $directory;
 # Load specific directory settings
 switch($ldap_type) {
   case "openldap":
+    $openldap_attributes_map['authtimestamp']['attribute'] = strtolower($ldap_lastauth_attribute);
     $attributes_map = array_merge($attributes_map, $openldap_attributes_map);
     $directory = new \Ltb\Directory\OpenLDAP();
   break;
