@@ -9,8 +9,10 @@ $entry = "";
 $edit_link = "";
 $checkpasswordresult= "";
 $resetpasswordresult= "";
-$accountunlockresult= "";
-$accountlockresult= "";
+$unlockaccountresult= "";
+$lockaccountresult= "";
+$enableaccountresult= "";
+$disableaccountresult= "";
 $prehookresult= "";
 $posthookresult= "";
 $ldapExpirationDate="";
@@ -34,12 +36,20 @@ if (isset($_GET["resetpasswordresult"]) and $_GET["resetpasswordresult"]) {
     $resetpasswordresult = $_GET["resetpasswordresult"];
 }
 
-if (isset($_GET["accountunlockresult"]) and $_GET["accountunlockresult"]) {
-    $accountunlockresult = $_GET["accountunlockresult"];
+if (isset($_GET["unlockaccountresult"]) and $_GET["unlockaccountresult"]) {
+    $unlockaccountresult = $_GET["unlockaccountresult"];
 }
 
-if (isset($_GET["accountlockresult"]) and $_GET["accountlockresult"]) {
-    $accountlockresult = $_GET["accountlockresult"];
+if (isset($_GET["lockaccountresult"]) and $_GET["lockaccountresult"]) {
+    $lockaccountresult = $_GET["lockaccountresult"];
+}
+
+if (isset($_GET["enableaccountresult"]) and $_GET["enableaccountresult"]) {
+    $enableaccountresult = $_GET["enableaccountresult"];
+}
+
+if (isset($_GET["disableaccountresult"]) and $_GET["disableaccountresult"]) {
+    $disableaccountresult = $_GET["disableaccountresult"];
 }
 
 if (isset($_GET["prehookresult"]) and $_GET["prehookresult"]) {
@@ -183,8 +193,10 @@ $smarty->assign("edit_link", $edit_link);
 
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);
-$smarty->assign("accountunlockresult", $accountunlockresult);
-$smarty->assign("accountlockresult", $accountlockresult);
+$smarty->assign("unlockaccountresult", $unlockaccountresult);
+$smarty->assign("lockaccountresult", $lockaccountresult);
+$smarty->assign("enableaccountresult", $enableaccountresult);
+$smarty->assign("disableaccountresult", $disableaccountresult);
 $smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
 if ($canLockAccount == false) { $smarty->assign("use_lockaccount", $canLockAccount); }
