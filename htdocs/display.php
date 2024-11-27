@@ -22,6 +22,7 @@ $lockDate = "";
 $isAccountValid = "";
 $startDate = "";
 $endDate = "";
+$updatevaliditydatesresult = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -63,6 +64,9 @@ if (isset($_GET["posthookresult"]) and $_GET["posthookresult"]) {
     $posthookresult = $_GET["posthookresult"];
 }
 
+if (isset($_GET["updatevaliditydatesresult"]) and $_GET["updatevaliditydatesresult"]) {
+    $updatevaliditydatesresult = $_GET["updatevaliditydatesresult"];
+}
 if ($result === "") {
 
     require_once("../conf/config.inc.php");
@@ -224,5 +228,6 @@ if (isset($messages[$resetpasswordresult])) {
 $smarty->assign("isAccountValid", $isAccountValid);
 $smarty->assign("startDate", $startDate);
 $smarty->assign("endDate", $endDate);
+$smarty->assign("updatevaliditydatesresult", $updatevaliditydatesresult);
 
 ?>

@@ -169,5 +169,7 @@ $messages['policypwned'] = "Your new password may not be published on any previo
 $messages['policyspecialatends'] = "Your new password may not have its only special character at the beginning or end";
 $messages['policyentropy'] = "Password strength";
 $messages['updatevaliditydates'] = "Update validity dates";
+$messages['validitydatesnotupdated'] = "Error when updating validity dates";
+$messages['validitydatesupdated'] = "Validity dates updated";
 
 ?>

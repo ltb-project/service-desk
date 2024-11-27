@@ -270,6 +270,7 @@ if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
 if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
 if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
 if ( $page === "auditlog" and !$use_showauditlog ) { $page = "welcome"; }
+if ( $page === "updatevaliditydates" and !($use_updatestarttime or $use_updateendtime) ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 

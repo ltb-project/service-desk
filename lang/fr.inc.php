@@ -169,5 +169,7 @@ $messages['policypwned'] = "Votre nouveau mot de passe ne doit pas être connu d
 $messages['policyspecialatends'] = "Votre nouveau mot de passe ne doit pas avoir son seul caractère spécial en première ou dernière position.";
 $messages['policyentropy'] = "Force du mot de passe";
 $messages['updatevaliditydates'] = "Modifier les dates de validité";
+$messages['validitydatesnotupdated'] = "Erreur lors de la mise à jour des dates de validité";
+$messages['validitydatesupdated'] = "Dates de validité mises à jour";
 
 ?>
