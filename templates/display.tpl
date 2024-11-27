@@ -331,7 +331,7 @@
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
                     <div>
-                        {include 'comment.tpl' method=disable page=disableaccount title=$msg_lockaccount}
+                        {include 'comment.tpl' method=disable page=disableaccount title=$msg_disableaccount}
                     </div>
                 {else}
                     <form id="disableaccount" method="post" action="index.php?page=disableaccount">
