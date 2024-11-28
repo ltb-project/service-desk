@@ -33,6 +33,9 @@
                       {if $use_searchidle}
                       <li><a href="index.php?page=searchidle" class="dropdown-item"><i class="fa fa-fw fa-hourglass-o"></i> {$msg_idleaccounts}</a></li>
                       {/if}
+                      {if $use_searchinvalid}
+                      <li><a href="index.php?page=searchinvalid" class="dropdown-item"><i class="fa fa-fw fa-user-xmark"></i> {$msg_invalidaccounts}</a></li>
+                      {/if}
                   </ul>
                 </li>
                 {if $use_showauditlog}
