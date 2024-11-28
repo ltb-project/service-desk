@@ -4,7 +4,7 @@ Upgrade
 From 0.5 to 0.6
 ---------------
 
-bundled dependencies
+Bundled dependencies
 ~~~~~~~~~~~~~~~~~~~~
 
 The dependencies are now explicitly listed in the service-desk package, including the bundled ones.
@@ -15,7 +15,7 @@ You can find bundled dependencies list:
 * in Provides field in rpm package
 
 
-configuration
+Configuration
 ~~~~~~~~~~~~~
 
 The configuration files are now in ``/etc/service-desk`` directory.
@@ -29,7 +29,7 @@ Please take in consideration that ``config.inc.php`` is now replaced systematica
 
 Avoid as much as possible editing the ``/etc/service-desk/config.inc.php`` file. Prefer modifying the ``/etc/service-desk/config.inc.local.php``.
 
-password policy
+Password policy
 ~~~~~~~~~~~~~~~
 
 When you change the password for a user, you can now configure a local password policy for ensuring the password strength is sufficient.
@@ -43,7 +43,7 @@ You can give a look to the :doc:`password policy documentation <ppolicy>` for mo
    The local password policy is now defined in a library: `ltb-common <https://github.com/ltb-project/ltb-common>`_.
 
 
-cache cleaning
+Cache cleaning
 ~~~~~~~~~~~~~~
 
 Now the cache is being cleaned-up during service-desk upgrade / install.
@@ -51,7 +51,7 @@ Now the cache is being cleaned-up during service-desk upgrade / install.
 This is intended to avoid smarty problems due to service-desk templates upgrade, and possibly smarty upgrade itself.
 
 
-dependencies update
+Dependencies update
 ~~~~~~~~~~~~~~~~~~~
 
 Removed packaged dependencies:
@@ -117,7 +117,6 @@ Removed bundled dependencies:
 Note that hidden files (.gitignore,...) from bundled dependencies are now removed from packages.
 
 
-
 Last authentication time and idle accounts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -142,3 +141,18 @@ You can enable this feature by setting a non-zero value to the page size paramet
 .. code-block:: php
 
    $ldap_page_size = 100;
+
+Account validity
+~~~~~~~~~~~~~~~~
+
+Account validity feature is enabled by default. For OpenLDAP it relies on ``pwdStartTime`` and ``pwdEndTime`` attributes available since OpenLDAP 2.5.
+For Active Directory, only the end time is available, in ``accountExpires`` attribute.
+
+You can disable this new feature if you don't want to use it:
+
+.. code-block:: php
+
+   $show_validitystatus = false;
+   $use_updatestarttime = false;
+   $use_updateendtime = false;
+   $use_searchinvalid = false;
