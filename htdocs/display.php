@@ -19,6 +19,10 @@ $ldapExpirationDate="";
 $canLockAccount="";
 $isAccountEnabled = "";
 $lockDate = "";
+$isAccountValid = "";
+$startDate = "";
+$endDate = "";
+$updatevaliditydatesresult = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -60,6 +64,9 @@ if (isset($_GET["posthookresult"]) and $_GET["posthookresult"]) {
     $posthookresult = $_GET["posthookresult"];
 }
 
+if (isset($_GET["updatevaliditydatesresult"]) and $_GET["updatevaliditydatesresult"]) {
+    $updatevaliditydatesresult = $_GET["updatevaliditydatesresult"];
+}
 if ($result === "") {
 
     require_once("../conf/config.inc.php");
@@ -171,6 +178,18 @@ if ($result === "") {
             $isAccountEnabled = $directory->isAccountEnabled($ldap, $dn);
         }
 
+        if ($show_validitystatus) {
+            $isAccountValid = $directory->isAccountValid($ldap, $dn);
+            if ($use_updatestarttime and isset($entry[0][ $attributes_map['starttime']['attribute'] ])) {
+                $starttime = $entry[0][ $attributes_map['starttime']['attribute'] ][0];
+                $startDate = $directory->getPhpDate( $starttime );
+            }
+            if ($use_updateendtime and isset($entry[0][ $attributes_map['endtime']['attribute'] ])) {
+                $endtime = $entry[0][ $attributes_map['endtime']['attribute'] ][0];
+                $endDate = $directory->getPhpDate( $endtime );
+            }
+        }
+
     }}}
 }
 
@@ -206,5 +225,9 @@ if (isset($messages[$resetpasswordresult])) {
 } else {
     $smarty->assign('msg_resetpasswordresult','');
 }
+$smarty->assign("isAccountValid", $isAccountValid);
+$smarty->assign("startDate", $startDate);
+$smarty->assign("endDate", $endDate);
+$smarty->assign("updatevaliditydatesresult", $updatevaliditydatesresult);
 
 ?>

@@ -376,8 +376,47 @@
             </div>
             {/if}
         </div>
-       {/if}
-       {/if}
+        {/if}
+        {/if}
+
+        {if $show_validitystatus}
+        <div class="card mb-3 shadow border-{if $isAccountValid}success{else}danger{/if}">
+            <div class="card-header text-bg-{if $isAccountValid}success{else}danger{/if} text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-{if $isAccountValid}check-square-o{else}exclamation-triangle{/if}"></i>
+                    {if $isAccountValid}{$msg_accountvalid}{else}{$msg_accountnotvalid}{/if}
+                </p>
+            </div>
+            {if $use_updatestarttime or $use_updateendtime}
+            <div class="card-body">
+                {if $updatevaliditydatesresult eq 'ldaperror' or $updatevaliditydatesresult eq 'actionforbidden'}
+                <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_validitydatesnotupdated}</div>
+                {/if}
+                {if $updatevaliditydatesresult eq 'validiydatesupdated'}
+                <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_validitydatesupdated}</div>
+                {/if}
+                <form id="updatevaliditydates" method="post" action="index.php?page=updatevaliditydates" class="row g-3">
+                        <input type="hidden" name="dn" value="{$dn}" />
+                        {if $use_updatestarttime}
+                        <div class="col-md-6">
+                            <label for="startDate" class="form-label">{$msg_startdate}</label>
+                            <input type="date" class="form-control" id="startDate" name="start_date" value="{$startDate|date_format:"%Y-%m-%d"}"/>
+                        </div>
+                        {/if}
+                        {if $use_updateendtime}
+                        <div class="col-md-6">
+                            <label for="endDate" class="form-label">{$msg_enddate}</label>
+                            <input type="date" class="form-control" id="endDate" name="end_date" value="{$endDate|date_format:"%Y-%m-%d"}"/>
+                        </div>
+                        {/if}
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-fw fa-calendar-check"></i> {$msg_updatevaliditydates}
+                        </button>
+                </form>
+            </div>
+            {/if}
+        </div>
+        {/if}
 
    </div>
 </div>

@@ -54,3 +54,12 @@ You can disable the expire status panel:
 .. code-block:: php
 
     $show_expirestatus = false;
+
+Validity status
+---------------
+
+You can disable the validity status panel:
+
+.. code-block:: php
+
+    $show_validitytatus = false;

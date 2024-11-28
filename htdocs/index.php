@@ -207,7 +207,10 @@ $smarty->assign('use_enablecomment',$use_enablecomment);
 $smarty->assign('use_enablecomment_required',$use_enablecomment_required);
 $smarty->assign('use_disablecomment',$use_disablecomment);
 $smarty->assign('use_disablecomment_required',$use_disablecomment_required);
-
+$smarty->assign('show_validitystatus',$show_validitystatus);
+$smarty->assign('use_updatestarttime',$attributes_map['starttime'] ? $use_updatestarttime : false);
+$smarty->assign('use_updateendtime',$attributes_map['endtime'] ? $use_updateendtime : false);
+$smarty->assign('use_searchinvalid',$use_searchinvalid);
 
 # Assign messages
 $smarty->assign('lang',$lang);
@@ -268,6 +271,8 @@ if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
 if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
 if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
 if ( $page === "auditlog" and !$use_showauditlog ) { $page = "welcome"; }
+if ( $page === "updatevaliditydates" and !($use_updatestarttime or $use_updateendtime) ) { $page = "welcome"; }
+if ( $page === "searchinvalid" and !$use_searchinvalid ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 
