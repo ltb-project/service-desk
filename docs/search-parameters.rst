@@ -28,6 +28,9 @@ Configure items shown when displaying results:
 Datatables
 ----------
 
+Pagination
+~~~~~~~~~~
+
 Define pagination values in dropdown:
 
 .. code-block:: php
@@ -40,9 +43,22 @@ Set default pagination for results (can also be used to force the length without
 
     $datatables_page_length_default = 10;
 
-Enable or disable autoPrint feature:
+Print
+~~~~~
+Show "print all" button:
+
+.. code-block:: php
+
+    $datatables_print_all = true;
+
+Show "print page" button:
+
+.. code-block:: php
+
+    $datatables_print_page = true;
+
+Enable autoPrint feature (will launch print dialog directly when cliking on print buttons):
 
 .. code-block:: php
 
     $datatables_auto_print = true;
-

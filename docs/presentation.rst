@@ -17,6 +17,7 @@ Features
 * Test current password
 * Reset password and force password change at next connection
 * Lock and unlock account
+* Update account validity dates
 * Create and view audit logs
 * Dashboards:
 
@@ -24,3 +25,4 @@ Features
   * Accounts with a password that will soon expire
   * Accounts with an expired password
   * Accounts idle (never connected or not connected since a number of days)
+  * Accounts invalid (for which start date is in the future, or end date is in the past)

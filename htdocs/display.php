@@ -9,8 +9,10 @@ $entry = "";
 $edit_link = "";
 $checkpasswordresult= "";
 $resetpasswordresult= "";
-$accountunlockresult= "";
-$accountlockresult= "";
+$unlockaccountresult= "";
+$lockaccountresult= "";
+$enableaccountresult= "";
+$disableaccountresult= "";
 $prehookresult= "";
 $posthookresult= "";
 $prehooklockresult= "";
@@ -21,6 +23,10 @@ $ldapExpirationDate="";
 $canLockAccount="";
 $isAccountEnabled = "";
 $lockDate = "";
+$isAccountValid = "";
+$startDate = "";
+$endDate = "";
+$updatevaliditydatesresult = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -38,12 +44,20 @@ if (isset($_GET["resetpasswordresult"]) and $_GET["resetpasswordresult"]) {
     $resetpasswordresult = $_GET["resetpasswordresult"];
 }
 
-if (isset($_GET["accountunlockresult"]) and $_GET["accountunlockresult"]) {
-    $accountunlockresult = $_GET["accountunlockresult"];
+if (isset($_GET["unlockaccountresult"]) and $_GET["unlockaccountresult"]) {
+    $unlockaccountresult = $_GET["unlockaccountresult"];
 }
 
-if (isset($_GET["accountlockresult"]) and $_GET["accountlockresult"]) {
-    $accountlockresult = $_GET["accountlockresult"];
+if (isset($_GET["lockaccountresult"]) and $_GET["lockaccountresult"]) {
+    $lockaccountresult = $_GET["lockaccountresult"];
+}
+
+if (isset($_GET["enableaccountresult"]) and $_GET["enableaccountresult"]) {
+    $enableaccountresult = $_GET["enableaccountresult"];
+}
+
+if (isset($_GET["disableaccountresult"]) and $_GET["disableaccountresult"]) {
+    $disableaccountresult = $_GET["disableaccountresult"];
 }
 
 if (isset($_GET["prehookresult"]) and $_GET["prehookresult"]) {
@@ -68,6 +82,10 @@ if (isset($_GET["prehookunlockresult"]) and $_GET["prehookunlockresult"]) {
 
 if (isset($_GET["posthookunlockresult"]) and $_GET["posthookunlockresult"]) {
     $posthookunlockresult = $_GET["posthookunlockresult"];
+}
+
+if (isset($_GET["updatevaliditydatesresult"]) and $_GET["updatevaliditydatesresult"]) {
+    $updatevaliditydatesresult = $_GET["updatevaliditydatesresult"];
 }
 
 if ($result === "") {
@@ -112,7 +130,44 @@ if ($result === "") {
         # Sort attributes values
         foreach ($entry[0] as $attr => $values) {
             if ( is_array($values) && $values['count'] > 1 ) {
-                asort($values);
+
+                # Find key in attributes_map
+                $attributes_map_filter = array_filter($attributes_map, function($v) use(&$attr) {
+                    return $v['attribute'] == "$attr";
+                });
+                if( count($attributes_map_filter) < 1 )
+                {
+                    $k = "";
+                    error_log("WARN: no key found for attribute $attr in \$attributes_map");
+                }
+                elseif( count($attributes_map_filter) > 1 )
+                {
+                    $k = array_key_first($attributes_map_filter);
+                    error_log("WARN: multiple keys found for attribute $attr in \$attributes_map, using first one: $k");
+                }
+                else
+                {
+                    $k = array_key_first($attributes_map_filter);
+                }
+
+                if(isset($attributes_map[$k]['sort']))
+                {
+                    if($attributes_map[$k]['sort'] == "descending" )
+                    {
+                        # descending sort
+                        arsort($values);
+                    }
+                    else
+                    {
+                        # ascending sort
+                        asort($values);
+                    }
+                }
+                else
+                {
+                    # if 'sort' param unset: default to ascending sort
+                    asort($values);
+                }
             }
             if ( isset($values['count']) ) {
                 unset($values['count']);
@@ -144,6 +199,18 @@ if ($result === "") {
             $isAccountEnabled = $directory->isAccountEnabled($ldap, $dn);
         }
 
+        if ($show_validitystatus) {
+            $isAccountValid = $directory->isAccountValid($ldap, $dn);
+            if ($use_updatestarttime and isset($entry[0][ $attributes_map['starttime']['attribute'] ])) {
+                $starttime = $entry[0][ $attributes_map['starttime']['attribute'] ][0];
+                $startDate = $directory->getPhpDate( $starttime );
+            }
+            if ($use_updateendtime and isset($entry[0][ $attributes_map['endtime']['attribute'] ])) {
+                $endtime = $entry[0][ $attributes_map['endtime']['attribute'] ][0];
+                $endDate = $directory->getPhpDate( $endtime );
+            }
+        }
+
     }}}
 }
 
@@ -166,8 +233,10 @@ $smarty->assign("edit_link", $edit_link);
 
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);
-$smarty->assign("accountunlockresult", $accountunlockresult);
-$smarty->assign("accountlockresult", $accountlockresult);
+$smarty->assign("unlockaccountresult", $unlockaccountresult);
+$smarty->assign("lockaccountresult", $lockaccountresult);
+$smarty->assign("enableaccountresult", $enableaccountresult);
+$smarty->assign("disableaccountresult", $disableaccountresult);
 $smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
 $smarty->assign("prehooklockresult", $prehooklockresult);
@@ -181,5 +250,9 @@ if (isset($messages[$resetpasswordresult])) {
 } else {
     $smarty->assign('msg_resetpasswordresult','');
 }
+$smarty->assign("isAccountValid", $isAccountValid);
+$smarty->assign("startDate", $startDate);
+$smarty->assign("endDate", $endDate);
+$smarty->assign("updatevaliditydatesresult", $updatevaliditydatesresult);
 
 ?>

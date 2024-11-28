@@ -82,13 +82,13 @@ $openldap_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'authtimestamp', 'faclass' => 'lock', 'type' => 'date' ),
     'identifier' => array( 'attribute' => 'uid', 'faclass' => 'user-o', 'type' => 'text' ),
     'pwdaccountlockedtime' => array( 'attribute' => 'pwdaccountlockedtime', 'faclass' => 'lock', 'type' => 'date' ),
-    'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date' ),
-    'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date' ),
+    'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date', 'sort' => 'descending' ),
+    'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date', 'sort' => 'descending' ),
     'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdpolicysubentry' => array( 'attribute' => 'pwdpolicysubentry', 'faclass' => 'lock', 'type' => 'ppolicy_dn' ),
-    'pwdgraceusetime' => array( 'attribute' => ' pwdgraceusetime', 'faclass' => 'lock', 'type' => 'date' ),
-    'starttime' => array( 'attribute' => ' pwdstarttime', 'faclass' => 'lock', 'type' => 'date' ),
-    'endtime' => array( 'attribute' => ' pwdendtime', 'faclass' => 'lock', 'type' => 'date' ),
+    'pwdgraceusetime' => array( 'attribute' => 'pwdgraceusetime', 'faclass' => 'lock', 'type' => 'date' ),
+    'starttime' => array( 'attribute' => 'pwdstarttime', 'faclass' => 'lock', 'type' => 'date' ),
+    'endtime' => array( 'attribute' => 'pwdendtime', 'faclass' => 'lock', 'type' => 'date' ),
 );
 $activedirectory_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'lastlogon', 'faclass' => 'lock', 'type' => 'ad_date' ),
@@ -111,12 +111,14 @@ $search_result_truncate_value_after = 20;
 
 $datatables_page_length_choices = array(10, 25, 50, 100, -1);
 $datatables_page_length_default = 10;
+$datatables_print_all = true;
+$datatables_print_page = true;
 $datatables_auto_print = true;
 
 $display_items = array('identifier', 'firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary' );
 $display_title = "fullname";
 $display_show_undefined = false;
-$display_password_items = array('pwdchangedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdlastsuccess', 'pwdgraceusetime', 'starttime', 'endtime', 'created', 'modified');
+$display_password_items = array('pwdchangedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdgraceusetime', 'starttime', 'endtime', 'created', 'modified');
 $display_password_expiration_date = true;
 
 # Features
@@ -160,6 +162,10 @@ $use_enablecomment_required = false;
 $use_disablecomment = false;
 $use_disablecomment_required = false;
 
+$show_validitystatus = true;
+$use_updatestarttime = true;
+$use_updateendtime = true;
+$use_searchinvalid = true;
 
 # Local password policy
 # This is applied before directory password policy

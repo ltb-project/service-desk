@@ -75,6 +75,7 @@ $directory;
 # Load specific directory settings
 switch($ldap_type) {
   case "openldap":
+    $openldap_attributes_map['authtimestamp']['attribute'] = strtolower($ldap_lastauth_attribute);
     $attributes_map = array_merge($attributes_map, $openldap_attributes_map);
     $directory = new \Ltb\Directory\OpenLDAP();
   break;
@@ -164,9 +165,16 @@ $smarty->assign('background_image',$background_image);
 $smarty->assign('custom_css',$custom_css);
 $smarty->assign('attributes_map',$attributes_map);
 $smarty->assign('date_specifiers',$date_specifiers);
-if (is_array($datatables_page_length_choices)) $datatables_page_length_choices = implode(', ', $datatables_page_length_choices);
+if (is_array($datatables_page_length_choices)) {
+    if ( $all = array_search('-1', $datatables_page_length_choices)) {
+        $datatables_page_length_choices[$all] = '{"value":"-1","label":"'.$messages["pager_all"].'"}';
+    }
+    $datatables_page_length_choices = implode(', ', $datatables_page_length_choices);
+}
 $smarty->assign('datatables_page_length_choices', $datatables_page_length_choices);
 $smarty->assign('datatables_page_length_default', $datatables_page_length_default);
+$smarty->assign('datatables_print_all', $datatables_print_all);
+$smarty->assign('datatables_print_page', $datatables_print_page);
 $smarty->assign('datatables_auto_print', $datatables_auto_print);
 $smarty->assign('version',$version);
 $smarty->assign('display_footer',$display_footer);
@@ -199,7 +207,10 @@ $smarty->assign('use_enablecomment',$use_enablecomment);
 $smarty->assign('use_enablecomment_required',$use_enablecomment_required);
 $smarty->assign('use_disablecomment',$use_disablecomment);
 $smarty->assign('use_disablecomment_required',$use_disablecomment_required);
-
+$smarty->assign('show_validitystatus',$show_validitystatus);
+$smarty->assign('use_updatestarttime',$attributes_map['starttime'] ? $use_updatestarttime : false);
+$smarty->assign('use_updateendtime',$attributes_map['endtime'] ? $use_updateendtime : false);
+$smarty->assign('use_searchinvalid',$use_searchinvalid);
 
 # Assign messages
 $smarty->assign('lang',$lang);
@@ -260,6 +271,8 @@ if ( $page === "searchexpired" and !$use_searchexpired ) { $page = "welcome"; }
 if ( $page === "searchwillexpire" and !$use_searchwillexpire ) { $page = "welcome"; }
 if ( $page === "searchidle" and !$use_searchidle ) { $page = "welcome"; }
 if ( $page === "auditlog" and !$use_showauditlog ) { $page = "welcome"; }
+if ( $page === "updatevaliditydates" and !($use_updatestarttime or $use_updateendtime) ) { $page = "welcome"; }
+if ( $page === "searchinvalid" and !$use_searchinvalid ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 
