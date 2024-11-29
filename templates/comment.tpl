@@ -8,13 +8,7 @@
                     <h1 class="modal-title fs-5" id="CommentModal">{$title}</h1>
                 </div>
                 <div class="modal-body">
-                    <textarea class="form-control" name="comment" id="comment-{$method}" rows="3" placeholder="{$msg_insert_comment}"
-                    {if $method eq 'lock' || $method eq 'unlock'}
-                        {if $use_lockcomment_required || $use_unlockcomment_required}required{/if}
-                    {elseif $method eq 'enable' || $method eq 'disable'}
-                        {if $use_disablecomment_required || $use_enablecomment_required}required{/if}
-                    {/if}
-                    ></textarea>
+                    <textarea class="form-control" name="comment" id="comment-{$method}" rows="3" placeholder="{$msg_insert_comment}"{if $required} required{/if}></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
