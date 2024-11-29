@@ -5,6 +5,8 @@ Hook feature allows to run a script before or after an action:
 * Password reset
 * Password lock
 * Password unlock
+* Account enable
+* Account disable
 
 The script must return 0 if no error occured. Any text printed on STDOUT
 will be displayed as an error message (see options).
@@ -107,3 +109,53 @@ To ignore prehook error:
 .. code-block:: php
 
     $ignore_prehook_unlock_error = true;
+
+Account enable
+--------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and enable the feature):
+
+.. code-block:: php
+
+    $prehook_enable = "/usr/share/service-desk/prehook_enable.sh";
+    $posthook_enable = "/usr/share/service-desk/posthook_enable.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_enable_error = true;
+   $display_posthook_enable_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_enable_error = true;
+
+Account disable
+---------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and disable the feature):
+
+.. code-block:: php
+
+    $prehook_disable = "/usr/share/service-desk/prehook_disable.sh";
+    $posthook_disable = "/usr/share/service-desk/posthook_disable.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_disable_error = true;
+   $display_posthook_disable_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_disable_error = true;
