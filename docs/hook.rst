@@ -7,6 +7,7 @@ Hook feature allows to run a script before or after an action:
 * Password unlock
 * Account enable
 * Account disable
+* Update validity dates
 
 The script must return 0 if no error occured. Any text printed on STDOUT
 will be displayed as an error message (see options).
@@ -159,3 +160,28 @@ To ignore prehook error:
 .. code-block:: php
 
     $ignore_prehook_disable_error = true;
+
+Update validity dates
+---------------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and updatevalidity the feature):
+
+.. code-block:: php
+
+    $prehook_updatevalidity = "/usr/share/service-desk/prehook_updatevalidity.sh";
+    $posthook_updatevalidity = "/usr/share/service-desk/posthook_updatevalidity.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_updatevalidity_error = true;
+   $display_posthook_updatevalidity_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_updatevalidity_error = true;
