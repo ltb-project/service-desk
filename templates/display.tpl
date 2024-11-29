@@ -234,6 +234,18 @@
             </div>
 
              <div class="card-body">
+                {if $prehooklockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehooklockresult}</div>
+                {/if}
+                {if $posthooklockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthooklockresult}</div>
+                {/if}
+                {if $prehookunlockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookunlockresult}</div>
+                {/if}
+                {if $posthookunlockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookunlockresult}</div>
+                {/if}
                 {if $unlockDate}
                 <p>{$msg_unlockdate} {$unlockDate|date_format:{$date_specifiers}}</p>
                 {/if}
@@ -271,8 +283,20 @@
                 </p>
             </div>
 
-            {if $use_lockaccount}
+            {if $use_lockaccount || $prehooklockresult || $posthooklockresult || $prehookunlockresult || $posthookunlockresult}
             <div class="card-body">
+                {if $prehooklockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehooklockresult}</div>
+                {/if}
+                {if $posthooklockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthooklockresult}</div>
+                {/if}
+                {if $prehookunlockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookunlockresult}</div>
+                {/if}
+                {if $posthookunlockresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookunlockresult}</div>
+                {/if}
                 {if $lockaccountresult eq 'ldaperror'}
                     <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotlocked}</div>
                 {/if}
@@ -320,10 +344,22 @@
                     {$msg_accountenabled}
                 </p>
             </div>
-            {if $use_disableaccount}
+            {if $use_disableaccount || $prehookenableresult || posthookenableresult || $prehookdisableresult || $posthookdisableresult}
             <div class="card-body">
                 {if $disableaccountresult eq 'ldaperror' or $disableaccountresult eq 'actionforbidden'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotdisabled}</div>
+                {/if}
+                {if $prehookenableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookenableresult}</div>
+                {/if}
+                {if $posthookenableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookenableresult}</div>
+                {/if}
+                {if $prehookdisableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookdisableresult}</div>
+                {/if}
+                {if $posthookdisableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookdisableresult}</div>
                 {/if}
                 {if $use_disablecomment}
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModaldisable{$dn|sha256}">
@@ -352,10 +388,22 @@
                     {$msg_accountdisabled}
                 </p>
             </div>
-            {if $use_enableaccount}
+            {if $use_enableaccount || $prehookenableresult || $posthookenableresult || $prehookdisableresult || $posthookdisableresult}
             <div class="card-body">
                 {if $enableaccountresult eq 'ldaperror' or $enableaccountresult eq 'actionforbidden'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotenabled}</div>
+                {/if}
+                {if $prehookenableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookenableresult}</div>
+                {/if}
+                {if $posthookenableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookenableresult}</div>
+                {/if}
+                {if $prehookdisableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookdisableresult}</div>
+                {/if}
+                {if $posthookdisableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookdisableresult}</div>
                 {/if}
                 {if $use_enablecomment}
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModalenable{$dn|sha256}">
@@ -387,13 +435,19 @@
                     {if $isAccountValid}{$msg_accountvalid}{else}{$msg_accountnotvalid}{/if}
                 </p>
             </div>
-            {if $use_updatestarttime or $use_updateendtime}
+            {if $use_updatestarttime || $use_updateendtime || $prehookupdatevalidityresult || $posthookupdatevalidityresult}
             <div class="card-body">
                 {if $updatevaliditydatesresult eq 'ldaperror' or $updatevaliditydatesresult eq 'actionforbidden'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_validitydatesnotupdated}</div>
                 {/if}
                 {if $updatevaliditydatesresult eq 'validiydatesupdated'}
                 <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_validitydatesupdated}</div>
+                {/if}
+                {if $prehookupdatevalidityresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookupdatevalidityresult}</div>
+                {/if}
+                {if $posthookupdatevalidityresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookupdatevalidityresult}</div>
                 {/if}
                 <form id="updatevaliditydates" method="post" action="index.php?page=updatevaliditydates" class="row g-3">
                         <input type="hidden" name="dn" value="{$dn}" />

@@ -41,6 +41,7 @@ $messages['eventsfound'] = "événements trouvés";
 $messages['expiredaccounts'] = "Mots de passe expirés";
 $messages['false'] = "Non";
 $messages['forcereset'] = "Forcer la réinitialisation à la prochaine connexion";
+$messages['hookerror'] = "Une erreur s'est produite dans le hook";
 $messages['idleaccounts'] = "Comptes inactifs";
 $messages['idleaccountstitle'] = "Comptes inactifs depuis plus de $idledays jours";
 $messages['insert_comment'] = "Insérer un commentaire";

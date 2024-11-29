@@ -15,6 +15,14 @@ $enableaccountresult= "";
 $disableaccountresult= "";
 $prehookresult= "";
 $posthookresult= "";
+$prehooklockresult= "";
+$posthooklockresult= "";
+$prehookunlockresult= "";
+$posthookunlockresult= "";
+$prehookenableresult= "";
+$posthookenableresult= "";
+$prehookdisableresult= "";
+$posthookdisableresult= "";
 $ldapExpirationDate="";
 $canLockAccount="";
 $isAccountEnabled = "";
@@ -23,6 +31,8 @@ $isAccountValid = "";
 $startDate = "";
 $endDate = "";
 $updatevaliditydatesresult = "";
+$prehookupdatevalidityresult= "";
+$posthookupdatevalidityresult= "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -64,9 +74,50 @@ if (isset($_GET["posthookresult"]) and $_GET["posthookresult"]) {
     $posthookresult = $_GET["posthookresult"];
 }
 
+if (isset($_GET["prehooklockresult"]) and $_GET["prehooklockresult"]) {
+    $prehooklockresult = $_GET["prehooklockresult"];
+}
+
+if (isset($_GET["posthooklockresult"]) and $_GET["posthooklockresult"]) {
+    $posthooklockresult = $_GET["posthooklockresult"];
+}
+
+if (isset($_GET["prehookunlockresult"]) and $_GET["prehookunlockresult"]) {
+    $prehookunlockresult = $_GET["prehookunlockresult"];
+}
+
+if (isset($_GET["posthookunlockresult"]) and $_GET["posthookunlockresult"]) {
+    $posthookunlockresult = $_GET["posthookunlockresult"];
+}
+
+if (isset($_GET["prehookenableresult"]) and $_GET["prehookenableresult"]) {
+    $prehookenableresult = $_GET["prehookenableresult"];
+}
+
+if (isset($_GET["posthookenableresult"]) and $_GET["posthookenableresult"]) {
+    $posthookenableresult = $_GET["posthookenableresult"];
+}
+
+if (isset($_GET["prehookdisableresult"]) and $_GET["prehookdisableresult"]) {
+    $prehookdisableresult = $_GET["prehookdisableresult"];
+}
+
+if (isset($_GET["posthookdisableresult"]) and $_GET["posthookdisableresult"]) {
+    $posthookdisableresult = $_GET["posthookdisableresult"];
+}
+
 if (isset($_GET["updatevaliditydatesresult"]) and $_GET["updatevaliditydatesresult"]) {
     $updatevaliditydatesresult = $_GET["updatevaliditydatesresult"];
 }
+
+if (isset($_GET["prehookupdatevalidityresult"]) and $_GET["prehookupdatevalidityresult"]) {
+    $prehookupdatevalidityresult = $_GET["prehookupdatevalidityresult"];
+}
+
+if (isset($_GET["posthookupdatevalidityresult"]) and $_GET["posthookupdatevalidityresult"]) {
+    $posthookupdatevalidityresult = $_GET["posthookupdatevalidityresult"];
+}
+
 if ($result === "") {
 
     require_once("../conf/config.inc.php");
@@ -218,8 +269,16 @@ $smarty->assign("enableaccountresult", $enableaccountresult);
 $smarty->assign("disableaccountresult", $disableaccountresult);
 $smarty->assign("prehookresult", $prehookresult);
 $smarty->assign("posthookresult", $posthookresult);
+$smarty->assign("prehooklockresult", $prehooklockresult);
+$smarty->assign("posthooklockresult", $posthooklockresult);
+$smarty->assign("prehookunlockresult", $prehookunlockresult);
+$smarty->assign("posthookunlockresult", $posthookunlockresult);
 if ($canLockAccount == false) { $smarty->assign("use_lockaccount", $canLockAccount); }
 $smarty->assign("isAccountEnabled", $isAccountEnabled);
+$smarty->assign("prehookenableresult", $prehookenableresult);
+$smarty->assign("posthookenableresult", $posthookenableresult);
+$smarty->assign("prehookdisableresult", $prehookdisableresult);
+$smarty->assign("posthookdisableresult", $posthookdisableresult);
 if (isset($messages[$resetpasswordresult])) {
     $smarty->assign('msg_resetpasswordresult', $messages[$resetpasswordresult]);
 } else {
@@ -229,5 +288,7 @@ $smarty->assign("isAccountValid", $isAccountValid);
 $smarty->assign("startDate", $startDate);
 $smarty->assign("endDate", $endDate);
 $smarty->assign("updatevaliditydatesresult", $updatevaliditydatesresult);
+$smarty->assign("prehookupdatevalidityresult", $prehookupdatevalidityresult);
+$smarty->assign("posthookupdatevalidityresult", $posthookupdatevalidityresult);
 
 ?>

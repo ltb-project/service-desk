@@ -48,15 +48,11 @@ if ($result === "") {
         error_log("LDAP - $dn not found using the configured search settings, reject request");
     } else {
         if ( isset($prehook) || isset($posthook) ) {
-            $login_search = ldap_read($ldap, $dn, '(objectClass=*)', array($prehook_login, $posthook_login));
-            $login_entry = ldap_first_entry( $ldap, $login_search );
             if ( isset($prehook_login) ) {
-                $prehook_login_values = ldap_get_values( $ldap, $login_entry, $prehook_login );
-                $prehook_login_value = $prehook_login_values[0];
+                $prehook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $prehook_login);
             }
             if ( isset($posthook_login) ) {
-                $posthook_login_values = ldap_get_values( $ldap, $login_entry, $posthook_login );
-                $posthook_login_value = $posthook_login_values[0];
+                $posthook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $posthook_login);
             }
         }
 
@@ -103,7 +99,7 @@ if ($result === "") {
                     $prehook_return = 255;
                     $prehook_message = "No login found, cannot execute prehook script";
                 } else {
-                    $command = hook_command($prehook, $prehook_login_value, $password, null, $prehook_password_encodebase64);
+                    $command = password_hook_command($prehook, $prehook_login_value, $password, null, $prehook_password_encodebase64);
                     exec($command, $prehook_output, $prehook_return);
                     $prehook_message = $prehook_output[0];
                 }
@@ -127,7 +123,7 @@ if ($result === "") {
                 $posthook_return = 255;
                 $posthook_message = "No login found, cannot execute posthook script";
             } else {
-                $command = hook_command($posthook, $posthook_login_value, $password, null, $posthook_password_encodebase64);
+                $command = password_hook_command($posthook, $posthook_login_value, $password, null, $posthook_password_encodebase64);
                 exec($command, $posthook_output, $posthook_return);
                 $posthook_message = $posthook_output[0];
             }

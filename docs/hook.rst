@@ -1,12 +1,31 @@
 Hook
 ====
 
-Hook feature allows to run a script before or after the password modification.
+Hook feature allows to run a script before or after an action:
+* Password reset
+* Password lock
+* Password unlock
+* Account enable
+* Account disable
+* Update validity dates
+
+The script must return 0 if no error occured. Any text printed on STDOUT
+will be displayed as an error message (see options).
+
+Login
+-----
+
+Define which attribute will be used as login in prehook and posthook scripts:
+
+.. code-block:: php
+
+    $prehook_login = "uid";
+    $posthook_login = "uid";
+
+Password reset
+--------------
 
 The script is called with two parameters: login and new password.
-
-Parameters
-----------
 
 Define prehook or posthook script (and enable the feature):
 
@@ -14,13 +33,6 @@ Define prehook or posthook script (and enable the feature):
 
     $prehook = "/usr/share/service-desk/prehook.sh";
     $posthook = "/usr/share/service-desk/posthook.sh";
-
-Define which attribute will be used as login:
-
-.. code-block:: php
-
-    $prehook_login = "uid";
-    $posthook_login = "uid";
 
 You can choose to display an error if the script return code is greater
 than 0:
@@ -48,3 +60,128 @@ if it fails, but still try to update password in the directory.
 .. code-block:: php
 
     $ignore_prehook_error = true;
+
+Password lock
+-------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and enable the feature):
+
+.. code-block:: php
+
+    $prehook_lock = "/usr/share/service-desk/prehook_lock.sh";
+    $posthook_lock = "/usr/share/service-desk/posthook_lock.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_lock_error = true;
+   $display_posthook_lock_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_lock_error = true;
+
+Password unlock
+---------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and enable the feature):
+
+.. code-block:: php
+
+    $prehook_unlock = "/usr/share/service-desk/prehook_unlock.sh";
+    $posthook_unlock = "/usr/share/service-desk/posthook_unlock.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_unlock_error = true;
+   $display_posthook_unlock_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_unlock_error = true;
+
+Account enable
+--------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and enable the feature):
+
+.. code-block:: php
+
+    $prehook_enable = "/usr/share/service-desk/prehook_enable.sh";
+    $posthook_enable = "/usr/share/service-desk/posthook_enable.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_enable_error = true;
+   $display_posthook_enable_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_enable_error = true;
+
+Account disable
+---------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and disable the feature):
+
+.. code-block:: php
+
+    $prehook_disable = "/usr/share/service-desk/prehook_disable.sh";
+    $posthook_disable = "/usr/share/service-desk/posthook_disable.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_disable_error = true;
+   $display_posthook_disable_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_disable_error = true;
+
+Update validity dates
+---------------------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and updatevalidity the feature):
+
+.. code-block:: php
+
+    $prehook_updatevalidity = "/usr/share/service-desk/prehook_updatevalidity.sh";
+    $posthook_updatevalidity = "/usr/share/service-desk/posthook_updatevalidity.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_updatevalidity_error = true;
+   $display_posthook_updatevalidity_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_updatevalidity_error = true;
