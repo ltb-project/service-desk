@@ -344,7 +344,7 @@
                     {$msg_accountenabled}
                 </p>
             </div>
-            {if $use_disableaccount || $prehookenableresult || posthookenableresult}
+            {if $use_disableaccount || $prehookenableresult || posthookenableresult || $prehookdisableresult || $posthookdisableresult}
             <div class="card-body">
                 {if $disableaccountresult eq 'ldaperror' or $disableaccountresult eq 'actionforbidden'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotdisabled}</div>
@@ -354,6 +354,12 @@
                 {/if}
                 {if $posthookenableresult}
                 <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookenableresult}</div>
+                {/if}
+                {if $prehookdisableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookdisableresult}</div>
+                {/if}
+                {if $posthookdisableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookdisableresult}</div>
                 {/if}
                 {if $use_disablecomment}
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModaldisable{$dn|sha256}">
@@ -382,7 +388,7 @@
                     {$msg_accountdisabled}
                 </p>
             </div>
-            {if $use_enableaccount || $prehookenableresult || $posthookenableresult}
+            {if $use_enableaccount || $prehookenableresult || $posthookenableresult || $prehookdisableresult || $posthookdisableresult}
             <div class="card-body">
                 {if $enableaccountresult eq 'ldaperror' or $enableaccountresult eq 'actionforbidden'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotenabled}</div>
@@ -392,6 +398,12 @@
                 {/if}
                 {if $posthookenableresult}
                 <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookenableresult}</div>
+                {/if}
+                {if $prehookdisableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookdisableresult}</div>
+                {/if}
+                {if $posthookdisableresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookdisableresult}</div>
                 {/if}
                 {if $use_enablecomment}
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#commentModalenable{$dn|sha256}">

@@ -34,17 +34,21 @@ if (isset($_POST["comment"]) and $_POST["comment"]) {
     $comment = $_POST["comment"];
 }
 
+if (!$use_enableaccount) {
+    $result = "actionforbidden";
+}
+
 if ($result === "") {
 
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
+    require_once("../lib/hook.inc.php");
 
     # Connect to LDAP
     $ldap_connection = $ldapInstance->connect();
 
     $ldap = $ldap_connection[0];
     $result = $ldap_connection[1];
-    require_once("../lib/hook.inc.php");
 
     # DN match
     if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
