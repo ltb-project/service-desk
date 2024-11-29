@@ -320,6 +320,12 @@ $prehook_login = "uid";
 #$display_prehook_disable_error = true;
 #$ignore_prehook_disable_error = true;
 
+## Update validity
+
+#$prehook_updatevalidity = "/usr/share/service-desk/prehook_updatevalidity.sh";
+#$display_prehook_updatevalidity_error = true;
+#$ignore_prehook_updatevalidity_error = true;
+
 ### Posthooks
 
 # The posthook is only launched if the action was successful
@@ -356,6 +362,11 @@ $posthook_login = "uid";
 
 #$posthook_disable = "/usr/share/service-desk/posthook_disable.sh";
 #$display_posthook_disable_error = true;
+
+## Update validity
+
+#$posthook_updatevalidity = "/usr/share/service-desk/posthook_updatevalidity.sh";
+#$display_posthook_updatevalidity_error = true;
 
 # The name of an HTTP Header that may hold a reference to an extra config file to include.
 #$header_name_extra_config="SSP-Extra-Config";

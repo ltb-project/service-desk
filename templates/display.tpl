@@ -435,13 +435,19 @@
                     {if $isAccountValid}{$msg_accountvalid}{else}{$msg_accountnotvalid}{/if}
                 </p>
             </div>
-            {if $use_updatestarttime or $use_updateendtime}
+            {if $use_updatestarttime || $use_updateendtime || $prehookupdatevalidityresult || $posthookupdatevalidityresult}
             <div class="card-body">
                 {if $updatevaliditydatesresult eq 'ldaperror' or $updatevaliditydatesresult eq 'actionforbidden'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_validitydatesnotupdated}</div>
                 {/if}
                 {if $updatevaliditydatesresult eq 'validiydatesupdated'}
                 <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_validitydatesupdated}</div>
+                {/if}
+                {if $prehookupdatevalidityresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookupdatevalidityresult}</div>
+                {/if}
+                {if $posthookupdatevalidityresult}
+                <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookupdatevalidityresult}</div>
                 {/if}
                 <form id="updatevaliditydates" method="post" action="index.php?page=updatevaliditydates" class="row g-3">
                         <input type="hidden" name="dn" value="{$dn}" />

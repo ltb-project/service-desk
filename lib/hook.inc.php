@@ -41,4 +41,18 @@ function hook_command($hook, $login) {
     return $command;
 }
 
+/* @function string validity_hook_command(string $hook, string $login, string $start_date, string $end_date)
+   Creates hook command line passing login and dates as parameter
+   @param $hook string script/command to execute for procesing hook data
+   @param $login string username
+   @param $start_date string start date YYYY-MM-DD
+   @param $end_date string end date YYYY-MM-DD
+ */
+function validity_hook_command($hook, $login, $start_date, $end_date) {
+    if (!$start_date) { $start_date = "0000-00-00"; }
+    if (!$end_date) { $end_date = "0000-00-00"; }
+    $command = escapeshellcmd($hook).' '.escapeshellarg($login).' '.escapeshellarg($start_date).' '.escapeshellarg($end_date);
+    return $command;
+}
+
 ?>

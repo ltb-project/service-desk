@@ -31,6 +31,8 @@ $isAccountValid = "";
 $startDate = "";
 $endDate = "";
 $updatevaliditydatesresult = "";
+$prehookupdatevalidityresult= "";
+$posthookupdatevalidityresult= "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -106,6 +108,14 @@ if (isset($_GET["posthookdisableresult"]) and $_GET["posthookdisableresult"]) {
 
 if (isset($_GET["updatevaliditydatesresult"]) and $_GET["updatevaliditydatesresult"]) {
     $updatevaliditydatesresult = $_GET["updatevaliditydatesresult"];
+}
+
+if (isset($_GET["prehookupdatevalidityresult"]) and $_GET["prehookupdatevalidityresult"]) {
+    $prehookupdatevalidityresult = $_GET["prehookupdatevalidityresult"];
+}
+
+if (isset($_GET["posthookupdatevalidityresult"]) and $_GET["posthookupdatevalidityresult"]) {
+    $posthookupdatevalidityresult = $_GET["posthookupdatevalidityresult"];
 }
 
 if ($result === "") {
@@ -278,5 +288,7 @@ $smarty->assign("isAccountValid", $isAccountValid);
 $smarty->assign("startDate", $startDate);
 $smarty->assign("endDate", $endDate);
 $smarty->assign("updatevaliditydatesresult", $updatevaliditydatesresult);
+$smarty->assign("prehookupdatevalidityresult", $prehookupdatevalidityresult);
+$smarty->assign("posthookupdatevalidityresult", $posthookupdatevalidityresult);
 
 ?>
