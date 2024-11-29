@@ -19,6 +19,8 @@ $prehooklockresult= "";
 $posthooklockresult= "";
 $prehookunlockresult= "";
 $posthookunlockresult= "";
+$prehookenableresult= "";
+$posthookenableresult= "";
 $ldapExpirationDate="";
 $canLockAccount="";
 $isAccountEnabled = "";
@@ -82,6 +84,14 @@ if (isset($_GET["prehookunlockresult"]) and $_GET["prehookunlockresult"]) {
 
 if (isset($_GET["posthookunlockresult"]) and $_GET["posthookunlockresult"]) {
     $posthookunlockresult = $_GET["posthookunlockresult"];
+}
+
+if (isset($_GET["prehookenableresult"]) and $_GET["prehookenableresult"]) {
+    $prehookenableresult = $_GET["prehookenableresult"];
+}
+
+if (isset($_GET["posthookenableresult"]) and $_GET["posthookenableresult"]) {
+    $posthookenableresult = $_GET["posthookenableresult"];
 }
 
 if (isset($_GET["updatevaliditydatesresult"]) and $_GET["updatevaliditydatesresult"]) {
@@ -245,6 +255,8 @@ $smarty->assign("prehookunlockresult", $prehookunlockresult);
 $smarty->assign("posthookunlockresult", $posthookunlockresult);
 if ($canLockAccount == false) { $smarty->assign("use_lockaccount", $canLockAccount); }
 $smarty->assign("isAccountEnabled", $isAccountEnabled);
+$smarty->assign("prehookenableresult", $prehookenableresult);
+$smarty->assign("posthookenableresult", $posthookenableresult);
 if (isset($messages[$resetpasswordresult])) {
     $smarty->assign('msg_resetpasswordresult', $messages[$resetpasswordresult]);
 } else {
