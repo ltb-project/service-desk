@@ -1,7 +1,7 @@
 <!--table class="table table-striped table-hover table-condensed dataTable"-->
 <thead>
     <tr>
-        <th class="hidden-print nosort">&nbsp;</th>
+        <th class="hidden-print" data-dt-order="disable">&nbsp;</th>
         {foreach $listing_columns as $item}<th>{$msg_label_{$item}}</th>{/foreach}
     </tr>
 </thead>
