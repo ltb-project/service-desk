@@ -36,10 +36,10 @@
         bottom2Start: {
             buttons: [
 {if $datatables_print_all}
-                { extend: 'print', text: '{$msg_print_all}', autoPrint: {if $datatables_auto_print}true{else}false{/if} },
+                { extend: 'print', text: '{$msg_print_all}', exportOptions: { colums: ':not(.hidden-print)' }, autoPrint: {if $datatables_auto_print}true{else}false{/if} },
 {/if}
 {if $datatables_print_page}
-                { extend: 'print', text: '{$msg_print_page}', exportOptions: { modifier: { page: 'current' } }, autoPrint: {if $datatables_auto_print}true{else}false{/if} },
+                { extend: 'print', text: '{$msg_print_page}', exportOptions: { colums: ':not(.hidden-print)', modifier: { page: 'current' } }, autoPrint: {if $datatables_auto_print}true{else}false{/if} },
 {/if}
             ]
         }
