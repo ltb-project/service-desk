@@ -4,6 +4,8 @@ Display parameters
 User panel
 ----------
 
+.. image:: images/ltb_sd_user_panel.png
+
 Configure which items are displayed:
 
 .. code-block:: php
@@ -25,6 +27,8 @@ Choose to show undefined values:
 Account information panel
 -------------------------
 
+.. image:: images/ltb_sd_account_information.png
+
 Configure which items are displayed:
 
 .. code-block:: php
@@ -40,11 +44,24 @@ You can also display the password expiration date in this panel by enabling this
 Lock status
 -----------
 
+.. image:: images/ltb_sd_lock_status.png
+
 You can disable the lock status panel:
 
 .. code-block:: php
 
     $show_lockstatus = false;
+
+Enable status
+-------------
+
+.. image:: images/ltb_sd_enable_status.png
+
+You can disable the enable status panel:
+
+.. code-block:: php
+
+    $show_enablestatus = false;
 
 Expire status
 -------------
@@ -57,6 +74,8 @@ You can disable the expire status panel:
 
 Validity status
 ---------------
+
+.. image:: images/ltb_sd_validity_status.png
 
 You can disable the validity status panel:
 

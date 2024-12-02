@@ -1,6 +1,8 @@
 Lock and unlock account
 =======================
 
+.. image:: images/ltb_sd_lock_status.png
+
 Show lock status
 ----------------
 

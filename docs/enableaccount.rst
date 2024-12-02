@@ -1,6 +1,8 @@
 Enable and disable account
 ==========================
 
+.. image:: images/ltb_sd_enable_status.png
+
 Show enabled status
 -------------------
 

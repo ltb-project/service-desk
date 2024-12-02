@@ -1,6 +1,8 @@
 Presentation
 ============
 
+.. image:: images/ltb_sd_welcome_page.png
+
 LDAP Tool Box Service Desk is a web application for administrators and support teams.
 It allows to browse accounts in an LDAP directory, view and update their status.
 
@@ -31,3 +33,7 @@ Features
   * Accounts with an expired password
   * Accounts idle (never connected or not connected since a number of days)
   * Accounts invalid (for which start date is in the future, or end date is in the past)
+
+.. image:: images/ltb_sd_search.png
+
+.. image:: images/ltb_sd_comment.png

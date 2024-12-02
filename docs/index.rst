@@ -6,11 +6,11 @@
 LDAP Tool Box Service Desk documentation
 ========================================
 
-.. image:: images/ltb_sd_screenshot.jpg
+.. image:: images/ltb_sd_0.6.png
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
    presentation.rst
    installation.rst

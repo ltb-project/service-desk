@@ -12,7 +12,7 @@ To enable it:
 
     $use_searchlocked = true;
 
-It is possible to unlock an account directly from this page. This requires to enable the feature :doc:`unlockaccount`.
+It is possible to unlock an account directly from this page. This requires to enable the feature :doc:`lockaccount`.
 
 Disabled accounts
 -----------------

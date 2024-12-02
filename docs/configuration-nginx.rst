@@ -1,14 +1,14 @@
 .. _nginx_configuration:
 
 Nginx configuration
-====================
+===================
 
 Apache or Nginx is not installed by default. You must choose one.
 
 Current section explains how to install and configure Nginx.
 
 Install and configure Nginx
-----------------------------
+---------------------------
 
 On Debian:
 
@@ -26,7 +26,7 @@ On RHEL systems:
   dnf install nginx
 
 Virtual host configuration
-------------
+--------------------------
 
 Here is a sample block server configuration:
 

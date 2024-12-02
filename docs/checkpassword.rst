@@ -1,6 +1,8 @@
 Check password
 ==============
 
+.. image:: images/ltb_sd_check_password.png
+
 This feature allows to enter a password and check authentication.
 
 .. warning:: the authentification can fail even if the password is correct.

@@ -24,7 +24,7 @@ Multi tenancy
 You can load a specific configuration file by passing a HTTP header.
 This feature is disable by default. To enable it:
 
-.. code:: php
+.. code-block:: php
 
    $header_name_extra_config = "SSP-Extra-Config";
 
@@ -33,7 +33,7 @@ Then if you send the header ``SSP-Extra-Config: domain1``, the file
 
 Using Apache, we may set such header using the following:
 
-.. code:: apache
+.. code-block::
 
     <VirtualHost *:80>
        ServerName ssp.domain1.com
@@ -43,7 +43,7 @@ Using Apache, we may set such header using the following:
 
 Using Nginx, we could use instead:
 
-.. code:: nginx
+.. code-block::
 
    server {
        [...]
@@ -187,14 +187,14 @@ It is possible to provide mail of administrator to service-desk using a HTTP hea
 
 $header_name_notify_admin_by_mail is name of header that will be provided to cgi script as HTTP_$header_name_notify_admin_by_mail to set administrator mail from webserver.
 
-.. code:: php
+.. code-block:: php
 
    $header_name_notify_admin_by_mail = "SSP-Admin-Mail";
 
 
 Using Apache, we may set such header using the following:
 
-.. code:: apache
+.. code-block::
 
     <VirtualHost *:80>
        ServerName ssp.domain1.com
@@ -205,7 +205,7 @@ Using Apache, we may set such header using the following:
 Using Nginx, nginx take normalized cgi param naming, ie uppercase and - replaced to _.
 we could use instead:
 
-.. code:: nginx
+.. code-block::
 
    server {
        [...]

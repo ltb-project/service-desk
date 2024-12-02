@@ -1,6 +1,8 @@
 Reset password
 ==============
 
+.. image:: images/ltb_sd_reset_password.png
+
 This feature allows to reset a password and set the reset at next connection flag.
 
 To enable this feature:
