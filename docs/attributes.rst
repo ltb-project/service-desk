@@ -7,6 +7,7 @@ Attributes are defined in ``$attributes_map``, where each item is an array with 
 * ``faclass``: name of Font Awesome icon class
 * ``type``: type of attribute (text, mailto, tel or date)
 * ``sort``: optional, when attribute is multi-valued, sort them. Two possible values: ``ascending`` (default) or ``descending``
+* ``dtorder``: optional, set value to ``disable`` to remove sorting on the column
 
 This is used to configure how attribute is displayed.
 
