@@ -20,11 +20,21 @@ You need to install these prerequisites:
 
 * Apache or another web server
 * php-ldap
-* php-fpm
+* php-fpm >= 7.3
 * smarty (version 3 or 4)
 
 Debian / Ubuntu
 ---------------
+
+.. warning:: Due to a `bug`_ in old Debian and Ubuntu `smarty3`_ package, you may face the error ``syntax error, unexpected token "class"``.
+   In this case, install a newer version of the package:
+
+   ``# wget http://ftp.us.debian.org/debian/pool/main/s/smarty3/smarty3_3.1.47-2_all.deb``
+
+   ``# dpkg -i smarty3_3.1.47-2_all.deb``
+
+.. _smarty3: https://packages.debian.org/sid/smarty3
+.. _bug: https://github.com/ltb-project/self-service-password/issues/681
 
 Import the PGP key:
 
@@ -60,10 +70,6 @@ or to :ref:`Nginx installation and configuration <nginx_configuration>`
 
 CentOS / RedHat
 ---------------
-
-.. warning::  You must install the package `php-Smarty`_. You can get it from EPEL repositories.
-
-.. _php-Smarty: https://pkgs.org/download/php-Smarty
 
 Configure the yum repository:
 
