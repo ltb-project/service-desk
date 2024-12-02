@@ -15,7 +15,7 @@
 %define sd_realname  ltb-project-%{name}
 
 Name:      service-desk
-Version:   0.6.0
+Version:   0.6
 Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
 URL:       https://ltb-project.org/
@@ -168,7 +168,7 @@ rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %changelog
-* Mon Dec 02 2024 Clement Oudot <clem@ltb-project.org> - 0.6.0-1
+* Mon Dec 02 2024 Clement Oudot <clem@ltb-project.org> - 0.6-1
 - gh#52: LTB Service Desk Active Directory Support
 - gh#53: Display pwdPolicySubentry
 - gh#57: Add new password policy items from Behera draft 10
