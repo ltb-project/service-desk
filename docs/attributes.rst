@@ -27,3 +27,11 @@ Available types:
 
 .. tip:: See LDAP Tool Box White Pages documentation to get more information.
 
+OpenLDAP and Active Directory
+-----------------------------
+
+To allow compatibilty with OpenLDAP and Active Directory, some specific attributes are configured in dedicated parameters: ``$openldap_attributes_map`` and ``$activedirectory_attributes_map``.
+
+For example, the ``endtime`` is in ``pwdEndTime`` attribute in OpenLDAP and in ``accountExpires`` attribute in Active Directory.
+
+If you need to change the default settings, override these parameters. They are merged into the global ``$attributes_map`` by the software itself.
