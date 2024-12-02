@@ -18,6 +18,7 @@ Available types:
 * ``tel``: tel link
 * ``boolean``: true or false
 * ``date``: LDAP date converted to full date
+* ``ad_date``: Active Directory date converted to full date
 * ``list``: value from a list
 * ``bytes``: bytes converted in KB/MB/GB/TB
 * ``timestamp``: timestamp converted to full date

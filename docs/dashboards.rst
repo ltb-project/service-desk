@@ -14,6 +14,19 @@ To enable it:
 
 It is possible to unlock an account directly from this page. This requires to enable the feature :doc:`unlockaccount`.
 
+Disabled accounts
+-----------------
+
+This page will list all currently disabled accounts.
+
+To enable it:
+
+.. code-block:: php
+
+    $use_searchdisabled = true;
+
+It is possible to enable an account directly from this page. This requires to enable the feature :doc:`enableaccount`.
+
 Soon expired passwords
 ----------------------
 
@@ -60,3 +73,14 @@ You can also configure the number of idle days:
 .. code-block:: php
 
     $idledays = 60;
+
+Invalid accounts
+----------------
+
+This page will list all invalid accounts.
+
+To enable it:
+
+.. code-block:: php
+
+    $use_searchinvalid = true;
