@@ -13,6 +13,7 @@
 %global sd_destdir   %{_datadir}/%{name}
 %global sd_cachedir  %{_localstatedir}/cache/%{name}
 %define sd_realname  ltb-project-%{name}
+%undefine __brp_mangle_shebangs
 
 Name:      service-desk
 Version:   0.6
@@ -32,6 +33,7 @@ Requires:  php(language) >= 7.3
 Requires:  php-ldap
 Requires:  php-Smarty
 Requires:  php-fpm
+%{!?el7:%global __requires_exclude /usr/bin/python}
 
 Provides:  bundled(js-bootstrap) = v5.3.2
 Provides:  bundled(js-jquery) = v3.7.1
