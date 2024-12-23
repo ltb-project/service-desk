@@ -23,7 +23,7 @@ Configure items shown when displaying results:
 
 .. code-block:: php
 
-    search_result_items = array('identifier', 'mail', 'mobile');
+    $search_result_items = array('identifier', 'mail', 'mobile');
 
 Datatables
 ----------
