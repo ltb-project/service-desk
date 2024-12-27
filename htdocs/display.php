@@ -231,14 +231,8 @@ if ($result === "") {
 
         if ($show_validitystatus) {
             $isAccountValid = $directory->isAccountValid($ldap, $dn);
-            if ($use_updatestarttime and isset($entry[0][ $attributes_map['starttime']['attribute'] ])) {
-                $starttime = $entry[0][ $attributes_map['starttime']['attribute'] ][0];
-                $startDate = $directory->getPhpDate( $starttime );
-            }
-            if ($use_updateendtime and isset($entry[0][ $attributes_map['endtime']['attribute'] ])) {
-                $endtime = $entry[0][ $attributes_map['endtime']['attribute'] ][0];
-                $endDate = $directory->getPhpDate( $endtime );
-            }
+            $startDate = $directory->getStartDate($ldap, $dn);
+            $endDate = $directory->getEndDate($ldap, $dn);
         }
 
     }}}
