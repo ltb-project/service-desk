@@ -10,3 +10,31 @@ See [list of features](https://service-desk.readthedocs.io/en/stable/presentatio
 ![Screenshot](https://raw.githubusercontent.com/ltb-project/service-desk/master/ltb_sd_screenshot.jpg)
 
 :exclamation: With great power comes great responsibility: this application allows to reset password of any user, you must protect it and allow access only to trusted users.
+
+## Documentation
+
+Documentation is available on https://service-desk.readthedocs.io/en/latest/
+
+## Docker
+
+We provide an [official Docker image](https://hub.docker.com/r/ltbproject/service-desk).
+
+Create a minimal configuration file:
+```
+vi sd.conf.php
+```
+```php
+<?php // My Service Desk configuration
+$ldap_url = "ldap://ldap.example.com";
+$ldap_binddn = "cn=admin,dc=example,dc=com";
+$ldap_bindpw = 'secret';
+$debug = true;
+?>
+```
+
+And run:
+```
+docker run -p 80:80 \
+    -v $PWD/sd.conf.php:/var/www/conf/config.inc.local.php \
+    -it docker.io/ltbproject/service-desk:latest
+```
