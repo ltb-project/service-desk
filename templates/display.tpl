@@ -344,7 +344,7 @@
                     {$msg_accountenabled}
                 </p>
             </div>
-            {if $use_disableaccount || $prehookenableresult || posthookenableresult || $prehookdisableresult || $posthookdisableresult}
+            {if $use_disableaccount || $prehookenableresult || $posthookenableresult || $prehookdisableresult || $posthookdisableresult}
             <div class="card-body">
                 {if $disableaccountresult eq 'ldaperror' or $disableaccountresult eq 'actionforbidden'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_accountnotdisabled}</div>
