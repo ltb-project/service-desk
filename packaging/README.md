@@ -122,10 +122,19 @@ You can also build with podman:
 podman build --no-cache -t service-desk -f ./docker/Dockerfile ../
 ```
 
-Tag the `latest` image with the major and minor version, for example:
+For Alpine linux image :
+
+```
+DOCKER_BUILDKIT=1 docker build -t service-desk-alpine -f ./docker/Dockerfile.alpine ../
+```
+
+Tag the defautl and alpine images with the major and minor version, for example:
 
 ```
 docker tag service-desk:latest ltbproject/service-desk:1.6.1
 docker tag service-desk:latest ltbproject/service-desk:1.6
 docker tag service-desk:latest ltbproject/service-desk:latest
+docker tag service-desk-alpine:latest ltbproject/service-desk:alpine-1.6.1
+docker tag service-desk-alpine:latest ltbproject/service-desk:alpine-1.6
+docker tag service-desk-alpine:latest ltbproject/service-desk:alpine-latest
 ```
