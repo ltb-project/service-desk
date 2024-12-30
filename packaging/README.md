@@ -103,8 +103,29 @@ rpm --addsign RPMS/noarch/service-desk*
 
 ## 4 - Docker
 
-From current directory, do:
+Pre-requisites:
+
+* docker / podman
+* if docker: a version with buildkit (included by default in Docker Engine
+  as of version 23.0, but can be enabled in previous versions with
+  DOCKER_BUILDKIT=1 in build command line)
+
+From "packaging" directory, do:
 
 ```
-docker build -t service-desk -f ./docker/Dockerfile ../
+DOCKER_BUILDKIT=1 docker build -t service-desk -f ./docker/Dockerfile ../
+```
+
+You can also build with podman:
+
+```
+podman build --no-cache -t service-desk -f ./docker/Dockerfile ../
+```
+
+Tag the `latest` image with the major and minor version, for example:
+
+```
+docker tag service-desk:latest ltbproject/service-desk:1.6.1
+docker tag service-desk:latest ltbproject/service-desk:1.6
+docker tag service-desk:latest ltbproject/service-desk:latest
 ```
