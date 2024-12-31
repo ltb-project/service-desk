@@ -84,9 +84,8 @@ if ($result === "") {
             $result = "hookerror";
         } else {
 
-            if ($use_updatestarttime and $start_date) {
-                $startDate = new DateTime($start_date);
-                $ldapStartDate = $directory->getLdapDate($startDate);
+            if ($use_updatestarttime) {
+                $ldapStartDate = $start_date ? $directory->getLdapDate(new DateTime($start_date)) : array();
                 $update = $ldapInstance->modify_attributes($dn, array( $attributes_map['starttime']['attribute'] => $ldapStartDate));
                 if ( $update[0] == 0 ) {
                     $result = "validiydatesupdated";
@@ -94,9 +93,8 @@ if ($result === "") {
                     $result = "ldaperror";
                 }
             }
-            if ($use_updateendtime and $end_date) {
-                $endDate = new DateTime($end_date);
-                $ldapEndDate = $directory->getLdapDate($endDate);
+            if ($use_updateendtime) {
+                $ldapEndDate = $end_date ? $directory->getLdapDate(new DateTime($end_date)) : array();
                 $update = $ldapInstance->modify_attributes($dn, array( $attributes_map['endtime']['attribute'] => $ldapEndDate));
                 if ( $update[0] == 0 and $result !== "ldaperror" ) {
                     $result = "validiydatesupdated";
