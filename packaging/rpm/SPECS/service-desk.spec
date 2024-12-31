@@ -16,7 +16,7 @@
 %undefine __brp_mangle_shebangs
 
 Name:      service-desk
-Version:   0.6
+Version:   0.6.1
 Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
 URL:       https://ltb-project.org/
@@ -170,6 +170,19 @@ rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %changelog
+* Tue Dec 31 2024 Clement Oudot <clem@ltb-project.org> - 0.6.1-1
+- gh#193: Docker image not available for 0.6
+- gh#194: Wrong display when no expiration date on an AD account
+- gh#195: Disable button displayed even if use_disableaccount is false
+- gh#197: Manage Active Directory special values for accountExpires
+- gh#198: AD reset at next connection is not displayed in account status
+- gh#199: Packages requires PHP 8.1
+- gh#200: Fix bad condition for posthookenableresult
+- gh#201: Use ltb-common 0.4.1
+- gh#202: Upgrade Docker image
+- gh#203: Unable to empty validity dates
+- gh#204: Manage empty values for start date and end date
+
 * Mon Dec 02 2024 Clement Oudot <clem@ltb-project.org> - 0.6-1
 - gh#52: LTB Service Desk Active Directory Support
 - gh#53: Display pwdPolicySubentry
