@@ -71,7 +71,7 @@ or to :ref:`Nginx installation and configuration <nginx_configuration>`
 CentOS / RedHat
 ---------------
 
-Configure the yum repository:
+Configure the yum repository: (take care to configure the name of the GPG key, see below)
 
 .. prompt:: bash #
 
@@ -93,9 +93,18 @@ Then update:
 
 Import repository key:
 
+On RHEL 7 or 8:
+
 .. prompt:: bash #
 
     rpm --import https://ltb-project.org/documentation/_static/RPM-GPG-KEY-LTB-project
+
+On RHEL 9:
+
+.. prompt:: bash #
+
+    rpm --import https://ltb-project.org/documentation/_static/RPM-GPG-KEY-LTB-PROJECT-SECURITY
+
 
 You are now ready to install:
 
