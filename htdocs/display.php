@@ -213,6 +213,8 @@ if ($result === "") {
         if ($display_edit_link) {
             # Replace {dn} in URL
             $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
+        } else if ($use_update) {
+            $edit_link = "/?page=update&dn=".urlencode($dn);
         }
 
         $lockDate = $directory->getLockDate($ldap, $dn);

@@ -41,8 +41,14 @@
                 {/foreach}
                 </table>
                 </div>
-
             </div>
+
+            {if $edit_link}
+            <div class="card-footer text-center">
+                <a class="btn btn-success" href="{$edit_link}"><i class="fa fa-edit"></i> {$msg_editentry}</a>
+            </div>
+            {/if}
+
         </div>
 
         <div class="card mb-3 shadow ">
