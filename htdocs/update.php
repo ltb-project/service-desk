@@ -6,8 +6,13 @@
 $result = "";
 $dn = "";
 $entry = "";
+$action = "displayform";
+$modify_result = "";
 
-if (isset($_GET["dn"]) and $_GET["dn"]) {
+if (isset($_POST["dn"]) and $_POST["dn"]) {
+    $dn = $_POST["dn"];
+    $action = "updateentry";
+} elseif (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
 } elseif (isset($entry_dn)) {
     $dn = $entry_dn;
@@ -35,78 +40,96 @@ if ($result === "") {
             error_log("LDAP - $dn not found using the configured search settings, reject request");
         } else {
 
-        # Search attributes
-        $attributes = array();
-        $search_items = array_merge($display_items, $update_items);
-        foreach( $search_items as $item ) {
-            $attributes[] = $attributes_map[$item]['attribute'];
-        }
-        $attributes[] = $attributes_map[$display_title]['attribute'];
+            # Display form
+            if ($action == "displayform") {
 
-        # Search entry
-        $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
-        $errno = ldap_errno($ldap);
-
-        if ( $errno ) {
-            $result = "ldaperror";
-            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
-        } else {
-
-        $entry = ldap_get_entries($ldap, $search);
-
-        # Sort attributes values
-        foreach ($entry[0] as $attr => $values) {
-            if ( is_array($values) && $values['count'] > 1 ) {
-
-                # Find key in attributes_map
-                $attributes_map_filter = array_filter($attributes_map, function($v) use(&$attr) {
-                    return $v['attribute'] == "$attr";
-                });
-                if( count($attributes_map_filter) < 1 )
-                {
-                    $k = "";
-                    error_log("WARN: no key found for attribute $attr in \$attributes_map");
+                # Search attributes
+                $attributes = array();
+                $search_items = array_merge($display_items, $update_items);
+                foreach( $search_items as $item ) {
+                    $attributes[] = $attributes_map[$item]['attribute'];
                 }
-                elseif( count($attributes_map_filter) > 1 )
-                {
-                    $k = array_key_first($attributes_map_filter);
-                    error_log("WARN: multiple keys found for attribute $attr in \$attributes_map, using first one: $k");
-                }
-                else
-                {
-                    $k = array_key_first($attributes_map_filter);
-                }
+                $attributes[] = $attributes_map[$display_title]['attribute'];
 
-                if(isset($attributes_map[$k]['sort']))
-                {
-                    if($attributes_map[$k]['sort'] == "descending" )
-                    {
-                        # descending sort
-                        arsort($values);
+                # Search entry
+                $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
+                $errno = ldap_errno($ldap);
+
+                if ( $errno ) {
+                    $result = "ldaperror";
+                    error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
+                } else {
+
+                    $entry = ldap_get_entries($ldap, $search);
+
+                    # Sort attributes values
+                    foreach ($entry[0] as $attr => $values) {
+                        if ( is_array($values) && $values['count'] > 1 ) {
+
+                            # Find key in attributes_map
+                            $attributes_map_filter = array_filter($attributes_map, function($v) use(&$attr) {
+                                return $v['attribute'] == "$attr";
+                            });
+                            if( count($attributes_map_filter) < 1 )
+                            {
+                                $k = "";
+                                error_log("WARN: no key found for attribute $attr in \$attributes_map");
+                            }
+                            elseif( count($attributes_map_filter) > 1 )
+                            {
+                                $k = array_key_first($attributes_map_filter);
+                                error_log("WARN: multiple keys found for attribute $attr in \$attributes_map, using first one: $k");
+                            }
+                            else
+                            {
+                                $k = array_key_first($attributes_map_filter);
+                            }
+
+                            if(isset($attributes_map[$k]['sort']))
+                            {
+                                if($attributes_map[$k]['sort'] == "descending" )
+                                {
+                                    # descending sort
+                                    arsort($values);
+                                }
+                                else
+                                {
+                                    # ascending sort
+                                    asort($values);
+                                }
+                            }
+                            else
+                            {
+                                # if 'sort' param unset: default to ascending sort
+                                asort($values);
+                            }
+                        }
+                        if ( isset($values['count']) ) {
+                            unset($values['count']);
+                        }
+                        $entry[0][$attr] = $values;
                     }
-                    else
-                    {
-                        # ascending sort
-                        asort($values);
-                    }
-                }
-                else
-                {
-                    # if 'sort' param unset: default to ascending sort
-                    asort($values);
                 }
             }
-            if ( isset($values['count']) ) {
-                unset($values['count']);
-            }
-            $entry[0][$attr] = $values;
-        }
 
-    }}}
+            # Update entry
+            if ($action == "updateentry") {
+
+                # Get all data
+                $update_attributes = array();
+                foreach ($update_items as $item) {
+                    $update_attributes[ $attributes_map[$item]['attribute'] ] = $_POST[$item];
+                }
+
+                # Update entry
+                $modify_result = ldap_mod_replace($ldap, $dn, $update_attributes);
+            }
+        }}
 }
 
 $smarty->assign("entry", $entry[0]);
 $smarty->assign("dn", $dn);
+$smarty->assign("action", $action);
 
 $smarty->assign("card_title", $display_title);
 $smarty->assign("card_items", array_unique(array_merge($display_items, $update_items)));

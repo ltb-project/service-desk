@@ -1,6 +1,8 @@
 <div class="row">
     <div class="update">
 
+    <div class="alert alert-success"><i class="fa fa-fw fa-edit"></i> {$msg_editentry} {$dn}</div>
+
         <div class="card mb-3 shadow">
             <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
@@ -10,6 +12,8 @@
             </div>
 
             <form method="post">
+
+            <input type="hidden" name="dn" value="{$dn}"/>
 
             <div class="card-body">
                 <div class="table-responsive">
@@ -33,10 +37,10 @@
                         <td>
                             {if $item|in_array:$update_items}
                                 {if !({$entry.$attribute.0})}
-                                {include 'value_editor.tpl' value="" type=$type truncate_value_after=10000}
+                                {include 'value_editor.tpl' item=$item value="" type=$type truncate_value_after=10000}
                                 {else}
                                     {foreach $entry.{$attribute} as $value}
-                                        {include 'value_editor.tpl' value=$value type=$type truncate_value_after=10000}
+                                        {include 'value_editor.tpl' item=$item value=$value type=$type truncate_value_after=10000}
                                     {/foreach}
                                 {/if}
                             {else}
