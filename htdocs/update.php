@@ -7,7 +7,7 @@ $result = "";
 $dn = "";
 $entry = "";
 $action = "displayform";
-$modify_result = "";
+$result = "";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
@@ -39,6 +39,37 @@ if ($result === "") {
             $result = "noentriesfound";
             error_log("LDAP - $dn not found using the configured search settings, reject request");
         } else {
+
+            # Update entry
+            if ($action == "updateentry") {
+
+                # Get all data
+                $update_attributes = array();
+                foreach ($update_items as $item) {
+                    $value = array();
+                    if (isset($_POST[$item]) and !empty($_POST[$item])) {
+                        $value = array($_POST[$item]);
+                    }
+                    $update_attributes[ $attributes_map[$item]['attribute'] ] = $value;
+                }
+
+                # Update entry
+                if (!ldap_mod_replace($ldap, $dn, $update_attributes)) {
+                    error_log("LDAP - modify failed for $dn");
+                    $result = "updatefailed";
+                    $action = "displayform";
+                } else {
+                    $errno = ldap_errno($ldap);
+                    if ( $errno ) {
+                        error_log("LDAP - modify error $errno (".ldap_error($ldap).") for $dn");
+                        $result = "updatefailed";
+                        $action = "displayform";
+                    } else {
+                        $result = "updateok";
+                        $action = "displayentry";
+                    }
+                }
+            }
 
             # Display form
             if ($action == "displayform") {
@@ -112,19 +143,16 @@ if ($result === "") {
                 }
             }
 
-            # Update entry
-            if ($action == "updateentry") {
-
-                # Get all data
-                $update_attributes = array();
-                foreach ($update_items as $item) {
-                    $update_attributes[ $attributes_map[$item]['attribute'] ] = $_POST[$item];
-                }
-
-                # Update entry
-                $modify_result = ldap_mod_replace($ldap, $dn, $update_attributes);
-            }
         }}
+}
+
+if ($audit_log_file) {
+    auditlog($audit_log_file, $dn, $audit_admin, "updateentry", $result, $comment);
+}
+
+if ( $action == "displayentry" ) {
+    $location = 'index.php?page=display&dn='.$dn.'&updateresult='.$result;
+    header('Location: '.$location);
 }
 
 $smarty->assign("entry", $entry[0]);

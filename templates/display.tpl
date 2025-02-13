@@ -1,4 +1,9 @@
 <div class="row">
+
+    {if $updateresult eq 'updateok'}
+    <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_updateok}</div>
+    {/if}
+
     <div class="display col-md-6">
 
         <div class="card mb-3 shadow">

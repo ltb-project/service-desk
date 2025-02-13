@@ -1,8 +1,6 @@
 <div class="row">
     <div class="update">
 
-    <div class="alert alert-success"><i class="fa fa-fw fa-edit"></i> {$msg_editentry} {$dn}</div>
-
         <div class="card mb-3 shadow">
             <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
@@ -58,9 +56,12 @@
             </div>
 
             <div class="card-footer text-center">
+                <div class="d-grid gap-2 col-md-4 mx-auto">
                 <button type="submit" class="btn btn-success">
                     <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
                 </button>
+                <a href="?page=display&dn={$dn}" class="btn btn-secondary"><i class="fa fa-fw fa-cancel"></i> {$msg_cancelbacktoentry}</a>
+                </div>
             </div>
 
             </form>

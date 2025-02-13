@@ -33,6 +33,7 @@ $endDate = "";
 $updatevaliditydatesresult = "";
 $prehookupdatevalidityresult= "";
 $posthookupdatevalidityresult= "";
+$updateresult = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -116,6 +117,10 @@ if (isset($_GET["prehookupdatevalidityresult"]) and $_GET["prehookupdatevalidity
 
 if (isset($_GET["posthookupdatevalidityresult"]) and $_GET["posthookupdatevalidityresult"]) {
     $posthookupdatevalidityresult = $_GET["posthookupdatevalidityresult"];
+}
+
+if (isset($_GET["updateresult"]) and $_GET["updateresult"]) {
+    $updateresult = $_GET["updateresult"];
 }
 
 if ($result === "") {
@@ -286,5 +291,6 @@ $smarty->assign("endDate", $endDate);
 $smarty->assign("updatevaliditydatesresult", $updatevaliditydatesresult);
 $smarty->assign("prehookupdatevalidityresult", $prehookupdatevalidityresult);
 $smarty->assign("posthookupdatevalidityresult", $posthookupdatevalidityresult);
+$smarty->assign("updateresult", $updateresult);
 
 ?>
