@@ -1,7 +1,24 @@
 {if $type eq 'text'}
-    <input type="text" name={$item} class="form-control" value="{$value}" />
+    <input type="text" name="{$item}" class="form-control" value="{$value}" />
+
 {else if $type eq 'mailto'}
-    <input type="email" name={$item} class="form-control" value="{$value}" />
+    <input type="email" name="{$item}" class="form-control" value="{$value}" />
+
+{else if $type eq 'tel'}
+    <input type="tel" name="{$item}" class="form-control" value="{$value}" />
+
+{else if $type eq 'boolean'}
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" name="{$item}" {if $value eq 'TRUE'} checked{/if} value="TRUE" />
+    </div>
+
+{else if $type eq 'date'}
+    <input type="date" class="form-control" name="{$item}" value="{convert_ldap_date($value)|date_format:"%Y-%m-%d"}"/>
+
+{else if $type eq 'ad_date'}
+    <input type="date" class="form-control" name="{$item}" value="{convert_ad_date($value)|date_format:"%Y-%m-%d"}"/>
+
 {else}
     <input type="text" name={$item} class="form-control" value="{$value}" />
+
 {/if}

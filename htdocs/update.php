@@ -49,7 +49,12 @@ if ($result === "") {
                     $value = array();
                     if (isset($_POST[$item]) and !empty($_POST[$item])) {
                         $value = array($_POST[$item]);
+
+                        if ( $attributes_map[$item]['type'] == "date" ||  $attributes_map[$item]['type'] == "ad_date" ) {
+                            $value = $directory->getLdapDate(new DateTime($_POST[$item]));
+                        }
                     }
+
                     $update_attributes[ $attributes_map[$item]['attribute'] ] = $value;
                 }
 

@@ -1,7 +1,9 @@
 <div class="row">
 
     {if $updateresult eq 'updateok'}
-    <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_updateok}</div>
+    <div class="container">
+        <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_updateok}</div>
+    </div>
     {/if}
 
     <div class="display col-md-6">
