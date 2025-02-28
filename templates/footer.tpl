@@ -24,6 +24,11 @@
 {/literal}
 {literal}
     var itemlist = $('table.dataTable').DataTable({
+      serverSide: true,
+      ajax: {
+        url: '/index.php?page=search-api',
+        type: 'POST'
+      },
       layout: {
         topStart: {
 {/literal}
