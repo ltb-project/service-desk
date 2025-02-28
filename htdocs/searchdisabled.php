@@ -6,21 +6,10 @@
 require_once("../conf/config.inc.php");
 require __DIR__ . '/../vendor/autoload.php';
 
+/*
 [$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search($ldap_user_filter, array(), $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
 
 $ldapInstance->ldapSort($entries, $attributes_map['identifier']['attribute']);
-
-$page_nb = 1;
-$page_size = isset($default_page_size) ? $default_page_size : 25;
-if (isset($_GET["page_nb"]) and $_GET["page_nb"])
-{
-    $page_nb = $_GET["page_nb"];
-}
-if (isset($_GET["page_size"]) and $_GET["page_size"])
-{
-    $page_size = $_GET["page_size"];
-}
-$entries = array_slice($entries, ($page_size * ($page_nb - 1)), $page_size );
 
 if ( !empty($entries) )
 {
@@ -55,5 +44,17 @@ if ( !empty($entries) )
         if ($use_enableaccount) { $smarty->assign("display_enable_button", true); }
     }
 }
+*/
+
+$smarty->assign("nb_entries", 0);
+$smarty->assign("entries", null);
+$columns = $search_result_items;
+if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+$smarty->assign("listing_columns", $columns);
+$smarty->assign("listing_linkto",  isset($search_result_linkto) ? $search_result_linkto : array($search_result_title));
+$smarty->assign("listing_sortby",  array_search($search_result_sortby, $columns));
+$smarty->assign("show_undef", $search_result_show_undefined);
+$smarty->assign("truncate_value_after", $search_result_truncate_value_after);
+if ($use_enableaccount) { $smarty->assign("display_enable_button", true); }
 
 ?>
