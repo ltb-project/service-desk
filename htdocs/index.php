@@ -225,7 +225,7 @@ foreach ($messages as $key => $message) {
 
 # Other assignations
 $search = "";
-if (isset($_REQUEST["search"]) and $_REQUEST["search"]) { $search = htmlentities($_REQUEST["search"]); }
+if (isset($_REQUEST["search"]) and $_REQUEST["search"] and is_string($_REQUEST["search"])) { $search = htmlentities($_REQUEST["search"]); }
 $smarty->assign('search',$search);
 
 # Register plugins
