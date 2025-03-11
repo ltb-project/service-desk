@@ -26,6 +26,9 @@
         {/foreach}
     </select>
 
+{else if $type eq 'bytes'}
+    <input type="number" name="{$item}" class="form-control" value="{$value}" />
+
 {else}
     <input type="text" name={$item} class="form-control" value="{$value}" />
 
