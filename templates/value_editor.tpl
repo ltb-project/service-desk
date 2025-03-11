@@ -18,6 +18,14 @@
 {else if $type eq 'ad_date'}
     <input type="date" class="form-control" name="{$item}" value="{convert_ad_date($value)|date_format:"%Y-%m-%d"}"/>
 
+{else if $type eq 'static_list'}
+    <select class="form-control" id="{$item}" name="{$item}">
+        <option></option>
+        {foreach $list as $lvalue}
+        <option value="{$lvalue@key}"{if {$lvalue@key}=={$value}} selected{/if}>{$lvalue}</option>
+        {/foreach}
+    </select>
+
 {else}
     <input type="text" name={$item} class="form-control" value="{$value}" />
 

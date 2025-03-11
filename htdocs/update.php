@@ -145,6 +145,15 @@ if ($result === "") {
                         }
                         $entry[0][$attr] = $values;
                     }
+
+                    # Compute lists
+                    $item_list = array();
+
+                    foreach ($update_items as $item) {
+                        if ( $attributes_map[$item]["type"] === "static_list") {
+                            $item_list[$item] = isset($attributes_static_list[$item]) ? $attributes_static_list[$item] : array();
+                        }
+                    }
                 }
             }
 
@@ -163,6 +172,8 @@ if ( $action == "displayentry" ) {
 $smarty->assign("entry", $entry[0]);
 $smarty->assign("dn", $dn);
 $smarty->assign("action", $action);
+
+$smarty->assign("item_list", $item_list);
 
 $smarty->assign("card_title", $display_title);
 $smarty->assign("card_items", array_unique(array_merge($display_items, $update_items)));

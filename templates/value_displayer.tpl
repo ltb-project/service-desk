@@ -23,7 +23,7 @@
     {convert_ad_date($value)|date_format:{$date_specifiers}|truncate:{$truncate_value_after}}<br />
 {/if}
 
-{if $type eq 'list'}
+{if $type eq 'static_list' or $type eq 'list'}
     {$value|truncate:{$truncate_value_after}}<br />
 {/if}
 

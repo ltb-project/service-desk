@@ -35,10 +35,10 @@
                         <td>
                             {if $item|in_array:$update_items}
                                 {if !({$entry.$attribute.0})}
-                                {include 'value_editor.tpl' item=$item value="" type=$type truncate_value_after=10000}
+                                {include 'value_editor.tpl' item=$item value="" type=$type list=$item_list.$item truncate_value_after=10000}
                                 {else}
                                     {foreach $entry.{$attribute} as $value}
-                                        {include 'value_editor.tpl' item=$item value=$value type=$type truncate_value_after=10000}
+                                        {include 'value_editor.tpl' item=$item value=$value type=$type list=$item_list.$item truncate_value_after=10000}
                                     {/foreach}
                                 {/if}
                             {else}

@@ -99,6 +99,15 @@ $activedirectory_attributes_map = array(
     'endtime' => array( 'attribute' => 'accountexpires', 'faclass' => 'lock', 'type' => 'ad_date' ),
 );
 
+# List of values
+// Static lists: key/values in configuration file
+$attributes_static_list = array();
+// $attributes_static_list['title'] = array( 'Mr' => 'Mister', 'Mrs' => 'Misses' );
+
+// LDAP lists: key/values returned by an LDAP search
+$attributes_list = array();
+// $attributes_list['organizationalunit'] = array('base'=>'ou=services,dc=example,dc=com', 'filter'=>'(objectClass=organizationalUnit)', 'key'=>'description', 'value'=>'ou');
+
 # Search
 $search_attributes = array('uid', 'cn', 'mail');
 $search_use_substring_match = true;
