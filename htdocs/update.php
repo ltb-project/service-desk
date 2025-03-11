@@ -153,6 +153,9 @@ if ($result === "") {
                         if ( $attributes_map[$item]["type"] === "static_list") {
                             $item_list[$item] = isset($attributes_static_list[$item]) ? $attributes_static_list[$item] : array();
                         }
+                        if ( $attributes_map[$item]["type"] === "list") {
+                            $item_list[$item] = $ldapInstance->get_list( $attributes_list[$item]["base"], $attributes_list[$item]["filter"], $attributes_list[$item]["key"], $attributes_list[$item]["value"]  );
+                        }
                     }
                 }
             }
