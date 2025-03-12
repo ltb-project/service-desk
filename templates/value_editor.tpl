@@ -1,3 +1,4 @@
+<div class="{$type}">
 {if $type eq 'text'}
     <input type="text" name="{$item}" class="form-control" value="{$value}" />
 
@@ -29,7 +30,11 @@
 {else if $type eq 'bytes'}
     <input type="number" name="{$item}" class="form-control" value="{$value}" />
 
+{else if $type eq 'dn_link'}
+    <input type="text" name="{$item}" class="form-control" value="{$value}" />
+
 {else}
     <input type="text" name={$item} class="form-control" value="{$value}" />
 
 {/if}
+</div>
