@@ -74,6 +74,16 @@ div#footer {
   width:100%;
 }
 
+/* dn_link editor */
+div.dn_link_container {
+  position: relative;
+}
+
+div.dn_link_container > ul {
+  position: absolute;
+  top: 40px;
+}
+
 @media print {
 
   html, body {
