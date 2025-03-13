@@ -7,6 +7,10 @@ $(document).ready(function(){
   });
 
   $(".dn_link input").on("keyup", function (event) {
+    // Remove value if field is emptied
+    if ($(".dn_link input[type=text]").val().length == 0) {
+        $('.dn_link input[type=hidden]').val('') ;
+    }
     // Minimal search characters
     if ($(".dn_link input[type=text]").val().length > 2) {
       if (timer) {
