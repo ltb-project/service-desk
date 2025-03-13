@@ -34,7 +34,7 @@
     <div class="dn_link_container">
     <input type="text" name="{$item}display" class="form-control" value="{get_attribute dn="{$value}" attribute="cn" ldap_url="{$ldap_params.ldap_url}" ldap_starttls="{$ldap_params.ldap_starttls}" ldap_binddn="{$ldap_params.ldap_binddn}" ldap_bindpw="{$ldap_params.ldap_bindpw}" ldap_filter="{$ldap_params.ldap_user_filter}" ldap_network_timeout="{$ldap_params.ldap_network_timeout}"}" />
     <input type="hidden" name="{$item}" value="{$value}" />
-    <ul class="list-group dn_link_suggestions"></ul>
+    <div class="list-group dn_link_suggestions"></div>
     </div>
 
 {else}

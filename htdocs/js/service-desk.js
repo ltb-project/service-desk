@@ -12,23 +12,23 @@ $(document).ready(function(){
       if (timer) {
         clearTimeout(timer);
         // clear any existing list
-        $("ul.dn_link_suggestions").empty();
+        $("div.dn_link_suggestions").empty();
       }
 
       timer = setTimeout(() => {
         $.post("index.php", { 'apiendpoint': 'search_dn', 'search': $(".dn_link input[type=text]").val() }, (data) => {
           // clear existing list
-          $('ul.dn_link_suggestions').empty();
+          $('div.dn_link_suggestions').empty();
           // add entries to list
           data.forEach( (entry) => {
 console.log(entry);
-            const $elem = $(`<li class="list-group-item" data="${entry.dn}">${entry.display}</li>`);
+            const $elem = $(`<button type="button" class="list-group-item list-group-item-action">${entry.display}</button>`);
             $elem.on('click', () => {
               $('.dn_link input[type=text]').val(entry.display);
               $('.dn_link input[type=hidden]').val(entry.dn);
-              $('ul.dn_link_suggestions').empty();
+              $('div.dn_link_suggestions').empty();
             })
-            $('ul.dn_link_suggestions').append($elem)
+            $('div.dn_link_suggestions').append($elem)
           });
         }, 'json');
       }, 500);

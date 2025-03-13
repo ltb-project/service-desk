@@ -79,7 +79,7 @@ div.dn_link_container {
   position: relative;
 }
 
-div.dn_link_container > ul {
+div.dn_link_suggestions {
   position: absolute;
   top: 40px;
 }
