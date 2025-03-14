@@ -6,6 +6,12 @@
     </div>
     {/if}
 
+    {if $renameresult eq 'renameok'}
+    <div class="container">
+        <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_renameok}</div>
+    </div>
+    {/if}
+
     <div class="display col-md-6">
 
         <div class="card mb-3 shadow">
@@ -50,9 +56,14 @@
                 </div>
             </div>
 
-            {if $edit_link}
+            {if $edit_link || $rename_link}
             <div class="card-footer text-center">
+                {if $edit_link}
                 <a class="btn btn-success" href="{$edit_link}"><i class="fa fa-edit"></i> {$msg_editentry}</a>
+                {/if}
+                {if $rename_link}
+                <a class="btn btn-success" href="{$rename_link}"><i class="fa fa-user-pen"></i> {$msg_renameentry}</a>
+                {/if}
             </div>
             {/if}
 

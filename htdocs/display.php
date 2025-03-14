@@ -7,6 +7,7 @@ $result = "";
 $dn = "";
 $entry = "";
 $edit_link = "";
+$rename_link = "";
 $checkpasswordresult= "";
 $resetpasswordresult= "";
 $unlockaccountresult= "";
@@ -34,6 +35,7 @@ $updatevaliditydatesresult = "";
 $prehookupdatevalidityresult= "";
 $posthookupdatevalidityresult= "";
 $updateresult = "";
+$renameresult = "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -121,6 +123,10 @@ if (isset($_GET["posthookupdatevalidityresult"]) and $_GET["posthookupdatevalidi
 
 if (isset($_GET["updateresult"]) and $_GET["updateresult"]) {
     $updateresult = $_GET["updateresult"];
+}
+
+if (isset($_GET["renameresult"]) and $_GET["renameresult"]) {
+    $renameresult = $_GET["renameresult"];
 }
 
 if ($result === "") {
@@ -221,6 +227,9 @@ if ($result === "") {
         } else if ($use_update) {
             $edit_link = "/?page=update&dn=".urlencode($dn);
         }
+        if ($use_rename) {
+            $rename_link = "/?page=rename&dn=".urlencode($dn);
+        }
 
         $lockDate = $directory->getLockDate($ldap, $dn);
         $unlockDate = $directory->getUnlockDate($ldap, $dn, $pwdPolicyConfiguration);
@@ -261,6 +270,7 @@ $smarty->assign("ldapExpirationDate", $expirationDate ? $expirationDate->getTime
 $smarty->assign("resetAtNextConnection", $resetAtNextConnection);
 
 $smarty->assign("edit_link", $edit_link);
+$smarty->assign("rename_link", $rename_link);
 
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);
@@ -292,5 +302,6 @@ $smarty->assign("updatevaliditydatesresult", $updatevaliditydatesresult);
 $smarty->assign("prehookupdatevalidityresult", $prehookupdatevalidityresult);
 $smarty->assign("posthookupdatevalidityresult", $posthookupdatevalidityresult);
 $smarty->assign("updateresult", $updateresult);
+$smarty->assign("renameresult", $renameresult);
 
 ?>

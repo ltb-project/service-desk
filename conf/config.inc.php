@@ -176,10 +176,13 @@ $use_updatestarttime = true;
 $use_updateendtime = true;
 $use_searchinvalid = true;
 
-## Update information
+## Edition
 
 $use_update = true;
 $update_items = array('firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary');
+
+$use_rename = true;
+$rename_items = array('identifier');
 
 # Local password policy
 # This is applied before directory password policy

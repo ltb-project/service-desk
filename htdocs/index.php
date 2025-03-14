@@ -287,6 +287,7 @@ if ( $page === "auditlog" and !$use_showauditlog ) { $page = "welcome"; }
 if ( $page === "updatevaliditydates" and !($use_updatestarttime or $use_updateendtime) ) { $page = "welcome"; }
 if ( $page === "searchinvalid" and !$use_searchinvalid ) { $page = "welcome"; }
 if ( $page === "update" and !$use_update ) { $page = "welcome"; }
+if ( $page === "rename" and !$use_rename ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 
