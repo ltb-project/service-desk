@@ -134,7 +134,7 @@
                      {if $checkpasswordresult eq 'passwordrequired'}
                      <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordrequired}</div>
                      {/if}
-                     {if $checkpasswordresult eq 'ldaperror'}
+                     {if $checkpasswordresult eq 'passwordinvalid'}
                      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_passwordinvalid}</div>
                      {/if}
                      {if $checkpasswordresult eq 'passwordok'}
