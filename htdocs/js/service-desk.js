@@ -37,4 +37,10 @@ $(document).ready(function(){
       }, 500);
     }
   });
+
+  $('button[data-action=add]').on("click", function (event) {
+      var item = $(this).attr('data-item');
+      alert("ITEM "+ item);
+  });
+
 });

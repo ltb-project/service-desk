@@ -1,6 +1,7 @@
 <div class="row">
-    <div class="update">
-
+    <div class="update row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
         <div class="card mb-3 shadow">
             <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
@@ -20,6 +21,7 @@
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
+                {$multivalued=$attributes_map.{$item}.multivalued}
 
                 {if !({$entry.$attribute.0}) && ! $item|in_array:$update_items}
                     {continue}
@@ -35,10 +37,10 @@
                         <td>
                             {if $item|in_array:$update_items}
                                 {if !({$entry.$attribute.0})}
-                                {include 'value_editor.tpl' item="{$item}0" value="" type=$type list=$item_list.$item truncate_value_after=10000}
+                                {include 'value_editor.tpl' item=$item itemindex=0 value="" type=$type list=$item_list.$item multivalued=$multivalued truncate_value_after=10000}
                                 {else}
                                     {foreach from=$entry.{$attribute} item=$value name=updatevalue}
-                                        {include 'value_editor.tpl' item="{$item}{$smarty.foreach.updatevalue.index}" value=$value type=$type list=$item_list.$item truncate_value_after=10000}
+                                        {include 'value_editor.tpl' item=$item itemindex=$smarty.foreach.updatevalue.index multivalued=$multivalued value=$value type=$type list=$item_list.$item truncate_value_after=10000}
                                     {/foreach}
                                 {/if}
                             {else}
@@ -67,6 +69,7 @@
             </form>
 
         </div>
-
+    </div>
+    <div class="col-md-2"></div>
    </div>
 </div>
