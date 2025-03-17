@@ -25,7 +25,7 @@
                     {continue}
                 {/if}
 
-                    <tr id="info_{$item}">
+                    <tr id="update_{$item}">
                         <th class="text-center">
                             <i class="fa fa-fw fa-{$faclass}"></i>
                         </th>
@@ -35,10 +35,10 @@
                         <td>
                             {if $item|in_array:$update_items}
                                 {if !({$entry.$attribute.0})}
-                                {include 'value_editor.tpl' item=$item value="" type=$type list=$item_list.$item truncate_value_after=10000}
+                                {include 'value_editor.tpl' item="{$item}0" value="" type=$type list=$item_list.$item truncate_value_after=10000}
                                 {else}
-                                    {foreach $entry.{$attribute} as $value}
-                                        {include 'value_editor.tpl' item=$item value=$value type=$type list=$item_list.$item truncate_value_after=10000}
+                                    {foreach from=$entry.{$attribute} item=$value name=updatevalue}
+                                        {include 'value_editor.tpl' item="{$item}{$smarty.foreach.updatevalue.index}" value=$value type=$type list=$item_list.$item truncate_value_after=10000}
                                     {/foreach}
                                 {/if}
                             {else}

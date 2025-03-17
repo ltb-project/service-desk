@@ -20,7 +20,7 @@
     <input type="date" class="form-control" name="{$item}" value="{convert_ad_date($value)|date_format:"%Y-%m-%d"}"/>
 
 {else if $type eq 'static_list' or $type eq 'list'}
-    <select class="form-control" id="{$item}" name="{$item}">
+    <select class="form-control" name="{$item}">
         <option></option>
         {foreach $list as $lvalue}
         <option value="{$lvalue@key}"{if {$lvalue@key}=={$value}} selected{/if}>{$lvalue}</option>

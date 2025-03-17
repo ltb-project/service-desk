@@ -46,16 +46,21 @@ if ($result === "") {
                 # Get all data
                 $update_attributes = array();
                 foreach ($update_items as $item) {
-                    $value = array();
-                    if (isset($_POST[$item]) and !empty($_POST[$item])) {
-                        $value = array($_POST[$item]);
+                    $values = array();
+                    if (isset($_POST[$item."0"]) and !empty($_POST[$item."0"])) {
+                        $i = 0;
+                        while (isset($_POST[$item.$i]) and !empty($_POST[$item.$i])) {
 
-                        if ( $attributes_map[$item]['type'] == "date" ||  $attributes_map[$item]['type'] == "ad_date" ) {
-                            $value = $directory->getLdapDate(new DateTime($_POST[$item]));
+                            $value = $_POST[$item.$i];
+                            if ( $attributes_map[$item]['type'] == "date" ||  $attributes_map[$item]['type'] == "ad_date" ) {
+                                $value = $directory->getLdapDate(new DateTime($_POST[$item.$i]));
+                            }
+                            $values[$i] = $value;
+                            $i++;
                         }
                     }
 
-                    $update_attributes[ $attributes_map[$item]['attribute'] ] = $value;
+                    $update_attributes[ $attributes_map[$item]['attribute'] ] = $values;
                 }
 
                 # Update entry
