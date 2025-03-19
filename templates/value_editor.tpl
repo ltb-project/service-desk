@@ -1,5 +1,5 @@
-<div class="{$type} my-1 row">
-  <div class="col-10">
+<div class="value_editor_container {$type} my-1 row">
+  <div class="value_editor_field col-10">
 {if $type eq 'text'}
     <input type="text" name="{$item}{$itemindex}" class="form-control" value="{$value}" />
 {else if $type eq 'mailto'}
@@ -33,7 +33,7 @@
     <input type="text" name={$item} class="form-control" value="{$value}" />
 {/if}
   </div>
-  <div class="col-2">
+  <div class="value_editor_button col-2">
   {if $multivalued == "true" and $itemindex == 0}
     <button type="button" class="btn btn-success" data-action="add" data-item="{$item}"><span class="fa fa-plus"></span></button>
   {/if}
