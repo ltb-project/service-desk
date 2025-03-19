@@ -48,8 +48,8 @@ if ($result === "") {
         }
 
         if (!$result) {
-            $bind = ldap_bind($ldap, $dn, $password);
-            $result = $bind ? "passwordok" : "ldaperror";
+	    $bind = ldap_bind($ldap, $dn, $password);
+	    $result = $bind ? "passwordok" : "passwordinvalid";
         }
 
     }
