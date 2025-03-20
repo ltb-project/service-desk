@@ -1,5 +1,4 @@
-<div class="row">
-    <div class="update row">
+<div class="update row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <div class="card mb-3 shadow">
@@ -31,7 +30,7 @@
                         <th class="text-center">
                             <i class="fa fa-fw fa-{$faclass}"></i>
                         </th>
-                        <th class="hidden-xs">
+                        <th class="d-none d-sm-table-cell">
                             {$msg_label_{$item}}
                         </th>
                         <td>
@@ -71,5 +70,4 @@
         </div>
     </div>
     <div class="col-md-2"></div>
-   </div>
 </div>

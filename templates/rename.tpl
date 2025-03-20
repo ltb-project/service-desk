@@ -1,6 +1,7 @@
-<div class="row">
-    <div class="rename">
+<div class="rename row">
 
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
         <div class="card mb-3 shadow">
             <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
@@ -18,7 +19,7 @@
                 <table class="table table-striped table-hover">
                     <tr>
                         <th></th>
-                        <th></th>
+                        <th class="d-none d-sm-table-cell"></th>
                         <th>{$msg_oldvalue}</th>
                         <th>{$msg_newvalue}</th>
                     </tr>
@@ -31,7 +32,7 @@
                         <th class="text-center">
                             <i class="fa fa-fw fa-{$faclass}"></i>
                         </th>
-                        <th class="hidden-xs">
+                        <th class="d-none d-sm-table-cell">
                             {$msg_label_{$item}}
                         </th>
                         <td>
@@ -63,5 +64,7 @@
 
         </div>
 
-   </div>
+    </div>
+    <div class="col-md-2"></div>
+
 </div>

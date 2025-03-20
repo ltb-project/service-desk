@@ -38,7 +38,7 @@
                         <th class="text-center">
                             <i class="fa fa-fw fa-{$faclass}"></i>
                         </th>
-                        <th class="hidden-xs">
+                        <th class="d-none d-sm-table-cell">
                             {$msg_label_{$item}}
                         </th>
                         <td>
