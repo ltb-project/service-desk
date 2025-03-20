@@ -6,8 +6,6 @@
 $result = "";
 $dn = "";
 $entry = "";
-$edit_link = "";
-$rename_link = "";
 $checkpasswordresult= "";
 $resetpasswordresult= "";
 $unlockaccountresult= "";
@@ -221,16 +219,6 @@ if ($result === "") {
         if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
         if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
-        if ($display_edit_link) {
-            # Replace {dn} in URL
-            $edit_link = str_replace("{dn}", urlencode($dn), $display_edit_link);
-        } else if ($use_update) {
-            $edit_link = "/?page=update&dn=".urlencode($dn);
-        }
-        if ($use_rename) {
-            $rename_link = "/?page=rename&dn=".urlencode($dn);
-        }
-
         $lockDate = $directory->getLockDate($ldap, $dn);
         $unlockDate = $directory->getUnlockDate($ldap, $dn, $pwdPolicyConfiguration);
         $isLocked = $directory->isLocked($ldap, $dn, $pwdPolicyConfiguration);
@@ -269,8 +257,8 @@ $smarty->assign("isExpired", $isExpired);
 $smarty->assign("ldapExpirationDate", $expirationDate ? $expirationDate->getTimestamp(): NULL);
 $smarty->assign("resetAtNextConnection", $resetAtNextConnection);
 
-$smarty->assign("edit_link", $edit_link);
-$smarty->assign("rename_link", $rename_link);
+$smarty->assign("edit_link", "/?page=update&dn=".urlencode($dn));
+$smarty->assign("rename_link", "/?page=rename&dn=".urlencode($dn));
 
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);
