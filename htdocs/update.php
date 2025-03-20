@@ -47,16 +47,14 @@ if ($result === "") {
                 $update_attributes = array();
                 foreach ($update_items as $item) {
                     $values = array();
-                    if (isset($_POST[$item."0"]) and !empty($_POST[$item."0"])) {
-                        $i = 0;
-                        while (isset($_POST[$item.$i]) and !empty($_POST[$item.$i])) {
-
-                            $value = $_POST[$item.$i];
+                    $item_keys = preg_grep("/^$item(\d+)$/", array_keys($_POST));
+                    foreach ($item_keys as $item_key) {
+                        if (isset($_POST[$item_key]) and !empty($_POST[$item_key])) {
+                            $value = $_POST[$item_key];
                             if ( $attributes_map[$item]['type'] == "date" ||  $attributes_map[$item]['type'] == "ad_date" ) {
-                                $value = $directory->getLdapDate(new DateTime($_POST[$item.$i]));
+                                $value = $directory->getLdapDate(new DateTime($_POST[$item_key]));
                             }
-                            $values[$i] = $value;
-                            $i++;
+                            $values[] = $value;
                         }
                     }
 
