@@ -60,7 +60,7 @@ $attributes_map = array(
     'fullname' => array( 'attribute' => 'cn', 'faclass' => 'user-circle', 'type' => 'text' ),
     'l' => array( 'attribute' => 'l', 'faclass' => 'globe', 'type' => 'text' ),
     'lastname' => array( 'attribute' => 'sn', 'faclass' => 'user-o', 'type' => 'text' ),
-    'mail' => array( 'attribute' => 'mail', 'faclass' => 'envelope-o', 'type' => 'mailto' ),
+    'mail' => array( 'attribute' => 'mail', 'faclass' => 'envelope-o', 'type' => 'mailto', 'multivalued' => true ),
     'mailquota' => array( 'attribute' => 'gosamailquota', 'faclass' => 'pie-chart', 'type' => 'bytes', 'dtorder' => 'disable' ),
     'manager' => array( 'attribute' => 'manager', 'faclass' => 'user-circle-o', 'type' => 'dn_link', 'dtorder' => 'disable' ),
     'mobile' => array( 'attribute' => 'mobile', 'faclass' => 'mobile', 'type' => 'tel', 'dtorder' => 'disable' ),
@@ -98,6 +98,15 @@ $activedirectory_attributes_map = array(
     'pwdfailuretime' => array( 'attribute' => 'badpasswordtime', 'faclass' => 'lock', 'type' => 'ad_date' ),
     'endtime' => array( 'attribute' => 'accountexpires', 'faclass' => 'lock', 'type' => 'ad_date' ),
 );
+
+# List of values
+// Static lists: key/values in configuration file
+$attributes_static_list = array();
+// $attributes_static_list['title'] = array( 'Mr' => 'Mister', 'Mrs' => 'Misses' );
+
+// LDAP lists: key/values returned by an LDAP search
+$attributes_list = array();
+// $attributes_list['organizationalunit'] = array('base'=>'ou=services,dc=example,dc=com', 'filter'=>'(objectClass=organizationalUnit)', 'key'=>'description', 'value'=>'ou');
 
 # Search
 $search_attributes = array('uid', 'cn', 'mail');
@@ -166,6 +175,14 @@ $show_validitystatus = true;
 $use_updatestarttime = true;
 $use_updateendtime = true;
 $use_searchinvalid = true;
+
+## Edition
+
+$use_update = true;
+$update_items = array('firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary');
+
+$use_rename = true;
+$rename_items = array('identifier');
 
 # Local password policy
 # This is applied before directory password policy
