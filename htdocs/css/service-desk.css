@@ -33,6 +33,11 @@ table.table td {
  line-break: anywhere;
 }
 
+.table-responsive {
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
 .display img {
   margin-bottom: 20px;
 }
@@ -72,6 +77,16 @@ div#footer {
   text-align:center;
   padding:5px;
   width:100%;
+}
+
+/* dn_link editor */
+div.dn_link_container {
+  position: relative;
+}
+
+div.dn_link_suggestions {
+  position: absolute;
+  top: 40px;
 }
 
 @media print {
