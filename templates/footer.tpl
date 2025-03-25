@@ -50,6 +50,10 @@
 {literal}
       language: {
         url: "vendor/datatables/i18n/{/literal}{$lang|default:'en'}{literal}.json"
+      },
+      initComplete: function () {
+        $("#spinner").hide();
+        $('table.dataTable').show();
       }
     });
 {/literal}
