@@ -1,0 +1,24 @@
+
+{
+	"sEmptyTable":     "Ingen data funnet i tabell",
+	"sInfo":           "Viser _START_ til _END_ av _TOTAL_ oppføringer",
+	"sInfoEmpty":      "Viser 0 til 0 av 0 oppføringer",
+	"sInfoFiltered":   "(filtrert fra _MAX_ totale oppføringer)",
+	"sInfoPostFix":    "",
+	"sInfoThousands":  ",",
+	"sLengthMenu":     "Vis _MENU_ oppføringer",
+	"sLoadingRecords": "Laster...",
+	"sProcessing":     "Prosesserer...",
+	"sSearch":         "Filter:",
+	"sZeroRecords":    "Ingen like poster funnet",
+	"oPaginate": {
+		"sFirst":    "Første",
+		"sLast":     "Siste",
+		"sNext":     "Neste",
+		"sPrevious": "Forrige"
+	},
+	"oAria": {
+		"sSortAscending":  ": aktiver for å sortere kolonne stigenden",
+		"sSortDescending": ": aktiver for å sortere kolonne synkende"
+	}
+}
