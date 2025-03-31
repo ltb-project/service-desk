@@ -1,3 +1,12 @@
+ltb-project-service-desk (0.6.2-1) unstable; urgency=low
+
+    * gh#209: Use ltb-common 0.5.0
+    * gh#210: Search not working with PHP 7.4
+    * gh#217: Admin notification does not replace {dn}
+    * gh#218: Admin notification does not replace dn
+
+ -- Clement Oudot <clem@ltb-project.org>  Mon, 31 Mar 2025 12:00:00 +0200
+
 ltb-project-service-desk (0.6.1-1) unstable; urgency=low
 
     * gh#193: Docker image not available for 0.6
