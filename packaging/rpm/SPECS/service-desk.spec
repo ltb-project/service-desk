@@ -16,7 +16,7 @@
 %undefine __brp_mangle_shebangs
 
 Name:      service-desk
-Version:   0.6.1
+Version:   0.6.2
 Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
 URL:       https://ltb-project.org/
@@ -170,6 +170,12 @@ rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %changelog
+* Mon Mar 31 2025 Clement Oudot <clem@ltb-project.org> - 0.6.2-1
+- gh#209: Use ltb-common 0.5.0
+- gh#210: Search not working with PHP 7.4
+- gh#217: Admin notification does not replace {dn}
+- gh#218: Admin notification does not replace dn
+
 * Tue Dec 31 2024 Clement Oudot <clem@ltb-project.org> - 0.6.1-1
 - gh#193: Docker image not available for 0.6
 - gh#194: Wrong display when no expiration date on an AD account
