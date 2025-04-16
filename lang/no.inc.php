@@ -26,6 +26,7 @@ $messages['changesubjectforadmin'] = "Brukerens passord har blitt endret";
 $messages['checkpassword'] = "Sjekk passord";
 $messages['close'] = "Lukk";
 $messages['comment_needed'] = "En kommentar vil bli bedt om";
+$messages['create'] = "Create entry";
 $messages['currentpassword'] = "Nåværende passord";
 $messages['dashboards'] = "Dashboards";
 $messages['diffminchars'] = "Ditt nye passord er for likt ditt gamle passord";

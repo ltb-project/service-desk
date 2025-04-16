@@ -26,6 +26,7 @@ $messages['changesubject'] = "Your password has been changed";
 $messages['checkpassword'] = "Check password";
 $messages['close'] = "Close";
 $messages['comment_needed'] = "A comment will be asked";
+$messages['create'] = "Create entry";
 $messages['currentpassword'] = "Current password";
 $messages['dashboards'] = "Dashboards";
 $messages['diffminchars'] = "Your new password is too similar to your old password";

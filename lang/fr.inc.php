@@ -26,6 +26,7 @@ $messages['changesubject'] = "Votre mot de passe a été changé";
 $messages['checkpassword'] = "Vérification du mot de passe";
 $messages['close'] = "Fermer";
 $messages['comment_needed'] = "Un commentaire sera demandé";
+$messages['create'] = "Créer une entrée";
 $messages['currentpassword'] = "Mot de passe actuel";
 $messages['dashboards'] = "Tableaux de bord";
 $messages['diffminchars'] = "Votre nouveau mot de passe est trop similaire au précédant";

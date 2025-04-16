@@ -212,6 +212,7 @@ $smarty->assign('use_updatestarttime',$attributes_map['starttime'] ? $use_update
 $smarty->assign('use_updateendtime',$attributes_map['endtime'] ? $use_updateendtime : false);
 $smarty->assign('use_searchinvalid',$use_searchinvalid);
 $smarty->assign('use_update',$use_update);
+$smarty->assign('use_create',$use_create);
 
 # Assign messages
 $smarty->assign('lang',$lang);
@@ -288,6 +289,7 @@ if ( $page === "updatevaliditydates" and !($use_updatestarttime or $use_updateen
 if ( $page === "searchinvalid" and !$use_searchinvalid ) { $page = "welcome"; }
 if ( $page === "update" and !$use_update ) { $page = "welcome"; }
 if ( $page === "rename" and !$use_rename ) { $page = "welcome"; }
+if ( $page === "create" and !$use_create ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 

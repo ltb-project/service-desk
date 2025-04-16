@@ -14,6 +14,11 @@
 
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                {if $use_create}
+                <li class="nav-item">
+                  <a href="index.php?page=create" class="nav-link"><i class="fa fa-fw fa-circle-plus"></i> {$msg_create}</a>
+                </li>
+                {/if}
                 {if $use_searchlocked or $use_searchdisabled or $use_searchwillexpire or $use_searchexpired or $use_searchidle}
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-dashboard"></i> {$msg_dashboards}<span class="caret"></span></a>

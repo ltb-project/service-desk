@@ -184,6 +184,13 @@ $update_items = array('firstname', 'lastname', 'title', 'businesscategory', 'emp
 $use_rename = true;
 $rename_items = array('identifier');
 
+$use_create = true;
+$create_items = array('identifier', 'firstname', 'lastname', 'mail');
+$create_objectclass = array('top', 'person', 'organizationalPerson', 'inetOrgPerson');
+$create_dn_items = array('identifier');
+$create_base = $ldap_user_base;
+$create_items_macros = array('fullname' => '%firstname% %lastname%');
+
 # Local password policy
 # This is applied before directory password policy
 # Minimal length
