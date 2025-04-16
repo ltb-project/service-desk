@@ -164,55 +164,8 @@ if ($result === "") {
             error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
         } else {
 
-        $entry = ldap_get_entries($ldap, $search);
-
-        # Sort attributes values
-        foreach ($entry[0] as $attr => $values) {
-            if ( is_array($values) && $values['count'] > 1 ) {
-
-                # Find key in attributes_map
-                $attributes_map_filter = array_filter($attributes_map, function($v) use(&$attr) {
-                    return $v['attribute'] == "$attr";
-                });
-                if( count($attributes_map_filter) < 1 )
-                {
-                    $k = "";
-                    error_log("WARN: no key found for attribute $attr in \$attributes_map");
-                }
-                elseif( count($attributes_map_filter) > 1 )
-                {
-                    $k = array_key_first($attributes_map_filter);
-                    error_log("WARN: multiple keys found for attribute $attr in \$attributes_map, using first one: $k");
-                }
-                else
-                {
-                    $k = array_key_first($attributes_map_filter);
-                }
-
-                if(isset($attributes_map[$k]['sort']))
-                {
-                    if($attributes_map[$k]['sort'] == "descending" )
-                    {
-                        # descending sort
-                        arsort($values);
-                    }
-                    else
-                    {
-                        # ascending sort
-                        asort($values);
-                    }
-                }
-                else
-                {
-                    # if 'sort' param unset: default to ascending sort
-                    asort($values);
-                }
-            }
-            if ( isset($values['count']) ) {
-                unset($values['count']);
-            }
-            $entry[0][$attr] = $values;
-        }
+        $entries = ldap_get_entries($ldap, $search);
+        $entry = $ldapInstance->sortEntry($entries[0], $attributes_map);
 
         # Get password policy configuration
         $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $dn, $ldap_default_ppolicy);
@@ -242,7 +195,7 @@ if ($result === "") {
     }}}
 }
 
-$smarty->assign("entry", $entry[0]);
+$smarty->assign("entry", $entry);
 $smarty->assign("dn", $dn);
 
 $smarty->assign("card_title", $display_title);
