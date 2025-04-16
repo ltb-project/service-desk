@@ -32,5 +32,6 @@ LDAP Tool Box Service Desk documentation
    dashboards.rst
    configuration-mail.rst
    audit.rst
-   updateentry.rst
+   createentry.rst
    renameentry.rst
+   updateentry.rst
