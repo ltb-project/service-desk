@@ -31,6 +31,7 @@ $messages['createfailed'] = "Creation has failed";
 $messages['createok'] = "Entry has been created";
 $messages['currentpassword'] = "Current password";
 $messages['dashboards'] = "Dashboards";
+$messages['deleteconfirmation'] = "Are you sure that you want to delete this entry?";
 $messages['deleteentry'] = "Delete entry";
 $messages['deletefailed'] = "Deletion has failed";
 $messages['deleteok'] = "Entry has been deleted";

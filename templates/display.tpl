@@ -83,7 +83,10 @@
                 <a class="btn btn-success" href="{$rename_link}"><i class="fa fa-user-pen"></i> {$msg_renameentry}</a>
                 {/if}
                 {if $delete_link}
-                <a class="btn btn-danger" href="{$delete_link}"><i class="fa fa-user-minus"></i> {$msg_deleteentry}</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{$dn|sha256}">
+                  <i class="fa fa-user-minus"></i> {$msg_deleteentry}
+                </button>
+                 {include 'deletemodal.tpl' dn={$dn}}
                 {/if}
             </div>
             {/if}

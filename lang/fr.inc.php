@@ -31,6 +31,7 @@ $messages['createfailed'] = "La création a échoué";
 $messages['createok'] = "L'entrée a été créée";
 $messages['currentpassword'] = "Mot de passe actuel";
 $messages['dashboards'] = "Tableaux de bord";
+$messages['deleteconfirmation'] = "Êtes-vous sûr de vouloir supprimer cette entrée ?";
 $messages['deleteentry'] = "Supprimer l'entrée";
 $messages['deletefailed'] = "La suppression a échoué";
 $messages['deleteok'] = "L'entrée a été supprimée";
