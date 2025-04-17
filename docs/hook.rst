@@ -141,7 +141,7 @@ Account disable
 
 The script is called with one parameter: login.
 
-Define prehook or posthook script (and disable the feature):
+Define prehook or posthook script (and enable the feature):
 
 .. code-block:: php
 
@@ -166,7 +166,7 @@ Update validity dates
 
 The script is called with one parameter: login.
 
-Define prehook or posthook script (and updatevalidity the feature):
+Define prehook or posthook script (and enable the feature):
 
 .. code-block:: php
 
@@ -185,3 +185,28 @@ To ignore prehook error:
 .. code-block:: php
 
     $ignore_prehook_updatevalidity_error = true;
+
+Delete
+------
+
+The script is called with one parameter: login.
+
+Define prehook or posthook script (and enable the feature):
+
+.. code-block:: php
+
+    $prehook_delete = "/usr/share/service-desk/prehook_delete.sh";
+    $posthook_delete = "/usr/share/service-desk/posthook_delete.sh";
+
+To display hook error:
+
+.. code-block:: php
+
+   $display_prehook_delete_error = true;
+   $display_posthook_delete_error = true;
+
+To ignore prehook error:
+
+.. code-block:: php
+
+    $ignore_prehook_delete_error = true;

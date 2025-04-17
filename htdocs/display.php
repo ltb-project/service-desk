@@ -34,6 +34,10 @@ $prehookupdatevalidityresult= "";
 $posthookupdatevalidityresult= "";
 $updateresult = "";
 $renameresult = "";
+$createresult = "";
+$deleteresult = "";
+$prehookdeleteresult= "";
+$posthookdeleteresult= "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -127,6 +131,22 @@ if (isset($_GET["renameresult"]) and $_GET["renameresult"]) {
     $renameresult = $_GET["renameresult"];
 }
 
+if (isset($_GET["createresult"]) and $_GET["createresult"]) {
+    $createresult = $_GET["createresult"];
+}
+
+if (isset($_GET["deleteresult"]) and $_GET["deleteresult"]) {
+    $deleteresult = $_GET["deleteresult"];
+}
+
+if (isset($_GET["prehookdeleteresult"]) and $_GET["prehookdeleteresult"]) {
+    $prehookdeleteresult = $_GET["prehookdeleteresult"];
+}
+
+if (isset($_GET["posthookdeleteresult"]) and $_GET["posthookdeleteresult"]) {
+    $posthookdeleteresult = $_GET["posthookdeleteresult"];
+}
+
 if ($result === "") {
 
     require_once("../conf/config.inc.php");
@@ -212,6 +232,7 @@ $smarty->assign("resetAtNextConnection", $resetAtNextConnection);
 
 $smarty->assign("edit_link", "/?page=update&dn=".urlencode($dn));
 $smarty->assign("rename_link", "/?page=rename&dn=".urlencode($dn));
+$smarty->assign("delete_link", "/?page=delete&dn=".urlencode($dn));
 
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);
@@ -244,5 +265,9 @@ $smarty->assign("prehookupdatevalidityresult", $prehookupdatevalidityresult);
 $smarty->assign("posthookupdatevalidityresult", $posthookupdatevalidityresult);
 $smarty->assign("updateresult", $updateresult);
 $smarty->assign("renameresult", $renameresult);
+$smarty->assign("createresult", $createresult);
+$smarty->assign("deleteresult", $deleteresult);
+$smarty->assign("prehookdeleteresult", $prehookdeleteresult);
+$smarty->assign("posthookdeleteresult", $posthookdeleteresult);
 
 ?>
