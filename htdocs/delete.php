@@ -78,9 +78,9 @@ if ($result === "") {
                 $result = "hookerror";
             } else {
                 if ( ldap_delete($ldap, $dn) ) {
-                    $result = "accountdeleteed";
+                    $result = "deleteok";
                 } else {
-                    $result = "ldaperror";
+                    $result = "deletefailed";
                 }
             }
 
