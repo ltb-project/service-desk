@@ -35,3 +35,4 @@ LDAP Tool Box Service Desk documentation
    createentry.rst
    renameentry.rst
    updateentry.rst
+   deleteentry.rst
