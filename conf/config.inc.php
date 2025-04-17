@@ -191,6 +191,8 @@ $create_dn_items = array('identifier');
 $create_base = $ldap_user_base;
 $create_items_macros = array('fullname' => '%firstname% %lastname%');
 
+$use_delete = true;
+
 # Local password policy
 # This is applied before directory password policy
 # Minimal length
@@ -350,6 +352,12 @@ $prehook_login = "uid";
 #$display_prehook_updatevalidity_error = true;
 #$ignore_prehook_updatevalidity_error = true;
 
+## Delete
+
+#$prehook_delete = "/usr/share/service-desk/prehook_delete.sh";
+#$display_prehook_delete_error = true;
+#$ignore_prehook_delete_error = true;
+
 ### Posthooks
 
 # The posthook is only launched if the action was successful
@@ -391,6 +399,11 @@ $posthook_login = "uid";
 
 #$posthook_updatevalidity = "/usr/share/service-desk/posthook_updatevalidity.sh";
 #$display_posthook_updatevalidity_error = true;
+
+## Delete
+
+#$posthook_delete = "/usr/share/service-desk/posthook_delete.sh";
+#$display_posthook_delete_error = true;
 
 # The name of an HTTP Header that may hold a reference to an extra config file to include.
 #$header_name_extra_config="SSP-Extra-Config";

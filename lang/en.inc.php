@@ -29,6 +29,7 @@ $messages['comment_needed'] = "A comment will be asked";
 $messages['create'] = "Create entry";
 $messages['currentpassword'] = "Current password";
 $messages['dashboards'] = "Dashboards";
+$messages['deleteentry'] = "Delete entry";
 $messages['diffminchars'] = "Your new password is too similar to your old password";
 $messages['disableaccount'] = "Disable account";
 $messages['disabledaccounts'] = "Disabled accounts";

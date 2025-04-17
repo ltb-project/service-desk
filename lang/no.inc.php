@@ -29,6 +29,7 @@ $messages['comment_needed'] = "En kommentar vil bli bedt om";
 $messages['create'] = "Create entry";
 $messages['currentpassword'] = "Nåværende passord";
 $messages['dashboards'] = "Dashboards";
+$messages['deleteentry'] = "Delete entry";
 $messages['diffminchars'] = "Ditt nye passord er for likt ditt gamle passord";
 $messages['disableaccount'] = "Deaktiver konto";
 $messages['disabledaccounts'] = "Deaktiverte kontoer";

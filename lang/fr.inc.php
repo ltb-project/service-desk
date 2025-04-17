@@ -29,6 +29,7 @@ $messages['comment_needed'] = "Un commentaire sera demandé";
 $messages['create'] = "Créer une entrée";
 $messages['currentpassword'] = "Mot de passe actuel";
 $messages['dashboards'] = "Tableaux de bord";
+$messages['deleteentry'] = "Supprimer l'entrée";
 $messages['diffminchars'] = "Votre nouveau mot de passe est trop similaire au précédant";
 $messages['disableaccount'] = "Désactiver le compte";
 $messages['disabledaccounts'] = "Comptes désactivés";
