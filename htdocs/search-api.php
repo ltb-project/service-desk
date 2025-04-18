@@ -40,8 +40,16 @@ $entries = array_slice( $entries,
 
 # Format data to send
 $data = array();
-# TODO: get this list from configuration
-$attribute_list = array("cn", "uid", "mail", "mobile", "sn");
+
+# Get columns labels
+$columns = $search_result_items;
+if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+
+# Get attribute list from columns
+foreach( $columns as $column ) {
+    $attribute_list[] = $attributes_map[$column]['attribute'];
+}
+
 $i=0;
 foreach ($entries as $entry)
 {
