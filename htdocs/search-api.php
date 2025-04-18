@@ -34,7 +34,7 @@ foreach ($datatables_params as $key => $value) {
 $ldapInstance->ldapSort($entries, $attributes_map['identifier']['attribute']);
 
 $entries = array_slice( $entries,
-                        (intval($datatables_params["length"]) * intval($datatables_params["start"])),
+                        intval($datatables_params["start"]),
                         intval($datatables_params["length"]) );
 
 
@@ -65,9 +65,9 @@ foreach ($entries as $entry)
 
 echo json_encode(
     array(
-        "draw" => 1,
+        "draw" => $datatables_params["draw"],
         "recordsTotal" => $nb_entries,
-        "recordsFiltered" => $datatables_params["length"],
+        "recordsFiltered" => $nb_entries,
         "data" => $data
     )
 );
