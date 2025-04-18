@@ -17,6 +17,7 @@
 <script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
+<script src="js/table-renderer.js"></script>
 
 {literal}
     <script type="text/javascript">
@@ -24,6 +25,17 @@
 {/literal}
 {literal}
     var itemlist = $('table.dataTable').DataTable({
+      serverSide: true,
+      ajax: {
+        url: '/index.php?page=search-api',
+        type: 'POST'
+      },
+      columnDefs: [
+          { targets: [0], render: function ( data, type, row, meta ) {return ldapTypeRenderer("dn", "dn_link", data, row[0]);} },
+{/literal}
+{foreach from=$listing_columns item=item name=i}    { targets: [{$smarty.foreach.i.iteration}], {literal}render: function ( data, type, row, meta ) {return ldapTypeRenderer({/literal}"{$item}", "{$attributes_map.{$item}.type}{literal}", data, row[0]);} },{/literal}{/foreach}
+{literal}
+      ],
       layout: {
         topStart: {
 {/literal}
