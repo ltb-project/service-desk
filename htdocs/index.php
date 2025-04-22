@@ -212,6 +212,7 @@ $smarty->assign('use_updatestarttime',$attributes_map['starttime'] ? $use_update
 $smarty->assign('use_updateendtime',$attributes_map['endtime'] ? $use_updateendtime : false);
 $smarty->assign('use_searchinvalid',$use_searchinvalid);
 $smarty->assign('use_update',$use_update);
+$smarty->assign('json_messages', base64_encode(json_encode( $messages )));
 
 # Assign messages
 $smarty->assign('lang',$lang);
