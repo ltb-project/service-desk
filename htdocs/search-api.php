@@ -57,8 +57,13 @@ foreach ($entries as $entry)
     array_push( $data[$i], $entry["dn"] );
     foreach ($attribute_list as $attr)
     {
-        $val = $entry[$attr][0] ?? "";
-        array_push( $data[$i], $val );
+        $values = [];
+        foreach ($entry[$attr] as $j => $value) {
+            if($j != "count") {
+                array_push( $values, $value );
+            }
+        }
+        array_push( $data[$i], $values );
     }
     $i++;
 }
