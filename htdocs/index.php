@@ -216,6 +216,7 @@ $smarty->assign('use_rename',$use_rename);
 $smarty->assign('use_update',$use_update);
 $smarty->assign('use_create',$use_create);
 $smarty->assign('use_delete',$use_delete);
+$smarty->assign('json_messages', base64_encode(json_encode( $messages )));
 
 # Assign messages
 $smarty->assign('lang',$lang);

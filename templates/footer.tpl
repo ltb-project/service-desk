@@ -24,16 +24,44 @@
       $(document).ready( function() {
 {/literal}
 {literal}
+    json_messages = $("#global-messages").data('messages') || btoa("{}") ;
+    var messages = JSON.parse(atob(json_messages));
+
+{/literal}
+    {if $listing_linkto|is_array}
+    listing_linkto = JSON.parse("{json_encode($listing_linkto)|escape:'javascript'}".replaceAll('&quot;', '"'));
+    {else}
+    listing_linkto = "{$listing_linkto}";
+    {/if}
+    {if $show_undef}
+    show_undef = true;
+    {else}
+    show_undef = false;
+    {/if}
+    {if $truncate_value_after}
+    truncate_value_after = {$truncate_value_after};
+    {else}
+    truncate_value_after = 0;
+    {/if}
+    {if $search}
+    search = {$search};
+    {else}
+    search = "";
+    {/if}
+{literal}
+
     var itemlist = $('table.dataTable').DataTable({
       serverSide: true,
       ajax: {
         url: '/index.php?page=search-api',
         type: 'POST'
       },
+      // Calling renderer for each cell
+      // Special column 0 is for DN
       columnDefs: [
-          { targets: [0], render: function ( data, type, row, meta ) {return ldapTypeRenderer("dn", "dn_link", data, row[0]);} },
+          { targets: [0], render: function ( data, type, row, meta ) {return ldapTypeRenderer("dn", "dn_link", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search);} },
 {/literal}
-{foreach from=$listing_columns item=item name=i}    { targets: [{$smarty.foreach.i.iteration}], {literal}render: function ( data, type, row, meta ) {return ldapTypeRenderer({/literal}"{$item}", "{$attributes_map.{$item}.type}{literal}", data, row[0]);} },{/literal}{/foreach}
+{foreach from=$listing_columns item=item name=i}    { targets: [{$smarty.foreach.i.iteration}], {literal}render: function ( data, type, row, meta ) {return ldapTypeRenderer({/literal}"{$item}", "{$attributes_map.{$item}.type}{literal}", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search);} },{/literal}{/foreach}
 {literal}
       ],
       layout: {
