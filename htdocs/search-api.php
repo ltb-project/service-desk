@@ -45,22 +45,51 @@ $data = array();
 $columns = $search_result_items;
 if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
 
-# Get attribute list from columns
+# Get attribute list from columns: attr => type
+$attribute_list = [];
 foreach( $columns as $column ) {
-    $attribute_list[] = $attributes_map[$column]['attribute'];
+    $attribute_list[$attributes_map[$column]['attribute']] = $attributes_map[$column]['type'];
 }
 
 $i=0;
 foreach ($entries as $entry)
 {
     $data[$i] = array();
+    # Always push DN as first value of the entry
     array_push( $data[$i], $entry["dn"] );
-    foreach ($attribute_list as $attr)
+    foreach ($attribute_list as $attr => $type)
     {
         $values = [];
         foreach ($entry[$attr] as $j => $value) {
             if($j != "count") {
-                array_push( $values, $value );
+
+                # If this is a DN, we search for the corresponding cn
+                if( $type == "dn_link" || $type == "ppolicy_dn" )
+                {
+                    $dn = $value;
+                    // Get cn of corresponding link
+                    $cn_vals = $ldapInstance->get_attribute_values($dn, "cn");
+                    if( $cn_vals == false )
+                    {
+                        $cn = [];
+                    }
+                    else
+                    {
+                        $cn = [];
+                        foreach ($cn_vals as $k => $cn_val) {
+                            if($k != "count") {
+                                array_push( $cn, $cn_val );
+                            }
+                        }
+                    }
+                    array_push( $values, [ $dn, $cn ] );
+                }
+
+                # If this is a standard list of values, just push it
+                else
+                {
+                    array_push( $values, $value );
+                }
             }
         }
         array_push( $data[$i], $values );

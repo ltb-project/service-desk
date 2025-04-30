@@ -45,6 +45,9 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
         {
             switch(type)
             {
+                case "dn":
+                    render += ldapDNTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    break;
                 case "text":
                     render += ldapTextTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
                     break;
@@ -98,6 +101,11 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
     return render;
 }
 
+function ldapDNTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+{
+    return value;
+}
+
 function ldapTextTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
 {
     text = truncate(value, truncate_value_after) + "<br />";
@@ -141,7 +149,28 @@ function ldapTimestampTypeRenderer(column, type, value, dn, messages, listing_li
 
 function ldapDNLinkTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
 {
-    return value;
+    var dn = "";
+    var cn = [];
+    if(Array.isArray(value))
+    {
+        if(value.length >= 1)
+        {
+            dn = value[0];
+        }
+        if(value.length >= 2)
+        {
+            cn = value[1];
+        }
+    }
+
+    if(Array.isArray(cn))
+    {
+        cn = cn.join(", ");
+    }
+
+    // TODO: url escape of dn
+    var res = '<a href="index.php?page=display&dn=' + dn + '&search=' + search + '">' + cn + '</a> <br />';
+    return res;
 }
 
 function ldapPPolicyDNTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
