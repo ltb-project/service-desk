@@ -59,7 +59,7 @@
       // Calling renderer for each cell
       // Special column 0 is for DN
       columnDefs: [
-          { targets: [0], render: function ( data, type, row, meta ) {return ldapTypeRenderer("dn", "dn_link", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search);} },
+          { targets: [0], render: function ( data, type, row, meta ) {return ldapTypeRenderer("dn", "dn", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search);} },
 {/literal}
 {foreach from=$listing_columns item=item name=i}    { targets: [{$smarty.foreach.i.iteration}], {literal}render: function ( data, type, row, meta ) {return ldapTypeRenderer({/literal}"{$item}", "{$attributes_map.{$item}.type}{literal}", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search);} },{/literal}{/foreach}
 {literal}
