@@ -280,6 +280,9 @@ $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
 $fake_password_inputs = false;
 
+# Customized template directory: to override some templates files
+$custom_tpl_dir = "";
+
 # Audit
 #$audit_log_file = "/var/log/service-desk/audit.log";
 $use_showauditlog = false;
