@@ -13,7 +13,7 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
 {
     var render = "";
 
-    // if we are processing column "linkto"
+    // if we are processing column "linkto", add an html link <a>
     if(Array.isArray(listing_linkto) && listing_linkto.includes(column))
     {
         // TODO: url escape of dn
@@ -91,7 +91,7 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
         });
     }
 
-    // if we are processing column "linkto"
+    // if we are processing column "linkto", add an html link <a>
     if(Array.isArray(listing_linkto) && listing_linkto.includes(column))
     {
         render += "</a>";
@@ -101,6 +101,7 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
     return render;
 }
 
+// Renderer for special first column "DN"
 function ldapDNTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
 {
     return value;
@@ -114,17 +115,46 @@ function ldapTextTypeRenderer(column, type, value, dn, messages, listing_linkto,
 
 function ldapMailtoTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
 {
-    return value;
+    mail_hexa = value.split("")
+                     .map(c => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
+                     .join("");
+
+    mail = '<a href="mailto:' + mail_hexa + '" ' +
+           'class="link-email" ' +
+           'title="' + messages['tooltip_emailto'] + '">' +
+           value +
+           '</a> <br />';
+
+    return mail;
 }
 
 function ldapTelTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
 {
-    return value;
+    tel = '<a href="tel:' + value + '" ' +
+          'rel="nofollow" ' +
+          'class="link-phone" ' +
+          'title="' + messages['tooltip_phoneto'] + '">' +
+          truncate(value, truncate_value_after) +
+          '</a><br />';
+
+    return tel;
 }
 
 function ldapBooleanTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
 {
-    return value;
+    bool = "";
+
+    if( value == "TRUE" )
+    {
+        bool = truncate(messages['true'], truncate_value_after) + '<br />';
+    }
+
+    if( value == "FALSE" )
+    {
+        bool = truncate(messages['false'], truncate_value_after) + '<br />';
+    }
+
+    return bool;
 }
 
 function ldapADDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
