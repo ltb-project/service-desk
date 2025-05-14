@@ -213,6 +213,7 @@ $smarty->assign('use_updatestarttime',$attributes_map['starttime'] ? $use_update
 $smarty->assign('use_updateendtime',$attributes_map['endtime'] ? $use_updateendtime : false);
 $smarty->assign('use_searchinvalid',$use_searchinvalid);
 $smarty->assign('use_update',$use_update);
+$smarty->assign('json_messages', base64_encode(json_encode( $messages )));
 
 # Assign messages
 $smarty->assign('lang',$lang);
@@ -222,7 +223,7 @@ foreach ($messages as $key => $message) {
 
 # Other assignations
 $search = "";
-if (isset($_REQUEST["search"]) and $_REQUEST["search"]) { $search = htmlentities($_REQUEST["search"]); }
+if (isset($_REQUEST["search"]) and $_REQUEST["search"] and is_string($_REQUEST["search"])) { $search = htmlentities($_REQUEST["search"]); }
 $smarty->assign('search',$search);
 
 # Register plugins
