@@ -8,8 +8,9 @@
      show_undef: boolean. When true, show a specific message when there is no value for the current attribute
      truncate_value_after: integer. max length after which the string is truncated
      search: string, parameter named "search" of the http query
+     js_date_specifiers: string, format of the date as specified in https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
 */
-function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers)
 {
     var render = "";
 
@@ -61,10 +62,10 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
                     render += ldapBooleanTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
                     break;
                 case "date":
-                    render += ldapDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);
                     break;
                 case "ad_date":
-                    render += ldapADDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapADDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);
                     break;
                 case "static_list":
                     render += ldapListTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
@@ -76,7 +77,7 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
                     render += ldapBytesTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
                     break;
                 case "timestamp":
-                    render += ldapTimestampTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapTimestampTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);
                     break;
                 case "dn_link":
                     render += ldapDNLinkTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
@@ -157,9 +158,22 @@ function ldapBooleanTypeRenderer(column, type, value, dn, messages, listing_link
     return bool;
 }
 
-function ldapADDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers)
 {
-    return value;
+    date = ldap2date.parse(value);
+    return dayjs(date).format(js_date_specifiers);
+}
+
+
+function ldapADDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers)
+{
+    // divide by 10 000 000 to get seconds
+    winSecs = parseInt( value / 10000000 );
+    // 1.1.1600 -> 1.1.1970 difference in seconds
+    unixTimestamp = winSecs - 11644473600;
+    // get js date object from unixtimestamp in ms
+    date = new Date(unixTimestamp * 1000);
+    return dayjs(date).format(js_date_specifiers);
 }
 
 function ldapListTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
@@ -172,7 +186,7 @@ function ldapBytesTypeRenderer(column, type, value, dn, messages, listing_linkto
     return value;
 }
 
-function ldapTimestampTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapTimestampTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers)
 {
     return value;
 }

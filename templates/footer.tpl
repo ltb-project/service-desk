@@ -15,6 +15,10 @@
 <script src="vendor/datatables/buttons.html5.min.js"></script>
 <script src="vendor/datatables/buttons.print.min.js"></script>
 <script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
+<!-- dayjs, from https://github.com/iamkun/dayjs/ MIT LICENSE -->
+<script src="js/dayjs.min.js"></script>
+<!-- ldap2date, from https://github.com/rsolomo/ldap2date.js/ MIT LICENSE -->
+<script src="js/ldap2date.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
 <script src="js/table-renderer.js"></script>
@@ -48,6 +52,11 @@
     {else}
     search = "";
     {/if}
+    {if $js_date_specifiers}
+    js_date_specifiers = "{$js_date_specifiers}";
+    {else}
+    js_date_specifiers = "";
+    {/if}
 {literal}
 
     var itemlist = $('table.dataTable').DataTable({
@@ -59,9 +68,9 @@
       // Calling renderer for each cell
       // Special column 0 is for DN
       columnDefs: [
-          { targets: [0], render: function ( data, type, row, meta ) {return ldapTypeRenderer("dn", "dn", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search);} },
+          { targets: [0], render: function ( data, type, row, meta ) {return ldapTypeRenderer("dn", "dn", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);} },
 {/literal}
-{foreach from=$listing_columns item=item name=i}    { targets: [{$smarty.foreach.i.iteration}], {literal}render: function ( data, type, row, meta ) {return ldapTypeRenderer({/literal}"{$item}", "{$attributes_map.{$item}.type}{literal}", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search);} },{/literal}{/foreach}
+{foreach from=$listing_columns item=item name=i}    { targets: [{$smarty.foreach.i.iteration}], {literal}render: function ( data, type, row, meta ) {return ldapTypeRenderer({/literal}"{$item}", "{$attributes_map.{$item}.type}{literal}", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);} },{/literal}{/foreach}
 {literal}
       ],
       layout: {
