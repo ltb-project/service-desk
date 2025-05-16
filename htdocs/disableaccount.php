@@ -100,7 +100,7 @@ if ($audit_log_file) {
     auditlog($audit_log_file, $dn, $audit_admin, "disableaccount", $result, $comment);
 }
 
-$location = 'index.php?page='.$returnto.'&dn='.$dn.'&disableaccountresult='.$result;
+$location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&disableaccountresult='.$result;
 if ( isset($prehook_return) and $display_prehook_disable_error and $prehook_return > 0 ) {
     $location .= '&prehookdisableresult='.$prehook_message;
 }

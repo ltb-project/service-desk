@@ -104,7 +104,7 @@ if ($audit_log_file) {
     auditlog($audit_log_file, $dn, $audit_admin, "enableaccount", $result, $comment);
 }
 
-$location = 'index.php?page='.$returnto.'&dn='.$dn.'&enableaccountresult='.$result;
+$location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&enableaccountresult='.$result;
 if ( isset($prehook_return) and $display_prehook_enable_error and $prehook_return > 0 ) {
     $location .= '&prehookenableresult='.$prehook_message;
 }

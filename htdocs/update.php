@@ -61,6 +61,17 @@ if ($result === "") {
                     $update_attributes[ $attributes_map[$item]['attribute'] ] = $values;
                 }
 
+                # Use macros
+                foreach ($update_items_macros as $item => $macro) {
+                    $value = preg_replace_callback('/%(\w+)%/',
+                        function ($matches) use ($item, $update_attributes, $attributes_map) {
+                            return $update_attributes[ $attributes_map[$matches[1]]['attribute'] ][0];
+                        },
+                        $macro);
+                    error_log( "Use macro $macro for item $item: $value" );
+                    $update_attributes[ $attributes_map[$item]['attribute'] ] = $value;
+                }
+
                 # Update entry
                 if (!ldap_mod_replace($ldap, $dn, $update_attributes)) {
                     error_log("LDAP - modify failed for $dn");
@@ -77,6 +88,11 @@ if ($result === "") {
                         $action = "displayentry";
                     }
                 }
+
+                if ($audit_log_file) {
+                    auditlog($audit_log_file, $dn, $audit_admin, "updateentry", $result, $comment);
+                }
+
             }
 
             # Display form
@@ -119,12 +135,8 @@ if ($result === "") {
         }}
 }
 
-if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "updateentry", $result, $comment);
-}
-
 if ( $action == "displayentry" ) {
-    $location = 'index.php?page=display&dn='.$dn.'&updateresult='.$result;
+    $location = 'index.php?page=display&dn='.urlencode($dn).'&updateresult='.$result;
     header('Location: '.$location);
 }
 

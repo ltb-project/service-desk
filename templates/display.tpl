@@ -12,6 +12,24 @@
     </div>
     {/if}
 
+    {if $createresult eq 'createok'}
+    <div class="container">
+        <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_createok}</div>
+    </div>
+    {/if}
+
+    {if $prehookdeleteresult}
+    <div class="container">
+        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookdeleteresult}</div>
+    </div>
+    {/if}
+
+    {if $posthookdeleteresult}
+    <div class="container">
+        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookdeleteresult}</div>
+    </div>
+    {/if}
+
     <div class="display col-md-6">
 
         <div class="card mb-3 shadow">
@@ -56,13 +74,19 @@
                 </div>
             </div>
 
-            {if $edit_link || $rename_link}
+            {if $edit_link || $rename_link || $delete_link}
             <div class="card-footer text-center">
                 {if $edit_link}
                 <a class="btn btn-success" href="{$edit_link}"><i class="fa fa-edit"></i> {$msg_editentry}</a>
                 {/if}
                 {if $rename_link}
                 <a class="btn btn-success" href="{$rename_link}"><i class="fa fa-user-pen"></i> {$msg_renameentry}</a>
+                {/if}
+                {if $delete_link}
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{$dn|sha256}">
+                  <i class="fa fa-user-minus"></i> {$msg_deleteentry}
+                </button>
+                 {include 'deletemodal.tpl' dn={$dn}}
                 {/if}
             </div>
             {/if}
