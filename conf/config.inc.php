@@ -180,6 +180,7 @@ $use_searchinvalid = true;
 
 $use_update = true;
 $update_items = array('firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary');
+$update_items_macros = array('fullname' => '%firstname% %lastname%');
 
 $use_rename = true;
 $rename_items = array('identifier');
