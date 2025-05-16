@@ -87,6 +87,11 @@ if ($result === "") {
                         $action = "displayentry";
                     }
                 }
+
+                if ($audit_log_file) {
+                    auditlog($audit_log_file, $dn, $audit_admin, "createentry", $result, $comment);
+                }
+
             }
 
             # Display form
@@ -106,10 +111,6 @@ if ($result === "") {
 
             }
     }
-}
-
-if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "createentry", $result, $comment);
 }
 
 if ( $action == "displayentry" ) {

@@ -5,7 +5,7 @@
             <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">
                     <i class="fa fa-fw fa-circle-plus"></i>
-                    {$msg_create}
+                    {$msg_createentry}
                 </p>
             </div>
 

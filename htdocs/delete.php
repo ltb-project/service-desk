@@ -100,7 +100,7 @@ if ($result === "") {
 }
 
 if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "delete", $result, $comment);
+    auditlog($audit_log_file, $dn, $audit_admin, "deleteentry", $result, $comment);
 }
 
 $location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&deleteaccountresult='.$result;

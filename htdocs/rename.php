@@ -78,6 +78,10 @@ if ($result === "") {
                         $dn = $new_rdn ."," . $parent;
                     }
                 }
+
+                if ($audit_log_file) {
+                    auditlog($audit_log_file, $dn, $audit_admin, "renameentry", $result, $comment);
+                }
             }
 
             # Display form
@@ -104,10 +108,6 @@ if ($result === "") {
             }
 
         }}
-}
-
-if ($audit_log_file) {
-    auditlog($audit_log_file, $dn, $audit_admin, "renameentry", $result, $comment);
 }
 
 if ( $action == "displayentry" ) {
