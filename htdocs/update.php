@@ -124,7 +124,7 @@ if ($audit_log_file) {
 }
 
 if ( $action == "displayentry" ) {
-    $location = 'index.php?page=display&dn='.$dn.'&updateresult='.$result;
+    $location = 'index.php?page=display&dn='.urlencode($dn).'&updateresult='.$result;
     header('Location: '.$location);
 }
 

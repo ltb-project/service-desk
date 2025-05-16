@@ -103,7 +103,7 @@ if ($audit_log_file) {
     auditlog($audit_log_file, $dn, $audit_admin, "delete", $result, $comment);
 }
 
-$location = 'index.php?page='.$returnto.'&dn='.$dn.'&deleteaccountresult='.$result;
+$location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&deleteaccountresult='.$result;
 if ( isset($prehook_return) and $display_prehook_delete_error and $prehook_return > 0 ) {
     $location .= '&prehookdeleteresult='.$prehook_message;
 }

@@ -49,7 +49,7 @@ if ($result === "") {
                     if (isset($_POST[$item]) and !empty($_POST[$item])) {
                         $value = $_POST[$item];
                         if (!empty($new_rdn)) { $new_rdn .= "+"; }
-                        $new_rdn .= $attributes_map[$item]['attribute'] ."=". $value;
+                        $new_rdn .= $attributes_map[$item]['attribute'] ."=". ldap_escape($value, "", LDAP_ESCAPE_DN);
                     }
                 }
 
@@ -111,7 +111,7 @@ if ($audit_log_file) {
 }
 
 if ( $action == "displayentry" ) {
-    $location = 'index.php?page=display&dn='.$dn.'&renameresult='.$result;
+    $location = 'index.php?page=display&dn='.urlencode($dn).'&renameresult='.$result;
     header('Location: '.$location);
 }
 

@@ -172,7 +172,7 @@ if ($audit_log_file) {
     auditlog($audit_log_file, $dn, $audit_admin, "resetpassword", $result, NULL);
 }
 
-$location = 'index.php?page=display&dn='.$dn.'&resetpasswordresult='.$result;
+$location = 'index.php?page=display&dn='.urlencode($dn).'&resetpasswordresult='.$result;
 if ( isset($prehook_return) and $display_prehook_error and $prehook_return > 0 ) {
     $location .= '&prehookresult='.$prehook_message;
 }

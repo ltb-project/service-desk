@@ -123,7 +123,7 @@ if ($audit_log_file) {
     auditlog($audit_log_file, $dn, $audit_admin, "updatevaliditydates", $result, $comment);
 }
 
-$location = 'index.php?page='.$returnto.'&dn='.$dn.'&updatevaliditydatesresult='.$result;
+$location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&updatevaliditydatesresult='.$result;
 if ( isset($prehook_return) and $display_prehook_updatevalidity_error and $prehook_return > 0 ) {
     $location .= '&prehookupdatevalidityresult='.$prehook_message;
 }

@@ -104,7 +104,7 @@ if ($audit_log_file) {
     auditlog($audit_log_file, $dn, $audit_admin, "lockaccount", $result, $comment);
 }
 
-$location = 'index.php?page='.$returnto.'&dn='.$dn.'&lockaccountresult='.$result;
+$location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&lockaccountresult='.$result;
 if ( isset($prehook_return) and $display_prehook_lock_error and $prehook_return > 0 ) {
     $location .= '&prehooklockresult='.$prehook_message;
 }

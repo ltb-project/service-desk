@@ -55,7 +55,7 @@ if ($result === "") {
                 foreach ($create_dn_items as $dn_item) {
                     $attribute = $attributes_map[$dn_item]['attribute'];
                     if ($dn) { $dn .= "+"; }
-                    $dn .= $attribute . "=" . $create_attributes[$attribute][0]; 
+                    $dn .= $attribute . "=" . ldap_escape($create_attributes[$attribute][0], "", LDAP_ESCAPE_DN);
                 }
 
                 $dn .= "," . $create_base;
@@ -113,7 +113,7 @@ if ($audit_log_file) {
 }
 
 if ( $action == "displayentry" ) {
-    $location = 'index.php?page=display&dn='.$dn.'&createresult='.$result;
+    $location = 'index.php?page=display&dn='.urlencode($dn).'&createresult='.$result;
     header('Location: '.$location);
 }
 
