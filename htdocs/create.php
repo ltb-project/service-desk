@@ -50,16 +50,6 @@ if ($result === "") {
 
                 $create_attributes['objectclass'] = $create_objectclass;
 
-                $dn = "";
-
-                foreach ($create_dn_items as $dn_item) {
-                    $attribute = $attributes_map[$dn_item]['attribute'];
-                    if ($dn) { $dn .= "+"; }
-                    $dn .= $attribute . "=" . ldap_escape($create_attributes[$attribute][0], "", LDAP_ESCAPE_DN);
-                }
-
-                $dn .= "," . $create_base;
-
                 # Use macros
                 foreach ($create_items_macros as $item => $macro) {
                     $value = preg_replace_callback('/%(\w+)%/',
@@ -70,6 +60,17 @@ if ($result === "") {
                     error_log( "Use macro $macro for item $item: $value" );
                     $create_attributes[ $attributes_map[$item]['attribute'] ] = $value;
                 }
+
+                # Build DN
+                $dn = "";
+
+                foreach ($create_dn_items as $dn_item) {
+                    $attribute = $attributes_map[$dn_item]['attribute'];
+                    if ($dn) { $dn .= "+"; }
+                    $dn .= $attribute . "=" . ldap_escape($create_attributes[$attribute][0], "", LDAP_ESCAPE_DN);
+                }
+
+                $dn .= "," . $create_base;
 
                 # Create entry
                 if (!ldap_add($ldap, $dn, $create_attributes)) {
