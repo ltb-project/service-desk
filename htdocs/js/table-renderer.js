@@ -50,28 +50,28 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
                     render += ldapDNTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
                     break;
                 case "text":
-                    render += ldapTextTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapTextTypeRenderer(value, truncate_value_after);
                     break;
                 case "mailto":
-                    render += ldapMailtoTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapMailtoTypeRenderer(value, messages);
                     break;
                 case "tel":
-                    render += ldapTelTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapTelTypeRenderer(value, messages, truncate_value_after);
                     break;
                 case "boolean":
-                    render += ldapBooleanTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapBooleanTypeRenderer(value, messages, truncate_value_after);
                     break;
                 case "date":
-                    render += ldapDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);
+                    render += ldapDateTypeRenderer(value, js_date_specifiers);
                     break;
                 case "ad_date":
-                    render += ldapADDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);
+                    render += ldapADDateTypeRenderer(value, js_date_specifiers);
                     break;
                 case "static_list":
-                    render += ldapListTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapListTypeRenderer(value, truncate_value_after);
                     break;
                 case "list":
-                    render += ldapListTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapListTypeRenderer(value, truncate_value_after);
                     break;
                 case "bytes":
                     render += ldapBytesTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
@@ -80,7 +80,7 @@ function ldapTypeRenderer(column, type, data, dn, messages, listing_linkto, show
                     render += ldapTimestampTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);
                     break;
                 case "dn_link":
-                    render += ldapDNLinkTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapDNLinkTypeRenderer(value, search);
                     break;
                 case "ppolicy_dn":
                     render += ldapPPolicyDNTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
@@ -108,13 +108,13 @@ function ldapDNTypeRenderer(column, type, value, dn, messages, listing_linkto, s
     return value;
 }
 
-function ldapTextTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapTextTypeRenderer(value, truncate_value_after)
 {
     text = truncate(value, truncate_value_after) + "<br />";
     return text;
 }
 
-function ldapMailtoTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapMailtoTypeRenderer(value, messages)
 {
     mail_hexa = value.split("")
                      .map(c => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
@@ -129,7 +129,7 @@ function ldapMailtoTypeRenderer(column, type, value, dn, messages, listing_linkt
     return mail;
 }
 
-function ldapTelTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapTelTypeRenderer(value, messages, truncate_value_after)
 {
     tel = '<a href="tel:' + value + '" ' +
           'rel="nofollow" ' +
@@ -141,7 +141,7 @@ function ldapTelTypeRenderer(column, type, value, dn, messages, listing_linkto, 
     return tel;
 }
 
-function ldapBooleanTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapBooleanTypeRenderer(value, messages, truncate_value_after)
 {
     bool = "";
 
@@ -158,14 +158,14 @@ function ldapBooleanTypeRenderer(column, type, value, dn, messages, listing_link
     return bool;
 }
 
-function ldapDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers)
+function ldapDateTypeRenderer(value, js_date_specifiers)
 {
     date = ldap2date.parse(value);
     return dayjs(date).format(js_date_specifiers);
 }
 
 
-function ldapADDateTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers)
+function ldapADDateTypeRenderer(value, js_date_specifiers)
 {
     // divide by 10 000 000 to get seconds
     winSecs = parseInt( value / 10000000 );
@@ -176,9 +176,10 @@ function ldapADDateTypeRenderer(column, type, value, dn, messages, listing_linkt
     return dayjs(date).format(js_date_specifiers);
 }
 
-function ldapListTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapListTypeRenderer(value, truncate_value_after)
 {
-    return value;
+    text = truncate(value, truncate_value_after) + "<br />";
+    return text;
 }
 
 function ldapBytesTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
@@ -191,7 +192,7 @@ function ldapTimestampTypeRenderer(column, type, value, dn, messages, listing_li
     return value;
 }
 
-function ldapDNLinkTypeRenderer(column, type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapDNLinkTypeRenderer(value, search)
 {
     var dn = "";
     var cn = [];
