@@ -81,6 +81,8 @@ are allowed by default, to restrict them add ``$allowed_lang`` array:
 Dates
 -----
 
+.. _date_format:
+
 Format
 ^^^^^^
 
@@ -91,6 +93,12 @@ You can adapt how dates are displayed with specifiers (see `strftime reference`_
 .. code-block:: php
 
     $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
+
+The date displayed in javascript should be configured with the dayjs format (see `<https://day.js.org/docs/en/display/format>`_):
+
+.. code-block:: php
+
+    $js_date_specifiers = "YYYY-MM-DD HH:mm:ss (Z)";
 
 Timezone
 ^^^^^^^^
