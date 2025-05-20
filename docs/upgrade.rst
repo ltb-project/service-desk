@@ -1,6 +1,23 @@
 Upgrade
 =======
 
+From 0.6 to 0.7
+---------------
+
+date specifier
+~~~~~~~~~~~~~~
+
+A new javascript date specifier has been added to the default configuration file.
+
+If you did some modifications to ``$date_specifiers``, you should adapt them as well to ``$js_date_specifiers``.
+
+.. code-block:: php
+
+    $js_date_specifiers = "YYYY-MM-DD HH:mm:ss (Z)";
+
+See :ref:`date format<date_format>` for more information.
+
+
 From 0.5 to 0.6
 ---------------
 
