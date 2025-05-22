@@ -27,36 +27,7 @@
     <script type="text/javascript">
       $(document).ready( function() {
 {/literal}
-{literal}
-    json_messages = $("#global-messages").data('messages') || btoa("{}") ;
-    var messages = JSON.parse(atob(json_messages));
-
-{/literal}
-    {if $listing_linkto|is_array}
-    listing_linkto = JSON.parse("{json_encode($listing_linkto)|escape:'javascript'}".replaceAll('&quot;', '"'));
-    {else}
-    listing_linkto = "{$listing_linkto}";
-    {/if}
-    {if $show_undef}
-    show_undef = true;
-    {else}
-    show_undef = false;
-    {/if}
-    {if $truncate_value_after}
-    truncate_value_after = {$truncate_value_after};
-    {else}
-    truncate_value_after = 0;
-    {/if}
-    {if $search}
-    search = {$search};
-    {else}
-    search = "";
-    {/if}
-    {if $js_date_specifiers}
-    js_date_specifiers = "{$js_date_specifiers}";
-    {else}
-    js_date_specifiers = "";
-    {/if}
+    var datatables_params = JSON.parse(atob("{$datatables_params}"));
 {literal}
 
     var itemlist = $('table.dataTable').DataTable({
@@ -66,12 +37,8 @@
         type: 'POST'
       },
       // Calling renderer for each cell
-      // Special column 0 is for DN
       columnDefs: [
-          { targets: [0], render: function ( data, type, row, meta ) {return ldapTypeRenderer("dn", "dn", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);} },
-{/literal}
-{foreach from=$listing_columns item=item name=i}    { targets: [{$smarty.foreach.i.iteration}], {literal}render: function ( data, type, row, meta ) {return ldapTypeRenderer({/literal}"{$item}", "{$attributes_map.{$item}.type}{literal}", data, row[0], messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);} },{/literal}{/foreach}
-{literal}
+          { targets: '_all', render: function ( data, type, row, meta ) {return ldapTypeRenderer(data, type, row, meta, datatables_params);} }
       ],
       layout: {
         topStart: {

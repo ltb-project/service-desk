@@ -216,7 +216,24 @@ $smarty->assign('use_rename',$use_rename);
 $smarty->assign('use_update',$use_update);
 $smarty->assign('use_create',$use_create);
 $smarty->assign('use_delete',$use_delete);
-$smarty->assign('json_messages', base64_encode(json_encode( $messages )));
+
+$datatables_params = [];
+$datatables_params["messages"] = $messages;
+$datatables_params["listing_linkto"] = isset($search_result_linkto) ? $search_result_linkto : array($search_result_title);
+$datatables_params["show_undef"] = $search_result_show_undefined;
+$datatables_params["truncate_value_after"] = $search_result_truncate_value_after;
+$datatables_params["search"] = $search;
+$datatables_params["js_date_specifiers"] = $js_date_specifiers;
+$datatables_params["column_types"] = [];
+$datatables_params["column_types"]["dn"] = "dn";
+$columns = $search_result_items;
+if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+foreach ($columns as $column )
+{
+    $datatables_params["column_types"][$column] = $attributes_map[$column]["type"];
+}
+$smarty->assign("datatables_params", base64_encode(json_encode($datatables_params)));
+
 
 # Assign messages
 $smarty->assign('lang',$lang);
