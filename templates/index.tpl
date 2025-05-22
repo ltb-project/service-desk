@@ -3,8 +3,6 @@
 <div class="card mb-3 shadow card-success">
 <div class="card-body">
 
-<div id="global-messages" data-messages='{$json_messages}'></div>
-
 {include file="menu.tpl"}
 
 {if $page_title}
