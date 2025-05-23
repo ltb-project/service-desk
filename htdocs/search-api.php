@@ -67,22 +67,27 @@ foreach ($entries as $entry)
                 if( $type == "dn_link" || $type == "ppolicy_dn" )
                 {
                     $dn = $value;
-                    // Get cn of corresponding link
-                    $cn_vals = $ldapInstance->get_attribute_values($dn, "cn");
-                    if( $cn_vals == false )
+                    $linked_attr = "cn";
+                    if($type == "ppolicy_dn")
                     {
-                        $cn = [];
+                        $linked_attr = $ldap_ppolicy_name_attribute;
+                    }
+                    // Get linked_attr of corresponding link
+                    $linked_attr_res = $ldapInstance->get_attribute_values($dn, $linked_attr);
+                    if( $linked_attr_res == false )
+                    {
+                        $linked_attr_vals = [];
                     }
                     else
                     {
-                        $cn = [];
-                        foreach ($cn_vals as $k => $cn_val) {
+                        $linked_attr_vals = [];
+                        foreach ($linked_attr_res as $k => $linked_attr_val) {
                             if($k != "count") {
-                                array_push( $cn, $cn_val );
+                                array_push( $linked_attr_vals, $linked_attr_val );
                             }
                         }
                     }
-                    array_push( $values, [ $dn, $cn ] );
+                    array_push( $values, [ $dn, $linked_attr_vals ] );
                 }
 
                 # If this is a standard list of values, just push it
