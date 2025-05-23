@@ -51,6 +51,7 @@ if (isset($_POST["search"]) and $_POST["search"]) {
                 $smarty->assign("listing_sortby",  array_search($search_result_sortby, $columns));
                 $smarty->assign("show_undef", $search_result_show_undefined);
                 $smarty->assign("truncate_value_after", $search_result_truncate_value_after);
+                $smarty->assign("search_query", $_POST["search"]);
         }
     }
 } else {

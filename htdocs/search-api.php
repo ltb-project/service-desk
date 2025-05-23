@@ -5,10 +5,16 @@
 
 require_once("../conf/config.inc.php");
 require __DIR__ . '/../vendor/autoload.php';
+require_once("../lib/date.inc.php");
 
+$possible_actions = [ 'searchdisabled', 'searchexpired',
+                      'searchidle', 'searchinvalid',
+                      'searchlocked', 'search',
+                      'searchwillexpire' ];
+$action = "";
 
 # Get search parameters from request
-$datatables_params = array(
+$datatables_input = array(
     "columns" => null,
     "draw"    => null,
     "start"   => null,
@@ -16,10 +22,10 @@ $datatables_params = array(
     "order"   => null,
     "search"  => null
 );
-foreach ($datatables_params as $key => $value) {
+foreach ($datatables_input as $key => $value) {
     if (isset($_REQUEST[$key]))
     {
-        $datatables_params[$key] = $_REQUEST[$key];
+        $datatables_input[$key] = $_REQUEST[$key];
     }
     else
     {
@@ -27,15 +33,161 @@ foreach ($datatables_params as $key => $value) {
         exit(1);
     }
 }
+if ( isset($_REQUEST["action"]) && in_array($_REQUEST["action"], $possible_actions ) )
+{
+    $action = $_REQUEST["action"];
+}
+else
+{
+    error_log("Missing or invalid action: $action");
+    exit(1);
+}
 
 
+# Prepare the LDAP request according to the action
+switch ($action) {
+
+    case "searchidle":
+        # Compute idle date
+        $dateIdle = new DateTime();
+        date_sub( $dateIdle, new DateInterval('P'.$idledays.'D') );
+        $dateIdleLdap = $directory->getLdapDate($dateIdle);
+        # Search filter
+        $ldap_filter = "(&".$ldap_user_filter."(|(!(".$ldap_lastauth_attribute."=*))(".$ldap_lastauth_attribute."<=".$dateIdleLdap.")))";
+        $ldap_user_filter = $ldap_filter;
+        break;
+
+    case "searchinvalid":
+        # Compute idle date
+        $date= new DateTime();
+        $dateLdap = $directory->getLdapDate($date);
+
+        $ldap_filter = "(&". $ldap_user_filter . "(|";
+        if ( isset($attributes_map['starttime']) ) {
+            $ldap_filter .= "(" . $attributes_map['starttime']['attribute'] .">=". $dateLdap .")";
+            $search_result_items[] = "starttime";
+        }
+        if ( isset($attributes_map['endtime']) ) {
+            $ldap_filter .= "(" . $attributes_map['endtime']['attribute'] ."<=". $dateLdap .")";
+            $search_result_items[] = "endtime";
+        }
+        $ldap_filter.= "))";
+        $ldap_user_filter = $ldap_filter;
+        break;
+
+    case "search":
+        $filter_escape_chars = "";
+        if (!$search_use_substring_match) { $filter_escape_chars = "*"; }
+
+        $search_query = ldap_escape($_REQUEST["search_query"], $filter_escape_chars, LDAP_ESCAPE_FILTER);
+
+        # Search filter
+        $ldap_filter = "(&".$ldap_user_filter."(|";
+        foreach ($search_attributes as $attr) {
+            $ldap_filter .= "($attr=";
+            if ($search_use_substring_match) { $ldap_filter .= "*"; }
+            $ldap_filter .= $search_query;
+            if ($search_use_substring_match) { $ldap_filter .= "*"; }
+            $ldap_filter .= ")";
+        }
+        $ldap_filter .= "))";
+        $ldap_user_filter = $ldap_filter;
+        break;
+
+}
+
+# Do the LDAP request
 [$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search($ldap_user_filter, array(), $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
 
+# Filter the result according to the action
+switch ($action) {
+
+    case "searchdisabled":
+        foreach($entries as $entry_key => $entry) {
+
+            $isEnabled = $directory->isAccountEnabled($ldap, $entry['dn']);
+
+            if ( $isEnabled === true ) {
+                unset($entries[$entry_key]);
+                $nb_entries--;
+            }
+
+        }
+        break;
+
+    case "searchexpired":
+        foreach($entries as $entry_key => $entry) {
+
+            # Get password policy configuration
+            $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $entry["dn"], $ldap_default_ppolicy);
+            if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
+            if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
+
+            $isExpired = $directory->isPasswordExpired($ldap, $entry["dn"], $pwdPolicyConfiguration);
+
+            if ( $isExpired === false ) {
+                unset($entries[$entry_key]);
+                $nb_entries--;
+            }
+
+        }
+        break;
+
+    case "searchlocked":
+        # Check if entry is still locked
+        foreach($entries as $entry_key => $entry) {
+            # Get password policy configuration
+            $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $entry["dn"], $ldap_default_ppolicy);
+            if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
+            if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
+
+            $isLocked = $directory->isLocked($ldap, $entry['dn'], $pwdPolicyConfiguration);
+
+            if ( $isLocked === false ) {
+                unset($entries[$entry_key]);
+                $nb_entries--;
+            }
+        }
+        break;
+
+    case "searchwillexpire":
+        # Check if entry will soon expire
+        foreach($entries as $entry_key => $entry) {
+
+            # Get password policy configuration
+            $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $entry["dn"], $ldap_default_ppolicy);
+            if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
+            if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
+
+            $isWillExpire = false;
+            $expirationDate = $directory->getPasswordExpirationDate($ldap, $entry["dn"], $pwdPolicyConfiguration);
+
+            if ($expirationDate) {
+                $expirationDateClone = clone $expirationDate;
+                $willExpireDate = date_sub( $expirationDateClone, new DateInterval('P'.$willexpiredays.'D'));
+                $time = time();
+                if ( $time >= $willExpireDate->getTimestamp() and $time < $expirationDate->getTimestamp() ) {
+                    $isWillExpire = true;
+                }
+            }
+
+            if ( $isWillExpire === false ) {
+                unset($entries[$entry_key]);
+                $nb_entries--;
+            }
+        }
+        break;
+
+}
+# TODO: get rid of all search*.php files: merge into a unique one or remove it completely?
+
+# Sort entries for having them always in the same order
 $ldapInstance->ldapSort($entries, $attributes_map['identifier']['attribute']);
 
+# Only get a page of entries
 $entries = array_slice( $entries,
-                        intval($datatables_params["start"]),
-                        intval($datatables_params["length"]) );
+                        intval($datatables_input["start"]),
+                        intval($datatables_input["length"]) );
 
 
 # Format data to send
@@ -72,7 +224,7 @@ foreach ($entries as $entry)
                     {
                         $linked_attr = $ldap_ppolicy_name_attribute;
                     }
-                    // Get linked_attr of corresponding link
+                    # Get linked_attr of corresponding link
                     $linked_attr_res = $ldapInstance->get_attribute_values($dn, $linked_attr);
                     if( $linked_attr_res == false )
                     {
@@ -104,7 +256,7 @@ foreach ($entries as $entry)
 
 echo json_encode(
     array(
-        "draw" => $datatables_params["draw"],
+        "draw" => $datatables_input["draw"],
         "recordsTotal" => $nb_entries,
         "recordsFiltered" => $nb_entries,
         "data" => $data

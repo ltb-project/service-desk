@@ -34,7 +34,13 @@
       serverSide: true,
       ajax: {
         url: '/index.php?page=search-api',
-        type: 'POST'
+        type: 'POST',
+        data: {
+{/literal}
+            action: "{$page}",
+            search_query: "{$search_query}"
+{literal}
+        }
       },
       // Calling renderer for each cell
       columnDefs: [
