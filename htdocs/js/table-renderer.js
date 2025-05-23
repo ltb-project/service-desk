@@ -74,8 +74,10 @@ function ldapTypeRenderer(data, type, row, meta, datatables_params)
     // if we are processing column "linkto", add an html link <a>
     if(Array.isArray(listing_linkto) && listing_linkto.includes(column))
     {
-        // TODO: url escape of dn
-        render += "<a href=\"index.php?page=display&dn=" + dn + "&search=" + search + "\" title=\"" + messages["displayentry"] + "\">";
+        render += "<a href=\"index.php?page=display" +
+                  "&dn=" + encodeURIComponent(dn) +
+                  "&search=" + encodeURIComponent(search) +
+                  "\" title=\"" + messages["displayentry"] + "\">";
     }
 
     // empty value, return immediately the value
@@ -134,16 +136,16 @@ function ldapTypeRenderer(data, type, row, meta, datatables_params)
                     render += ldapBytesTypeRenderer(value, truncate_value_after);
                     break;
                 case "timestamp":
-                    render += ldapTimestampTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers);
+                    render += ldapTimestampTypeRenderer(value, js_date_specifiers);
                     break;
                 case "dn_link":
-                    render += ldapDNLinkTypeRenderer(value, search);
+                    render += ldapDNLinkTypeRenderer(value, truncate_value_after, search);
                     break;
                 case "ppolicy_dn":
-                    render += ldapPPolicyDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapPPolicyDNTypeRenderer(value, truncate_value_after);
                     break;
                 case "address":
-                    render += ldapAddressTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapAddressTypeRenderer(value);
                     break;
             }
         });
@@ -279,15 +281,18 @@ function ldapBytesTypeRenderer(value, truncate_value_after)
     return result;
 }
 
-function ldapTimestampTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, js_date_specifiers)
+function ldapTimestampTypeRenderer(value, js_date_specifiers)
 {
-    return value;
+    // timestamp is considered in seconds, converting to milliseconds
+    return dayjs(value * 1000).format(js_date_specifiers);
 }
 
-function ldapDNLinkTypeRenderer(value, search)
+function ldapDNLinkTypeRenderer(value, truncate_value_after, search)
 {
     var dn = "";
-    var cn = [];
+    var attr_values = [];
+    var truncated_attr_values = [];
+    var vals = "";
     if(Array.isArray(value))
     {
         if(value.length >= 1)
@@ -296,28 +301,74 @@ function ldapDNLinkTypeRenderer(value, search)
         }
         if(value.length >= 2)
         {
-            cn = value[1];
+            attr_values = value[1];
         }
     }
 
-    if(Array.isArray(cn))
+    if(Array.isArray(attr_values))
     {
-        cn = cn.join(", ");
+        for ( attr_value of attr_values )
+        {
+            truncated_attr_values.push(truncate(attr_value, truncate_value_after));
+        }
+        vals = truncated_attr_values.join(", ");
+    }
+    else
+    {
+        vals = truncate(attr_values, truncate_value_after);
     }
 
-    // TODO: url escape of dn
-    var res = '<a href="index.php?page=display&dn=' + dn + '&search=' + search + '">' + cn + '</a> <br />';
+    var res = '<a href="index.php?page=display' +
+              '&dn=' + encodeURIComponent(dn) +
+              '&search=' + encodeURIComponent(search) + '">'
+              + truncated_attr_values + '</a> <br />';
     return res;
 }
 
-function ldapPPolicyDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapPPolicyDNTypeRenderer(value, truncate_value_after)
 {
-    return value;
+    var dn = "";
+    var linked_attr_vals = [];
+    var truncated_attr_values = [];
+    var vals = "";
+    if(Array.isArray(value))
+    {
+        if(value.length >= 1)
+        {
+            dn = value[0];
+        }
+        if(value.length >= 2)
+        {
+            linked_attr_vals = value[1];
+        }
+    }
+
+    if(Array.isArray(linked_attr_vals))
+    {
+        for ( attr_value of linked_attr_vals )
+        {
+            truncated_attr_values.push(truncate(attr_value, truncate_value_after));
+        }
+        vals = truncated_attr_values.join(", ");
+    }
+    else
+    {
+        vals = truncate(linked_attr_vals, truncate_value_after);
+    }
+
+    var res = vals + '<br />';
+    return res;
 }
 
-function ldapAddressTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapAddressTypeRenderer(value)
 {
-    return value;
+    var result = "";
+    address_parts = value.split('$');
+    for( address_part of address_parts )
+    {
+        result += address_part + '<br />';
+    }
+    return result;
 }
 
 function truncate(string, length)
