@@ -162,9 +162,28 @@ function ldapTypeRenderer(data, type, row, meta, datatables_params)
 }
 
 // Renderer for special first column "DN"
+// This column displays all the actions possible for the user:
+// display, unlock,...
 function ldapDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
 {
-    return value;
+
+    var result = "";
+
+    result += '<a href="index.php?page=display&' +
+              'dn=' + encodeURIComponent(dn) +
+              '&search=' + encodeURIComponent(search) + '" ' +
+              'class="btn btn-info btn-sm';
+
+    result += listing_linkto == false ? ' hidden' : '';
+
+    result += '" role="button"' +
+              ' title="' + messages["displayentry"] + '">' +
+              '<i class="fa fa-fw fa-id-card"></i>' +
+              '</a>';
+
+    // TODO: add functions for computing unlock button and enable button
+
+    return result;
 }
 
 function ldapTextTypeRenderer(value, truncate_value_after)
