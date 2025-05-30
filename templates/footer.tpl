@@ -1,4 +1,5 @@
 </div>
+{include 'commentbox.tpl'}
 
 {if $display_footer}
 <div id="footer">LDAP Tool Box Service Desk - version {$version}</div>
@@ -15,15 +16,37 @@
 <script src="vendor/datatables/buttons.html5.min.js"></script>
 <script src="vendor/datatables/buttons.print.min.js"></script>
 <script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
+<!-- dayjs, from https://github.com/iamkun/dayjs/ MIT LICENSE -->
+<script src="js/dayjs.min.js"></script>
+<!-- ldap2date, from https://github.com/rsolomo/ldap2date.js/ MIT LICENSE -->
+<script src="js/ldap2date.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
+<script src="js/table-renderer.js"></script>
 
 {literal}
     <script type="text/javascript">
       $(document).ready( function() {
 {/literal}
+    var datatables_params = JSON.parse(atob("{$datatables_params}"));
 {literal}
+
     var itemlist = $('table.dataTable').DataTable({
+      serverSide: true,
+      ajax: {
+        url: '/index.php?page=search-api',
+        type: 'POST',
+        data: {
+{/literal}
+            action: "{$page}",
+            search_query: "{$search_query}"
+{literal}
+        }
+      },
+      // Calling renderer for each cell
+      columnDefs: [
+          { targets: '_all', render: function ( data, type, row, meta ) {return ldapTypeRenderer(data, type, row, meta, datatables_params);} }
+      ],
       layout: {
         topStart: {
 {/literal}

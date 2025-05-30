@@ -280,6 +280,7 @@ $mail_priority = 3;
 $lang = "en";
 $allowed_lang = array();
 $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
+$js_date_specifiers = "YYYY-MM-DD HH:mm:ss (Z)";
 $date_timezone = "UTC";
 
 # Graphics
