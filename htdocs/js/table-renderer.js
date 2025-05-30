@@ -46,10 +46,13 @@ function get_datatables_params(data, type, row, meta, datatables_params)
     {
         js_date_specifiers = "";
     }
+    var unlock = datatables_params["unlock"];
+    var enable = datatables_params["enable"];
 
     return [
              column, column_type, dn, messages, listing_linkto,
-             show_undef, truncate_value_after, search, js_date_specifiers
+             show_undef, truncate_value_after, search, js_date_specifiers,
+             unlock, enable
            ];
 }
 
@@ -68,7 +71,8 @@ function ldapTypeRenderer(data, type, row, meta, datatables_params)
     var render = "";
 
     [column, column_type, dn, messages, listing_linkto,
-     show_undef, truncate_value_after, search, js_date_specifiers ] =
+     show_undef, truncate_value_after, search, js_date_specifiers,
+     unlock, enable ] =
             get_datatables_params(data, type, row, meta, datatables_params);
 
     // if we are processing column "linkto", add an html link <a>
@@ -106,13 +110,13 @@ function ldapTypeRenderer(data, type, row, meta, datatables_params)
             switch(column_type)
             {
                 case "dn":
-                    render += ldapDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search);
+                    render += ldapDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, unlock, enable);
                     break;
                 case "text":
                     render += ldapTextTypeRenderer(value, truncate_value_after);
                     break;
                 case "mailto":
-                    render += ldapMailtoTypeRenderer(value, messages);
+                    render += ldapMailtoTypeRenderer(value, truncate_value_after, messages);
                     break;
                 case "tel":
                     render += ldapTelTypeRenderer(value, messages, truncate_value_after);
@@ -161,13 +165,218 @@ function ldapTypeRenderer(data, type, row, meta, datatables_params)
     return render;
 }
 
+function rightRotate(value, amount) {
+    return (value>>>amount) | (value<<(32 - amount));
+};
+
+function sha256(ascii) {
+
+    var mathPow = Math.pow;
+    var maxWord = mathPow(2, 32);
+    var lengthProperty = 'length'
+    var i, j; // Used as a counter across the whole file
+    var result = ''
+
+    var words = [];
+    var asciiBitLength = ascii[lengthProperty]*8;
+
+    //* caching results is optional - remove/add slash from front of this line to toggle
+    // Initial hash value: first 32 bits of the fractional parts of the square roots of the first 8 primes
+    // (we actually calculate the first 64, but extra values are just ignored)
+    var hash = sha256.h = sha256.h || [];
+    // Round constants: first 32 bits of the fractional parts of the cube roots of the first 64 primes
+    var k = sha256.k = sha256.k || [];
+    var primeCounter = k[lengthProperty];
+    /*/
+    var hash = [], k = [];
+    var primeCounter = 0;
+    //*/
+
+    var isComposite = {};
+    for (var candidate = 2; primeCounter < 64; candidate++) {
+        if (!isComposite[candidate]) {
+            for (i = 0; i < 313; i += candidate) {
+                isComposite[i] = candidate;
+            }
+            hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+            k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+        }
+    }
+
+    ascii += '\x80' // Append Ƈ' bit (plus zero padding)
+    while (ascii[lengthProperty]%64 - 56) ascii += '\x00' // More zero padding
+    for (i = 0; i < ascii[lengthProperty]; i++) {
+        j = ascii.charCodeAt(i);
+        if (j>>8) return; // ASCII check: only accept characters in range 0-255
+        words[i>>2] |= j << ((3 - i)%4)*8;
+    }
+    words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+    words[words[lengthProperty]] = (asciiBitLength)
+
+    // process each chunk
+    for (j = 0; j < words[lengthProperty];) {
+        var w = words.slice(j, j += 16); // The message is expanded into 64 words as part of the iteration
+        var oldHash = hash;
+        // This is now the undefinedworking hash", often labelled as variables a...g
+        // (we have to truncate as well, otherwise extra entries at the end accumulate
+        hash = hash.slice(0, 8);
+
+        for (i = 0; i < 64; i++) {
+            var i2 = i + j;
+            // Expand the message into 64 words
+            // Used below if
+            var w15 = w[i - 15], w2 = w[i - 2];
+
+            // Iterate
+            var a = hash[0], e = hash[4];
+            var temp1 = hash[7]
+                + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) // S1
+                + ((e&hash[5])^((~e)&hash[6])) // ch
+                + k[i]
+                // Expand the message schedule if needed
+                + (w[i] = (i < 16) ? w[i] : (
+                        w[i - 16]
+                        + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3)) // s0
+                        + w[i - 7]
+                        + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10)) // s1
+                    )|0
+                );
+            // This is only used once, so *could* be moved below, but it only saves 4 bytes and makes things unreadble
+            var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) // S0
+                + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2])); // maj
+
+            hash = [(temp1 + temp2)|0].concat(hash); // We don't bother trimming off the extra ones, they're harmless as long as we're truncating when we do the slice()
+            hash[4] = (hash[4] + temp1)|0;
+        }
+
+        for (i = 0; i < 8; i++) {
+            hash[i] = (hash[i] + oldHash[i])|0;
+        }
+    }
+
+    for (i = 0; i < 8; i++) {
+        for (j = 3; j + 1; j--) {
+            var b = (hash[i]>>(j*8))&255;
+            result += ((b < 16) ? 0 : '') + b.toString(16);
+        }
+    }
+    return result;
+}
+
+// Duplicate the commentbox template and fill it for each entry
+function comment_displayer(method, page, messages, dn, returnto, required)
+{
+    var res = "";
+    var commentbox = $("#commentbox").clone();
+
+    commentbox.find("form").attr("id", method);
+    commentbox.find("form").attr("action", "index.php?page="+page);
+    commentbox.find("input[name='dn']").attr("value", dn);
+    commentbox.find("input[name='returnto']").attr("value", returnto);
+    commentbox.find("div[id='commentModalMethodHashedDN']").attr("id", "commentModal" + method + sha256(dn));
+    commentbox.find("h1[id='CommentModal']").text(messages[page]);
+    commentbox.find("textarea[name='comment']").attr("id", "comment-" + method);
+    commentbox.find("textarea[name='comment']").attr("placeholder", messages["insert_comment"]);
+    if(required)
+    {
+        commentbox.find("textarea[name='comment']").prop('required',true);
+    }
+    var button_close_content = commentbox.find("button[type='button']").html();
+    button_close_content = button_close_content.replace("msg_close", messages["close"]);
+    commentbox.find("button[type='button']").html(button_close_content);
+
+    var button_submit_content = commentbox.find("button[type='submit']").html();
+    button_submit_content = button_submit_content.replace("msg_submit", messages["submit"]);
+    commentbox.find("button[type='submit']").html(button_submit_content);
+
+    res += commentbox.html();
+
+    return res;
+}
+
+function unlock_displayer(dn, messages, search, unlock, page)
+{
+    var use_unlockaccount          = unlock["use_unlockaccount"];
+    var use_unlockcomment          = unlock["use_unlockcomment"];
+    var use_unlockcomment_required = unlock["use_unlockcomment_required"];
+
+    var res = "";
+
+    if(use_unlockaccount && page == "searchlocked")
+    {
+        if(use_unlockcomment)
+        {
+            res += '<button type="button"' +
+                   ' class="btn btn-success btn-sm"' +
+                   ' data-bs-toggle="modal"' +
+                   ' data-bs-target="#commentModalunlock' + sha256(dn) + '">';
+            res += '<i class="fa fa-fw fa-unlock mr-3"></i>';
+            res += '<i class="fa fa-fw fa-info-circle text-body-tertiary" title="' + messages["comment_needed"] + '"></i>';
+            res += '</button>';
+            res += '<div>';
+            // Add comment form
+            res += comment_displayer("unlock", "unlockaccount", messages, dn, page, use_unlockcomment_required);
+
+            res += '</div>';
+        }
+        else
+        {
+            res += '<a href="index.php?page=unlockaccount&dn=' + encodeURIComponent(dn) + '&returnto=searchlocked"';
+            res += ' class="btn btn-success btn-sm" role="button" title="' + messages["unlockaccount"] + '">';
+            res += '<i class="fa fa-fw fa-unlock"></i>';
+            res += '</a>';
+        }
+    }
+    return res;
+}
+
+function enable_displayer(dn, messages, search, enable, page)
+{
+    var use_enableaccount = enable["use_enableaccount"];
+    var use_enablecomment = enable["use_enablecomment"];
+    var use_enablecomment_required = enable["use_enablecomment_required"];
+
+    var res = "";
+
+    if(use_enableaccount && page == "searchdisabled")
+    {
+        if(use_enablecomment)
+        {
+            res += '<button type="button"' +
+                   ' class="btn btn-success btn-sm"' +
+                   ' data-bs-toggle="modal"' +
+                   ' data-bs-target="#commentModalenable' + sha256(dn) + '">';
+            res += '<i class="fa fa-fw fa-user-check mr-3"></i>';
+            res += '<i class="fa fa-fw fa-info-circle text-body-tertiary" title="' + messages["comment_needed"] + '"></i>';
+            res += '</button>';
+            res += '<div>';
+
+            // Add comment form
+            res += comment_displayer("enable", "enableaccount", messages, dn, page, use_enablecomment_required);
+
+            res += '</div>';
+        }
+        else
+        {
+            res += '<a href="index.php?page=enableaccount&dn=' + encodeURIComponent(dn) + '&returnto=searchdisabled"';
+            res += ' class="btn btn-success btn-sm" role="button" title="' + messages["enableaccount"] + '">';
+            res += '<i class="fa fa-fw fa-user-check"></i>';
+            res += '</a>';
+        }
+    }
+    return res;
+}
+
 // Renderer for special first column "DN"
 // This column displays all the actions possible for the user:
 // display, unlock,...
-function ldapDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search)
+function ldapDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, unlock, enable)
 {
 
     var result = "";
+
+    var get_params = new URLSearchParams(document.location.search);
+    var page = get_params.get("page");
 
     result += '<a href="index.php?page=display&' +
               'dn=' + encodeURIComponent(dn) +
@@ -181,7 +390,8 @@ function ldapDNTypeRenderer(column, column_type, value, dn, messages, listing_li
               '<i class="fa fa-fw fa-id-card"></i>' +
               '</a>';
 
-    // TODO: add functions for computing unlock button and enable button
+    result += unlock_displayer(dn, messages, search, unlock, page);
+    result += enable_displayer(dn, messages, search, enable, page);
 
     return result;
 }
@@ -192,7 +402,7 @@ function ldapTextTypeRenderer(value, truncate_value_after)
     return text;
 }
 
-function ldapMailtoTypeRenderer(value, messages)
+function ldapMailtoTypeRenderer(value, truncate_value_after, messages)
 {
     mail_hexa = value.split("")
                      .map(c => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
@@ -201,7 +411,7 @@ function ldapMailtoTypeRenderer(value, messages)
     mail = '<a href="mailto:' + mail_hexa + '" ' +
            'class="link-email" ' +
            'title="' + messages['tooltip_emailto'] + '">' +
-           value +
+           truncate(value, truncate_value_after) +
            '</a> <br />';
 
     return mail;
@@ -401,3 +611,5 @@ function truncate(string, length)
     return result;
 }
 
+// TODO: remove templates/comment.tpl file and its call in display.tpl
+// TODO: remove templates/value_displayer.tpl file and its call in display.tpl

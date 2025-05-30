@@ -1,4 +1,5 @@
 </div>
+{include 'commentbox.tpl'}
 
 {if $display_footer}
 <div id="footer">LDAP Tool Box Service Desk - version {$version}</div>
