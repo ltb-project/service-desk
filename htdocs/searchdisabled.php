@@ -46,6 +46,7 @@ if ( !empty($entries) )
 }
 */
 
+$smarty->assign("page_title", "disabledaccounts");
 $smarty->assign("nb_entries", 0);
 $smarty->assign("entries", null);
 $columns = $search_result_items;
