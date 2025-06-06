@@ -96,6 +96,10 @@ switch ($action) {
 
 }
 
+# TODO: FILTERING
+# get $datatables_input["search"] and if not empty:
+# get the attributes to search, and append the filter with (&current_filter(|(attr1=search)(attr2=search)...))
+
 # Do the LDAP request
 [$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search($ldap_user_filter, array(), $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
 

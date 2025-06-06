@@ -33,6 +33,7 @@
 
     var itemlist = $('table.dataTable').DataTable({
       serverSide: true,
+      processing: true,
       ajax: {
         url: '/index.php?page=search-api',
         type: 'POST',
