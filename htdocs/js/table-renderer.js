@@ -639,3 +639,4 @@ function print_all_results(e, dt, node, config, cb, autoPrint)
 
 // TODO: remove templates/comment.tpl file and its call in display.tpl
 // TODO: remove templates/value_displayer.tpl file and its call in display.tpl
+// TODO: update number of entries found in yellow banner while data have loaded
