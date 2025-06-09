@@ -96,9 +96,28 @@ switch ($action) {
 
 }
 
-# TODO: FILTERING
-# get $datatables_input["search"] and if not empty:
-# get the attributes to search, and append the filter with (&current_filter(|(attr1=search)(attr2=search)...))
+# FILTERING
+# If there is a search filter
+if( !empty($datatables_input["search"]["value"]) )
+{
+    # Get the list of attributes to search
+    foreach( $search_result_items as $item ) {
+        $attributes[] = $attributes_map[$item]['attribute'];
+    }
+    $attributes[] = $attributes_map[$search_result_title]['attribute'];
+    $attributes[] = $attributes_map[$search_result_sortby]['attribute'];
+
+    # For each attribute, append the search filter with a new component
+    $filter_components = "(|";
+    foreach( $attributes as $attribute ) {
+        $filter_components .= "($attribute=*".$datatables_input["search"]["value"]."*)";
+    }
+    $filter_components .= ")";
+
+    # Include the new filter in the ldap_user_filter
+    $ldap_user_filter = "(&". $ldap_user_filter . $filter_components . ")";
+}
+
 
 # Do the LDAP request
 [$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search($ldap_user_filter, array(), $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
