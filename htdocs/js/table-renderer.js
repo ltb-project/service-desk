@@ -611,5 +611,31 @@ function truncate(string, length)
     return result;
 }
 
+function print_all_results(e, dt, node, config, cb, autoPrint)
+{
+    config.title = $(document).attr('title');
+    config.header = true;
+    config.exportOptions = {
+        columns: ':not(.hidden-print)',
+    };
+    config.autoPrint = autoPrint;
+    var table = new DataTable('table.dataTable');
+    var pageLength = table.page.info().length;
+    var pageNumber = table.page.info().page;
+
+    var totalRows = table.page.info().recordsTotal;
+    table.page.len(totalRows).draw(); // Draw table with all records
+
+    table.on('draw', function() {
+        var additionalParams = function() {
+            // Once loaded, redraw at current page with page length
+            table.off('draw');
+            table.page.len(pageLength).page(pageNumber).draw('page');
+        };
+        // Draw table with all records
+        DataTable.ext.buttons.print.action(e, dt, node, config, additionalParams);
+    });
+}
+
 // TODO: remove templates/comment.tpl file and its call in display.tpl
 // TODO: remove templates/value_displayer.tpl file and its call in display.tpl

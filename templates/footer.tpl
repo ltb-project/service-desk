@@ -60,7 +60,7 @@
         bottom2Start: {
             buttons: [
 {if $datatables_print_all}
-                { extend: 'print', text: '{$msg_print_all}', exportOptions: { columns: ':not(.hidden-print)' }, autoPrint: {if $datatables_auto_print}true{else}false{/if} },
+                { text: '{$msg_print_all}', action: function (e, dt, node, config, cb){ print_all_results(e, dt, node, config, cb, {if $datatables_auto_print}true{else}false{/if});} },
 {/if}
 {if $datatables_print_page}
                 { extend: 'print', text: '{$msg_print_page}', exportOptions: { columns: ':not(.hidden-print)', modifier: { page: 'current' } }, autoPrint: {if $datatables_auto_print}true{else}false{/if} },
