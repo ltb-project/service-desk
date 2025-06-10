@@ -1,4 +1,5 @@
 </div>
+{include 'commentbox.tpl'}
 
 {if $display_footer}
 <div id="footer">LDAP Tool Box Service Desk - version {$version}</div>
@@ -15,54 +16,22 @@
 <script src="vendor/datatables/buttons.html5.min.js"></script>
 <script src="vendor/datatables/buttons.print.min.js"></script>
 <script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
+<!-- dayjs, from https://github.com/iamkun/dayjs/ MIT LICENSE -->
+<script src="js/dayjs.min.js"></script>
+<!-- ldap2date, from https://github.com/rsolomo/ldap2date.js/ MIT LICENSE -->
+<script src="js/ldap2date.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
+<script src="js/table-renderer.js"></script>
+
+{if $page|strstr:"search"}
+{include 'datatables-search.tpl'}
+{/if}
+{if $page|strstr:"audit"}
+{include 'datatables-audit.tpl'}
+{/if}
 
 {literal}
-    <script type="text/javascript">
-      $(document).ready( function() {
-{/literal}
-{literal}
-    var itemlist = $('table.dataTable').DataTable({
-      layout: {
-        topStart: {
-{/literal}
-{if $datatables_page_length_choices}
-          pageLength: {
-            menu: [ {$datatables_page_length_choices nofilter} ]
-          }
-{/if}
-        },
-        bottom2Start: {
-            buttons: [
-{if $datatables_print_all}
-                { extend: 'print', text: '{$msg_print_all}', exportOptions: { columns: ':not(.hidden-print)' }, autoPrint: {if $datatables_auto_print}true{else}false{/if} },
-{/if}
-{if $datatables_print_page}
-                { extend: 'print', text: '{$msg_print_page}', exportOptions: { columns: ':not(.hidden-print)', modifier: { page: 'current' } }, autoPrint: {if $datatables_auto_print}true{else}false{/if} },
-{/if}
-            ]
-        }
-      },
-{if $datatables_page_length_default}
-      pageLength: {$datatables_page_length_default},
-{/if}
-{literal}
-      language: {
-        url: "vendor/datatables/i18n/{/literal}{$lang|default:'en'}{literal}.json"
-      },
-      initComplete: function () {
-        $("#spinner").hide();
-        $('table.dataTable').show();
-      }
-    });
-{/literal}
-{literal}
-        $('table tr.clickable').click(function() {
-          document.location.href = $(this).find('[href]').attr('href');
-        });
-      });
-    </script>
     <script>
     $(document).ready(function(){
         $('[data-toggle="popover"]').popover({
