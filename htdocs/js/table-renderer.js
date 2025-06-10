@@ -637,6 +637,15 @@ function print_all_results(e, dt, node, config, cb, autoPrint)
     });
 }
 
+function updateEntriesCount(settings, datatables_params)
+{
+    var table = new DataTable('table.dataTable');
+    var totalRows = table.page.info().recordsTotal;
+
+    var messages = datatables_params["messages"];
+
+    $('#entriesCount').html(totalRows + ' ' + messages['entriesfound'] );
+}
+
 // TODO: remove templates/comment.tpl file and its call in display.tpl
 // TODO: remove templates/value_displayer.tpl file and its call in display.tpl
-// TODO: update number of entries found in yellow banner while data have loaded
