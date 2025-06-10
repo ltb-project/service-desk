@@ -1,5 +1,5 @@
 
-<div class="alert alert-success">
+<div id="entriesCount" class="alert alert-success">
     {$msg_title_search} {$nb_entries} {if $nb_entries==1}{$msg_entryfound}{else}{$msg_entriesfound}{/if}
 </div>
 

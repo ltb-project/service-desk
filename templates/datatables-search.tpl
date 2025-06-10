@@ -22,6 +22,7 @@
       columnDefs: [
           { targets: '_all', render: function ( data, type, row, meta ) {return ldapTypeRenderer(data, type, row, meta, datatables_params);} }
       ],
+      drawCallback: function (settings) { updateEntriesCount(settings, datatables_params);},
       layout: {
         topStart: {
 {/literal}
