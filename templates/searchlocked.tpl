@@ -1,4 +1,4 @@
-<div class="alert alert-warning">
+<div id="entriesCount" class="alert alert-warning">
     {$nb_entries} {if $nb_entries==1}{$msg_entryfound}{else}{$msg_entriesfound}{/if}
 </div>
 
