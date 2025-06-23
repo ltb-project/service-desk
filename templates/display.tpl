@@ -306,8 +306,7 @@
                         <i class="fa fa-fw fa-unlock me-2"></i>{$msg_unlockaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                    <div>
-                        {include 'comment.tpl' method=unlock page=unlockaccount title=$msg_unlockaccount required=$use_unlockcomment_required}
+                    <div id="unlockcommentbox">
                     </div>
                 {else}
                     <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
@@ -353,8 +352,7 @@
                         <i class="fa fa-fw fa-lock me-2"></i>{$msg_lockaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                    <div>
-                        {include 'comment.tpl' method=lock page=lockaccount title=$msg_lockaccount required=$use_lockcomment_required}
+                    <div id="lockcommentbox">
                     </div>
                 {else}
                     <form id="lockaccount" method="post" action="index.php?page=lockaccount">
@@ -414,8 +412,7 @@
                         <i class="fa fa-fw fa-user-slash me-2"></i>{$msg_disableaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                    <div>
-                        {include 'comment.tpl' method=disable page=disableaccount title=$msg_disableaccount required=$use_disablecomment_required}
+                    <div id="disablecommentbox">
                     </div>
                 {else}
                     <form id="disableaccount" method="post" action="index.php?page=disableaccount">
@@ -458,8 +455,7 @@
                         <i class="fa fa-fw fa-user-check me-2"></i>{$msg_enableaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                    <div>
-                        {include 'comment.tpl' method=enable page=enableaccount title=$msg_enableaccount required=$use_enablecomment_required}
+                    <div id="enablecommentbox">
                     </div>
                 {else}
                     <form id="disableaccount" method="post" action="index.php?page=enableaccount">

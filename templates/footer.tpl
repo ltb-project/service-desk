@@ -1,5 +1,4 @@
 </div>
-{include 'commentbox.tpl'}
 
 {if $display_footer}
 <div id="footer">LDAP Tool Box Service Desk - version {$version}</div>
@@ -20,15 +19,17 @@
 <script src="js/dayjs.min.js"></script>
 <!-- ldap2date, from https://github.com/rsolomo/ldap2date.js/ MIT LICENSE -->
 <script src="js/ldap2date.js"></script>
+<script src="js/table-renderer.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
-<script src="js/table-renderer.js"></script>
+{include 'commentbox.tpl'}
+{include 'commentbox.js.tpl'}
 
 {if $page|strstr:"search"}
-{include 'datatables-search.tpl'}
+{include 'datatables-search.js.tpl'}
 {/if}
 {if $page|strstr:"audit"}
-{include 'datatables-audit.tpl'}
+{include 'datatables-audit.js.tpl'}
 {/if}
 
 {literal}
