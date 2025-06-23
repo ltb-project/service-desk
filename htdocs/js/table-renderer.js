@@ -647,5 +647,17 @@ function updateEntriesCount(settings, datatables_params)
     $('#entriesCount').html(totalRows + ' ' + messages['entriesfound'] );
 }
 
-// TODO: remove templates/comment.tpl file and its call in display.tpl
+// Load comment box when available
+function loadCommentBox(boxid, method, page, messages, dn, returnto, required)
+{
+    var commentbox = $("#" + boxid);
+
+    if(commentbox.length)
+    {
+        commentbox.html(
+            comment_displayer(method, page, messages, dn, returnto, required)
+        );
+    }
+}
+
 // TODO: remove templates/value_displayer.tpl file and its call in display.tpl
