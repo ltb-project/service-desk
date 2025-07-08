@@ -1,7 +1,8 @@
 
 /* get_datatables_params:
    INPUT:
-     same as ldapTypeRenderer
+     datatables_params: structure storing the input params sent by the backend
+     column_index: the attribute to select in column_types key of datatables_params structure
    OUTPUT:
      column: column name, ie key of $attributes_map associative array (firstname, fullname, identifier,...)
      column_type: attribute type, ie value of "type" key in $attributes_map associative array (text, tel, dn_link,...)
@@ -13,14 +14,12 @@
      search: string, parameter named "search" of the http query
      js_date_specifiers: string, format of the date as specified in https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
 */
-function get_datatables_params(data, type, row, meta, datatables_params)
+function get_datatables_params(datatables_params, column_index)
 {
 
-    var column = Object.keys(datatables_params["column_types"])[meta.col];
+    var column = Object.keys(datatables_params["column_types"])[column_index];
 
     var column_type = datatables_params["column_types"][column];
-
-    var dn = row[0];
 
     var messages = datatables_params["messages"];
 
@@ -50,30 +49,60 @@ function get_datatables_params(data, type, row, meta, datatables_params)
     var enable = datatables_params["enable"];
 
     return [
-             column, column_type, dn, messages, listing_linkto,
+             column, column_type, messages, listing_linkto,
              show_undef, truncate_value_after, search, js_date_specifiers,
              unlock, enable
            ];
 }
 
 
-/* ldapTypeRenderer:
+/* datatableTypeRenderer:
    INPUT:
      data: attribute value (javascript array or string)
      type: origin of datatables operation when performing the rendering: filter, display, type, sort, undefined, custom
      row: full data source of the row
      meta: meta information about the row: row index, col index, settings
-     datatables_paras: structure storing all parameters for rendering
+     datatables_params: structure storing all parameters for rendering
 */
 
-function ldapTypeRenderer(data, type, row, meta, datatables_params)
+function datatableTypeRenderer(data, type, row, meta, datatables_params)
 {
     var render = "";
 
-    [column, column_type, dn, messages, listing_linkto,
+    [column, column_type, messages, listing_linkto,
      show_undef, truncate_value_after, search, js_date_specifiers,
      unlock, enable ] =
-            get_datatables_params(data, type, row, meta, datatables_params);
+            get_datatables_params(datatables_params, meta.col);
+
+    var dn = row[0];
+
+    render += ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, column, column_type, data, show_undef, truncate_value_after, js_date_specifiers);
+
+    return render;
+}
+
+
+/* ldapTypeRenderer:
+   INPUT:
+     dn: DN of current attribute
+     messages: associative array containing all messages for selected language
+     listing_linkto: array or string containing the attribute key(s) for linking
+     search: string, parameter named "search" of the http query
+     unlock: associative array containing unlock config parameters
+     enable: associative array containing enable config parameters
+     column: attribute name: key of attributes_map config parameter (identifier, mail,...)
+     column_type: attribute type: value of "type" property in attributes_map config parameter (text, date, dn_link,...)
+     data: attribute value (javascript array or string)
+     show_undef: boolean. When true, show a specific message when there is no value for the current attribute
+     truncate_value_after: integer. max length after which the string is truncated
+     js_date_specifiers: string, format of the date as specified in https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
+   OUTPUT:
+     render: the html code rendering the value according to the type
+*/
+
+function ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, column, column_type, data, show_undef, truncate_value_after, js_date_specifiers )
+{
+    var render = "";
 
     // if we are processing column "linkto", add an html link <a>
     if(Array.isArray(listing_linkto) && listing_linkto.includes(column))
@@ -161,9 +190,9 @@ function ldapTypeRenderer(data, type, row, meta, datatables_params)
         render += "</a>";
     }
 
-
     return render;
 }
+
 
 function rightRotate(value, amount) {
     return (value>>>amount) | (value<<(32 - amount));
