@@ -19,7 +19,7 @@
 <script src="js/dayjs.min.js"></script>
 <!-- ldap2date, from https://github.com/rsolomo/ldap2date.js/ MIT LICENSE -->
 <script src="js/ldap2date.js"></script>
-<script src="js/table-renderer.js"></script>
+<script src="js/value-renderer.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
 {include 'commentbox.tpl'}
@@ -31,6 +31,11 @@
 {if $page|strstr:"audit"}
 {include 'datatables-audit.js.tpl'}
 {/if}
+{if $page|strstr:"display"}
+{include 'value-displayer.js.tpl'}
+{/if}
+
+
 
 {literal}
     <script>
