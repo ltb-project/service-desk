@@ -20,7 +20,7 @@
       },
       // Calling renderer for each cell
       columnDefs: [
-          { targets: '_all', render: function ( data, type, row, meta ) {return ldapTypeRenderer(data, type, row, meta, datatables_params);} }
+          { targets: '_all', render: function ( data, type, row, meta ) {return datatableTypeRenderer(data, type, row, meta, datatables_params);} }
       ],
       drawCallback: function (settings) { updateEntriesCount(settings, datatables_params);},
       layout: {
