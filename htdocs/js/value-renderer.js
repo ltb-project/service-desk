@@ -2,11 +2,7 @@
 /* get_datatables_params:
    INPUT:
      datatables_params: structure storing the input params sent by the backend
-     column_index: the attribute to select in column_types key of datatables_params structure
    OUTPUT:
-     column: column name, ie key of $attributes_map associative array (firstname, fullname, identifier,...)
-     column_type: attribute type, ie value of "type" key in $attributes_map associative array (text, tel, dn_link,...)
-     dn: DN of current attribute
      messages: associative array containing all messages for selected language
      listing_linkto: array or string containing the attribute key(s) for linking
      show_undef: boolean. When true, show a specific message when there is no value for the current attribute
@@ -14,12 +10,8 @@
      search: string, parameter named "search" of the http query
      js_date_specifiers: string, format of the date as specified in https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
 */
-function get_datatables_params(datatables_params, column_index)
+function get_datatables_params(datatables_params)
 {
-
-    var column = Object.keys(datatables_params["column_types"])[column_index];
-
-    var column_type = datatables_params["column_types"][column];
 
     var messages = datatables_params["messages"];
 
@@ -49,9 +41,8 @@ function get_datatables_params(datatables_params, column_index)
     var enable = datatables_params["enable"];
 
     return [
-             column, column_type, messages, listing_linkto,
-             show_undef, truncate_value_after, search, js_date_specifiers,
-             unlock, enable
+             messages, listing_linkto, show_undef, truncate_value_after, search,
+             js_date_specifiers, unlock, enable
            ];
 }
 
@@ -69,12 +60,16 @@ function datatableTypeRenderer(data, type, row, meta, datatables_params)
 {
     var render = "";
 
-    [column, column_type, messages, listing_linkto,
-     show_undef, truncate_value_after, search, js_date_specifiers,
-     unlock, enable ] =
-            get_datatables_params(datatables_params, meta.col);
+    [messages, listing_linkto, show_undef, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
 
     var dn = row[0];
+    // column: column name, ie key of $attributes_map associative array (firstname, fullname, identifier,...)
+    var column = Object.keys(datatables_params["column_types"])[meta.col];
+    // column_type: attribute type, ie value of "type" key in $attributes_map associative array (text, tel, dn_link,...)
+    var column_type = datatables_params["column_types"][column];
+
 
     render += ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, column, column_type, data, show_undef, truncate_value_after, js_date_specifiers);
 

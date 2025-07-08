@@ -59,14 +59,7 @@
                         <th class="d-none d-sm-table-cell">
                             {$msg_label_{$item}}
                         </th>
-                        <td>
-                        {if ({$entry.$attribute.0})}
-                            {foreach $entry.{$attribute} as $value}
-                            {include 'value_displayer.tpl' value=$value type=$type truncate_value_after=10000}
-                            {/foreach}
-                        {else}
-                            <i>{$msg_notdefined}</i><br />
-                        {/if}
+                        <td class="value_displayer" data-entry="{$entry_encoded}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" >
                         </td>
                     </tr>
                 {/foreach}
