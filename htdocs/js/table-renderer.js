@@ -110,7 +110,7 @@ function ldapTypeRenderer(data, type, row, meta, datatables_params)
             switch(column_type)
             {
                 case "dn":
-                    render += ldapDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, unlock, enable);
+                    render += ldapDNTypeRenderer(dn, messages, listing_linkto, search, unlock, enable);
                     break;
                 case "text":
                     render += ldapTextTypeRenderer(value, truncate_value_after);
@@ -370,7 +370,7 @@ function enable_displayer(dn, messages, search, enable, page)
 // Renderer for special first column "DN"
 // This column displays all the actions possible for the user:
 // display, unlock,...
-function ldapDNTypeRenderer(column, column_type, value, dn, messages, listing_linkto, show_undef, truncate_value_after, search, unlock, enable)
+function ldapDNTypeRenderer(dn, messages, listing_linkto, search, unlock, enable)
 {
 
     var result = "";
