@@ -10,8 +10,9 @@ require_once("../lib/date.inc.php");
 $possible_actions = [ 'searchdisabled', 'searchexpired',
                       'searchidle', 'searchinvalid',
                       'searchlocked', 'search',
-                      'searchwillexpire' ];
+                      'searchwillexpire', 'display' ];
 $action = "";
+$targetDN = "";
 
 # Get search parameters from request
 $datatables_input = array(
@@ -27,11 +28,6 @@ foreach ($datatables_input as $key => $value) {
     {
         $datatables_input[$key] = $_REQUEST[$key];
     }
-    else
-    {
-        error_log("Missing parameter: $key");
-        exit(1);
-    }
 }
 if ( isset($_REQUEST["action"]) && in_array($_REQUEST["action"], $possible_actions ) )
 {
@@ -42,6 +38,11 @@ else
     error_log("Missing or invalid action: $action");
     exit(1);
 }
+if ( isset($_REQUEST["targetDN"]) )
+{
+    $targetDN = $_REQUEST["targetDN"];
+}
+$ldap_user_base = "";
 
 
 # Prepare the LDAP request according to the action
@@ -94,6 +95,12 @@ switch ($action) {
         $ldap_user_filter = $ldap_filter;
         break;
 
+    case "display":
+        $ldap_user_base = $ldapInstance->ldap_user_base;
+        $ldapInstance->ldap_user_base = $targetDN;
+        $search_result_items = array_merge($display_items, $display_password_items);
+        $ldap_scope = "base";
+        break;
 }
 
 # FILTERING
@@ -120,7 +127,15 @@ if( !empty($datatables_input["search"]["value"]) )
 
 
 # Do the LDAP request
-[$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search($ldap_user_filter, array(), $attributes_map, $search_result_title, $search_result_sortby, $search_result_items, $ldap_scope);
+[$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search(
+    $ldap_user_filter,
+    array(),
+    $attributes_map,
+    $search_result_title,
+    $search_result_sortby,
+    $search_result_items,
+    $ldap_scope
+);
 
 # Filter the result according to the action
 switch ($action) {
@@ -201,6 +216,9 @@ switch ($action) {
         }
         break;
 
+    case "display":
+        $ldapInstance->ldap_user_base = $ldap_user_base;
+        break;
 }
 # TODO: get rid of all search*.php files: merge into a unique one or remove it completely?
 
@@ -218,7 +236,12 @@ $data = array();
 
 # Get columns labels
 $columns = $search_result_items;
-if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+
+if( $action != "display" )
+{
+    # add search_result_title (cn) in front of the columns list
+    if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+}
 
 # Get attribute list from columns: attr => type
 $attribute_list = [];

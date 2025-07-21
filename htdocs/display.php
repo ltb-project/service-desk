@@ -175,12 +175,6 @@ if ($result === "") {
         }
         $attributes[] = $attributes_map[$display_title]['attribute'];
 
-        # Get attribute list from list of searched items: attr => type
-        $attribute_list = [];
-        foreach( $search_items as $item ) {
-            $attribute_list[$attributes_map[$item]['attribute']] = $attributes_map[$item]['type'];
-        }
-
         # Search entry
         $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
         $errno = ldap_errno($ldap);
@@ -218,57 +212,10 @@ if ($result === "") {
             $endDate = $directory->getEndDate($ldap, $dn);
         }
 
-        # Add some meta information about dn_link or ppolicy_dn attributes
-        $structure = [];
-        foreach ($attribute_list as $attr => $type)
-        {
-            $values = [];
-            foreach ($entry[$attr] as $j => $value) {
-                if($j != "count") {
-                    # If this is a DN, we search for the corresponding cn
-                    if( $type == "dn_link" || $type == "ppolicy_dn" )
-                    {
-                        $linked_attr = "cn";
-                        if($type == "ppolicy_dn")
-                        {
-                            $linked_attr = $ldap_ppolicy_name_attribute;
-                        }
-
-                        $dn = $value;
-                        # Get linked_attr of corresponding link
-                        $linked_attr_res = $ldapInstance->get_attribute_values($dn, $linked_attr);
-                        if( $linked_attr_res == false )
-                        {
-                            $linked_attr_vals = [];
-                        }
-                        else
-                        {
-                            $linked_attr_vals = [];
-                            foreach ($linked_attr_res as $k => $linked_attr_val) {
-                                if($k != "count") {
-                                    array_push( $linked_attr_vals, $linked_attr_val );
-                                }
-                            }
-                        }
-                        array_push($values, [ $dn, $linked_attr_vals ]);
-                    }
-                }
-            }
-            if(!empty($values) )
-            {
-                $structure[$attr] = $values;
-            }
-        }
-        foreach ($structure as $attr => $value) {
-            $entry[$attr] = $value;
-        }
-
-
     }}}
 }
 
 $smarty->assign("entry", $entry);
-$smarty->assign("entry_encoded", base64_encode(json_encode($entry)));
 $smarty->assign("dn", $dn);
 
 $smarty->assign("card_title", $display_title);
