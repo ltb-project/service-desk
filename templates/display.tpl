@@ -43,24 +43,13 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table id="user_attributes" class="table table-striped table-hover" data-dn="{$dn}" >
                 {foreach $card_items as $item}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
 
-                {if !({$entry.$attribute.0}) && ! $show_undef}
-                    {continue}
-                {/if}
-                    <tr id="info_{$item}">
-                        <th class="text-center">
-                            <i class="fa fa-fw fa-{$faclass}"></i>
-                        </th>
-                        <th class="d-none d-sm-table-cell">
-                            {$msg_label_{$item}}
-                        </th>
-                        <td class="value_displayer" data-entry="{$entry_encoded}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" >
-                        </td>
+                    <tr id="info_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}">
                     </tr>
                 {/foreach}
                 </table>

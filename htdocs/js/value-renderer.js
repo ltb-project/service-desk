@@ -5,7 +5,8 @@
    OUTPUT:
      messages: associative array containing all messages for selected language
      listing_linkto: array or string containing the attribute key(s) for linking
-     show_undef: boolean. When true, show a specific message when there is no value for the current attribute
+     search_result_show_undefined: boolean. When true, show a specific message when there is no value for the current attribute, during search of multiple entries
+     display_show_undefined: boolean. When true, show a specific message when there is no value for the current attribute, during an entry display
      truncate_value_after: integer. max length after which the string is truncated
      search: string, parameter named "search" of the http query
      js_date_specifiers: string, format of the date as specified in https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
@@ -17,8 +18,11 @@ function get_datatables_params(datatables_params)
 
     var listing_linkto = datatables_params["listing_linkto"];
 
-    var show_undef = datatables_params["show_undef"];
-    show_undef = show_undef ? true : false;
+    var search_result_show_undefined = datatables_params["search_result_show_undefined"];
+    search_result_show_undefined = search_result_show_undefined ? true : false;
+
+    var display_show_undefined = datatables_params["display_show_undefined"];
+    display_show_undefined = display_show_undefined ? true : false;
 
     var truncate_value_after = datatables_params["truncate_value_after"];
     if(!truncate_value_after)
@@ -41,7 +45,8 @@ function get_datatables_params(datatables_params)
     var enable = datatables_params["enable"];
 
     return [
-             messages, listing_linkto, show_undef, truncate_value_after, search,
+             messages, listing_linkto, search_result_show_undefined,
+             display_show_undefined, truncate_value_after, search,
              js_date_specifiers, unlock, enable
            ];
 }
@@ -60,7 +65,8 @@ function datatableTypeRenderer(data, type, row, meta, datatables_params)
 {
     var render = "";
 
-    [messages, listing_linkto, show_undef, truncate_value_after, search,
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
             get_datatables_params(datatables_params);
 
@@ -71,7 +77,7 @@ function datatableTypeRenderer(data, type, row, meta, datatables_params)
     var column_type = datatables_params["column_types"][column];
 
 
-    render += ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, column, column_type, data, show_undef, truncate_value_after, js_date_specifiers);
+    render += ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, column, column_type, data, search_result_show_undefined, truncate_value_after, js_date_specifiers);
 
     return render;
 }
