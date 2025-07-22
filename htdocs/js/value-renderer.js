@@ -690,4 +690,95 @@ function loadCommentBox(boxid, method, page, messages, dn, returnto, required)
     }
 }
 
-// TODO: remove templates/value_displayer.tpl file and its call in display.tpl
+function renderUserAttributesList(datatables_params, targetDN, column, column_type, attribute, faclass, data)
+{
+    render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+        get_datatables_params(datatables_params);
+
+    // overload truncate_value_after to always display complete values
+    truncate_value_after = 10000;
+    show_undef = display_show_undefined;
+
+    if( show_undef || ( typeof data === 'string' && data ) || ( Array.isArray(data) && data.length != 0 ) )
+    {
+        // display value only if not empty
+        // or if the conf says to show undefined values
+        render += '<th class="text-center">' + "\n";
+        render += '  <i class="fa fa-fw fa-' + faclass + '"></i>' + "\n";
+        render += '</th>' + "\n";
+        render += '<th class="d-none d-sm-table-cell">' + "\n";
+        render += messages['label_' + column] + "\n";
+        render += '</th>' + "\n";
+        render += '<td class="value_displayer">' + "\n";
+        render += ldapTypeRenderer(
+                                      targetDN,
+                                      messages,
+                                      listing_linkto,
+                                      search,
+                                      unlock,
+                                      enable,
+                                      column,
+                                      column_type,
+                                      data,
+                                      show_undef,
+                                      truncate_value_after,
+                                      js_date_specifiers
+                                  );
+        render += "\n";
+        render += '</td>' + "\n";
+    }
+    else
+    {
+        // don't display anything
+    }
+    return render;
+}
+
+function renderStatusAttributesList(datatables_params, targetDN, column, column_type, attribute, faclass, data)
+{
+    render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+        get_datatables_params(datatables_params);
+
+    // overload truncate_value_after to always display complete values
+    truncate_value_after = 10000;
+    show_undef = display_show_undefined;
+
+    if( show_undef || ( typeof data === 'string' && data ) || ( Array.isArray(data) && data.length != 0 ) )
+    {
+        // display value only if not empty
+        // or if the conf says to show undefined values
+        render += '<th class="col-md-6">' + "\n"
+        render += messages['label_' + column] + "\n";
+        render += '</th>' + "\n"
+        render += '<td class="col-md-6">' + "\n"
+        render += ldapTypeRenderer(
+                                      targetDN,
+                                      messages,
+                                      listing_linkto,
+                                      search,
+                                      unlock,
+                                      enable,
+                                      column,
+                                      column_type,
+                                      data,
+                                      show_undef,
+                                      truncate_value_after,
+                                      js_date_specifiers
+                                  );
+        render += "\n";
+        render += '</td>' + "\n"
+    }
+    else
+    {
+        // don't display anything
+    }
+    return render;
+}
