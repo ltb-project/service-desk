@@ -140,6 +140,8 @@ function sha256($string)
 }
 $smarty->registerPlugin("modifier","sha256", "sha256");
 $smarty->registerPlugin("modifier","is_array", "is_array");
+$smarty->registerPlugin("modifier","in_array", "in_array");
+$smarty->registerPlugin("modifier", 'strstr', 'strstr');
 
 if(isset($smarty_debug) && $smarty_debug == true )
 {
