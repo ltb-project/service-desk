@@ -1,11 +1,9 @@
 <?php
 /*
- * Search disabled entries in LDAP directory
+ * Search entries in LDAP directory and returns a JSON structure
  */
 
-require_once("../conf/config.inc.php");
-require __DIR__ . '/../vendor/autoload.php';
-require_once("../lib/date.inc.php");
+require_once(__DIR__ . "/../../lib/date.inc.php");
 
 $possible_actions = [ 'searchdisabled', 'searchexpired',
                       'searchidle', 'searchinvalid',
@@ -220,7 +218,6 @@ switch ($action) {
         $ldapInstance->ldap_user_base = $ldap_user_base;
         break;
 }
-# TODO: get rid of all search*.php files: merge into a unique one or remove it completely?
 
 # Sort entries for having them always in the same order
 $ldapInstance->ldapSort($entries, $attributes_map['identifier']['attribute']);
@@ -232,7 +229,7 @@ $entries = array_slice( $entries,
 
 
 # Format data to send
-$data = array();
+$outputdata = array();
 
 # Get columns labels
 $columns = $search_result_items;
@@ -252,9 +249,9 @@ foreach( $columns as $column ) {
 $i=0;
 foreach ($entries as $entry)
 {
-    $data[$i] = array();
+    $outputdata[$i] = array();
     # Always push DN as first value of the entry
-    array_push( $data[$i], $entry["dn"] );
+    array_push( $outputdata[$i], $entry["dn"] );
     foreach ($attribute_list as $attr => $type)
     {
         $values = [];
@@ -295,20 +292,17 @@ foreach ($entries as $entry)
                 }
             }
         }
-        array_push( $data[$i], $values );
+        array_push( $outputdata[$i], $values );
     }
     $i++;
 }
 
-echo json_encode(
-    array(
-        "draw" => $datatables_input["draw"],
-        "recordsTotal" => $nb_entries,
-        "recordsFiltered" => $nb_entries,
-        "data" => $data
-    )
+$data = array(
+    "draw" => $datatables_input["draw"],
+    "recordsTotal" => $nb_entries,
+    "recordsFiltered" => $nb_entries,
+    "data" => $outputdata
 );
 
-exit(0);
-
+# TODO: get rid of all search*.php files: merge into a unique one or remove it completely?
 ?>

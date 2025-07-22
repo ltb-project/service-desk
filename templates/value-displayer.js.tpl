@@ -13,12 +13,13 @@ $(document).ready(function(){
     {
 
         targetDN = user_attributes.attr("data-dn");
-        $.post( "index.php?page=search-api",
+        $.post( "index.php",
                 { action: "display",
                   start: "0",
                   length: "1",
                   search_query: "",
-                  targetDN: targetDN
+                  targetDN: targetDN,
+                  apiendpoint: "search-api"
                 }
               )
               .done(function( apiResponse ) {
