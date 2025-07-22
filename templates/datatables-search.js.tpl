@@ -9,12 +9,13 @@
       serverSide: true,
       processing: true,
       ajax: {
-        url: '/index.php?page=search-api',
+        url: '/index.php',
         type: 'POST',
         data: {
 {/literal}
             action: "{$page}",
-            search_query: "{$search_query}"
+            search_query: "{$search_query}",
+            apiendpoint: "search-api"
 {literal}
         }
       },
