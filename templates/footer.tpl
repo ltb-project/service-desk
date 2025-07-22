@@ -31,8 +31,11 @@
 {if $page|strstr:"audit"}
 {include 'datatables-audit.js.tpl'}
 {/if}
-{if $page|strstr:"display"}
+{if $page|strstr:"display" || $page|strstr:"update" || $page|strstr:"rename"}
 {include 'value-displayer.js.tpl'}
+{/if}
+{if $page|strstr:"auditlog"}
+{include 'auditlog-value-displayer.js.tpl'}
 {/if}
 
 

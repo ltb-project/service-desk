@@ -44,7 +44,8 @@
                                 {/if}
                             {else}
                                 {foreach $entry.{$attribute} as $value}
-                                    {include 'value_displayer.tpl' value=$value type=$type truncate_value_after=10000}
+                                    <div class="display_value" data-dn="{$dn}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-value="{$value}" >
+                                    </div>
                                 {/foreach}
                             {/if}
                         </td>

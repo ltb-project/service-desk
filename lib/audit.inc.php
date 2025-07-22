@@ -18,7 +18,7 @@ function auditlog($file, $dn, $admin, $action, $result, $comment) {
   file_put_contents($file, json_encode($log, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL, FILE_APPEND | LOCK_EX);
 }
 
-function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $audit_log_reverse) {
+function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $audit_log_reverse, $ldapInstance) {
 
   $events = array();
 
@@ -31,6 +31,27 @@ function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $a
     $logdate = DateTimeImmutable::createFromFormat("D, d M Y H:i:s", $json['date']);
     if ($logdate > $olddatelog) {
       $json['date'] = date_format($logdate, "Y-m-d H:i:s");
+
+      $dn = $json['user_dn'];
+      $linked_attr = "cn";
+      # Get linked_attr of corresponding link
+      $ldapInstance->connect();
+      $linked_attr_res = $ldapInstance->get_attribute_values($dn, $linked_attr);
+      if( $linked_attr_res == false )
+      {
+          $linked_attr_vals = [];
+      }
+      else
+      {
+          $linked_attr_vals = [];
+          foreach ($linked_attr_res as $k => $linked_attr_val) {
+              if($k != "count") {
+                  array_push( $linked_attr_vals, $linked_attr_val );
+              }
+          }
+      }
+      $json['user_dn'] = json_encode([ $dn, $linked_attr_vals ]);
+
       array_push($events, $json);
     }
   }
