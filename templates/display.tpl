@@ -86,28 +86,12 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table id="status_attributes" class="table table-striped table-hover">
                 {foreach $password_items as $item}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
-
-                {if !({$entry.$attribute.0}) && ! $show_undef}
-                    {continue}
-                {/if}
-                    <tr>
-                        <th class="col-md-6">
-                            {$msg_label_{$item}}
-                        </th>
-                        <td class="col-md-6">
-                        {if ({$entry.$attribute.0})}
-                            {foreach $entry.{$attribute} as $value}
-                            {include 'value_displayer.tpl' value=$value type=$type truncate_value_after=10000}
-                            {/foreach}
-                        {else}
-                            <i>{$msg_notdefined}</i><br />
-                        {/if}
-                        </td>
+                    <tr id="status_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}">
                     </tr>
                 {/foreach}
                 {if $lockDate}
