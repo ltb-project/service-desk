@@ -3,5 +3,5 @@
 </div>
 
 <table id="search-listing" class="table table-striped table-hover table-condensed dataTable">
-    {include 'listing_table.tpl' display="audit"}
+    {include 'listing_audit_table.tpl'}
 </table>

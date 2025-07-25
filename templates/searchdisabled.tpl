@@ -7,5 +7,5 @@
 {/if}
 
 <table id="search-listing" class="table table-striped table-hover table-condensed dataTable">
-    {include 'listing_table.tpl' display="search"}
+    {include 'listing_search_table.tpl'}
 </table>
