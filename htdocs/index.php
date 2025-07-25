@@ -271,6 +271,22 @@ if( isset($date_timezone) && !empty($date_timezone) )
     date_default_timezone_set($date_timezone);
 }
 
+
+#==============================================================================
+# Load render templates
+#==============================================================================
+$templateDirectory = dirname(__FILE__) . "/../templates/value-renderer";
+if(!is_dir($templateDirectory))
+{
+    error_log("Wrong template directory: $templateDirectory");
+}
+$templateFiles = array_diff(scandir($templateDirectory), array('..', '.'));
+$templateFilesContent = "";
+foreach ($templateFiles as $templateFile) {
+    $templateFilesContent .= file_get_contents("$templateDirectory/$templateFile") . "\n";
+}
+$smarty->assign('templateFilesContent',$templateFilesContent);
+
 #==============================================================================
 # Audit
 #==============================================================================

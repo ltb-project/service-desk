@@ -1,3 +1,20 @@
+/* renderTemplate:
+   INPUT:
+     template: template id to use
+     values: dictionary of values to replace
+   OUTPUT:
+     string containing the template with modified values
+*/
+function renderTemplate(template, values) {
+    var t = document.querySelector('#' + template);
+    var clone = t.cloneNode(true);
+    var content = clone.innerHTML;
+    for (key in values) {
+        content = content.replaceAll('{' + key + '}', values[key])
+    }
+    return content;
+}
+
 
 /* get_datatables_params:
    INPUT:
@@ -707,29 +724,25 @@ function renderUserAttributesList(datatables_params, targetDN, column, column_ty
     {
         // display value only if not empty
         // or if the conf says to show undefined values
-        render += '<th class="text-center">' + "\n";
-        render += '  <i class="fa fa-fw fa-' + faclass + '"></i>' + "\n";
-        render += '</th>' + "\n";
-        render += '<th class="d-none d-sm-table-cell">' + "\n";
-        render += messages['label_' + column] + "\n";
-        render += '</th>' + "\n";
-        render += '<td class="value_displayer">' + "\n";
-        render += ldapTypeRenderer(
-                                      targetDN,
-                                      messages,
-                                      listing_linkto,
-                                      search,
-                                      unlock,
-                                      enable,
-                                      column,
-                                      column_type,
-                                      data,
-                                      show_undef,
-                                      truncate_value_after,
-                                      js_date_specifiers
-                                  );
-        render += "\n";
-        render += '</td>' + "\n";
+        var values = {
+          "faclass": faclass,
+          "message": messages['label_' + column],
+          "value": ldapTypeRenderer(
+                                       targetDN,
+                                       messages,
+                                       listing_linkto,
+                                       search,
+                                       unlock,
+                                       enable,
+                                       column,
+                                       column_type,
+                                       data,
+                                       show_undef,
+                                       truncate_value_after,
+                                       js_date_specifiers
+                                   )
+        };
+        render = renderTemplate("display_user_attributes_list", values);
     }
     else
     {
@@ -755,26 +768,24 @@ function renderStatusAttributesList(datatables_params, targetDN, column, column_
     {
         // display value only if not empty
         // or if the conf says to show undefined values
-        render += '<th class="col-md-6">' + "\n"
-        render += messages['label_' + column] + "\n";
-        render += '</th>' + "\n"
-        render += '<td class="col-md-6">' + "\n"
-        render += ldapTypeRenderer(
-                                      targetDN,
-                                      messages,
-                                      listing_linkto,
-                                      search,
-                                      unlock,
-                                      enable,
-                                      column,
-                                      column_type,
-                                      data,
-                                      show_undef,
-                                      truncate_value_after,
-                                      js_date_specifiers
-                                  );
-        render += "\n";
-        render += '</td>' + "\n"
+        var values = {
+          "message": messages['label_' + column],
+          "value": ldapTypeRenderer(
+                                       targetDN,
+                                       messages,
+                                       listing_linkto,
+                                       search,
+                                       unlock,
+                                       enable,
+                                       column,
+                                       column_type,
+                                       data,
+                                       show_undef,
+                                       truncate_value_after,
+                                       js_date_specifiers
+                                   )
+        };
+        render = renderTemplate("display_status_attributes_list", values);
     }
     else
     {
