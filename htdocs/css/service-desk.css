@@ -89,6 +89,10 @@ div.dn_link_suggestions {
   top: 40px;
 }
 
+div#value-render-templates {
+  display: none;
+}
+
 @media print {
 
   html, body {

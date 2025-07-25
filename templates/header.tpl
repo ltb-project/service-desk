@@ -31,4 +31,8 @@
 </head>
 <body>
 
+<div id="value-render-templates">
+{$templateFilesContent nofilter}
+</div>
+
 <div class="container">
