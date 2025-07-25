@@ -47,10 +47,6 @@ table.table td {
   font-weight: normal;
 }
 
-table.dataTable {
-  display: none;
-}
-
 table.dataTable thead .sorting::after,
 table.dataTable thead .sorting_asc::after,
 table.dataTable thead .sorting_desc::after,
@@ -91,6 +87,14 @@ div.dn_link_container {
 div.dn_link_suggestions {
   position: absolute;
   top: 40px;
+}
+
+div#value-render-templates {
+  display: none;
+}
+
+div#size_limit_reached {
+  display: none;
 }
 
 @media print {

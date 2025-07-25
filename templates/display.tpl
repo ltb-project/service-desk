@@ -43,31 +43,13 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table id="user_attributes" class="table table-striped table-hover" data-dn="{$dn}" >
                 {foreach $card_items as $item}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
 
-                {if !({$entry.$attribute.0}) && ! $show_undef}
-                    {continue}
-                {/if}
-                    <tr id="info_{$item}">
-                        <th class="text-center">
-                            <i class="fa fa-fw fa-{$faclass}"></i>
-                        </th>
-                        <th class="d-none d-sm-table-cell">
-                            {$msg_label_{$item}}
-                        </th>
-                        <td>
-                        {if ({$entry.$attribute.0})}
-                            {foreach $entry.{$attribute} as $value}
-                            {include 'value_displayer.tpl' value=$value type=$type truncate_value_after=10000}
-                            {/foreach}
-                        {else}
-                            <i>{$msg_notdefined}</i><br />
-                        {/if}
-                        </td>
+                    <tr id="info_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}">
                     </tr>
                 {/foreach}
                 </table>
@@ -104,28 +86,12 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table id="status_attributes" class="table table-striped table-hover">
                 {foreach $password_items as $item}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
-
-                {if !({$entry.$attribute.0}) && ! $show_undef}
-                    {continue}
-                {/if}
-                    <tr>
-                        <th class="col-md-6">
-                            {$msg_label_{$item}}
-                        </th>
-                        <td class="col-md-6">
-                        {if ({$entry.$attribute.0})}
-                            {foreach $entry.{$attribute} as $value}
-                            {include 'value_displayer.tpl' value=$value type=$type truncate_value_after=10000}
-                            {/foreach}
-                        {else}
-                            <i>{$msg_notdefined}</i><br />
-                        {/if}
-                        </td>
+                    <tr id="status_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}">
                     </tr>
                 {/foreach}
                 {if $lockDate}
@@ -306,8 +272,7 @@
                         <i class="fa fa-fw fa-unlock me-2"></i>{$msg_unlockaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                    <div>
-                        {include 'comment.tpl' method=unlock page=unlockaccount title=$msg_unlockaccount required=$use_unlockcomment_required}
+                    <div id="unlockcommentbox">
                     </div>
                 {else}
                     <form id="unlockaccount" method="post" action="index.php?page=unlockaccount">
@@ -353,8 +318,7 @@
                         <i class="fa fa-fw fa-lock me-2"></i>{$msg_lockaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                    <div>
-                        {include 'comment.tpl' method=lock page=lockaccount title=$msg_lockaccount required=$use_lockcomment_required}
+                    <div id="lockcommentbox">
                     </div>
                 {else}
                     <form id="lockaccount" method="post" action="index.php?page=lockaccount">
@@ -414,8 +378,7 @@
                         <i class="fa fa-fw fa-user-slash me-2"></i>{$msg_disableaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                    <div>
-                        {include 'comment.tpl' method=disable page=disableaccount title=$msg_disableaccount required=$use_disablecomment_required}
+                    <div id="disablecommentbox">
                     </div>
                 {else}
                     <form id="disableaccount" method="post" action="index.php?page=disableaccount">
@@ -458,8 +421,7 @@
                         <i class="fa fa-fw fa-user-check me-2"></i>{$msg_enableaccount}
                         <i class="fa fa-fw fa-info-circle text-body-tertiary ms-2" title="{$msg_comment_needed}"></i>
                     </button>
-                    <div>
-                        {include 'comment.tpl' method=enable page=enableaccount title=$msg_enableaccount required=$use_enablecomment_required}
+                    <div id="enablecommentbox">
                     </div>
                 {else}
                     <form id="disableaccount" method="post" action="index.php?page=enableaccount">

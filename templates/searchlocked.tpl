@@ -1,13 +1,8 @@
-<div class="alert alert-warning">
-    {$nb_entries} {if $nb_entries==1}{$msg_entryfound}{else}{$msg_entriesfound}{/if}
+<div id="entriesCount" class="alert alert-warning">
 </div>
 
-{if {$size_limit_reached}}
-<div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_sizelimit}</div>
-{/if}
-
-{include 'spinner.tpl'}
+<div id="size_limit_reached" class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i></div>
 
 <table id="search-listing" class="table table-striped table-hover table-condensed dataTable">
-    {include 'listing_table.tpl' display="search"}
+    {include 'listing_search_table.tpl'}
 </table>

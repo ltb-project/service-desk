@@ -140,6 +140,8 @@ function sha256($string)
 }
 $smarty->registerPlugin("modifier","sha256", "sha256");
 $smarty->registerPlugin("modifier","is_array", "is_array");
+$smarty->registerPlugin("modifier","in_array", "in_array");
+$smarty->registerPlugin("modifier", 'strstr', 'strstr');
 
 if(isset($smarty_debug) && $smarty_debug == true )
 {
@@ -217,6 +219,33 @@ $smarty->assign('use_update',$use_update);
 $smarty->assign('use_create',$use_create);
 $smarty->assign('use_delete',$use_delete);
 
+$datatables_params = [];
+$datatables_params["messages"] = $messages;
+$datatables_params["listing_linkto"] = isset($search_result_linkto) ? $search_result_linkto : array($search_result_title);
+$datatables_params["display_show_undefined"] = $display_show_undefined;
+$datatables_params["search_result_show_undefined"] = $search_result_show_undefined;
+$datatables_params["truncate_value_after"] = $search_result_truncate_value_after;
+$datatables_params["search"] = $search;
+$datatables_params["js_date_specifiers"] = $js_date_specifiers;
+$datatables_params["unlock"] = [];
+$datatables_params["unlock"]["use_unlockaccount"] = $use_unlockaccount;
+$datatables_params["unlock"]["use_unlockcomment"] = $use_unlockcomment;
+$datatables_params["unlock"]["use_unlockcomment_required"] = $use_unlockcomment_required;
+$datatables_params["enable"] = [];
+$datatables_params["enable"]["use_enableaccount"] = $use_enableaccount;
+$datatables_params["enable"]["use_enablecomment"] = $use_enablecomment;
+$datatables_params["enable"]["use_enablecomment_required"] = $use_enablecomment_required;
+$datatables_params["column_types"] = [];
+$datatables_params["column_types"]["dn"] = "dn";
+$columns = $search_result_items;
+if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+foreach ($columns as $column )
+{
+    $datatables_params["column_types"][$column] = $attributes_map[$column]["type"];
+}
+$smarty->assign("datatables_params", base64_encode(json_encode($datatables_params)));
+
+
 # Assign messages
 $smarty->assign('lang',$lang);
 foreach ($messages as $key => $message) {
@@ -225,7 +254,7 @@ foreach ($messages as $key => $message) {
 
 # Other assignations
 $search = "";
-if (isset($_REQUEST["search"]) and $_REQUEST["search"]) { $search = htmlentities($_REQUEST["search"]); }
+if (isset($_REQUEST["search"]) and $_REQUEST["search"] and is_string($_REQUEST["search"])) { $search = htmlentities($_REQUEST["search"]); }
 $smarty->assign('search',$search);
 
 # Register plugins
@@ -241,6 +270,31 @@ if( isset($date_timezone) && !empty($date_timezone) )
 {
     date_default_timezone_set($date_timezone);
 }
+
+
+#==============================================================================
+# Load render templates
+#==============================================================================
+$templateDirectory = dirname(__FILE__) . "/../js-templates";
+if(!is_dir($templateDirectory))
+{
+    error_log("Wrong template directory: $templateDirectory");
+}
+$templateFiles = array_diff(scandir($templateDirectory), array('..', '.'));
+$templateFilesContent = "";
+foreach ($templateFiles as $templateFile) {
+    if(preg_match("/\.html$/",$templateFile))
+    {
+        $templateFilesContent .= file_get_contents(
+                                     "$templateDirectory/$templateFile"
+                                 ) . "\n";
+    }
+    else
+    {
+        error_log("Dropping template $templateFile as it does not end by .html");
+    }
+}
+$smarty->assign('templateFilesContent',$templateFilesContent);
 
 #==============================================================================
 # Audit
