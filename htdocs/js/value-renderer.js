@@ -502,7 +502,7 @@ function ldapDNLinkTypeRenderer(value, truncate_value_after, search)
     var res = '<a href="index.php?page=display' +
               '&dn=' + encodeURIComponent(dn) +
               '&search=' + encodeURIComponent(search) + '">'
-              + truncated_attr_values + '</a> <br />';
+              + vals + '</a> <br />';
     return res;
 }
 

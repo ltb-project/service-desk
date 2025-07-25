@@ -6,12 +6,10 @@ $(document).ready(function(){
     var datatables_params = JSON.parse(atob("{$datatables_params}"));
 {literal}
 
-    // If we are on display page, call the API to get the attributes and display them
-    display_dn_link = $( "#display_dn_link" );
+    $( ".display_dn_link" ).each(function( ) {
 
-    if(display_dn_link.length)
-    {
-        var json_dn = display_dn_link.attr("data-dn");
+        var b64_json_dn = $( this ).attr("data-dn");
+        var json_dn = atob(b64_json_dn);
         var dn = JSON.parse(json_dn);
 
         [messages, listing_linkto, search_result_show_undefined,
@@ -21,9 +19,9 @@ $(document).ready(function(){
 
         render = "";
         render += ldapDNLinkTypeRenderer(dn, truncate_value_after, search);
-        display_dn_link.html(render);
+        $( this ).html(render);
 
-    }
+    });
 
 });
 </script>

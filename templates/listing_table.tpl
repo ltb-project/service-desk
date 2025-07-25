@@ -21,7 +21,7 @@
             {if $column == "result" or $column == "action"}
             {$msg_{$event.$column}}
             {elseif $column == "user_dn"}
-            <div id="display_dn_link" data-dn='{$event.user_dn}' >
+            <div class="display_dn_link" data-dn='{$event.user_dn}' ></div>
             {else}
             {$event.$column}
             {/if}
