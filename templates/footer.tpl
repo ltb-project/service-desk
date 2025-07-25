@@ -19,6 +19,7 @@
 <script src="js/dayjs.min.js"></script>
 <!-- ldap2date, from https://github.com/rsolomo/ldap2date.js/ MIT LICENSE -->
 <script src="js/ldap2date.js"></script>
+<script src="js/utils.js"></script>
 <script src="js/value-renderer.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
