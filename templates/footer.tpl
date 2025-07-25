@@ -23,7 +23,6 @@
 <script src="js/value-renderer.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
-{include 'commentbox.tpl'}
 {include 'commentbox.js.tpl'}
 
 {if $page|strstr:"search"}

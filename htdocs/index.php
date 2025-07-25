@@ -275,7 +275,7 @@ if( isset($date_timezone) && !empty($date_timezone) )
 #==============================================================================
 # Load render templates
 #==============================================================================
-$templateDirectory = dirname(__FILE__) . "/../templates/value-renderer";
+$templateDirectory = dirname(__FILE__) . "/../js-templates";
 if(!is_dir($templateDirectory))
 {
     error_log("Wrong template directory: $templateDirectory");
@@ -283,7 +283,16 @@ if(!is_dir($templateDirectory))
 $templateFiles = array_diff(scandir($templateDirectory), array('..', '.'));
 $templateFilesContent = "";
 foreach ($templateFiles as $templateFile) {
-    $templateFilesContent .= file_get_contents("$templateDirectory/$templateFile") . "\n";
+    if(preg_match("/\.html$/",$templateFile))
+    {
+        $templateFilesContent .= file_get_contents(
+                                     "$templateDirectory/$templateFile"
+                                 ) . "\n";
+    }
+    else
+    {
+        error_log("Dropping template $templateFile as it does not end by .html");
+    }
 }
 $smarty->assign('templateFilesContent',$templateFilesContent);
 
