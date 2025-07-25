@@ -215,32 +215,24 @@ function ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, 
 // Duplicate the commentbox template and fill it for each entry
 function comment_displayer(method, page, messages, dn, returnto, required)
 {
-    var res = "";
-    var commentbox = $("#commentbox").clone();
+    var render = "";
 
-    commentbox.find("form").attr("id", method);
-    commentbox.find("form").attr("action", "index.php?page="+page);
-    commentbox.find("input[name='dn']").attr("value", dn);
-    commentbox.find("input[name='returnto']").attr("value", returnto);
-    commentbox.find("div[id='commentModalMethodHashedDN']").attr("id", "commentModal" + method + sha256(dn));
-    commentbox.find("h1[id='CommentModal']").text(messages[page]);
-    commentbox.find("textarea[name='comment']").attr("id", "comment-" + method);
-    commentbox.find("textarea[name='comment']").attr("placeholder", messages["insert_comment"]);
-    if(required)
-    {
-        commentbox.find("textarea[name='comment']").prop('required',true);
-    }
-    var button_close_content = commentbox.find("button[type='button']").html();
-    button_close_content = button_close_content.replace("msg_close", messages["close"]);
-    commentbox.find("button[type='button']").html(button_close_content);
+    var values = {
+      "form_id": method,
+      "action": "index.php?page="+page,
+      "dn": dn,
+      "returnto": returnto,
+      "modal_id": "commentModal" + method + sha256(dn),
+      "modal_title": messages[page],
+      "textarea_id": "comment-" + method,
+      "textarea_placeholder": messages["insert_comment"],
+      "textarea_required": required ? "required" : "",
+      "message_close": messages["close"],
+      "message_submit": messages["submit"]
+    };
+    render = renderTemplate("commentbox", values);
 
-    var button_submit_content = commentbox.find("button[type='submit']").html();
-    button_submit_content = button_submit_content.replace("msg_submit", messages["submit"]);
-    commentbox.find("button[type='submit']").html(button_submit_content);
-
-    res += commentbox.html();
-
-    return res;
+    return render;
 }
 
 function unlock_displayer(dn, messages, search, unlock, page)
@@ -249,34 +241,41 @@ function unlock_displayer(dn, messages, search, unlock, page)
     var use_unlockcomment          = unlock["use_unlockcomment"];
     var use_unlockcomment_required = unlock["use_unlockcomment_required"];
 
-    var res = "";
+    var render = "";
 
     if(use_unlockaccount && page == "searchlocked")
     {
         if(use_unlockcomment)
         {
-            res += '<button type="button"' +
-                   ' class="btn btn-success btn-sm"' +
-                   ' data-bs-toggle="modal"' +
-                   ' data-bs-target="#commentModalunlock' + sha256(dn) + '">';
-            res += '<i class="fa fa-fw fa-unlock mr-3"></i>';
-            res += '<i class="fa fa-fw fa-info-circle text-body-tertiary" title="' + messages["comment_needed"] + '"></i>';
-            res += '</button>';
-            res += '<div>';
-            // Add comment form
-            res += comment_displayer("unlock", "unlockaccount", messages, dn, page, use_unlockcomment_required);
 
-            res += '</div>';
+            var comment_form = comment_displayer(
+                                   "unlock",
+                                   "unlockaccount",
+                                   messages,
+                                   dn,
+                                   page,
+                                   use_unlockcomment_required
+                               );
+            var values = {
+              "target": "#commentModalunlock" + sha256(dn),
+              "message_comment_needed": messages["comment_needed"],
+              "comment_form": comment_form
+            };
+            render = renderTemplate("unlock_with_comment", values);
+
         }
         else
         {
-            res += '<a href="index.php?page=unlockaccount&dn=' + encodeURIComponent(dn) + '&returnto=searchlocked"';
-            res += ' class="btn btn-success btn-sm" role="button" title="' + messages["unlockaccount"] + '">';
-            res += '<i class="fa fa-fw fa-unlock"></i>';
-            res += '</a>';
+            var values = {
+              "target": "index.php?page=unlockaccount&dn=" +
+                        encodeURIComponent(dn) +
+                        "&returnto=searchlocked",
+              "title": messages["unlockaccount"],
+            };
+            render = renderTemplate("unlock_without_comment", values);
         }
     }
-    return res;
+    return render;
 }
 
 function enable_displayer(dn, messages, search, enable, page)
@@ -285,35 +284,39 @@ function enable_displayer(dn, messages, search, enable, page)
     var use_enablecomment = enable["use_enablecomment"];
     var use_enablecomment_required = enable["use_enablecomment_required"];
 
-    var res = "";
+    var render = "";
 
     if(use_enableaccount && page == "searchdisabled")
     {
         if(use_enablecomment)
         {
-            res += '<button type="button"' +
-                   ' class="btn btn-success btn-sm"' +
-                   ' data-bs-toggle="modal"' +
-                   ' data-bs-target="#commentModalenable' + sha256(dn) + '">';
-            res += '<i class="fa fa-fw fa-user-check mr-3"></i>';
-            res += '<i class="fa fa-fw fa-info-circle text-body-tertiary" title="' + messages["comment_needed"] + '"></i>';
-            res += '</button>';
-            res += '<div>';
-
-            // Add comment form
-            res += comment_displayer("enable", "enableaccount", messages, dn, page, use_enablecomment_required);
-
-            res += '</div>';
+            var comment_form = comment_displayer(
+                                   "enable",
+                                   "enableaccount",
+                                   messages,
+                                   dn,
+                                   page,
+                                   use_enablecomment_required
+                               );
+            var values = {
+              "target": "#commentModalenable" + sha256(dn),
+              "message_comment_needed": messages["comment_needed"],
+              "comment_form": comment_form
+            };
+            render = renderTemplate("enable_with_comment", values);
         }
         else
         {
-            res += '<a href="index.php?page=enableaccount&dn=' + encodeURIComponent(dn) + '&returnto=searchdisabled"';
-            res += ' class="btn btn-success btn-sm" role="button" title="' + messages["enableaccount"] + '">';
-            res += '<i class="fa fa-fw fa-user-check"></i>';
-            res += '</a>';
+            var values = {
+              "target": "index.php?page=enableaccount&dn=" +
+                        encodeURIComponent(dn) +
+                        "&returnto=searchdisabled",
+              "title": messages["enableaccount"],
+            };
+            render = renderTemplate("enable_without_comment", values);
         }
     }
-    return res;
+    return render;
 }
 
 // Renderer for special first column "DN"
