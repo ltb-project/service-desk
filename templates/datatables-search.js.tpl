@@ -3,27 +3,33 @@
       $(document).ready( function() {
 {/literal}
     var datatables_params = JSON.parse(atob("{$datatables_params}"));
+    var page = "{$page}";
+    var search_query = "{$search_query}";
 {literal}
 
-    var itemlist = $('table.dataTable').DataTable({
+    DataTable.ext.errMode = 'none';
+
+    var itemlist = $('table.dataTable')
+    .on('dt-error.dt', function (e, settings, techNote, error) {
+        datatableManageError(datatables_params, error);
+    })
+    .DataTable({
       serverSide: true,
       processing: true,
       ajax: {
         url: '/index.php',
         type: 'POST',
         data: {
-{/literal}
-            action: "{$page}",
-            search_query: "{$search_query}",
+            action: page,
+            search_query: search_query,
             apiendpoint: "search-api"
-{literal}
         }
       },
       // Calling renderer for each cell
       columnDefs: [
           { targets: '_all', render: function ( data, type, row, meta ) {return datatableTypeRenderer(data, type, row, meta, datatables_params);} }
       ],
-      drawCallback: function (settings) { updateEntriesCount(settings, datatables_params);},
+      drawCallback: function (settings) { updateEntriesCount(settings, datatables_params, page);},
       layout: {
         topStart: {
 {/literal}
