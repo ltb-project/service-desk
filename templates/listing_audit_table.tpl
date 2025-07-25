@@ -1,4 +1,3 @@
-<!--table class="table table-striped table-hover table-condensed dataTable"-->
 <thead>
     <tr>
         <th class="hidden-print" data-dt-order="disable">&nbsp;</th>
@@ -17,7 +16,6 @@
             </th>
             {foreach $listing_columns as $column}
             <td>
-            {if $display == "audit"}
             {if $column == "result" or $column == "action"}
             {$msg_{$event.$column}}
             {elseif $column == "user_dn"}
@@ -25,10 +23,8 @@
             {else}
             {$event.$column}
             {/if}
-            {/if}
         </td>
         {/foreach}
         </tr>
         {/foreach}
 </tbody>
-<!--/table-->
