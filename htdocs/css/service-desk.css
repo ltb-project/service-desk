@@ -93,6 +93,10 @@ div#value-render-templates {
   display: none;
 }
 
+div#size_limit_reached {
+  display: none;
+}
+
 @media print {
 
   html, body {

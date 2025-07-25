@@ -589,14 +589,53 @@ function print_all_results(e, dt, node, config, cb, autoPrint)
     });
 }
 
-function updateEntriesCount(settings, datatables_params)
+function updateEntriesCount(settings, datatables_params, page)
 {
     var table = new DataTable('table.dataTable');
     var totalRows = table.page.info().recordsTotal;
-
     var messages = datatables_params["messages"];
 
-    $('#entriesCount').html(totalRows + ' ' + messages['entriesfound'] );
+    var msg = "";
+
+    var title = "";
+    var titleKey = "title_" + page;
+    if( titleKey in messages)
+    {
+        title = messages[titleKey] + " ";
+    }
+
+    var nbEntriesMsg = "";
+    if( totalRows == 0 )
+    {
+        msg = title + messages["noentriesfound"];
+    }
+    else if( totalRows == 1 )
+    {
+        nbEntriesMsg = messages["entryfound"];
+        msg = title + totalRows + ' ' + nbEntriesMsg;
+    }
+    else
+    {
+        nbEntriesMsg = messages["entriesfound"];
+        msg = title + totalRows + ' ' + nbEntriesMsg;
+    }
+
+    $('#entriesCount').html(msg);
+}
+
+function datatableManageError(datatables_params, error)
+{
+    var messages = datatables_params["messages"];
+    if( error.match(/size_limit_reached/ ))
+    {
+        $('#size_limit_reached').html(messages["sizelimit"]);
+        $('#size_limit_reached').show();
+    }
+    else
+    {
+        // display error to user
+        alert(error);
+    }
 }
 
 // Load comment box when available

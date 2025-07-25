@@ -297,12 +297,18 @@ foreach ($entries as $entry)
     $i++;
 }
 
+$error = "";
+if($size_limit_reached)
+{
+    $error = "size_limit_reached";
+}
+
 $data = array(
     "draw" => $datatables_input["draw"],
     "recordsTotal" => $nb_entries,
     "recordsFiltered" => $nb_entries,
-    "data" => $outputdata
+    "data" => $outputdata,
+    "error" => $error
 );
 
-# TODO: get rid of all search*.php files: merge into a unique one or remove it completely?
 ?>
