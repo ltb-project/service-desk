@@ -50,7 +50,7 @@ function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $a
               }
           }
       }
-      $json['user_dn'] = json_encode([ $dn, $linked_attr_vals ]);
+      $json['user_dn'] = base64_encode(json_encode([ $dn, $linked_attr_vals ]));
 
       array_push($events, $json);
     }
