@@ -122,21 +122,15 @@ function ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, 
 {
     var render = "";
 
-    // if we are processing column "linkto", add an html link <a>
-    if(Array.isArray(listing_linkto) && listing_linkto.includes(column))
-    {
-        render += "<a href=\"index.php?page=display" +
-                  "&dn=" + encodeURIComponent(dn) +
-                  "&search=" + encodeURIComponent(search) +
-                  "\" title=\"" + messages["displayentry"] + "\">";
-    }
-
     // empty value, return immediately the value
     if(!data || (Array.isArray(data) && !data.length) )
     {
         if(show_undef)
         {
-            render += "<i>" + messages["notdefined"] + "</i>";
+            var values = {
+              "message": messages["notdefined"]
+            };
+            render += renderTemplate("undefined_template", values);
         }
         else
         {
@@ -205,7 +199,13 @@ function ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, 
     // if we are processing column "linkto", add an html link <a>
     if(Array.isArray(listing_linkto) && listing_linkto.includes(column))
     {
-        render += "</a>";
+        var values = {
+          "dn": encodeURIComponent(dn),
+          "search": encodeURIComponent(search),
+          "message": messages["displayentry"],
+          "value": render
+        };
+        render = renderTemplate("linkto_template", values);
     }
 
     return render;
@@ -325,105 +325,142 @@ function enable_displayer(dn, messages, search, enable, page)
 function ldapDNTypeRenderer(dn, messages, listing_linkto, search, unlock, enable)
 {
 
-    var result = "";
+    var render = "";
 
     var get_params = new URLSearchParams(document.location.search);
     var page = get_params.get("page");
 
-    result += '<a href="index.php?page=display&' +
-              'dn=' + encodeURIComponent(dn) +
-              '&search=' + encodeURIComponent(search) + '" ' +
-              'class="btn btn-info btn-sm';
+    var values = {
+      "dn": encodeURIComponent(dn),
+      "search": encodeURIComponent(search),
+      "hidden": listing_linkto == false ? ' hidden' : '',
+      "message": messages["displayentry"]
+    };
+    render = renderTemplate("ldapDNTypeRenderer", values);
 
-    result += listing_linkto == false ? ' hidden' : '';
+    render += unlock_displayer(dn, messages, search, unlock, page);
+    render += enable_displayer(dn, messages, search, enable, page);
 
-    result += '" role="button"' +
-              ' title="' + messages["displayentry"] + '">' +
-              '<i class="fa fa-fw fa-id-card"></i>' +
-              '</a>';
-
-    result += unlock_displayer(dn, messages, search, unlock, page);
-    result += enable_displayer(dn, messages, search, enable, page);
-
-    return result;
+    return render;
 }
 
 function ldapTextTypeRenderer(value, truncate_value_after)
 {
-    text = truncate(value, truncate_value_after) + "<br />";
-    return text;
+    var render = "";
+
+    var values = {
+      "value": truncate(value, truncate_value_after)
+    };
+    render = renderTemplate("ldapTextTypeRenderer", values);
+
+    return render;
 }
 
 function ldapMailtoTypeRenderer(value, truncate_value_after, messages)
 {
+    var render = "";
+
     mail_hexa = value.split("")
                      .map(c => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
                      .join("");
+    var values = {
+      "mailto": mail_hexa,
+      "message": messages['tooltip_emailto'],
+      "value": truncate(value, truncate_value_after)
+    };
+    render = renderTemplate("ldapMailtoTypeRenderer", values);
 
-    mail = '<a href="mailto:' + mail_hexa + '" ' +
-           'class="link-email" ' +
-           'title="' + messages['tooltip_emailto'] + '">' +
-           truncate(value, truncate_value_after) +
-           '</a> <br />';
-
-    return mail;
+    return render;
 }
 
 function ldapTelTypeRenderer(value, messages, truncate_value_after)
 {
-    tel = '<a href="tel:' + value + '" ' +
-          'rel="nofollow" ' +
-          'class="link-phone" ' +
-          'title="' + messages['tooltip_phoneto'] + '">' +
-          truncate(value, truncate_value_after) +
-          '</a><br />';
+    var render = "";
 
-    return tel;
+    var values = {
+      "tel": value,
+      "message": messages['tooltip_phoneto'],
+      "value": truncate(value, truncate_value_after)
+    };
+    render = renderTemplate("ldapTelTypeRenderer", values);
+
+    return render;
 }
 
 function ldapBooleanTypeRenderer(value, messages, truncate_value_after)
 {
-    bool = "";
+
+    var render = "";
+    var bool = "";
 
     if( value == "TRUE" )
     {
-        bool = truncate(messages['true'], truncate_value_after) + '<br />';
+        bool = truncate(messages['true'], truncate_value_after);
     }
 
     if( value == "FALSE" )
     {
-        bool = truncate(messages['false'], truncate_value_after) + '<br />';
+        bool = truncate(messages['false'], truncate_value_after);
     }
 
-    return bool;
+    var values = {
+      "value": bool
+    };
+    render = renderTemplate("ldapBooleanTypeRenderer", values);
+
+    return render;
 }
 
 function ldapDateTypeRenderer(value, js_date_specifiers)
 {
-    date = ldap2date.parse(value);
-    return dayjs(date).format(js_date_specifiers);
+    var render = "";
+    var date = ldap2date.parse(value);
+    var val = dayjs(date).format(js_date_specifiers);
+
+    var values = {
+      "value": val
+    };
+    render = renderTemplate("ldapDateTypeRenderer", values);
+
+    return render;
 }
 
 
 function ldapADDateTypeRenderer(value, js_date_specifiers)
 {
+    var render = "";
+
     // divide by 10 000 000 to get seconds
     winSecs = parseInt( value / 10000000 );
     // 1.1.1600 -> 1.1.1970 difference in seconds
     unixTimestamp = winSecs - 11644473600;
     // get js date object from unixtimestamp in ms
     date = new Date(unixTimestamp * 1000);
-    return dayjs(date).format(js_date_specifiers);
+    val = dayjs(date).format(js_date_specifiers);
+
+    var values = {
+      "value": val
+    };
+    render = renderTemplate("ldapADDateTypeRenderer", values);
+
+    return render;
 }
 
 function ldapListTypeRenderer(value, truncate_value_after)
 {
-    text = truncate(value, truncate_value_after) + "<br />";
-    return text;
+    var render = "";
+
+    var values = {
+      "value": truncate(value, truncate_value_after)
+    };
+    render = renderTemplate("ldapListTypeRenderer", values);
+
+    return render;
 }
 
 function ldapBytesTypeRenderer(value, truncate_value_after)
 {
+    var render = "";
     bytes = parseFloat(value);
     var result;
 
@@ -459,17 +496,31 @@ function ldapBytesTypeRenderer(value, truncate_value_after)
         }
     }
 
-    return result;
+    var values = {
+      "value": result
+    };
+    render = renderTemplate("ldapBytesTypeRenderer", values);
+
+    return render;
 }
 
 function ldapTimestampTypeRenderer(value, js_date_specifiers)
 {
+    var render = "";
     // timestamp is considered in seconds, converting to milliseconds
-    return dayjs(value * 1000).format(js_date_specifiers);
+    var result = dayjs(value * 1000).format(js_date_specifiers);
+
+    var values = {
+      "value": result
+    };
+    render = renderTemplate("ldapTimestampTypeRenderer", values);
+
+    return render;
 }
 
 function ldapDNLinkTypeRenderer(value, truncate_value_after, search)
 {
+    var render = "";
     var dn = "";
     var attr_values = [];
     var truncated_attr_values = [];
@@ -499,15 +550,19 @@ function ldapDNLinkTypeRenderer(value, truncate_value_after, search)
         vals = truncate(attr_values, truncate_value_after);
     }
 
-    var res = '<a href="index.php?page=display' +
-              '&dn=' + encodeURIComponent(dn) +
-              '&search=' + encodeURIComponent(search) + '">'
-              + vals + '</a> <br />';
-    return res;
+    var values = {
+      "dn": encodeURIComponent(dn),
+      "search": encodeURIComponent(search),
+      "values": vals
+    };
+    render = renderTemplate("ldapDNLinkTypeRenderer", values);
+
+    return render;
 }
 
 function ldapPPolicyDNTypeRenderer(value, truncate_value_after)
 {
+    var render = "";
     var dn = "";
     var linked_attr_vals = [];
     var truncated_attr_values = [];
@@ -537,19 +592,30 @@ function ldapPPolicyDNTypeRenderer(value, truncate_value_after)
         vals = truncate(linked_attr_vals, truncate_value_after);
     }
 
-    var res = vals + '<br />';
-    return res;
+    var values = {
+      "values": vals
+    };
+    render = renderTemplate("ldapPPolicyDNTypeRenderer", values);
+
+    return render;
 }
 
 function ldapAddressTypeRenderer(value)
 {
+    var render = "";
     var result = "";
     address_parts = value.split('$');
     for( address_part of address_parts )
     {
         result += address_part + '<br />';
     }
-    return result;
+
+    var values = {
+      "values": result
+    };
+    render = renderTemplate("ldapAddressTypeRenderer", values);
+
+    return render;
 }
 
 function truncate(string, length)
