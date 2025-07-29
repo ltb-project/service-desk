@@ -219,31 +219,31 @@ $smarty->assign('use_update',$use_update);
 $smarty->assign('use_create',$use_create);
 $smarty->assign('use_delete',$use_delete);
 
-$datatables_params = [];
-$datatables_params["messages"] = $messages;
-$datatables_params["listing_linkto"] = isset($search_result_linkto) ? $search_result_linkto : array($search_result_title);
-$datatables_params["display_show_undefined"] = $display_show_undefined;
-$datatables_params["search_result_show_undefined"] = $search_result_show_undefined;
-$datatables_params["truncate_value_after"] = $search_result_truncate_value_after;
-$datatables_params["search"] = $search;
-$datatables_params["js_date_specifiers"] = $js_date_specifiers;
-$datatables_params["unlock"] = [];
-$datatables_params["unlock"]["use_unlockaccount"] = $use_unlockaccount;
-$datatables_params["unlock"]["use_unlockcomment"] = $use_unlockcomment;
-$datatables_params["unlock"]["use_unlockcomment_required"] = $use_unlockcomment_required;
-$datatables_params["enable"] = [];
-$datatables_params["enable"]["use_enableaccount"] = $use_enableaccount;
-$datatables_params["enable"]["use_enablecomment"] = $use_enablecomment;
-$datatables_params["enable"]["use_enablecomment_required"] = $use_enablecomment_required;
-$datatables_params["column_types"] = [];
-$datatables_params["column_types"]["dn"] = "dn";
+$config_js = [];
+$config_js["messages"] = $messages;
+$config_js["listing_linkto"] = isset($search_result_linkto) ? $search_result_linkto : array($search_result_title);
+$config_js["display_show_undefined"] = $display_show_undefined;
+$config_js["search_result_show_undefined"] = $search_result_show_undefined;
+$config_js["truncate_value_after"] = $search_result_truncate_value_after;
+$config_js["search"] = $search;
+$config_js["js_date_specifiers"] = $js_date_specifiers;
+$config_js["unlock"] = [];
+$config_js["unlock"]["use_unlockaccount"] = $use_unlockaccount;
+$config_js["unlock"]["use_unlockcomment"] = $use_unlockcomment;
+$config_js["unlock"]["use_unlockcomment_required"] = $use_unlockcomment_required;
+$config_js["enable"] = [];
+$config_js["enable"]["use_enableaccount"] = $use_enableaccount;
+$config_js["enable"]["use_enablecomment"] = $use_enablecomment;
+$config_js["enable"]["use_enablecomment_required"] = $use_enablecomment_required;
+$config_js["column_types"] = [];
+$config_js["column_types"]["dn"] = "dn";
 $columns = $search_result_items;
 if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
 foreach ($columns as $column )
 {
-    $datatables_params["column_types"][$column] = $attributes_map[$column]["type"];
+    $config_js["column_types"][$column] = $attributes_map[$column]["type"];
 }
-$smarty->assign("datatables_params", base64_encode(json_encode($datatables_params)));
+$smarty->assign("config_js", base64_encode(json_encode($config_js)));
 
 
 # Assign messages

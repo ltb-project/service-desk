@@ -3,8 +3,8 @@
 $(document).ready( function() {
 {/literal}
 
-    var datatables_params = JSON.parse(atob("{$datatables_params}"));
-    var messages = datatables_params["messages"];
+    var config_js = JSON.parse(atob("{$config_js}"));
+    var messages = config_js["messages"];
 
     loadCommentBox(  'unlockcommentbox',
                      'unlock',

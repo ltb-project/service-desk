@@ -3,7 +3,7 @@
 $(document).ready(function(){
 
 {/literal}
-    var datatables_params = JSON.parse(atob("{$datatables_params}"));
+    var config_js = JSON.parse(atob("{$config_js}"));
 {literal}
 
     $( ".display_dn_link" ).each(function( ) {
@@ -15,7 +15,7 @@ $(document).ready(function(){
         [messages, listing_linkto, search_result_show_undefined,
          display_show_undefined, truncate_value_after, search,
          js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
         render = "";
         render += ldapDNLinkTypeRenderer(dn, truncate_value_after, search);
