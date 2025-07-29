@@ -153,13 +153,30 @@ function ldapTypeRenderer(config_js, dn, column, column_type, data, show_undef)
         {
             // Prepare function name: ldap<Type>TypeRenderer
             var renderFunction = String(column_type).charAt(0).toUpperCase() + String(column_type).slice(1);
-            renderFunction.replace("_", ""); // remove _
+            renderFunction = renderFunction.replaceAll("_", ""); // remove underscores
             renderFunction = "ldap" + renderFunction  + "TypeRenderer";
 
+            // If function exists
             if( typeof window[renderFunction] === 'function')
             {
                 // Call renderer dynamically
                 render += window[renderFunction](config_js, dn, value);
+
+                // Call custom event if available: ldap<Type>TypeRenderer
+                e = jQuery.Event(renderFunction);
+                var params = {
+                                 "render": render,
+                                 "value": value
+                             };
+                $(document).trigger(e, [ params ]);
+                if (!e.isDefaultPrevented()) {
+                    // Get optionally modified render from custom event
+                    render = params["render"];
+                }
+                else
+                {
+                    render = "";
+                }
             }
             else
             {
@@ -181,6 +198,7 @@ function ldapTypeRenderer(config_js, dn, column, column_type, data, show_undef)
     }
 
     return render;
+
 }
 
 
@@ -313,7 +331,7 @@ function ldapDnTypeRenderer(config_js, dn, value)
       "hidden": listing_linkto == false ? ' hidden' : '',
       "message": messages["displayentry"]
     };
-    render = renderTemplate("ldapDNTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     render += unlock_displayer(dn, messages, search, unlock, page);
     render += enable_displayer(dn, messages, search, enable, page);
@@ -333,7 +351,7 @@ function ldapTextTypeRenderer(config_js, dn, value)
     var values = {
       "value": truncate(value, truncate_value_after)
     };
-    render = renderTemplate("ldapTextTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -355,7 +373,7 @@ function ldapMailtoTypeRenderer(config_js, dn, value)
       "message": messages['tooltip_emailto'],
       "value": truncate(value, truncate_value_after)
     };
-    render = renderTemplate("ldapMailtoTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -374,7 +392,7 @@ function ldapTelTypeRenderer(config_js, dn, value)
       "message": messages['tooltip_phoneto'],
       "value": truncate(value, truncate_value_after)
     };
-    render = renderTemplate("ldapTelTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -403,7 +421,7 @@ function ldapBooleanTypeRenderer(config_js, dn, value)
     var values = {
       "value": bool
     };
-    render = renderTemplate("ldapBooleanTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -423,7 +441,7 @@ function ldapDateTypeRenderer(config_js, dn, value)
     var values = {
       "value": val
     };
-    render = renderTemplate("ldapDateTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -449,7 +467,7 @@ function ldapAddateTypeRenderer(config_js, dn, value)
     var values = {
       "value": val
     };
-    render = renderTemplate("ldapADDateTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -466,7 +484,7 @@ function ldapListTypeRenderer(config_js, dn, value)
     var values = {
       "value": truncate(value, truncate_value_after)
     };
-    render = renderTemplate("ldapListTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -523,7 +541,7 @@ function ldapBytesTypeRenderer(config_js, dn, value)
     var values = {
       "value": result
     };
-    render = renderTemplate("ldapBytesTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -543,7 +561,7 @@ function ldapTimestampTypeRenderer(config_js, dn, value)
     var values = {
       "value": result
     };
-    render = renderTemplate("ldapTimestampTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -591,7 +609,7 @@ function ldapDnlinkTypeRenderer(config_js, dn, value)
       "search": encodeURIComponent(search),
       "values": vals
     };
-    render = renderTemplate("ldapDNLinkTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -637,7 +655,7 @@ function ldapPpolicydnTypeRenderer(config_js, dn, value)
     var values = {
       "values": vals
     };
-    render = renderTemplate("ldapPPolicyDNTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
@@ -655,7 +673,7 @@ function ldapAddressTypeRenderer(config_js, dn, value)
     var values = {
       "values": result
     };
-    render = renderTemplate("ldapAddressTypeRenderer", values);
+    render = renderTemplate(arguments.callee.name, values);
 
     return render;
 }
