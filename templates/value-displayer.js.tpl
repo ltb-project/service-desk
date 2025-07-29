@@ -92,26 +92,17 @@ $(document).ready(function(){
         var data        = $( this ).attr("data-value");
         var targetDN    = $( this ).attr("data-dn");
 
-        [messages, listing_linkto, search_result_show_undefined,
-         display_show_undefined, truncate_value_after, search,
-         js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
-
-        show_undef = display_show_undefined;
+        // picking display_show_undefined as show_undef parameter
+        var display_show_undefined = datatables_params["display_show_undefined"];
+        display_show_undefined = display_show_undefined ? true : false;
 
         render += ldapTypeRenderer(
+                                     datatables_params,
                                      targetDN,
-                                     messages,
-                                     listing_linkto,
-                                     search,
-                                     unlock,
-                                     enable,
                                      column,
                                      column_type,
                                      data,
-                                     show_undef,
-                                     truncate_value_after,
-                                     js_date_specifiers
+                                     display_show_undefined
                                  );
 
         $( this ).html(render);

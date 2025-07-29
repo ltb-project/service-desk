@@ -27,6 +27,8 @@ function renderTemplate(template, values) {
      truncate_value_after: integer. max length after which the string is truncated
      search: string, parameter named "search" of the http query
      js_date_specifiers: string, format of the date as specified in https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
+     unlock: associative array containing unlock config parameters
+     enable: associative array containing enable config parameters
 */
 function get_datatables_params(datatables_params)
 {
@@ -82,19 +84,18 @@ function datatableTypeRenderer(data, type, row, meta, datatables_params)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
-
     var dn = row[0];
     // column: column name, ie key of $attributes_map associative array (firstname, fullname, identifier,...)
     var column = Object.keys(datatables_params["column_types"])[meta.col];
     // column_type: attribute type, ie value of "type" key in $attributes_map associative array (text, tel, dn_link,...)
     var column_type = datatables_params["column_types"][column];
 
+    // picking search_result_show_undefined for show_undef parameter
+    var search_result_show_undefined = datatables_params["search_result_show_undefined"];
+    search_result_show_undefined = search_result_show_undefined ? true : false;
 
-    render += ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, column, column_type, data, search_result_show_undefined, truncate_value_after, js_date_specifiers);
+
+    render += ldapTypeRenderer(datatables_params, dn, column, column_type, data, search_result_show_undefined);
 
     return render;
 }
@@ -102,25 +103,27 @@ function datatableTypeRenderer(data, type, row, meta, datatables_params)
 
 /* ldapTypeRenderer:
    INPUT:
+     datatables_params: structure storing the input params sent by the backend
      dn: DN of current attribute
-     messages: associative array containing all messages for selected language
-     listing_linkto: array or string containing the attribute key(s) for linking
-     search: string, parameter named "search" of the http query
-     unlock: associative array containing unlock config parameters
-     enable: associative array containing enable config parameters
      column: attribute name: key of attributes_map config parameter (identifier, mail,...)
      column_type: attribute type: value of "type" property in attributes_map config parameter (text, date, dn_link,...)
      data: attribute value (javascript array or string)
      show_undef: boolean. When true, show a specific message when there is no value for the current attribute
-     truncate_value_after: integer. max length after which the string is truncated
-     js_date_specifiers: string, format of the date as specified in https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
    OUTPUT:
      render: the html code rendering the value according to the type
 */
 
-function ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, column, column_type, data, show_undef, truncate_value_after, js_date_specifiers )
+function ldapTypeRenderer(datatables_params, dn, column, column_type, data, show_undef)
 {
     var render = "";
+
+    var messages = datatables_params["messages"];
+    var listing_linkto = datatables_params["listing_linkto"];
+    var search = datatables_params["search"];
+    if(!search)
+    {
+        search = "";
+    }
 
     // empty value, return immediately the value
     if(!data || (Array.isArray(data) && !data.length) )
@@ -151,46 +154,46 @@ function ldapTypeRenderer(dn, messages, listing_linkto, search, unlock, enable, 
             switch(column_type)
             {
                 case "dn":
-                    render += ldapDNTypeRenderer(dn, messages, listing_linkto, search, unlock, enable);
+                    render += ldapDNTypeRenderer(datatables_params, dn, value);
                     break;
                 case "text":
-                    render += ldapTextTypeRenderer(value, truncate_value_after);
+                    render += ldapTextTypeRenderer(datatables_params, dn, value);
                     break;
                 case "mailto":
-                    render += ldapMailtoTypeRenderer(value, truncate_value_after, messages);
+                    render += ldapMailtoTypeRenderer(datatables_params, dn, value);
                     break;
                 case "tel":
-                    render += ldapTelTypeRenderer(value, messages, truncate_value_after);
+                    render += ldapTelTypeRenderer(datatables_params, dn, value);
                     break;
                 case "boolean":
-                    render += ldapBooleanTypeRenderer(value, messages, truncate_value_after);
+                    render += ldapBooleanTypeRenderer(datatables_params, dn, value);
                     break;
                 case "date":
-                    render += ldapDateTypeRenderer(value, js_date_specifiers);
+                    render += ldapDateTypeRenderer(datatables_params, dn, value);
                     break;
                 case "ad_date":
-                    render += ldapADDateTypeRenderer(value, js_date_specifiers);
+                    render += ldapADDateTypeRenderer(datatables_params, dn, value);
                     break;
                 case "static_list":
-                    render += ldapListTypeRenderer(value, truncate_value_after);
+                    render += ldapListTypeRenderer(datatables_params, dn, value);
                     break;
                 case "list":
-                    render += ldapListTypeRenderer(value, truncate_value_after);
+                    render += ldapListTypeRenderer(datatables_params, dn, value);
                     break;
                 case "bytes":
-                    render += ldapBytesTypeRenderer(value, truncate_value_after);
+                    render += ldapBytesTypeRenderer(datatables_params, dn, value);
                     break;
                 case "timestamp":
-                    render += ldapTimestampTypeRenderer(value, js_date_specifiers);
+                    render += ldapTimestampTypeRenderer(datatables_params, dn, value);
                     break;
                 case "dn_link":
-                    render += ldapDNLinkTypeRenderer(value, truncate_value_after, search);
+                    render += ldapDNLinkTypeRenderer(datatables_params, dn, value);
                     break;
                 case "ppolicy_dn":
-                    render += ldapPPolicyDNTypeRenderer(value, truncate_value_after);
+                    render += ldapPPolicyDNTypeRenderer(datatables_params, dn, value);
                     break;
                 case "address":
-                    render += ldapAddressTypeRenderer(value);
+                    render += ldapAddressTypeRenderer(datatables_params, dn, value);
                     break;
             }
         });
@@ -322,10 +325,15 @@ function enable_displayer(dn, messages, search, enable, page)
 // Renderer for special first column "DN"
 // This column displays all the actions possible for the user:
 // display, unlock,...
-function ldapDNTypeRenderer(dn, messages, listing_linkto, search, unlock, enable)
+function ldapDNTypeRenderer(datatables_params, dn, value)
 {
 
     var render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
 
     var get_params = new URLSearchParams(document.location.search);
     var page = get_params.get("page");
@@ -344,9 +352,14 @@ function ldapDNTypeRenderer(dn, messages, listing_linkto, search, unlock, enable
     return render;
 }
 
-function ldapTextTypeRenderer(value, truncate_value_after)
+function ldapTextTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
 
     var values = {
       "value": truncate(value, truncate_value_after)
@@ -356,9 +369,14 @@ function ldapTextTypeRenderer(value, truncate_value_after)
     return render;
 }
 
-function ldapMailtoTypeRenderer(value, truncate_value_after, messages)
+function ldapMailtoTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
 
     mail_hexa = value.split("")
                      .map(c => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
@@ -373,9 +391,14 @@ function ldapMailtoTypeRenderer(value, truncate_value_after, messages)
     return render;
 }
 
-function ldapTelTypeRenderer(value, messages, truncate_value_after)
+function ldapTelTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
 
     var values = {
       "tel": value,
@@ -387,11 +410,16 @@ function ldapTelTypeRenderer(value, messages, truncate_value_after)
     return render;
 }
 
-function ldapBooleanTypeRenderer(value, messages, truncate_value_after)
+function ldapBooleanTypeRenderer(datatables_params, dn, value)
 {
 
     var render = "";
     var bool = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
 
     if( value == "TRUE" )
     {
@@ -411,9 +439,15 @@ function ldapBooleanTypeRenderer(value, messages, truncate_value_after)
     return render;
 }
 
-function ldapDateTypeRenderer(value, js_date_specifiers)
+function ldapDateTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
+
     var date = ldap2date.parse(value);
     var val = dayjs(date).format(js_date_specifiers);
 
@@ -426,9 +460,14 @@ function ldapDateTypeRenderer(value, js_date_specifiers)
 }
 
 
-function ldapADDateTypeRenderer(value, js_date_specifiers)
+function ldapADDateTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
 
     // divide by 10 000 000 to get seconds
     winSecs = parseInt( value / 10000000 );
@@ -446,9 +485,14 @@ function ldapADDateTypeRenderer(value, js_date_specifiers)
     return render;
 }
 
-function ldapListTypeRenderer(value, truncate_value_after)
+function ldapListTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
 
     var values = {
       "value": truncate(value, truncate_value_after)
@@ -458,11 +502,17 @@ function ldapListTypeRenderer(value, truncate_value_after)
     return render;
 }
 
-function ldapBytesTypeRenderer(value, truncate_value_after)
+function ldapBytesTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
-    bytes = parseFloat(value);
     var result;
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
+
+    bytes = parseFloat(value);
 
     var arBytes = [
                       {
@@ -504,9 +554,15 @@ function ldapBytesTypeRenderer(value, truncate_value_after)
     return render;
 }
 
-function ldapTimestampTypeRenderer(value, js_date_specifiers)
+function ldapTimestampTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
+
     // timestamp is considered in seconds, converting to milliseconds
     var result = dayjs(value * 1000).format(js_date_specifiers);
 
@@ -518,10 +574,16 @@ function ldapTimestampTypeRenderer(value, js_date_specifiers)
     return render;
 }
 
-function ldapDNLinkTypeRenderer(value, truncate_value_after, search)
+function ldapDNLinkTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
-    var dn = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
+
+    var dnlink = "";
     var attr_values = [];
     var truncated_attr_values = [];
     var vals = "";
@@ -529,7 +591,7 @@ function ldapDNLinkTypeRenderer(value, truncate_value_after, search)
     {
         if(value.length >= 1)
         {
-            dn = value[0];
+            dnlink = value[0];
         }
         if(value.length >= 2)
         {
@@ -551,7 +613,7 @@ function ldapDNLinkTypeRenderer(value, truncate_value_after, search)
     }
 
     var values = {
-      "dn": encodeURIComponent(dn),
+      "dn": encodeURIComponent(dnlink),
       "search": encodeURIComponent(search),
       "values": vals
     };
@@ -560,10 +622,16 @@ function ldapDNLinkTypeRenderer(value, truncate_value_after, search)
     return render;
 }
 
-function ldapPPolicyDNTypeRenderer(value, truncate_value_after)
+function ldapPPolicyDNTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
-    var dn = "";
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_datatables_params(datatables_params);
+
+    var dnppolicy = "";
     var linked_attr_vals = [];
     var truncated_attr_values = [];
     var vals = "";
@@ -571,7 +639,7 @@ function ldapPPolicyDNTypeRenderer(value, truncate_value_after)
     {
         if(value.length >= 1)
         {
-            dn = value[0];
+            dnppolicy = value[0];
         }
         if(value.length >= 2)
         {
@@ -600,7 +668,7 @@ function ldapPPolicyDNTypeRenderer(value, truncate_value_after)
     return render;
 }
 
-function ldapAddressTypeRenderer(value)
+function ldapAddressTypeRenderer(datatables_params, dn, value)
 {
     var render = "";
     var result = "";
@@ -721,16 +789,14 @@ function renderUserAttributesList(datatables_params, targetDN, column, column_ty
 {
     render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-        get_datatables_params(datatables_params);
-
     // overload truncate_value_after to always display complete values
     truncate_value_after = 10000;
-    show_undef = display_show_undefined;
+    // picking display_show_undefined as show_undef parameter
+    var display_show_undefined = datatables_params["display_show_undefined"];
+    display_show_undefined = display_show_undefined ? true : false;
+    var messages = datatables_params["messages"];
 
-    if( show_undef || ( typeof data === 'string' && data ) || ( Array.isArray(data) && data.length != 0 ) )
+    if( display_show_undefined || ( typeof data === 'string' && data ) || ( Array.isArray(data) && data.length != 0 ) )
     {
         // display value only if not empty
         // or if the conf says to show undefined values
@@ -738,18 +804,12 @@ function renderUserAttributesList(datatables_params, targetDN, column, column_ty
           "faclass": faclass,
           "message": messages['label_' + column],
           "value": ldapTypeRenderer(
+                                       datatables_params,
                                        targetDN,
-                                       messages,
-                                       listing_linkto,
-                                       search,
-                                       unlock,
-                                       enable,
                                        column,
                                        column_type,
                                        data,
-                                       show_undef,
-                                       truncate_value_after,
-                                       js_date_specifiers
+                                       display_show_undefined
                                    )
         };
         render = renderTemplate("display_user_attributes_list", values);
@@ -765,34 +825,26 @@ function renderStatusAttributesList(datatables_params, targetDN, column, column_
 {
     render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-        get_datatables_params(datatables_params);
-
     // overload truncate_value_after to always display complete values
     truncate_value_after = 10000;
-    show_undef = display_show_undefined;
+    // picking display_show_undefined as show_undef parameter
+    var display_show_undefined = datatables_params["display_show_undefined"];
+    display_show_undefined = display_show_undefined ? true : false;
+    var messages = datatables_params["messages"];
 
-    if( show_undef || ( typeof data === 'string' && data ) || ( Array.isArray(data) && data.length != 0 ) )
+    if( display_show_undefined || ( typeof data === 'string' && data ) || ( Array.isArray(data) && data.length != 0 ) )
     {
         // display value only if not empty
         // or if the conf says to show undefined values
         var values = {
           "message": messages['label_' + column],
           "value": ldapTypeRenderer(
+                                       datatables_params,
                                        targetDN,
-                                       messages,
-                                       listing_linkto,
-                                       search,
-                                       unlock,
-                                       enable,
                                        column,
                                        column_type,
                                        data,
-                                       show_undef,
-                                       truncate_value_after,
-                                       js_date_specifiers
+                                       display_show_undefined
                                    )
         };
         render = renderTemplate("display_status_attributes_list", values);
