@@ -29,6 +29,7 @@ LDAP Tool Box Service Desk documentation
    enableaccount.rst
    updatestartendtime.rst
    hook.rst
+   customization.rst
    dashboards.rst
    configuration-mail.rst
    audit.rst
