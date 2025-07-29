@@ -151,50 +151,19 @@ function ldapTypeRenderer(config_js, dn, column, column_type, data, show_undef)
 
         data.forEach((value) =>
         {
-            switch(column_type)
+            // Prepare function name: ldap<Type>TypeRenderer
+            var renderFunction = String(column_type).charAt(0).toUpperCase() + String(column_type).slice(1);
+            renderFunction.replace("_", ""); // remove _
+            renderFunction = "ldap" + renderFunction  + "TypeRenderer";
+
+            if( typeof window[renderFunction] === 'function')
             {
-                case "dn":
-                    render += ldapDNTypeRenderer(config_js, dn, value);
-                    break;
-                case "text":
-                    render += ldapTextTypeRenderer(config_js, dn, value);
-                    break;
-                case "mailto":
-                    render += ldapMailtoTypeRenderer(config_js, dn, value);
-                    break;
-                case "tel":
-                    render += ldapTelTypeRenderer(config_js, dn, value);
-                    break;
-                case "boolean":
-                    render += ldapBooleanTypeRenderer(config_js, dn, value);
-                    break;
-                case "date":
-                    render += ldapDateTypeRenderer(config_js, dn, value);
-                    break;
-                case "ad_date":
-                    render += ldapADDateTypeRenderer(config_js, dn, value);
-                    break;
-                case "static_list":
-                    render += ldapListTypeRenderer(config_js, dn, value);
-                    break;
-                case "list":
-                    render += ldapListTypeRenderer(config_js, dn, value);
-                    break;
-                case "bytes":
-                    render += ldapBytesTypeRenderer(config_js, dn, value);
-                    break;
-                case "timestamp":
-                    render += ldapTimestampTypeRenderer(config_js, dn, value);
-                    break;
-                case "dn_link":
-                    render += ldapDNLinkTypeRenderer(config_js, dn, value);
-                    break;
-                case "ppolicy_dn":
-                    render += ldapPPolicyDNTypeRenderer(config_js, dn, value);
-                    break;
-                case "address":
-                    render += ldapAddressTypeRenderer(config_js, dn, value);
-                    break;
+                // Call renderer dynamically
+                render += window[renderFunction](config_js, dn, value);
+            }
+            else
+            {
+                console.error("Error: unknown renderer " + renderFunction + " for type " + column_type);
             }
         });
     }
@@ -325,7 +294,7 @@ function enable_displayer(dn, messages, search, enable, page)
 // Renderer for special first column "DN"
 // This column displays all the actions possible for the user:
 // display, unlock,...
-function ldapDNTypeRenderer(config_js, dn, value)
+function ldapDnTypeRenderer(config_js, dn, value)
 {
 
     var render = "";
@@ -460,7 +429,7 @@ function ldapDateTypeRenderer(config_js, dn, value)
 }
 
 
-function ldapADDateTypeRenderer(config_js, dn, value)
+function ldapAddateTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
@@ -500,6 +469,11 @@ function ldapListTypeRenderer(config_js, dn, value)
     render = renderTemplate("ldapListTypeRenderer", values);
 
     return render;
+}
+
+function ldapStaticlistTypeRenderer(config_js, dn, value)
+{
+    return ldapListTypeRenderer(config_js, dn, value);
 }
 
 function ldapBytesTypeRenderer(config_js, dn, value)
@@ -574,7 +548,7 @@ function ldapTimestampTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapDNLinkTypeRenderer(config_js, dn, value)
+function ldapDnlinkTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
@@ -622,7 +596,7 @@ function ldapDNLinkTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapPPolicyDNTypeRenderer(config_js, dn, value)
+function ldapPpolicydnTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
