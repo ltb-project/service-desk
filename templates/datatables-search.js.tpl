@@ -2,7 +2,7 @@
     <script type="text/javascript">
       $(document).ready( function() {
 {/literal}
-    var datatables_params = JSON.parse(atob("{$datatables_params}"));
+    var config_js = JSON.parse(atob("{$config_js}"));
     var page = "{$page}";
     var search_query = "{$search_query}";
 {literal}
@@ -11,7 +11,7 @@
 
     var itemlist = $('table.dataTable')
     .on('dt-error.dt', function (e, settings, techNote, error) {
-        datatableManageError(datatables_params, error);
+        datatableManageError(config_js, error);
     })
     .DataTable({
       serverSide: true,
@@ -27,9 +27,9 @@
       },
       // Calling renderer for each cell
       columnDefs: [
-          { targets: '_all', render: function ( data, type, row, meta ) {return datatableTypeRenderer(data, type, row, meta, datatables_params);} }
+          { targets: '_all', render: function ( data, type, row, meta ) {return datatableTypeRenderer(data, type, row, meta, config_js);} }
       ],
-      drawCallback: function (settings) { updateEntriesCount(settings, datatables_params, page);},
+      drawCallback: function (settings) { updateEntriesCount(settings, config_js, page);},
       layout: {
         topStart: {
 {/literal}

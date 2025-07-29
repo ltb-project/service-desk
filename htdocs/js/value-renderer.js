@@ -16,9 +16,9 @@ function renderTemplate(template, values) {
 }
 
 
-/* get_datatables_params:
+/* get_config_js:
    INPUT:
-     datatables_params: structure storing the input params sent by the backend
+     config_js: structure storing the input params sent by the backend
    OUTPUT:
      messages: associative array containing all messages for selected language
      listing_linkto: array or string containing the attribute key(s) for linking
@@ -30,38 +30,38 @@ function renderTemplate(template, values) {
      unlock: associative array containing unlock config parameters
      enable: associative array containing enable config parameters
 */
-function get_datatables_params(datatables_params)
+function get_config_js(config_js)
 {
 
-    var messages = datatables_params["messages"];
+    var messages = config_js["messages"];
 
-    var listing_linkto = datatables_params["listing_linkto"];
+    var listing_linkto = config_js["listing_linkto"];
 
-    var search_result_show_undefined = datatables_params["search_result_show_undefined"];
+    var search_result_show_undefined = config_js["search_result_show_undefined"];
     search_result_show_undefined = search_result_show_undefined ? true : false;
 
-    var display_show_undefined = datatables_params["display_show_undefined"];
+    var display_show_undefined = config_js["display_show_undefined"];
     display_show_undefined = display_show_undefined ? true : false;
 
-    var truncate_value_after = datatables_params["truncate_value_after"];
+    var truncate_value_after = config_js["truncate_value_after"];
     if(!truncate_value_after)
     {
         truncate_value_after = 0;
     }
 
-    var search = datatables_params["search"];
+    var search = config_js["search"];
     if(!search)
     {
         search = "";
     }
 
-    var js_date_specifiers = datatables_params["js_date_specifiers"];
+    var js_date_specifiers = config_js["js_date_specifiers"];
     if(!js_date_specifiers)
     {
         js_date_specifiers = "";
     }
-    var unlock = datatables_params["unlock"];
-    var enable = datatables_params["enable"];
+    var unlock = config_js["unlock"];
+    var enable = config_js["enable"];
 
     return [
              messages, listing_linkto, search_result_show_undefined,
@@ -77,25 +77,25 @@ function get_datatables_params(datatables_params)
      type: origin of datatables operation when performing the rendering: filter, display, type, sort, undefined, custom
      row: full data source of the row
      meta: meta information about the row: row index, col index, settings
-     datatables_params: structure storing all parameters for rendering
+     config_js: structure storing all parameters for rendering
 */
 
-function datatableTypeRenderer(data, type, row, meta, datatables_params)
+function datatableTypeRenderer(data, type, row, meta, config_js)
 {
     var render = "";
 
     var dn = row[0];
     // column: column name, ie key of $attributes_map associative array (firstname, fullname, identifier,...)
-    var column = Object.keys(datatables_params["column_types"])[meta.col];
+    var column = Object.keys(config_js["column_types"])[meta.col];
     // column_type: attribute type, ie value of "type" key in $attributes_map associative array (text, tel, dn_link,...)
-    var column_type = datatables_params["column_types"][column];
+    var column_type = config_js["column_types"][column];
 
     // picking search_result_show_undefined for show_undef parameter
-    var search_result_show_undefined = datatables_params["search_result_show_undefined"];
+    var search_result_show_undefined = config_js["search_result_show_undefined"];
     search_result_show_undefined = search_result_show_undefined ? true : false;
 
 
-    render += ldapTypeRenderer(datatables_params, dn, column, column_type, data, search_result_show_undefined);
+    render += ldapTypeRenderer(config_js, dn, column, column_type, data, search_result_show_undefined);
 
     return render;
 }
@@ -103,7 +103,7 @@ function datatableTypeRenderer(data, type, row, meta, datatables_params)
 
 /* ldapTypeRenderer:
    INPUT:
-     datatables_params: structure storing the input params sent by the backend
+     config_js: structure storing the input params sent by the backend
      dn: DN of current attribute
      column: attribute name: key of attributes_map config parameter (identifier, mail,...)
      column_type: attribute type: value of "type" property in attributes_map config parameter (text, date, dn_link,...)
@@ -113,13 +113,13 @@ function datatableTypeRenderer(data, type, row, meta, datatables_params)
      render: the html code rendering the value according to the type
 */
 
-function ldapTypeRenderer(datatables_params, dn, column, column_type, data, show_undef)
+function ldapTypeRenderer(config_js, dn, column, column_type, data, show_undef)
 {
     var render = "";
 
-    var messages = datatables_params["messages"];
-    var listing_linkto = datatables_params["listing_linkto"];
-    var search = datatables_params["search"];
+    var messages = config_js["messages"];
+    var listing_linkto = config_js["listing_linkto"];
+    var search = config_js["search"];
     if(!search)
     {
         search = "";
@@ -154,46 +154,46 @@ function ldapTypeRenderer(datatables_params, dn, column, column_type, data, show
             switch(column_type)
             {
                 case "dn":
-                    render += ldapDNTypeRenderer(datatables_params, dn, value);
+                    render += ldapDNTypeRenderer(config_js, dn, value);
                     break;
                 case "text":
-                    render += ldapTextTypeRenderer(datatables_params, dn, value);
+                    render += ldapTextTypeRenderer(config_js, dn, value);
                     break;
                 case "mailto":
-                    render += ldapMailtoTypeRenderer(datatables_params, dn, value);
+                    render += ldapMailtoTypeRenderer(config_js, dn, value);
                     break;
                 case "tel":
-                    render += ldapTelTypeRenderer(datatables_params, dn, value);
+                    render += ldapTelTypeRenderer(config_js, dn, value);
                     break;
                 case "boolean":
-                    render += ldapBooleanTypeRenderer(datatables_params, dn, value);
+                    render += ldapBooleanTypeRenderer(config_js, dn, value);
                     break;
                 case "date":
-                    render += ldapDateTypeRenderer(datatables_params, dn, value);
+                    render += ldapDateTypeRenderer(config_js, dn, value);
                     break;
                 case "ad_date":
-                    render += ldapADDateTypeRenderer(datatables_params, dn, value);
+                    render += ldapADDateTypeRenderer(config_js, dn, value);
                     break;
                 case "static_list":
-                    render += ldapListTypeRenderer(datatables_params, dn, value);
+                    render += ldapListTypeRenderer(config_js, dn, value);
                     break;
                 case "list":
-                    render += ldapListTypeRenderer(datatables_params, dn, value);
+                    render += ldapListTypeRenderer(config_js, dn, value);
                     break;
                 case "bytes":
-                    render += ldapBytesTypeRenderer(datatables_params, dn, value);
+                    render += ldapBytesTypeRenderer(config_js, dn, value);
                     break;
                 case "timestamp":
-                    render += ldapTimestampTypeRenderer(datatables_params, dn, value);
+                    render += ldapTimestampTypeRenderer(config_js, dn, value);
                     break;
                 case "dn_link":
-                    render += ldapDNLinkTypeRenderer(datatables_params, dn, value);
+                    render += ldapDNLinkTypeRenderer(config_js, dn, value);
                     break;
                 case "ppolicy_dn":
-                    render += ldapPPolicyDNTypeRenderer(datatables_params, dn, value);
+                    render += ldapPPolicyDNTypeRenderer(config_js, dn, value);
                     break;
                 case "address":
-                    render += ldapAddressTypeRenderer(datatables_params, dn, value);
+                    render += ldapAddressTypeRenderer(config_js, dn, value);
                     break;
             }
         });
@@ -325,7 +325,7 @@ function enable_displayer(dn, messages, search, enable, page)
 // Renderer for special first column "DN"
 // This column displays all the actions possible for the user:
 // display, unlock,...
-function ldapDNTypeRenderer(datatables_params, dn, value)
+function ldapDNTypeRenderer(config_js, dn, value)
 {
 
     var render = "";
@@ -333,7 +333,7 @@ function ldapDNTypeRenderer(datatables_params, dn, value)
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     var get_params = new URLSearchParams(document.location.search);
     var page = get_params.get("page");
@@ -352,14 +352,14 @@ function ldapDNTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapTextTypeRenderer(datatables_params, dn, value)
+function ldapTextTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     var values = {
       "value": truncate(value, truncate_value_after)
@@ -369,14 +369,14 @@ function ldapTextTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapMailtoTypeRenderer(datatables_params, dn, value)
+function ldapMailtoTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     mail_hexa = value.split("")
                      .map(c => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
@@ -391,14 +391,14 @@ function ldapMailtoTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapTelTypeRenderer(datatables_params, dn, value)
+function ldapTelTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     var values = {
       "tel": value,
@@ -410,7 +410,7 @@ function ldapTelTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapBooleanTypeRenderer(datatables_params, dn, value)
+function ldapBooleanTypeRenderer(config_js, dn, value)
 {
 
     var render = "";
@@ -419,7 +419,7 @@ function ldapBooleanTypeRenderer(datatables_params, dn, value)
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     if( value == "TRUE" )
     {
@@ -439,14 +439,14 @@ function ldapBooleanTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapDateTypeRenderer(datatables_params, dn, value)
+function ldapDateTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     var date = ldap2date.parse(value);
     var val = dayjs(date).format(js_date_specifiers);
@@ -460,14 +460,14 @@ function ldapDateTypeRenderer(datatables_params, dn, value)
 }
 
 
-function ldapADDateTypeRenderer(datatables_params, dn, value)
+function ldapADDateTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     // divide by 10 000 000 to get seconds
     winSecs = parseInt( value / 10000000 );
@@ -485,14 +485,14 @@ function ldapADDateTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapListTypeRenderer(datatables_params, dn, value)
+function ldapListTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     var values = {
       "value": truncate(value, truncate_value_after)
@@ -502,7 +502,7 @@ function ldapListTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapBytesTypeRenderer(datatables_params, dn, value)
+function ldapBytesTypeRenderer(config_js, dn, value)
 {
     var render = "";
     var result;
@@ -510,7 +510,7 @@ function ldapBytesTypeRenderer(datatables_params, dn, value)
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     bytes = parseFloat(value);
 
@@ -554,14 +554,14 @@ function ldapBytesTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapTimestampTypeRenderer(datatables_params, dn, value)
+function ldapTimestampTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     // timestamp is considered in seconds, converting to milliseconds
     var result = dayjs(value * 1000).format(js_date_specifiers);
@@ -574,14 +574,14 @@ function ldapTimestampTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapDNLinkTypeRenderer(datatables_params, dn, value)
+function ldapDNLinkTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     var dnlink = "";
     var attr_values = [];
@@ -622,14 +622,14 @@ function ldapDNLinkTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapPPolicyDNTypeRenderer(datatables_params, dn, value)
+function ldapPPolicyDNTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
-            get_datatables_params(datatables_params);
+            get_config_js(config_js);
 
     var dnppolicy = "";
     var linked_attr_vals = [];
@@ -668,7 +668,7 @@ function ldapPPolicyDNTypeRenderer(datatables_params, dn, value)
     return render;
 }
 
-function ldapAddressTypeRenderer(datatables_params, dn, value)
+function ldapAddressTypeRenderer(config_js, dn, value)
 {
     var render = "";
     var result = "";
@@ -723,11 +723,11 @@ function print_all_results(e, dt, node, config, cb, autoPrint)
     });
 }
 
-function updateEntriesCount(settings, datatables_params, page)
+function updateEntriesCount(settings, config_js, page)
 {
     var table = new DataTable('table.dataTable');
     var totalRows = table.page.info().recordsTotal;
-    var messages = datatables_params["messages"];
+    var messages = config_js["messages"];
 
     var msg = "";
 
@@ -757,9 +757,9 @@ function updateEntriesCount(settings, datatables_params, page)
     $('#entriesCount').html(msg);
 }
 
-function datatableManageError(datatables_params, error)
+function datatableManageError(config_js, error)
 {
-    var messages = datatables_params["messages"];
+    var messages = config_js["messages"];
     if( error.match(/size_limit_reached/ ))
     {
         $('#size_limit_reached').html(messages["sizelimit"]);
@@ -785,16 +785,16 @@ function loadCommentBox(boxid, method, page, messages, dn, returnto, required)
     }
 }
 
-function renderUserAttributesList(datatables_params, targetDN, column, column_type, attribute, faclass, data)
+function renderUserAttributesList(config_js, targetDN, column, column_type, attribute, faclass, data)
 {
     render = "";
 
     // overload truncate_value_after to always display complete values
     truncate_value_after = 10000;
     // picking display_show_undefined as show_undef parameter
-    var display_show_undefined = datatables_params["display_show_undefined"];
+    var display_show_undefined = config_js["display_show_undefined"];
     display_show_undefined = display_show_undefined ? true : false;
-    var messages = datatables_params["messages"];
+    var messages = config_js["messages"];
 
     if( display_show_undefined || ( typeof data === 'string' && data ) || ( Array.isArray(data) && data.length != 0 ) )
     {
@@ -804,7 +804,7 @@ function renderUserAttributesList(datatables_params, targetDN, column, column_ty
           "faclass": faclass,
           "message": messages['label_' + column],
           "value": ldapTypeRenderer(
-                                       datatables_params,
+                                       config_js,
                                        targetDN,
                                        column,
                                        column_type,
@@ -821,16 +821,16 @@ function renderUserAttributesList(datatables_params, targetDN, column, column_ty
     return render;
 }
 
-function renderStatusAttributesList(datatables_params, targetDN, column, column_type, attribute, faclass, data)
+function renderStatusAttributesList(config_js, targetDN, column, column_type, attribute, faclass, data)
 {
     render = "";
 
     // overload truncate_value_after to always display complete values
     truncate_value_after = 10000;
     // picking display_show_undefined as show_undef parameter
-    var display_show_undefined = datatables_params["display_show_undefined"];
+    var display_show_undefined = config_js["display_show_undefined"];
     display_show_undefined = display_show_undefined ? true : false;
-    var messages = datatables_params["messages"];
+    var messages = config_js["messages"];
 
     if( display_show_undefined || ( typeof data === 'string' && data ) || ( Array.isArray(data) && data.length != 0 ) )
     {
@@ -839,7 +839,7 @@ function renderStatusAttributesList(datatables_params, targetDN, column, column_
         var values = {
           "message": messages['label_' + column],
           "value": ldapTypeRenderer(
-                                       datatables_params,
+                                       config_js,
                                        targetDN,
                                        column,
                                        column_type,

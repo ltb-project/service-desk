@@ -3,7 +3,7 @@
 $(document).ready(function(){
 
 {/literal}
-    var datatables_params = JSON.parse(atob("{$datatables_params}"));
+    var config_js = JSON.parse(atob("{$config_js}"));
 {literal}
 
     // If we are on display page, call the API to get the attributes and display them
@@ -40,7 +40,7 @@ $(document).ready(function(){
                       var data            = apiResponseJSON["data"][0][(i+1)];
 
                       render += renderUserAttributesList(
-                                    datatables_params,
+                                    config_js,
                                     targetDN,
                                     column,
                                     column_type,
@@ -64,7 +64,7 @@ $(document).ready(function(){
                       var data            = apiResponseJSON["data"][0][(i+1)];
 
                       render += renderStatusAttributesList(
-                                    datatables_params,
+                                    config_js,
                                     targetDN,
                                     column,
                                     column_type,
@@ -93,11 +93,11 @@ $(document).ready(function(){
         var targetDN    = $( this ).attr("data-dn");
 
         // picking display_show_undefined as show_undef parameter
-        var display_show_undefined = datatables_params["display_show_undefined"];
+        var display_show_undefined = config_js["display_show_undefined"];
         display_show_undefined = display_show_undefined ? true : false;
 
         render += ldapTypeRenderer(
-                                     datatables_params,
+                                     config_js,
                                      targetDN,
                                      column,
                                      column_type,
