@@ -29,7 +29,7 @@
       columnDefs: [
           { targets: '_all', render: function ( data, type, row, meta ) {return datatableTypeRenderer(data, type, row, meta, config_js);} }
       ],
-      drawCallback: function (settings) { updateEntriesCount(settings, config_js, page);},
+      drawCallback: function (settings) { updateEntriesCount(settings, config_js, page); redirectWhenOneEntry(settings, config_js, page)},
       layout: {
         topStart: {
 {/literal}
