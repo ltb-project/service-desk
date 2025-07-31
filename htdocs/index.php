@@ -331,6 +331,7 @@ if (isset($_POST["apiendpoint"])) {
 #==============================================================================
 $result = "";
 $page = "welcome";
+$searchaction = "";
 if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
 if ( $page === "checkpassword" and !$use_checkpassword ) { $page = "welcome"; }
 if ( $page === "resetpassword" and !$use_resetpassword ) { $page = "welcome"; }
@@ -348,8 +349,14 @@ if ( $page === "update" and !$use_update ) { $page = "welcome"; }
 if ( $page === "rename" and !$use_rename ) { $page = "welcome"; }
 if ( $page === "create" and !$use_create ) { $page = "welcome"; }
 if ( $page === "delete" and !$use_delete ) { $page = "welcome"; }
+if ( preg_match("/^search.*$/",$page) )
+{
+    $searchaction = $page;
+    $page = "search"; # Use generic page search
+}
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
+$smarty->assign('searchaction',$searchaction);
 
 \Ltb\Ppolicy::smarty_assign_ppolicy($smarty, $pwd_show_policy_pos, $pwd_show_policy, $result, $pwd_policy_config);
 

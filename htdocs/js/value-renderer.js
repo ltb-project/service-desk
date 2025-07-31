@@ -715,7 +715,7 @@ function print_all_results(e, dt, node, config, cb, autoPrint)
     });
 }
 
-function updateEntriesCount(settings, config_js, page)
+function updateEntriesCount(settings, config_js, searchaction)
 {
     var table = new DataTable('table.dataTable');
     var totalRows = table.page.info().recordsTotal;
@@ -724,7 +724,7 @@ function updateEntriesCount(settings, config_js, page)
     var msg = "";
 
     var title = "";
-    var titleKey = "title_" + page;
+    var titleKey = "title_" + searchaction;
     if( titleKey in messages)
     {
         title = messages[titleKey] + " ";
