@@ -18,7 +18,7 @@ $(document).ready(function(){
             get_config_js(config_js);
 
         render = "";
-        render += ldapDNLinkTypeRenderer(dn, truncate_value_after, search);
+        render += ldapDnlinkTypeRenderer(dn, truncate_value_after, search);
         $( this ).html(render);
 
     });

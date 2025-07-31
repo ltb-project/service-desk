@@ -3,7 +3,7 @@
       $(document).ready( function() {
 {/literal}
     var config_js = JSON.parse(atob("{$config_js}"));
-    var page = "{$page}";
+    var searchaction = "{$searchaction}";
     var search_query = "{$search_query}";
 {literal}
 
@@ -20,7 +20,7 @@
         url: '/index.php',
         type: 'POST',
         data: {
-            action: page,
+            action: searchaction,
             search_query: search_query,
             apiendpoint: "search-api"
         }
@@ -29,7 +29,7 @@
       columnDefs: [
           { targets: '_all', render: function ( data, type, row, meta ) {return datatableTypeRenderer(data, type, row, meta, config_js);} }
       ],
-      drawCallback: function (settings) { updateEntriesCount(settings, config_js, page); redirectWhenOneEntry(settings, config_js, page)},
+      drawCallback: function (settings) { updateEntriesCount(settings, config_js, searchaction); redirectWhenOneEntry(settings, config_js, searchaction)},
       layout: {
         topStart: {
 {/literal}
