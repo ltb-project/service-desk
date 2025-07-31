@@ -749,6 +749,25 @@ function updateEntriesCount(settings, config_js, page)
     $('#entriesCount').html(msg);
 }
 
+function redirectWhenOneEntry(settings, config_js, page)
+{
+    var table = new DataTable('table.dataTable');
+    var totalRows = table.page.info().recordsTotal;
+
+    if( page == "search" && totalRows == 1 )
+    {
+        var link = $('#search-listing tbody tr td a').first().attr('href');
+        if(link != undefined)
+        {
+            window.location.replace(link);
+        }
+        else
+        {
+            console.error("Only one entry found, but can't find an url for redirecting to entry page");
+        }
+    }
+}
+
 function datatableManageError(config_js, error)
 {
     var messages = config_js["messages"];
