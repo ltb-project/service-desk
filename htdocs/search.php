@@ -31,7 +31,7 @@ switch ($searchaction) {
         if (isset($_POST["search"]) and $_POST["search"]) {
             $result="";
             $smarty->assign("search_query", $_POST["search"]);
-        
+
         } else {
             $result = "searchrequired";
         }

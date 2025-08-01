@@ -54,7 +54,7 @@ $(document).ready(function(){
 
                    });
 
-                   $( "#status_attributes tr" ).each(function( ) {
+                   $( "#status_attributes tr[id^='status_']" ).each(function( ) {
 
                       var render = "";
                       var column          = $( this ).attr("data-item");
