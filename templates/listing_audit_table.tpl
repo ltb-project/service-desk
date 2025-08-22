@@ -20,6 +20,8 @@
             {$msg_{$event.$column}}
             {elseif $column == "user_dn"}
             <div class="display_dn_link" data-dn='{$event.user_dn}' ></div>
+            {elseif $column == "date"}
+            {$event.date|date_format:{$date_specifiers}}
             {else}
             {$event.$column}
             {/if}
