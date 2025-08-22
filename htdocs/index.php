@@ -245,6 +245,12 @@ foreach ($columns as $column )
 }
 $smarty->assign("config_js", base64_encode(json_encode($config_js)));
 
+# Assign custom template variables
+foreach (get_defined_vars() as $key => $value) {
+    if (preg_match('/^tpl_(.+)/', $key, $matches)) {
+        $smarty->assign($matches[1], $value);
+    }
+}
 
 # Assign messages
 $smarty->assign('lang',$lang);
