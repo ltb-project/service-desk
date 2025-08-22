@@ -230,6 +230,7 @@ $smarty->assign("isExpired", $isExpired);
 $smarty->assign("ldapExpirationDate", $expirationDate ? $expirationDate->getTimestamp(): NULL);
 $smarty->assign("resetAtNextConnection", $resetAtNextConnection);
 
+$smarty->assign("refresh_link", "/?page=display&dn=".urlencode($dn));
 $smarty->assign("edit_link", "/?page=update&dn=".urlencode($dn));
 $smarty->assign("rename_link", "/?page=rename&dn=".urlencode($dn));
 $smarty->assign("delete_link", "/?page=delete&dn=".urlencode($dn));
