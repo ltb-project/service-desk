@@ -286,6 +286,7 @@ $date_timezone = "UTC";
 # Graphics
 $logo = "images/ltb-logo.png";
 $background_image = "images/unsplash-space.jpeg";
+$favicon = "images/favicon.ico";
 $custom_css = "";
 $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
