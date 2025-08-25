@@ -15,6 +15,7 @@
 
             <div class="card-body">
                 <div class="container-fluid">
+                {assign var="modulo" value=0}
                 {foreach from=$card_items item=item name=items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
@@ -22,10 +23,11 @@
                 {$multivalued=$attributes_map.{$item}.multivalued}
 
                 {if !({$entry.$attribute.0}) && ! $item|in_array:$update_items}
+                    {if $modulo==0}{assign var="modulo" value=1}{else}{assign var="modulo" value=0}{/if}
                     {continue}
                 {/if}
 
-                    <div class="row align-items-center p-2{if $smarty.foreach.items.iteration %2 == 0} bg-white{/if}" id="update_{$item}">
+                    <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == $modulo} bg-white{/if}" id="update_{$item}">
                         <div class="col-1 px-1">
                             <i class="fa fa-fw fa-{$faclass}"></i>
                         </div>
