@@ -15,39 +15,38 @@
             <input type="hidden" name="dn" value="{$dn}"/>
 
             <div class="card-body">
-                <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <tr>
-                        <th></th>
-                        <th class="d-none d-sm-table-cell"></th>
-                        <th>{$msg_oldvalue}</th>
-                        <th>{$msg_newvalue}</th>
-                    </tr>
-                {foreach $card_items as $item}
+                <div class="container-fluid">
+
+                <div class="row align-items-center p-2 bg-secondary text-white">
+                    <div class="col-1 px-1"></div>
+                    <div class="col-3 d-none d-sm-block px-1"></div>
+                    <div class="col-4 px-1">{$msg_oldvalue}</div>
+                    <div class="col-4 px-1">{$msg_newvalue}</div>
+                </div>
+
+                {foreach from=$card_items item=item name=items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
 
-                    <tr id="info_{$item}">
-                        <th class="text-center">
-                            <i class="fa fa-fw fa-{$faclass}"></i>
-                        </th>
-                        <th class="d-none d-sm-table-cell">
-                            {$msg_label_{$item}}
-                        </th>
-                        <td>
+                <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == 0} bg-white{/if}" id="info_{$item}">
+                    <div class="col-1 px-1">
+                        <i class="fa fa-fw fa-{$faclass}"></i>
+                    </div>
+                    <div class="col-3 d-none d-sm-block px-1">
+                        {$msg_label_{$item}}
+                    </div>
+                    <div class="col-4 px-1">
                         {foreach $entry.{$attribute} as $value}
-                            <div class="display_value" data-dn="{$dn}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-value="{$value}" >
+                        <div class="display_value" data-dn="{$dn}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-value="{$value}"></div>
                         {/foreach}
-                        </td>
-                        <td>
+                    </div>
+                    <div class="col-4 px-1">
                         {include 'value_editor.tpl' item=$item value="" type=$type list=$item_list.$item truncate_value_after=10000}
-                        </td>
-                    </tr>
-                {/foreach}
-                </table>
+                    </div>
                 </div>
-
+                {/foreach}
+                </div>
 
             </div>
 

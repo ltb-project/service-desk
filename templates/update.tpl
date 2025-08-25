@@ -14,26 +14,27 @@
             <input type="hidden" name="dn" value="{$dn}"/>
 
             <div class="card-body">
-                <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                {foreach $card_items as $item}
+                <div class="container-fluid">
+                {assign var="modulo" value=0}
+                {foreach from=$card_items item=item name=items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
                 {$multivalued=$attributes_map.{$item}.multivalued}
 
                 {if !({$entry.$attribute.0}) && ! $item|in_array:$update_items}
+                    {if $modulo==0}{assign var="modulo" value=1}{else}{assign var="modulo" value=0}{/if}
                     {continue}
                 {/if}
 
-                    <tr id="update_{$item}">
-                        <th class="text-center">
+                    <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == $modulo} bg-white{/if}" id="update_{$item}">
+                        <div class="col-1 px-1">
                             <i class="fa fa-fw fa-{$faclass}"></i>
-                        </th>
-                        <th class="d-none d-sm-table-cell">
+                        </div>
+                        <div class="col-3 d-none d-sm-block px-1">
                             {$msg_label_{$item}}
-                        </th>
-                        <td>
+                        </div>
+                        <div class="col px-1">
                             {if $item|in_array:$update_items}
                                 {if !({$entry.$attribute.0})}
                                 {include 'value_editor.tpl' item=$item itemindex=0 value="" type=$type list=$item_list.$item multivalued=$multivalued truncate_value_after=10000}
@@ -48,13 +49,10 @@
                                     </div>
                                 {/foreach}
                             {/if}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {/foreach}
-                </table>
                 </div>
-
-
             </div>
 
             <div class="card-footer text-center">
