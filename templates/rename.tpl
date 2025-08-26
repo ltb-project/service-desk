@@ -51,12 +51,10 @@
             </div>
 
             <div class="card-footer text-center">
-                <div class="d-grid gap-2 col-md-4 mx-auto">
-                <button type="submit" class="btn btn-success">
+                <button type="submit" class="btn btn-success m-1">
                     <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
                 </button>
-                <a href="?page=display&dn={$dn}" class="btn btn-secondary"><i class="fa fa-fw fa-cancel"></i> {$msg_cancelbacktoentry}</a>
-                </div>
+                <a href="?page=display&dn={$dn}" class="btn btn-outline-secondary m-1"><i class="fa fa-fw fa-cancel"></i> {$msg_cancelbacktoentry}</a>
             </div>
 
             </form>

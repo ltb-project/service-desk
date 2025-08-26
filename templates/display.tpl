@@ -62,15 +62,15 @@
             </div>
 
             <div class="card-footer text-center">
-                <a class="btn btn-outline-primary" href="{$refresh_link}"><i class="fa fa-refresh"></i> {$msg_refreshentry}</a>
+                <a class="btn btn-outline-primary m-1" href="{$refresh_link}"><i class="fa fa-refresh"></i> {$msg_refreshentry}</a>
                 {if $edit_link}
-                <a class="btn btn-outline-success" href="{$edit_link}"><i class="fa fa-edit"></i> {$msg_editentry}</a>
+                <a class="btn btn-outline-success m-1" href="{$edit_link}"><i class="fa fa-edit"></i> {$msg_editentry}</a>
                 {/if}
                 {if $rename_link}
-                <a class="btn btn-outline-success" href="{$rename_link}"><i class="fa fa-user-pen"></i> {$msg_renameentry}</a>
+                <a class="btn btn-outline-secondary m-1" href="{$rename_link}"><i class="fa fa-user-pen"></i> {$msg_renameentry}</a>
                 {/if}
                 {if $delete_link}
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete{$dn|sha256}">
+                <button type="button" class="btn btn-outline-danger m-1" data-bs-toggle="modal" data-bs-target="#delete{$dn|sha256}">
                   <i class="fa fa-user-minus"></i> {$msg_deleteentry}
                 </button>
                 {include 'deletemodal.tpl' dn={$dn}}
