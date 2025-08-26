@@ -89,46 +89,51 @@
 
             <div class="card-body">
 
-                <div class="table-responsive">
-                <table id="status_attributes" class="table table-striped table-hover">
-                {foreach $password_items as $item}
+                <div class="container-fluid" id="status_attributes">
+                {assign var="modulo" value=0}
+                {foreach from=$password_items item=item name=status_items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
-                    <tr id="status_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}">
-                    </tr>
+
+                {if !({$entry.$attribute.0})}
+                    {if $modulo==0}{assign var="modulo" value=1}{else}{assign var="modulo" value=0}{/if}
+                    {continue}
+                {/if}
+
+                    <div class="row align-items-center p-2{if $smarty.foreach.status_items.iteration % 2 == $modulo} bg-white{/if}" id="status_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}" data-index="{$smarty.foreach.status_items.iteration}">
+                    </div>
                 {/foreach}
                 {if $lockDate}
-                    <tr>
-                        <th class="col-md-6">
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
                             {$msg_label_pwdaccountlockedtime}
-                        </th>
-                        <td class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
                             {$lockDate|date_format:{$date_specifiers}|truncate:10000}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {/if}
                 {if {$display_password_expiration_date} and {$ldapExpirationDate}}
-                    <tr>
-                        <th class="col-md-6">
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
                             {$msg_label_expirationdate}
-                        </th>
-                        <td class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
                             {$ldapExpirationDate|date_format:{$date_specifiers}|truncate:10000}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {/if}
                 {if $resetAtNextConnection}
-                    <tr>
-                        <th class="col-md-6">
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
                             {$msg_label_pwdreset}
-                        </th>
-                        <td class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
                             {$msg_true}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {/if}
-                </table>
                 </div>
 
             </div>

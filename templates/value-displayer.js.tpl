@@ -25,6 +25,7 @@ $(document).ready(function(){
               .done(function( apiResponse ) {
 
                   var apiResponseJSON = JSON.parse(apiResponse);
+                  var status_index = 0;
 
                   $( "#user_attributes > div" ).each(function( ) {
 
@@ -47,17 +48,20 @@ $(document).ready(function(){
                                 );
 
                       $( this ).html(render);
+                      status_index = index;
 
                    });
 
-                   $( "#status_attributes tr[id^='status_']" ).each(function( ) {
+                   $( "#status_attributes div[id^='status_']" ).each(function( ) {
 
                       var render = "";
                       var column          = $( this ).attr("data-item");
                       var column_type     = $( this ).attr("data-type");
                       var attribute       = $( this ).attr("data-attribute");
                       var faclass         = $( this ).attr("data-faclass");
-                      var data            = apiResponseJSON["data"][0][(i+1)];
+                      var index           = $( this ).attr("data-index");
+                      var new_index       = parseInt(index)+parseInt(status_index)+2;
+                      var data            = apiResponseJSON["data"][0][new_index];
 
                       render += renderStatusAttributesList(
                                     config_js,
@@ -70,7 +74,6 @@ $(document).ready(function(){
                                 );
 
                       $( this ).html(render);
-                      i++;
 
                    });
 
