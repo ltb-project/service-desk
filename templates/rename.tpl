@@ -17,11 +17,11 @@
             <div class="card-body">
                 <div class="container-fluid">
 
-                <div class="row align-items-center p-2 bg-secondary text-white">
-                    <div class="col-1 px-1"></div>
-                    <div class="col-3 d-none d-sm-block px-1"></div>
-                    <div class="col-4 px-1">{$msg_oldvalue}</div>
-                    <div class="col-4 px-1">{$msg_newvalue}</div>
+                <div class="row align-items-center p-2 text-bg-secondary">
+                    <div class="col-1 px-1 d-none d-sm-block"></div>
+                    <div class="col-3 px-1 d-none d-sm-block"></div>
+                    <div class="col-6 col-sm-4 px-1">{$msg_oldvalue}</div>
+                    <div class="col-6 col-sm-4 px-1">{$msg_newvalue}</div>
                 </div>
 
                 {foreach from=$card_items item=item name=items}
@@ -30,18 +30,18 @@
                 {$faclass=$attributes_map.{$item}.faclass}
 
                 <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == 0} bg-white{/if}" id="info_{$item}">
-                    <div class="col-1 px-1">
+                    <div class="col-1 px-1 d-none d-sm-block">
                         <i class="fa fa-fw fa-{$faclass}"></i>
                     </div>
-                    <div class="col-3 d-none d-sm-block px-1">
+                    <div class="col-3 fw-semibold px-1 d-none d-sm-block">
                         {$msg_label_{$item}}
                     </div>
-                    <div class="col-4 px-1">
+                    <div class="col-6 col-sm-4 px-1">
                         {foreach $entry.{$attribute} as $value}
                         <div class="display_value" data-dn="{$dn}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-value="{$value}"></div>
                         {/foreach}
                     </div>
-                    <div class="col-4 px-1">
+                    <div class="col-6 col-sm-4 px-1">
                         {include 'value_editor.tpl' item=$item value="" type=$type list=$item_list.$item truncate_value_after=10000}
                     </div>
                 </div>

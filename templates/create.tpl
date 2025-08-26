@@ -23,10 +23,10 @@
                         <div class="col-1 px-1">
                             <i class="fa fa-fw fa-{$faclass}"></i>
                         </div>
-                        <div class="col-3 d-none d-sm-block px-1">
+                        <div class="col-11 col-md-3 fw-semibold px-1">
                             {$msg_label_{$item}}
                         </div>
-                        <div class="col px-1">
+                        <div class="col-md px-1">
                             {include 'value_editor.tpl' item=$item itemindex=0 value="" type=$type list=$item_list.$item multivalued=$multivalued truncate_value_after=10000}
                         </div>
                     </div>
