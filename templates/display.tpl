@@ -42,15 +42,20 @@
 
             <div class="card-body">
 
-                <div class="table-responsive">
-                <table id="user_attributes" class="table table-striped table-hover" data-dn="{$dn}" >
-                {foreach $card_items as $item}
+                <div class="container-fluid" data-dn="{$dn}" id="user_attributes">
+                {assign var="modulo" value=0}
+                {foreach from=$card_items item=item name=items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
 
-                    <tr id="info_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}">
-                    </tr>
+                {if !({$entry.$attribute.0})}
+                    {if $modulo==0}{assign var="modulo" value=1}{else}{assign var="modulo" value=0}{/if}
+                    {continue}
+                {/if}
+
+                    <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == $modulo} bg-white{/if}" id="info_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}" data-index="{$smarty.foreach.items.iteration}">
+                    </div>
                 {/foreach}
                 </table>
                 </div>
