@@ -25,7 +25,6 @@ $(document).ready(function(){
               .done(function( apiResponse ) {
 
                   var apiResponseJSON = JSON.parse(apiResponse);
-                  var status_index = 0;
 
                   $( "#user_attributes > div" ).each(function( ) {
 
@@ -48,7 +47,6 @@ $(document).ready(function(){
                                 );
 
                       $( this ).html(render);
-                      status_index = index;
 
                    });
 
@@ -60,7 +58,8 @@ $(document).ready(function(){
                       var attribute       = $( this ).attr("data-attribute");
                       var faclass         = $( this ).attr("data-faclass");
                       var index           = $( this ).attr("data-index");
-                      var new_index       = parseInt(index)+parseInt(status_index)+2;
+                      var start_index     = $( this ).attr("data-start-index");
+                      var new_index       = parseInt(index)+parseInt(start_index);
                       var data            = apiResponseJSON["data"][0][new_index];
 
                       render += renderStatusAttributesList(

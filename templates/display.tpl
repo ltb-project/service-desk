@@ -101,7 +101,7 @@
                     {continue}
                 {/if}
 
-                    <div class="row align-items-center p-2{if $smarty.foreach.status_items.iteration % 2 == $modulo} bg-white{/if}" id="status_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}" data-index="{$smarty.foreach.status_items.iteration}">
+                    <div class="row align-items-center p-2{if $smarty.foreach.status_items.iteration % 2 == $modulo} bg-white{/if}" id="status_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}" data-index="{$smarty.foreach.status_items.iteration}" data-start-index="{$smarty.foreach.items.total}">
                     </div>
                 {/foreach}
                 {if $lockDate}
