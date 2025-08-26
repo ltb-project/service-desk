@@ -42,30 +42,35 @@
 
             <div class="card-body">
 
-                <div class="table-responsive">
-                <table id="user_attributes" class="table table-striped table-hover" data-dn="{$dn}" >
-                {foreach $card_items as $item}
+                <div class="container-fluid" data-dn="{$dn}" id="user_attributes">
+                {assign var="modulo" value=0}
+                {foreach from=$card_items item=item name=items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
 
-                    <tr id="info_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}">
-                    </tr>
+                {if !({$entry.$attribute.0})}
+                    {if $modulo==0}{assign var="modulo" value=1}{else}{assign var="modulo" value=0}{/if}
+                    {continue}
+                {/if}
+
+                    <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == $modulo} bg-white{/if}" id="info_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}" data-index="{$smarty.foreach.items.iteration}">
+                    </div>
                 {/foreach}
                 </table>
                 </div>
             </div>
 
             <div class="card-footer text-center">
-                <a class="btn btn-outline-primary" href="{$refresh_link}"><i class="fa fa-refresh"></i> {$msg_refreshentry}</a>
+                <a class="btn btn-outline-primary m-1" href="{$refresh_link}"><i class="fa fa-refresh"></i> {$msg_refreshentry}</a>
                 {if $edit_link}
-                <a class="btn btn-outline-success" href="{$edit_link}"><i class="fa fa-edit"></i> {$msg_editentry}</a>
+                <a class="btn btn-outline-success m-1" href="{$edit_link}"><i class="fa fa-edit"></i> {$msg_editentry}</a>
                 {/if}
                 {if $rename_link}
-                <a class="btn btn-outline-success" href="{$rename_link}"><i class="fa fa-user-pen"></i> {$msg_renameentry}</a>
+                <a class="btn btn-outline-secondary m-1" href="{$rename_link}"><i class="fa fa-user-pen"></i> {$msg_renameentry}</a>
                 {/if}
                 {if $delete_link}
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete{$dn|sha256}">
+                <button type="button" class="btn btn-outline-danger m-1" data-bs-toggle="modal" data-bs-target="#delete{$dn|sha256}">
                   <i class="fa fa-user-minus"></i> {$msg_deleteentry}
                 </button>
                 {include 'deletemodal.tpl' dn={$dn}}
@@ -84,46 +89,51 @@
 
             <div class="card-body">
 
-                <div class="table-responsive">
-                <table id="status_attributes" class="table table-striped table-hover">
-                {foreach $password_items as $item}
+                <div class="container-fluid" id="status_attributes">
+                {assign var="modulo" value=0}
+                {foreach from=$password_items item=item name=status_items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
-                    <tr id="status_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}">
-                    </tr>
+
+                {if !({$entry.$attribute.0})}
+                    {if $modulo==0}{assign var="modulo" value=1}{else}{assign var="modulo" value=0}{/if}
+                    {continue}
+                {/if}
+
+                    <div class="row align-items-center p-2{if $smarty.foreach.status_items.iteration % 2 == $modulo} bg-white{/if}" id="status_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}" data-index="{$smarty.foreach.status_items.iteration}">
+                    </div>
                 {/foreach}
                 {if $lockDate}
-                    <tr>
-                        <th class="col-md-6">
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
                             {$msg_label_pwdaccountlockedtime}
-                        </th>
-                        <td class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
                             {$lockDate|date_format:{$date_specifiers}|truncate:10000}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {/if}
                 {if {$display_password_expiration_date} and {$ldapExpirationDate}}
-                    <tr>
-                        <th class="col-md-6">
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
                             {$msg_label_expirationdate}
-                        </th>
-                        <td class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
                             {$ldapExpirationDate|date_format:{$date_specifiers}|truncate:10000}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {/if}
                 {if $resetAtNextConnection}
-                    <tr>
-                        <th class="col-md-6">
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
                             {$msg_label_pwdreset}
-                        </th>
-                        <td class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
                             {$msg_true}
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 {/if}
-                </table>
                 </div>
 
             </div>

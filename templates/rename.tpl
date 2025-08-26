@@ -15,49 +15,46 @@
             <input type="hidden" name="dn" value="{$dn}"/>
 
             <div class="card-body">
-                <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <tr>
-                        <th></th>
-                        <th class="d-none d-sm-table-cell"></th>
-                        <th>{$msg_oldvalue}</th>
-                        <th>{$msg_newvalue}</th>
-                    </tr>
-                {foreach $card_items as $item}
+                <div class="container-fluid">
+
+                <div class="row align-items-center p-2 text-bg-secondary">
+                    <div class="col-1 px-1 d-none d-sm-block"></div>
+                    <div class="col-3 px-1 d-none d-sm-block"></div>
+                    <div class="col-6 col-sm-4 px-1">{$msg_oldvalue}</div>
+                    <div class="col-6 col-sm-4 px-1">{$msg_newvalue}</div>
+                </div>
+
+                {foreach from=$card_items item=item name=items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
 
-                    <tr id="info_{$item}">
-                        <th class="text-center">
-                            <i class="fa fa-fw fa-{$faclass}"></i>
-                        </th>
-                        <th class="d-none d-sm-table-cell">
-                            {$msg_label_{$item}}
-                        </th>
-                        <td>
+                <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == 0} bg-white{/if}" id="info_{$item}">
+                    <div class="col-1 px-1 d-none d-sm-block">
+                        <i class="fa fa-fw fa-{$faclass}"></i>
+                    </div>
+                    <div class="col-3 fw-semibold px-1 d-none d-sm-block">
+                        {$msg_label_{$item}}
+                    </div>
+                    <div class="col-6 col-sm-4 px-1">
                         {foreach $entry.{$attribute} as $value}
-                            <div class="display_value" data-dn="{$dn}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-value="{$value}" >
+                        <div class="display_value" data-dn="{$dn}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-value="{$value}"></div>
                         {/foreach}
-                        </td>
-                        <td>
+                    </div>
+                    <div class="col-6 col-sm-4 px-1">
                         {include 'value_editor.tpl' item=$item value="" type=$type list=$item_list.$item truncate_value_after=10000}
-                        </td>
-                    </tr>
-                {/foreach}
-                </table>
+                    </div>
                 </div>
-
+                {/foreach}
+                </div>
 
             </div>
 
             <div class="card-footer text-center">
-                <div class="d-grid gap-2 col-md-4 mx-auto">
-                <button type="submit" class="btn btn-success">
+                <button type="submit" class="btn btn-success m-1">
                     <i class="fa fa-fw fa-check-square-o"></i> {$msg_submit}
                 </button>
-                <a href="?page=display&dn={$dn}" class="btn btn-secondary"><i class="fa fa-fw fa-cancel"></i> {$msg_cancelbacktoentry}</a>
-                </div>
+                <a href="?page=display&dn={$dn}" class="btn btn-outline-secondary m-1"><i class="fa fa-fw fa-cancel"></i> {$msg_cancelbacktoentry}</a>
             </div>
 
             </form>
