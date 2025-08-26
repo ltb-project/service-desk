@@ -11,10 +11,12 @@
 <script src="vendor/datatables/dataTables.min.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap5.min.js"></script>
 <script src="vendor/datatables/dataTables.buttons.min.js"></script>
+<script src="vendor/datatables/dataTables.responsive.min.js"></script>
 <script src="vendor/datatables/buttons.colVis.min.js"></script>
 <script src="vendor/datatables/buttons.html5.min.js"></script>
 <script src="vendor/datatables/buttons.print.min.js"></script>
 <script src="vendor/datatables/buttons.bootstrap5.min.js"></script>
+<script src="vendor/datatables/responsive.bootstrap5.min.js"></script>
 <!-- dayjs, from https://github.com/iamkun/dayjs/ MIT LICENSE -->
 <script src="js/dayjs.min.js"></script>
 <!-- ldap2date, from https://github.com/rsolomo/ldap2date.js/ MIT LICENSE -->

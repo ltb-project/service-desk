@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/v4-shims.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/datatables/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" type="text/css" href="vendor/datatables/buttons.bootstrap5.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/datatables/responsive.bootstrap5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/service-desk.css" />
     <link rel="stylesheet" type="text/css" href="css/ppolicy.css" />
 {if $custom_css}

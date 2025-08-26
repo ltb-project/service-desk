@@ -30,13 +30,9 @@
 {literal}
       language: {
         url: "vendor/datatables/i18n/{/literal}{$lang|default:'en'}{literal}.json"
-      }
+      },
+      responsive: true,
     });
-{/literal}
-{literal}
-        $('table tr.clickable').click(function() {
-          document.location.href = $(this).find('[href]').attr('href');
-        });
-      });
+    });
     </script>
 {/literal}
