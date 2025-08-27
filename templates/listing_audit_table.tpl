@@ -6,20 +6,26 @@
 </thead>
 <tbody>
         {foreach $events as $event}
-        <tr{if ! $listing_linkto|is_array} class="clickable" title="{$msg_displayentry}" {/if}>
+        <tr>
             <th class="hidden-print">
+                {if $listing_linkto!==false && $event.user_dn_values}
                 <a href="index.php?page=display&dn={$event.user_dn|escape:'url'}&search={$search}"
-                    class="btn btn-info btn-sm{if $listing_linkto===false} hidden{/if}" role="button"
+                    class="btn btn-info btn-sm" role="button"
                     title="{$msg_displayentry}">
                     <i class="fa fa-fw fa-id-card"></i>
                 </a>
+                {/if}
             </th>
             {foreach $listing_columns as $column}
             <td>
             {if $column == "result" or $column == "action"}
             {$msg_{$event.$column}}
             {elseif $column == "user_dn"}
-            <div class="display_dn_link" data-dn='{$event.user_dn}' ></div>
+            {if $event.user_dn_values}
+            <div class="display_dn_link" data-dn='{$event.user_dn}' data-dn-values='{$event.user_dn_values}'></div>
+            {else}
+            <i title="{$event.user_dn}">{$event.user_dn|truncate:15}</i>
+            {/if}
             {elseif $column == "date"}
             {$event.date|date_format:{$date_specifiers}}
             {else}

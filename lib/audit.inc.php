@@ -39,7 +39,7 @@ function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $a
       $linked_attr_res = $ldapInstance->get_attribute_values($dn, $linked_attr);
       if( $linked_attr_res == false )
       {
-          $linked_attr_vals = [];
+          $json['user_dn_values'] = false;
       }
       else
       {
@@ -49,8 +49,8 @@ function displayauditlog($audit_log_file, $audit_log_days, $audit_log_sortby, $a
                   array_push( $linked_attr_vals, $linked_attr_val );
               }
           }
+          $json['user_dn_values'] = base64_encode(json_encode([$dn,$linked_attr_vals]));
       }
-      $json['user_dn'] = base64_encode(json_encode([ $dn, $linked_attr_vals ]));
 
       array_push($events, $json);
     }
