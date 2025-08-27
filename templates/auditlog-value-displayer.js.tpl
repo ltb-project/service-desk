@@ -8,12 +8,13 @@ $(document).ready(function(){
 
     $( ".display_dn_link" ).each(function( ) {
 
-        var b64_json_dn = $( this ).attr("data-dn");
-        var json_dn = atob(b64_json_dn);
-        var dn = JSON.parse(json_dn);
+        var dn = $( this ).attr("data-dn");
+        var b64_json_dn_values = $( this ).attr("data-dn-values");
+        var json_dn_values = atob(b64_json_dn_values);
+        var values = JSON.parse(json_dn_values);
 
         render = "";
-        render += ldapDnlinkTypeRenderer(config_js, dn, dn);
+        render += ldapDnlinkTypeRenderer(config_js, dn, values);
         $( this ).html(render);
 
     });
