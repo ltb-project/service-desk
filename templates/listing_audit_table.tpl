@@ -10,7 +10,7 @@
             <th class="hidden-print">
                 {if $listing_linkto!==false && $event.user_dn_values}
                 <a href="index.php?page=display&dn={$event.user_dn|escape:'url'}&search={$search}"
-                    class="btn btn-info btn-sm" role="button"
+                    class="btn btn-outline-primary btn-sm" role="button"
                     title="{$msg_displayentry}">
                     <i class="fa fa-fw fa-id-card"></i>
                 </a>
