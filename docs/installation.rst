@@ -26,6 +26,10 @@ You need to install these prerequisites:
 Debian / Ubuntu
 ---------------
 
+.. Important::
+    The GPG key for debian has been updated on August 2025. Take care to use the new one by following the instructions below.
+
+
 .. warning:: Due to a `bug`_ in old Debian and Ubuntu `smarty3`_ package, you may face the error ``syntax error, unexpected token "class"``.
    In this case, install a newer version of the package:
 
@@ -41,7 +45,7 @@ Import the PGP key:
 .. prompt:: bash #
 
     apt install curl gpg
-    curl https://ltb-project.org/documentation/_static/RPM-GPG-KEY-LTB-project | gpg --dearmor > /usr/share/keyrings/ltb-project-openldap-archive-keyring.gpg
+    curl https://ltb-project.org/documentation/_static/ltb-project-debian-keyring.gpg | gpg --dearmor > /usr/share/keyrings/ltb-project-debian-keyring.gpg
 
 Configure the repository:
 
@@ -51,7 +55,7 @@ Configure the repository:
 
 .. code-block:: ini
 
-    deb [arch=amd64 signed-by=/usr/share/keyrings/ltb-project-openldap-archive-keyring.gpg] https://ltb-project.org/debian/stable stable main
+    deb [arch=amd64 signed-by=/usr/share/keyrings/ltb-project-debian-keyring.gpg] https://ltb-project.org/debian/stable stable main
 
 Then update:
 
