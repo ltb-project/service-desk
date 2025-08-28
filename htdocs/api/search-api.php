@@ -243,7 +243,12 @@ if( $action != "display" )
 # Get attribute list from columns: attr => type
 $attribute_list = [];
 foreach( $columns as $column ) {
-    $attribute_list[$attributes_map[$column]['attribute']] = $attributes_map[$column]['type'];
+    // Fill attribute list even for undefined items
+    if (!$attributes_map[$column]['attribute']) {
+        $attribute_list[$column."_undefined"] = null;
+    } else {
+        $attribute_list[$attributes_map[$column]['attribute']] = $attributes_map[$column]['type'];
+    }
 }
 
 $i=0;
