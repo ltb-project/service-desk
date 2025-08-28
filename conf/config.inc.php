@@ -108,6 +108,12 @@ $attributes_static_list = array();
 $attributes_list = array();
 // $attributes_list['organizationalunit'] = array('base'=>'ou=services,dc=example,dc=com', 'filter'=>'(objectClass=organizationalUnit)', 'key'=>'description', 'value'=>'ou');
 
+# DN Link
+$dn_link_label_attributes = array("cn");
+#$dn_link_search_display_macro = "%fullname% (%mail%)";
+$dn_link_search_min_chars = 3;
+$dn_link_search_size_limit = 10;
+
 # Search
 $search_attributes = array('uid', 'cn', 'mail');
 $search_use_substring_match = true;

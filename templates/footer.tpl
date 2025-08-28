@@ -25,6 +25,9 @@
 <script src="js/value-renderer.js"></script>
 <script src="js/service-desk.js"></script>
 <script src="js/ppolicy.js"></script>
+<script src="js/value_editor_dn_link.js"></script>
+<script src="js/value_editor_add_delete.js"></script>
+
 {include 'commentbox.js.tpl'}
 
 {if $page|strstr:"search"}
