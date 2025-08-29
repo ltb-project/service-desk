@@ -219,17 +219,6 @@ switch ($action) {
         break;
 }
 
-# Sort entries for having them always in the same order
-$ldapInstance->ldapSort($entries, $attributes_map['identifier']['attribute']);
-
-# Only get a page of entries
-$entries = array_slice( $entries,
-                        intval($datatables_input["start"]),
-                        intval($datatables_input["length"]) );
-
-
-# Format data to send
-$outputdata = array();
 
 # Get columns labels
 $columns = $search_result_items;
@@ -239,6 +228,36 @@ if( $action != "display" )
     # add search_result_title (cn) in front of the columns list
     if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
 }
+
+
+# Sort entries by the attribute provided
+if(isset($datatables_input["order"]) &&
+   isset($datatables_input["order"][0]) &&
+   isset($datatables_input["order"][0]["column"]) &&
+   $datatables_input["order"][0]["column"] > 0 )
+{
+    # use the order parameter provided in the request
+    $column_sortby = $columns[($datatables_input["order"][0]["column"]-1)];
+    $attribute_sortby = $attributes_map[$column_sortby]['attribute'];
+    $attribute_type = $attributes_map[$column_sortby]['type'];
+
+    $direction = isset($datatables_input["order"][0]["dir"]) ?
+                 $datatables_input["order"][0]["dir"] :
+                 "asc";
+
+    # Sort entries
+    $ldapInstance->sortEntries($entries, $attribute_sortby, $direction, $attribute_type);
+}
+
+
+# Only get a page of entries
+$entries = array_slice( $entries,
+                        intval($datatables_input["start"]),
+                        intval($datatables_input["length"]) );
+
+
+# Format data to send
+$outputdata = array();
 
 # Get attribute list from columns: attr => type
 $attribute_list = [];
@@ -250,6 +269,9 @@ foreach( $columns as $column ) {
         $attribute_list[$attributes_map[$column]['attribute']] = $attributes_map[$column]['type'];
     }
 }
+
+# Always remove count parameter
+unset($entries["count"]);
 
 $i=0;
 foreach ($entries as $entry)
