@@ -1,10 +1,11 @@
 # Program files
-../conf/*      etc/service-desk/
-../htdocs/*    usr/share/service-desk/htdocs/
-../lang/*      usr/share/service-desk/lang/
-../lib/*       usr/share/service-desk/lib/
-../templates/* usr/share/service-desk/templates/
-../vendor/*    usr/share/service-desk/vendor/
+../conf/*          etc/service-desk/
+../htdocs/*        usr/share/service-desk/htdocs/
+../js-templates/*  usr/share/service-desk/js-templates/
+../lang/*          usr/share/service-desk/lang/
+../lib/*           usr/share/service-desk/lib/
+../templates/*     usr/share/service-desk/templates/
+../vendor/*        usr/share/service-desk/vendor/
 
 # Apache configuration
 debian/conf/* etc/apache2/sites-available/

@@ -86,6 +86,7 @@ find . \
 mkdir -p %{buildroot}/%{sd_destdir}
 mkdir -p %{buildroot}/%{sd_destdir}/conf
 mkdir -p %{buildroot}/%{sd_destdir}/htdocs
+mkdir -p %{buildroot}/%{sd_destdir}/js-templates
 mkdir -p %{buildroot}/%{sd_destdir}/lang
 mkdir -p %{buildroot}/%{sd_destdir}/lib
 mkdir -p %{buildroot}/%{sd_destdir}/templates
@@ -96,10 +97,12 @@ mkdir -p %{buildroot}/%{sd_cachedir}/templates_c
 # Copy files
 ## Program
 install -p -m 644 htdocs/*.php   %{buildroot}/%{sd_destdir}/htdocs
+cp -a             htdocs/api     %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/css     %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/images  %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/js      %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/vendor  %{buildroot}/%{sd_destdir}/htdocs
+install -p -m 644 js-templates/* %{buildroot}/%{sd_destdir}/js-templates
 install -p -m 644 lang/*         %{buildroot}/%{sd_destdir}/lang
 install -p -m 644 lib/*          %{buildroot}/%{sd_destdir}/lib
 install -p -m 644 templates/*    %{buildroot}/%{sd_destdir}/templates
@@ -147,7 +150,7 @@ fi
 
 
 %post
-# Move old configuration to /etc/self-service-password
+# Move old configuration to /etc/service-desk
 for file in $( find %{_sysconfdir}/%{name} -name "*.save" -type f );
 do
     # move previously created *.save file into its equivalent without .save
