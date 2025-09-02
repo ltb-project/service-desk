@@ -283,7 +283,7 @@ foreach ($entries as $entry)
     {
         $values = [];
         foreach ($entry[$attr] as $j => $value) {
-            if($j != "count") {
+            if($j !== "count") {
 
                 # If this is a DN, we search for the corresponding cn
                 if( $type == "dn_link" || $type == "ppolicy_dn" )
