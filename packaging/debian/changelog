@@ -1,3 +1,45 @@
+ltb-project-service-desk (0.7-1) unstable; urgency=low
+
+    * gh#28: Add a page to edit user attributes
+    * gh#35: Ability to add new users
+    * gh#122: Problem sorting bytes columns in dashboards
+    * gh#196: Button to refresh the display page
+    * gh#205: Use date_specifiers to display date in audit page
+    * gh#206: Add a specific error when password check fails because password is wrong
+    * gh#207: Add a spinner to wait for datatables loading
+    * gh#211: HTML response may be too large/long to generate - implement server-side pagination
+    * gh#212: Update entry
+    * gh#213: Factorize function to sort attribute values
+    * gh#215: Adding password check error message
+    * gh#216: Customized templates
+    * gh#220: Norwegian translation
+    * gh#221: Reorder lang files
+    * gh#222: Spinner to wait for dataTable loading
+    * gh#223: Design: do not use tables when not needed
+    * gh#224: Use sortEntry method
+    * gh#225: Account creation
+    * gh#226: Manage pagination
+    * gh#227: Customized templates
+    * gh#228: In audit page, do not allow to view entry if it does not exist
+    * gh#230: Inject configuration variables in templates
+    * gh#231: Add configuration for favicon
+    * gh#232: error when computing ad_date type in value_editor.tpl
+    * gh#233: fix empty values for ad_date (#232)
+    * gh#234: Using date_specifiers for date column in audit dashboard
+    * gh#235: Inject configuration variables in templates
+    * gh#236: Favicon configuration
+    * gh#237: Add action button to refresh entry display
+    * gh#238: Use bootstrap grid/flex to replace table in update page
+    * gh#239: Improve the dn_list editor
+    * gh#240: Fix index management for status attributes
+    * gh#241: In audit page, do not link to entry if it does not exist
+    * gh#242: Search API results don't match with attribute list in display template
+    * gh#243: Configuration for dn list editor
+    * gh#244: sorting does not work any more in Datatables
+    * gh#245: fix datatables sorting + enable sorting for mailquota by default (#244)
+
+ -- Clement Oudot <clem@ltb-project.org>  Tue, 02 Sep 2025 12:00:00 +0200
+
 ltb-project-service-desk (0.6.2-1) unstable; urgency=low
 
     * gh#209: Use ltb-common 0.5.0
