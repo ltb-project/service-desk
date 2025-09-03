@@ -4,7 +4,28 @@ Upgrade
 From 0.6 to 0.7
 ---------------
 
-date specifier
+Entry edition enabled by default
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The main new feature of 0.7 version is the possibility to create, modify, rename and delete accounts in the LDAP directory.
+
+This is enabled by default, and if you want not to use them, you need to update your configuration:
+
+.. code-block:: php
+
+    $use_update = false;
+    $use_rename = false;
+    $use_create = false;
+    $use_delete = false;
+
+If you want to keep them, you need to check the configuration for each options, to set list of attributes available in creation mode or update mode, and set the branch where entries are created. Please check each documentation page:
+
+* :doc:`Create entry<createentry>`
+* :doc:`Update entry<updateentry>`
+* :doc:`Rename entry<renameentry>`
+* :doc:`Delete entry<deleteentry>`
+
+Date specifier
 ~~~~~~~~~~~~~~
 
 A new javascript date specifier has been added to the default configuration file.
@@ -16,7 +37,6 @@ If you did some modifications to ``$date_specifiers``, you should adapt them as 
     $js_date_specifiers = "YYYY-MM-DD HH:mm:ss (Z)";
 
 See :ref:`date format<date_format>` for more information.
-
 
 From 0.5 to 0.6
 ---------------
