@@ -15,6 +15,7 @@ Features
 
 * LDAPv3 and Active Directory support
 * Quick search for an account
+* Create, update, rename and delete accounts
 * View main attributes
 * View account and password status
 * Test current password
@@ -36,4 +37,4 @@ Features
 
 .. image:: images/ltb_sd_search.png
 
-.. image:: images/ltb_sd_comment.png
+.. image:: images/ltb_sd_update_entry.png

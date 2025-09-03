@@ -6,7 +6,7 @@
 LDAP Tool Box Service Desk documentation
 ========================================
 
-.. image:: images/ltb_sd_0.6.png
+.. image:: images/ltb_sd_account_information.png
 
 .. toctree::
    :maxdepth: 2

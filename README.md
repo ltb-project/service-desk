@@ -3,11 +3,13 @@
 [![Build Status](https://github.com/ltb-project/service-desk/actions/workflows/ci.yml/badge.svg)](https://github.com/ltb-project/service-desk/actions/workflows/ci.yml)
 [![Documentation Status](https://readthedocs.org/projects/service-desk/badge/?version=latest)](https://service-desk.readthedocs.io/en/latest/?badge=latest)
 
-Application for support team who need to check, lock, unlock and reset user passwords.
+Application for support team who need to manage accounts in LDAP repository and check their status (locked, expired, invalid...).
+
+Works with standard LDAPv3 directories and with Active Directory.
 
 See [list of features](https://service-desk.readthedocs.io/en/stable/presentation.html#features).
 
-![Screenshot](https://raw.githubusercontent.com/ltb-project/service-desk/master/ltb_sd_screenshot.jpg)
+![Screenshot](https://raw.githubusercontent.com/ltb-project/service-desk/master/ltb_sd_screenshot.png)
 
 :exclamation: With great power comes great responsibility: this application allows to reset password of any user, you must protect it and allow access only to trusted users.
 
