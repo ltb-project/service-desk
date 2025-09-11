@@ -63,13 +63,13 @@
 
             <div class="card-footer text-center">
                 <a class="btn btn-outline-primary m-1" href="{$refresh_link}"><i class="fa fa-refresh"></i> {$msg_refreshentry}</a>
-                {if $edit_link}
+                {if $use_update}
                 <a class="btn btn-outline-success m-1" href="{$edit_link}"><i class="fa fa-edit"></i> {$msg_editentry}</a>
                 {/if}
-                {if $rename_link}
+                {if $use_rename}
                 <a class="btn btn-outline-secondary m-1" href="{$rename_link}"><i class="fa fa-user-pen"></i> {$msg_renameentry}</a>
                 {/if}
-                {if $delete_link}
+                {if $use_delete}
                 <button type="button" class="btn btn-outline-danger m-1" data-bs-toggle="modal" data-bs-target="#delete{$dn|sha256}">
                   <i class="fa fa-user-minus"></i> {$msg_deleteentry}
                 </button>
