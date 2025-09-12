@@ -17,7 +17,7 @@
       serverSide: true,
       processing: true,
       ajax: {
-        url: '/index.php',
+        url: 'index.php',
         type: 'POST',
         data: {
             action: searchaction,
