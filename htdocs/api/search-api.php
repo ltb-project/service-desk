@@ -123,7 +123,6 @@ if( !empty($datatables_input["search"]["value"]) )
     $ldap_user_filter = "(&". $ldap_user_filter . $filter_components . ")";
 }
 
-
 # Do the LDAP request
 [$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search(
     $ldap_user_filter,
@@ -259,14 +258,18 @@ $entries = array_slice( $entries,
 # Format data to send
 $outputdata = array();
 
-# Get attribute list from columns: attr => type
-$attribute_list = [];
+# Get attribute list from columns: attr => [ "type" => type, "column" => column ]
+$attr_list = [];
 foreach( $columns as $column ) {
     // Fill attribute list even for undefined items
     if (!$attributes_map[$column]['attribute']) {
-        $attribute_list[$column."_undefined"] = null;
+        $attr_list[$column."_undefined"] = null;
     } else {
-        $attribute_list[$attributes_map[$column]['attribute']] = $attributes_map[$column]['type'];
+        $attr_list[$attributes_map[$column]['attribute']] =
+            array(
+                     "type" => $attributes_map[$column]['type'],
+                     "column" => $column
+            );
     }
 }
 
@@ -279,8 +282,11 @@ foreach ($entries as $entry)
     $outputdata[$i] = array();
     # Always push DN as first value of the entry
     array_push( $outputdata[$i], $entry["dn"] );
-    foreach ($attribute_list as $attr => $type)
+    foreach ($attr_list as $attr => $cont)
     {
+        $type = $cont["type"];
+        $col = $cont["column"];
+
         $values = [];
         foreach ($entry[$attr] as $j => $value) {
             if($j !== "count") {
@@ -310,6 +316,84 @@ foreach ($entries as $entry)
                         }
                     }
                     array_push( $values, [ $dn, $linked_attr_vals ] );
+                }
+
+                # If this is a dynamic list, we get the corresponding values
+                elseif( $type == "list" )
+                {
+                    if(isset($attributes_list) &&
+                       isset($attributes_list[$col]) &&
+                       isset($attributes_map[$col]["display"]) &&
+                       $attributes_map[$col]["display"] == "value"
+                      )
+                    {
+                        $list_filter = isset($attributes_list[$col]["filter"]) ?
+                                       $attributes_list[$col]["filter"] :
+                                       "(objectClass=*)";
+                        $key_filter = isset($attributes_list[$col]["key"]) ?
+                                      "(" . $attributes_list[$col]["key"] . "=" . $value . ")" :
+                                      "(objectClass=*)";
+                        $list_filter = "(&" . $list_filter . $key_filter . ")";
+                        $list_attrs = isset($attributes_list[$col]["value"]) ?
+                                      $attributes_list[$col]["value"] :
+                                      ( isset($attributes_list[$col]["key"]) ?
+                                        $attributes_list[$col]["key"] :
+                                        "dummy" );
+
+                        $entries_search = $ldapInstance->search_with_scope(
+                                                             "sub",
+                                                             $attributes_list[$col]["base"],
+                                                             $list_filter,
+                                                             array( $list_attrs )
+                                                         );
+                        $errno = ldap_errno($ldap);
+                        if ( $errno ) {
+                            error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
+                            # Send original value
+                            array_push( $values, $value );
+                        }
+                        $list_entries = ldap_get_entries($ldap, $entries_search);
+                        if($list_entries['count'] == 1 ) {
+                            $list_values = isset($list_entries[0][$list_attrs]) ?
+                                           $list_entries[0][$list_attrs] :
+                                           array();
+                            if(isset($list_values["count"])) {
+                                unset($list_values["count"]);
+                            }
+                            $values = array_merge( $values, $list_values );
+                        }
+                        else
+                        {
+                            # Send original value
+                            array_push( $values, $value );
+                        }
+
+                    }
+                    else
+                    {
+                        # Send original value
+                        array_push( $values, $value );
+                    }
+                }
+
+                # If this is a static list, we get the corresponding values
+                elseif( $type == "static_list" )
+                {
+                    if(isset($attributes_static_list) &&
+                       isset($attributes_static_list[$col]) &&
+                       isset($attributes_map[$col]["display"]) &&
+                       $attributes_map[$col]["display"] == "value" &&
+                       isset($attributes_static_list[$col][$value])
+                      )
+                    {
+                        # Use value rather than key
+                        array_push( $values, $attributes_static_list[$col][$value] );
+                    }
+                    else
+                    {
+                        # Send original value
+                        array_push( $values, $value );
+                    }
                 }
 
                 # If this is a standard list of values, just push it

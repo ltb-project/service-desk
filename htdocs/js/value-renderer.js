@@ -78,9 +78,9 @@ function datatableTypeRenderer(data, type, row, meta, config_js)
 
     var dn = row[0];
     // column: column name, ie key of $attributes_map associative array (firstname, fullname, identifier,...)
-    var column = Object.keys(config_js["column_types"])[meta.col];
+    var column = Object.keys(config_js["attributes_map"])[meta.col];
     // column_type: attribute type, ie value of "type" key in $attributes_map associative array (text, tel, dn_link,...)
-    var column_type = config_js["column_types"][column];
+    var column_type = config_js["attributes_map"][column]["type"];
 
     // picking search_result_show_undefined for show_undef parameter
     var search_result_show_undefined = config_js["search_result_show_undefined"];
@@ -152,7 +152,7 @@ function ldapTypeRenderer(config_js, dn, column, column_type, data, show_undef)
             if( typeof window[renderFunction] === 'function')
             {
                 // Call renderer dynamically
-                render += window[renderFunction](config_js, dn, value);
+                render += window[renderFunction](config_js, dn, value, column, column_type);
 
                 // Call custom event if available: ldap<Type>TypeRenderer
                 e = jQuery.Event(renderFunction);
@@ -304,7 +304,7 @@ function enable_displayer(dn, messages, search, enable, page)
 // Renderer for special first column "DN"
 // This column displays all the actions possible for the user:
 // display, unlock,...
-function ldapDnTypeRenderer(config_js, dn, value)
+function ldapDnTypeRenderer(config_js, dn, value, column, type)
 {
 
     var render = "";
@@ -338,7 +338,7 @@ function ldapDnTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapTextTypeRenderer(config_js, dn, value)
+function ldapTextTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -357,7 +357,7 @@ function ldapTextTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapMailtoTypeRenderer(config_js, dn, value)
+function ldapMailtoTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -383,7 +383,7 @@ function ldapMailtoTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapTelTypeRenderer(config_js, dn, value)
+function ldapTelTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -406,7 +406,7 @@ function ldapTelTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapBooleanTypeRenderer(config_js, dn, value)
+function ldapBooleanTypeRenderer(config_js, dn, value, column, type)
 {
 
     var render = "";
@@ -439,7 +439,7 @@ function ldapBooleanTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapDateTypeRenderer(config_js, dn, value)
+function ldapDateTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -462,7 +462,7 @@ function ldapDateTypeRenderer(config_js, dn, value)
 }
 
 
-function ldapAddateTypeRenderer(config_js, dn, value)
+function ldapAddateTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -489,7 +489,7 @@ function ldapAddateTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapListTypeRenderer(config_js, dn, value)
+function ldapListTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -508,12 +508,26 @@ function ldapListTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapStaticlistTypeRenderer(config_js, dn, value)
+function ldapStaticlistTypeRenderer(config_js, dn, value, column, type)
 {
-    return ldapListTypeRenderer(config_js, dn, value);
+    var render = "";
+
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
+
+    var values = {
+      "value": truncate(value, truncate_value_after)
+    };
+    render = renderTemplate(arguments.callee.name, values);
+
+    return render;
 }
 
-function ldapBytesTypeRenderer(config_js, dn, value)
+function ldapBytesTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
     var result;
@@ -567,7 +581,7 @@ function ldapBytesTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapTimestampTypeRenderer(config_js, dn, value)
+function ldapTimestampTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -589,7 +603,7 @@ function ldapTimestampTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapDnlinkTypeRenderer(config_js, dn, value)
+function ldapDnlinkTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -639,7 +653,7 @@ function ldapDnlinkTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapPpolicydnTypeRenderer(config_js, dn, value)
+function ldapPpolicydnTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
 
@@ -687,7 +701,7 @@ function ldapPpolicydnTypeRenderer(config_js, dn, value)
     return render;
 }
 
-function ldapAddressTypeRenderer(config_js, dn, value)
+function ldapAddressTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
     var result = "";

@@ -14,7 +14,7 @@ $(document).ready(function(){
         var values = JSON.parse(json_dn_values);
 
         render = "";
-        render += ldapDnlinkTypeRenderer(config_js, dn, values);
+        render += ldapDnlinkTypeRenderer(config_js, dn, values, "dummy_dn_column", "dn_link");
         $( this ).html(render);
 
     });
