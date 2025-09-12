@@ -475,15 +475,31 @@ function ldapAddateTypeRenderer(config_js, dn, value, column, type)
 function ldapListTypeRenderer(config_js, dn, value, column, type)
 {
     var render = "";
+    var val = value;
 
     [messages, listing_linkto, search_result_show_undefined,
      display_show_undefined, truncate_value_after, search,
      js_date_specifiers, unlock, enable ] =
             get_config_js(config_js);
 
+    // Check if we should display rather the value and not the key
+    if(column in config_js["attributes_map"] &&
+       "display" in config_js["attributes_map"][column] &&
+       config_js["attributes_map"][column]["display"] == "value"
+      )
+    {
+        // Check if the attributes_static_list for the value to display
+        if( "attributes_static_list" in config_js &&
+            column in config_js["attributes_static_list"] &&
+            value in config_js["attributes_static_list"][column]
+          )
+        {
+            val = config_js["attributes_static_list"][column][value];
+        }
+    }
 
     var values = {
-      "value": truncate(value, truncate_value_after)
+      "value": truncate(val, truncate_value_after)
     };
     render = renderTemplate(arguments.callee.name, values);
 
@@ -492,7 +508,36 @@ function ldapListTypeRenderer(config_js, dn, value, column, type)
 
 function ldapStaticlistTypeRenderer(config_js, dn, value, column, type)
 {
-    return ldapListTypeRenderer(config_js, dn, value, type);
+    var render = "";
+    var val = value;
+
+    [messages, listing_linkto, search_result_show_undefined,
+     display_show_undefined, truncate_value_after, search,
+     js_date_specifiers, unlock, enable ] =
+            get_config_js(config_js);
+
+    // Check if we should display rather the value and not the key
+    if(column in config_js["attributes_map"] &&
+       "display" in config_js["attributes_map"][column] &&
+       config_js["attributes_map"][column]["display"] == "value"
+      )
+    {
+        // Check if the attributes_static_list for the value to display
+        if( "attributes_static_list" in config_js &&
+            column in config_js["attributes_static_list"] &&
+            value in config_js["attributes_static_list"][column]
+          )
+        {
+            val = config_js["attributes_static_list"][column][value];
+        }
+    }
+
+    var values = {
+      "value": truncate(val, truncate_value_after)
+    };
+    render = renderTemplate(arguments.callee.name, values);
+
+    return render;
 }
 
 function ldapBytesTypeRenderer(config_js, dn, value, column, type)

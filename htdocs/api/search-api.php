@@ -259,14 +259,18 @@ $entries = array_slice( $entries,
 # Format data to send
 $outputdata = array();
 
-# Get attribute list from columns: attr => type
-$attribute_list = [];
+# Get attribute list from columns: attr => [ "type" => type, "column" => column ]
+$attr_list = [];
 foreach( $columns as $column ) {
     // Fill attribute list even for undefined items
     if (!$attributes_map[$column]['attribute']) {
-        $attribute_list[$column."_undefined"] = null;
+        $attr_list[$column."_undefined"] = null;
     } else {
-        $attribute_list[$attributes_map[$column]['attribute']] = $attributes_map[$column]['type'];
+        $attr_list[$attributes_map[$column]['attribute']] =
+            array(
+                     "type" => $attributes_map[$column]['type'],
+                     "column" => $column
+            );
     }
 }
 
@@ -279,8 +283,11 @@ foreach ($entries as $entry)
     $outputdata[$i] = array();
     # Always push DN as first value of the entry
     array_push( $outputdata[$i], $entry["dn"] );
-    foreach ($attribute_list as $attr => $type)
+    foreach ($attr_list as $attr => $cont)
     {
+        $type = $cont["type"];
+        $col = $cont["column"];
+
         $values = [];
         foreach ($entry[$attr] as $j => $value) {
             if($j != "count") {
@@ -310,6 +317,15 @@ foreach ($entries as $entry)
                         }
                     }
                     array_push( $values, [ $dn, $linked_attr_vals ] );
+                }
+
+                # If this is a dynamic list, we get the corresponding value
+                if( $type == "list" )
+                {
+                    if(isset($attributes_list) && isset($attributes_list[$col]))
+                    {
+                        # TODO: do the ldap search (append filter with the key attribute)
+                    }
                 }
 
                 # If this is a standard list of values, just push it

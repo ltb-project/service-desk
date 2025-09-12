@@ -238,9 +238,9 @@ $config_js["enable"] = [];
 $config_js["enable"]["use_enableaccount"] = $use_enableaccount;
 $config_js["enable"]["use_enablecomment"] = $use_enablecomment;
 $config_js["enable"]["use_enablecomment_required"] = $use_enablecomment_required;
-$config_js["column_types"] = [];
-$config_js["column_types"]["dn"] = "dn";
 $config_js["attributes_static_list"] = isset($attributes_static_list) ? $attributes_static_list : array();
+$config_js["attributes_map"] = [];
+$config_js["attributes_map"]["dn"] = array("type" => "dn", "display" => "");
 $columns = $search_result_items;
 if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
 foreach ($columns as $column )
