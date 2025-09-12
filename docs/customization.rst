@@ -11,7 +11,7 @@ You can add a new type by adding the appropriate function in ``htdocs/js/value-r
 
 .. code-block:: javascript
 
-    function ldapCustomTypeRenderer(config_js, dn, value)
+    function ldapCustomTypeRenderer(config_js, dn, value, column, type)
     {
         var render = "";
         var val = "test";
