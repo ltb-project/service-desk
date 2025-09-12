@@ -45,7 +45,9 @@ if ($result === "") {
                         }
                     }
 
-                    $create_attributes[ $attributes_map[$item]['attribute'] ] = $values;
+                    if (!empty($values)) {
+                        $create_attributes[ $attributes_map[$item]['attribute'] ] = $values;
+                    }
                 }
 
                 $create_attributes['objectclass'] = $create_objectclass;
