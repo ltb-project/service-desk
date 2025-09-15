@@ -224,37 +224,3 @@ You need to define where Smarty is installed:
 .. code-block:: php
 
     define("SMARTY", "/usr/share/php/smarty3/Smarty.class.php");
-
-Notify administrator by mail
-----------------------------
-
-It is possible to provide mail of administrator to service-desk using a HTTP header.
-
-$header_name_notify_admin_by_mail is name of header that will be provided to cgi script as HTTP_$header_name_notify_admin_by_mail to set administrator mail from webserver.
-
-.. code-block:: php
-
-   $header_name_notify_admin_by_mail = "SSP-Admin-Mail";
-
-
-Using Apache, we may set such header using the following:
-
-.. code-block::
-
-    <VirtualHost *:80>
-       ServerName ssp.domain1.com
-       RequestHeader setIfEmpty SSP-Admin-Mail admin@example.com
-       [...]
-    </VirtualHost>
-
-Using Nginx, nginx take normalized cgi param naming, ie uppercase and - replaced to _.
-we could use instead:
-
-.. code-block::
-
-   server {
-       [...]
-       location ~ \.php {
-           fastcgi_param HTTP_SSP_ADMIN_MAIL admin@example.com;
-           [...]
-       }

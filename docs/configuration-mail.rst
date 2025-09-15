@@ -44,6 +44,8 @@ successful password change:
 
 This option is false by default.
 
+A mail can also be sent to administrators, see :doc:`reset password configuuration <resetpassword>`.
+
 PHPMailer
 ---------
 
