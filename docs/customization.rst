@@ -16,10 +16,13 @@ You can add a new type by adding the appropriate function in ``htdocs/js/value-r
         var render = "";
         var val = "test";
 
-        [messages, listing_linkto, search_result_show_undefined,
-         display_show_undefined, truncate_value_after, search,
-         js_date_specifiers, unlock, enable ] =
-                get_config_js(config_js);
+        [
+         search_result_show_undefined,
+         display_show_undefined,
+         truncate_value_after,
+         search,
+         js_date_specifiers
+        ] = get_normalized_parameters(config_js);
 
         var values = {
           "value": val

@@ -16,26 +16,18 @@ function renderTemplate(template, values) {
 }
 
 
-/* get_config_js:
+/* get_normalized_parameters:
    INPUT:
      config_js: structure storing the input params sent by the backend
-   OUTPUT:
-     messages: associative array containing all messages for selected language
-     listing_linkto: array or string containing the attribute key(s) for linking
+   OUTPUT: value normalized:
      search_result_show_undefined: boolean. When true, show a specific message when there is no value for the current attribute, during search of multiple entries
      display_show_undefined: boolean. When true, show a specific message when there is no value for the current attribute, during an entry display
      truncate_value_after: integer. max length after which the string is truncated
      search: string, parameter named "search" of the http query
      js_date_specifiers: string, format of the date as specified in https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date-time-string-format
-     unlock: associative array containing unlock config parameters
-     enable: associative array containing enable config parameters
 */
-function get_config_js(config_js)
+function get_normalized_parameters(config_js)
 {
-
-    var messages = config_js["messages"];
-
-    var listing_linkto = config_js["listing_linkto"];
 
     var search_result_show_undefined = config_js["search_result_show_undefined"];
     search_result_show_undefined = search_result_show_undefined ? true : false;
@@ -60,13 +52,13 @@ function get_config_js(config_js)
     {
         js_date_specifiers = "";
     }
-    var unlock = config_js["unlock"];
-    var enable = config_js["enable"];
 
     return [
-             messages, listing_linkto, search_result_show_undefined,
-             display_show_undefined, truncate_value_after, search,
-             js_date_specifiers, unlock, enable
+             search_result_show_undefined,
+             display_show_undefined,
+             truncate_value_after,
+             search,
+             js_date_specifiers
            ];
 }
 
@@ -317,10 +309,17 @@ function ldapDnTypeRenderer(config_js, dn, value)
 
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
+
+    var listing_linkto = config_js['listing_linkto'];
+    var messages = config_js['messages'];
+    var unlock = config_js['unlock'];
+    var enable = config_js['enable'];
 
     var get_params = new URLSearchParams(document.location.search);
     var page = get_params.get("page");
@@ -343,10 +342,12 @@ function ldapTextTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
 
     var values = {
       "value": truncate(value, truncate_value_after)
@@ -360,10 +361,14 @@ function ldapMailtoTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
+
+    var messages = config_js['messages'];
 
     mail_hexa = value.split("")
                      .map(c => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
@@ -382,10 +387,14 @@ function ldapTelTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
+
+    var messages = config_js['messages'];
 
     var values = {
       "tel": value,
@@ -403,10 +412,14 @@ function ldapBooleanTypeRenderer(config_js, dn, value)
     var render = "";
     var bool = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
+
+    var messages = config_js['messages'];
 
     if( value == "TRUE" )
     {
@@ -430,10 +443,12 @@ function ldapDateTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
 
     var date = ldap2date.parse(value);
     var val = dayjs(date).format(js_date_specifiers);
@@ -451,10 +466,12 @@ function ldapAddateTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
 
     // divide by 10 000 000 to get seconds
     winSecs = parseInt( value / 10000000 );
@@ -476,10 +493,12 @@ function ldapListTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
 
     var values = {
       "value": truncate(value, truncate_value_after)
@@ -499,10 +518,12 @@ function ldapBytesTypeRenderer(config_js, dn, value)
     var render = "";
     var result;
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
 
     bytes = parseFloat(value);
 
@@ -550,10 +571,12 @@ function ldapTimestampTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
 
     // timestamp is considered in seconds, converting to milliseconds
     var result = dayjs(value * 1000).format(js_date_specifiers);
@@ -570,10 +593,12 @@ function ldapDnlinkTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
 
     var dnlink = "";
     var attr_values = [];
@@ -618,10 +643,12 @@ function ldapPpolicydnTypeRenderer(config_js, dn, value)
 {
     var render = "";
 
-    [messages, listing_linkto, search_result_show_undefined,
-     display_show_undefined, truncate_value_after, search,
-     js_date_specifiers, unlock, enable ] =
-            get_config_js(config_js);
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
 
     var dnppolicy = "";
     var linked_attr_vals = [];
