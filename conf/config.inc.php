@@ -246,6 +246,9 @@ $pwd_show_policy = "never";
 # below - the form
 $pwd_show_policy_pos = "above";
 
+# disallow use of the only special character as defined in `$pwd_special_chars` at the beginning and end
+$pwd_no_special_at_ends = false;
+
 ## Mail
 # LDAP mail attribute
 $mail_attributes = array( "mail", "gosaMailAlternateAddress", "proxyAddresses" );
