@@ -19,7 +19,7 @@
                   <a href="index.php?page=create" class="nav-link"><i class="fa fa-fw fa-circle-plus"></i> {$msg_createentry}</a>
                 </li>
                 {/if}
-                {if $use_searchlocked or $use_searchdisabled or $use_searchwillexpire or $use_searchexpired or $use_searchidle}
+                {if $use_searchlocked or $use_searchdisabled or $use_searchwillexpire or $use_searchexpired or $use_searchidle or $use_searchinvalid}
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-dashboard"></i> {$msg_dashboards}<span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -43,11 +43,11 @@
                       {/if}
                   </ul>
                 </li>
+                {/if}
                 {if $use_showauditlog}
                 <li class="nav-item">
                   <a href="index.php?page=auditlog" class="nav-link"><i class="fa fa-fw fa-list"></i> {$msg_auditlogs}</a>
                 </li>
-                {/if}
                 {/if}
                 {if $logout_link}
                 <li class="nav_item">
