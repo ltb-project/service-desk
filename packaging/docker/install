@@ -4,6 +4,7 @@ set -ex
 
 INSTALL_PATHS=${INSTALL_PATHS:-" \
     htdocs/ \
+    js-templates/ \
     lang/ \
     lib/ \
     templates/ \
