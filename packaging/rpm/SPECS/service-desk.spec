@@ -16,7 +16,7 @@
 %undefine __brp_mangle_shebangs
 
 Name:      service-desk
-Version:   0.7
+Version:   0.7.1
 Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
 URL:       https://ltb-project.org/
@@ -173,6 +173,22 @@ rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %changelog
+* Tue Sep 16 2025 Clement Oudot <clem@ltb-project.org> - 0.7.1-1
+- gh#248: Documentation for admin notify by mail feature
+- gh#250: For attributes of type "list" or "static_list", key is displayed instead value
+- gh#252: In create mode, a list with empty value still tries to add attribute
+- gh#254: Waiting on search without results
+- gh#255: Update, rename and delete buttons are visible even if features are disabled
+- gh#256: Display ppolicy "onerror" does not work
+- gh#257: Variable $pwd_no_special_at_ends is not initialized in config file
+- gh#258: Audit logs menu disappears when all Dashboards options are disabled
+- gh#259: 250 fix list value display
+- gh#260: refactor get_config_js function
+- gh#261: refactor get_config_js function (#260)
+- gh#262: Update to ltb-common 0.6.1
+- gh#263: attributes_static_list and attributes_list are not documented
+- gh#264: add documentation for attributes_list and attributes_static_list (#263)
+
 * Tue Sep 02 2025 Clement Oudot <clem@ltb-project.org> - 0.7-1
 - gh#28: Add a page to edit user attributes
 - gh#35: Ability to add new users
