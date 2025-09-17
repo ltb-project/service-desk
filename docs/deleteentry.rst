@@ -1,4 +1,4 @@
-Deleteentry
+Delete entry
 ============
 
 Disable or enable feature
