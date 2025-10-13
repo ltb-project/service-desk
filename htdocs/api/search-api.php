@@ -123,10 +123,10 @@ if( !empty($datatables_input["search"]["value"]) )
     $ldap_user_filter = "(&". $ldap_user_filter . $filter_components . ")";
 }
 
-# Do the LDAP request
+# LDAP request for searching users
 [$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search(
     $ldap_user_filter,
-    array(),
+    $directory->getOperationalAttributes(),
     $attributes_map,
     $search_result_title,
     $search_result_sortby,
@@ -134,13 +134,20 @@ if( !empty($datatables_input["search"]["value"]) )
     $ldap_scope
 );
 
+# Get password policies list + user's ppolicy assignment
+list($passwordPolicies, $userPolicies) = $directory->getPwdPolicies(
+                                             $ldap,
+                                             $entries,
+                                             $ldap_default_ppolicy
+                                         );
+
 # Filter the result according to the action
 switch ($action) {
 
     case "searchdisabled":
         foreach($entries as $entry_key => $entry) {
 
-            $isEnabled = $directory->isAccountEnabled($ldap, $entry['dn']);
+            $isEnabled = $directory->isAccountEnabled($entry);
 
             if ( $isEnabled === true ) {
                 unset($entries[$entry_key]);
@@ -154,11 +161,11 @@ switch ($action) {
         foreach($entries as $entry_key => $entry) {
 
             # Get password policy configuration
-            $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $entry["dn"], $ldap_default_ppolicy);
+            $pwdPolicyConfiguration = $userPolicies[$entry['dn']];
             if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
             if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
-            $isExpired = $directory->isPasswordExpired($ldap, $entry["dn"], $pwdPolicyConfiguration);
+            $isExpired = $directory->isPasswordExpired($entry, $pwdPolicyConfiguration);
 
             if ( $isExpired === false ) {
                 unset($entries[$entry_key]);
@@ -172,11 +179,11 @@ switch ($action) {
         # Check if entry is still locked
         foreach($entries as $entry_key => $entry) {
             # Get password policy configuration
-            $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $entry["dn"], $ldap_default_ppolicy);
+            $pwdPolicyConfiguration = $userPolicies[$entry['dn']];
             if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
             if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
-            $isLocked = $directory->isLocked($ldap, $entry['dn'], $pwdPolicyConfiguration);
+            $isLocked = $directory->isLocked($entry, $pwdPolicyConfiguration);
 
             if ( $isLocked === false ) {
                 unset($entries[$entry_key]);
@@ -190,12 +197,12 @@ switch ($action) {
         foreach($entries as $entry_key => $entry) {
 
             # Get password policy configuration
-            $pwdPolicyConfiguration = $directory->getPwdPolicyConfiguration($ldap, $entry["dn"], $ldap_default_ppolicy);
+            $pwdPolicyConfiguration = $userPolicies[$entry['dn']];
             if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
             if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
             $isWillExpire = false;
-            $expirationDate = $directory->getPasswordExpirationDate($ldap, $entry["dn"], $pwdPolicyConfiguration);
+            $expirationDate = $directory->getPasswordExpirationDate($entry, $pwdPolicyConfiguration);
 
             if ($expirationDate) {
                 $expirationDateClone = clone $expirationDate;
