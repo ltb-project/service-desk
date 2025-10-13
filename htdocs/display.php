@@ -174,6 +174,7 @@ if ($result === "") {
             $attributes[] = $attributes_map[$item]['attribute'];
         }
         $attributes[] = $attributes_map[$display_title]['attribute'];
+        $attributes = array_merge($attributes, $directory->getOperationalAttributes());
 
         # Search entry
         $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
@@ -192,24 +193,24 @@ if ($result === "") {
         if (isset($ldap_lockout_duration) and $ldap_lockout_duration) { $pwdPolicyConfiguration['lockout_duration'] = $ldap_lockout_duration; }
         if (isset($ldap_password_max_age) and $ldap_password_max_age) { $pwdPolicyConfiguration['password_max_age'] = $ldap_password_max_age; }
 
-        $lockDate = $directory->getLockDate($ldap, $dn);
-        $unlockDate = $directory->getUnlockDate($ldap, $dn, $pwdPolicyConfiguration);
-        $isLocked = $directory->isLocked($ldap, $dn, $pwdPolicyConfiguration);
+        $lockDate = $directory->getLockDate($entry, $pwdPolicyConfiguration);
+        $unlockDate = $directory->getUnlockDate($entry, $pwdPolicyConfiguration);
+        $isLocked = $directory->isLocked($entry, $pwdPolicyConfiguration);
         $canLockAccount = $pwdPolicyConfiguration["lockout_enabled"];
 
-        $expirationDate = $directory->getPasswordExpirationDate($ldap, $dn, $pwdPolicyConfiguration);
-        $isExpired = $directory->isPasswordExpired($ldap, $dn, $pwdPolicyConfiguration);
+        $expirationDate = $directory->getPasswordExpirationDate($entry, $pwdPolicyConfiguration);
+        $isExpired = $directory->isPasswordExpired($entry, $pwdPolicyConfiguration);
 
         $resetAtNextConnection = $directory->resetAtNextConnection($ldap, $dn);
 
         if ($show_enablestatus) {
-            $isAccountEnabled = $directory->isAccountEnabled($ldap, $dn);
+            $isAccountEnabled = $directory->isAccountEnabled($entry);
         }
 
         if ($show_validitystatus) {
-            $isAccountValid = $directory->isAccountValid($ldap, $dn);
-            $startDate = $directory->getStartDate($ldap, $dn);
-            $endDate = $directory->getEndDate($ldap, $dn);
+            $isAccountValid = $directory->isAccountValid($entry, $pwdPolicyConfiguration);
+            $startDate = $directory->getStartDate($entry, $pwdPolicyConfiguration);
+            $endDate = $directory->getEndDate($entry, $pwdPolicyConfiguration);
         }
 
     }}}
