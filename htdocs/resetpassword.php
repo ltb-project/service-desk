@@ -117,6 +117,17 @@ if ($result === "") {
             }
         }
 
+        # Set Samba password value
+        if ( $samba_mode ) {
+            $time = time();
+            $userdata = \Ltb\Password::set_samba_data($userdata, $samba_options, $password, $time);
+            list($error_code, $error_msg) = $ldapInstance->modify_attributes($dn, $userdata);
+            if( $error_code != 0 )
+            {
+                error_log("Error while updating samba attributes for $dn: $error_code, $error_msg");
+            }
+        }
+
         if ( $result === "passwordchanged" && isset($posthook) ) {
 
             if ( !isset($posthook_login_value) ) {

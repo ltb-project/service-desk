@@ -182,6 +182,13 @@ $use_updatestarttime = true;
 $use_updateendtime = true;
 $use_searchinvalid = true;
 
+$samba_mode = false;
+$samba_options=[];
+# Set password min/max age in Samba attributes
+#$samba_options['min_age'] = 5;
+#$samba_options['max_age'] = 45;
+#$samba_options['expire_days'] = 90;
+
 ## Edition
 
 $use_update = true;
