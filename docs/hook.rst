@@ -2,12 +2,14 @@ Hook
 ====
 
 Hook feature allows to run a script before or after an action:
+
 * Password reset
 * Password lock
 * Password unlock
 * Account enable
 * Account disable
 * Update validity dates
+* Delete
 
 The script must return 0 if no error occured. Any text printed on STDOUT
 will be displayed as an error message (see options).
