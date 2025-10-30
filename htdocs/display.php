@@ -175,6 +175,12 @@ if ($result === "") {
         }
         $attributes[] = $attributes_map[$display_title]['attribute'];
         $attributes = array_merge($attributes, $directory->getOperationalAttributes());
+        if($samba_mode)
+        {
+            array_push($attributes,
+                       "sambaPwdLastSet", "sambaPwdCanChange",
+                       "sambaPwdMustChange", "sambaKickoffTime");
+        }
 
         # Search entry
         $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
@@ -213,6 +219,14 @@ if ($result === "") {
             $endDate = $directory->getEndDate($entry, $pwdPolicyConfiguration);
         }
 
+        if($samba_mode)
+        {
+            $sambaPwdLastSet = $entry['sambapwdlastset'][0] ?? null;
+            $sambaPwdCanChange = $entry['sambapwdcanchange'][0] ?? null;
+            $sambaPwdMustChange = $entry['sambapwdmustchange'][0] ?? null;
+            $sambaKickoffTime = $entry['sambakickofftime'][0] ?? null;
+        }
+
     }}}
 }
 
@@ -230,6 +244,12 @@ $smarty->assign("unlockDate", $unlockDate);
 $smarty->assign("isExpired", $isExpired);
 $smarty->assign("ldapExpirationDate", $expirationDate ? $expirationDate->getTimestamp(): NULL);
 $smarty->assign("resetAtNextConnection", $resetAtNextConnection);
+
+$smarty->assign("samba_mode", $samba_mode);
+$smarty->assign("sambaPwdLastSet", $sambaPwdLastSet);
+$smarty->assign("sambaPwdCanChange", $sambaPwdCanChange);
+$smarty->assign("sambaPwdMustChange", $sambaPwdMustChange);
+$smarty->assign("sambaKickoffTime", $sambaKickoffTime);
 
 $smarty->assign("refresh_link", "index.php?page=display&dn=".urlencode($dn));
 $smarty->assign("edit_link", "index.php?page=update&dn=".urlencode($dn));

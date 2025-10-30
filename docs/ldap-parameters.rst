@@ -144,3 +144,34 @@ The last authentication date can be stored in different attributes depending on 
     $ldap_lastauth_attribute = "pwdLastSuccess";
 
 .. tip:: This attribute is automatically configured for Active Directory.
+
+Samba 3
+-------
+
+To manage compatibility with Windows world, Samba stores a specific hash
+of the password in a second attribute (``sambaNTpassword``). It also
+store modification date in ``sambaPwdLastSet``. Use ``$samba_mode`` to
+manage these attributes:
+
+.. code-block:: php
+
+   $samba_mode = true;
+
+You can also update ``sambaPwdCanChange`` and ``sambaPwdMustChange``
+attributes by settings minimal and maximal age, in days:
+
+.. code-block:: php
+
+   $samba_options['min_age'] = 5;
+   $samba_options['max_age'] = 45;
+
+To set an expiration date for a Samba account (attribute
+``sambaKickofftime``), configure a maximal age, in days:
+
+.. code-block:: php
+
+   $samba_options['expire_days'] = 90;
+
+.. tip:: Samba modifications will only be done on entries of class
+  ``sambaSamAccount``
+

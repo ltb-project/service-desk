@@ -139,7 +139,67 @@
             </div>
         </div>
 
+        {if $samba_mode}
+        <div class="card mb-3 shadow ">
+            <div class="card-header text-bg-secondary text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-info-circle"></i>
+                    {$msg_sambaaccountstatus}
+                </p>
+            </div>
+
+            <div class="card-body">
+
+                <div class="container-fluid" id="sambastatus_attributes">
+
+                {if $sambaPwdLastSet}
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
+                            {$msg_label_sambaPwdLastSet}
+                        </div>
+                        <div class="col-md-6">
+                            {$sambaPwdLastSet|date_format:{$date_specifiers}|truncate:10000}
+                        </div>
+                    </div>
+                {/if}
+                {if $sambaPwdCanChange}
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
+                            {$msg_label_sambaPwdCanChange}
+                        </div>
+                        <div class="col-md-6">
+                            {$sambaPwdCanChange|date_format:{$date_specifiers}|truncate:10000}
+                        </div>
+                    </div>
+                {/if}
+                {if $sambaPwdMustChange}
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
+                            {$msg_label_sambaPwdMustChange}
+                        </div>
+                        <div class="col-md-6">
+                            {$sambaPwdMustChange|date_format:{$date_specifiers}|truncate:10000}
+                        </div>
+                    </div>
+                {/if}
+                {if $sambaKickoffTime}
+                    <div class="row align-items-center p-2">
+                        <div class="col-md-6 fw-semibold">
+                            {$msg_label_sambaKickoffTime}
+                        </div>
+                        <div class="col-md-6">
+                            {$sambaKickoffTime|date_format:{$date_specifiers}|truncate:10000}
+                        </div>
+                    </div>
+                {/if}
+                </div>
+
+            </div>
+        </div>
+        {/if}
+
     </div>
+
     <div class="col-md-6">
 
         {if $use_checkpassword}
