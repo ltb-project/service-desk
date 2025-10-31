@@ -16,6 +16,26 @@ require_once("../conf/config.inc.php");
 require_once("../vendor/autoload.php");
 
 #==============================================================================
+# Hooks
+#==============================================================================
+$hook_dir = __DIR__ . '/../hooks/';
+if (is_dir($hook_dir)) {
+    if( $dh = opendir($hook_dir) )
+    {
+        while( ($hook_file = readdir($dh)) !== false )
+        {
+            if( filetype( $hook_dir . $hook_file ) == "file" &&
+                str_ends_with( $hook_file, '.php' )
+              )
+            {
+                require_once($hook_dir . $hook_file);
+            }
+        }
+        closedir($dh);
+    }
+}
+
+#==============================================================================
 # Language
 #==============================================================================
 # Available languages
