@@ -326,108 +326,40 @@ $debug = false;
 
 $debug_level = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING;
 
-### Prehooks
+# Hooks
 
-# Launch a prehook script before an action.
-# Script should return with 0, else action will be aborted, unless error is ignored
-
-# LDAP attribute used as login in posthook script
-$prehook_login = "uid";
-
-## Password reset
-
-#$prehook = "/usr/share/service-desk/prehook.sh";
-
-# Display prehook error
-#$display_prehook_error = true;
-# Encode passwords sent to prehook script as base64. This will prevent alteration of the passwords if set to true.
-# To read the actual password in the prehook script, use a base64_decode function/tool
-#$prehook_password_encodebase64 = false;
-# Ignore prehook error. This will allow to change password even if prehook script fails.
-#$ignore_prehook_error = true;
-
-## Lock
-
-#$prehook_lock = "/usr/share/service-desk/prehook_lock.sh";
-#$display_prehook_lock_error = true;
-#$ignore_prehook_lock_error = true;
-
-## Unlock
-
-#$prehook_unlock = "/usr/share/service-desk/prehook_unlock.sh";
-#$display_prehook_unlock_error = true;
-#$ignore_prehook_unlock_error = true;
-
-## Enable
-
-#$prehook_enable = "/usr/share/service-desk/prehook_enable.sh";
-#$display_prehook_enable_error = true;
-#$ignore_prehook_enable_error = true;
-
-## Disable
-
-#$prehook_disable = "/usr/share/service-desk/prehook_disable.sh";
-#$display_prehook_disable_error = true;
-#$ignore_prehook_disable_error = true;
-
-## Update validity
-
-#$prehook_updatevalidity = "/usr/share/service-desk/prehook_updatevalidity.sh";
-#$display_prehook_updatevalidity_error = true;
-#$ignore_prehook_updatevalidity_error = true;
-
-## Delete
-
-#$prehook_delete = "/usr/share/service-desk/prehook_delete.sh";
-#$display_prehook_delete_error = true;
-#$ignore_prehook_delete_error = true;
-
-### Posthooks
-
-# The posthook is only launched if the action was successful
-
-# LDAP attribute used as login in posthook script
-$posthook_login = "uid";
-
-## Password reset
-
-#$posthook = "/usr/share/service-desk/posthook.sh";
-
-# Display posthook error
-#$display_posthook_error = true;
-# Encode passwords sent to posthook script as base64. This will prevent alteration of the passwords if set to true.
-# To read the actual password in the posthook script, use a base64_decode function/tool
-#$posthook_password_encodebase64 = false;
-
-## Lock
-
-#$posthook_lock = "/usr/share/service-desk/posthook_lock.sh";
-#$display_posthook_lock_error = true;
-
-## Unlock
-
-#$posthook_unlock = "/usr/share/service-desk/posthook_unlock.sh";
-#$display_posthook_unlock_error = true;
-
-## Enable
-
-#$posthook_enable = "/usr/share/service-desk/posthook_enable.sh";
-#$display_posthook_enable_error = true;
-
-## Disable
-
-#$posthook_disable = "/usr/share/service-desk/posthook_disable.sh";
-#$display_posthook_disable_error = true;
-
-## Update validity
-
-#$posthook_updatevalidity = "/usr/share/service-desk/posthook_updatevalidity.sh";
-#$display_posthook_updatevalidity_error = true;
-
-## Delete
-
-#$posthook_delete = "/usr/share/service-desk/posthook_delete.sh";
-#$display_posthook_delete_error = true;
+#$prehook = array(
+#    "passwordReset" => array(
+#        "externalScript" => "/usr/share/service-desk/prehook.sh",
+#        "function" => "prehookFunction",
+#        "login" => "uid",
+#        "displayError" => false,
+#        "ignoreError" => false,
+#        "encodebase64" => false
+#    ),
+#    "passwordLock" => array(),
+#    "passwordUnlock" => array(),
+#    "accountEnable" => array(),
+#    "accountDisable" => array(),
+#    "updateValidityDates" => array(),
+#    "deleteAccount" => array()
+#);
+# passwordReset, passwordLock,...: entrypoints triggering hooks
+#  * passwordReset:       input: login, new password
+#  * passwordLock:        input: login
+#  * passwordUnlock:      input: login
+#  * accountEnable:       input: login
+#  * accountDisable:      input: login
+#  * updateValidityDates: input: login, start date, end date
+#  * deleteAccount:       input: login
+# externalScript: path of the script that is called. Script should return 0, else action after prehook will be aborted, unless error is ignored
+# function: the hook can also be a function. Write your own file.php in hooks/ directory
+# login: LDAP attribute used as identifier to send to the script or function
+# displayError: display an error if the script or function returns an error
+# ignoreError: prehook only, ignore error returned by the script or function
+# encodebase64: passwordReset entrypoint only, encode the password in base64 before sending it
+$prehook = array();
+$posthook = array();
 
 # The name of an HTTP Header that may hold a reference to an extra config file to include.
 #$header_name_extra_config="SSP-Extra-Config";

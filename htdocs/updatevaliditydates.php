@@ -9,10 +9,8 @@ $start_date = "";
 $end_date = "";
 $comment = "";
 $returnto = "display";
-$prehook_login_value = "";
 $prehook_message = "";
 $prehook_return = 0;
-$posthook_login_value = "";
 $posthook_message = "";
 $posthook_return = 0;
 
@@ -60,27 +58,13 @@ if ($result === "") {
         error_log("LDAP - $dn not found using the configured search settings, reject request");
     } else {
 
-        if ( isset($prehook_updatevalidity) || isset($posthook_updatevalidity) ) {
-            if ( isset($prehook_login) ) {
-                $prehook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $prehook_login);
-            }
-            if ( isset($posthook_login) ) {
-                $posthook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $posthook_login);
-            }
-        }
-        if ( isset($prehook_updatevalidity) ) {
-
-            if ( !isset($prehook_login_value) ) {
-                $prehook_return = 255;
-                $prehook_message = "No login found, cannot execute prehook script";
-            } else {
-                    $command = validity_hook_command($prehook_updatevalidity, $prehook_login_value, $start_date, $end_date);
-                exec($command, $prehook_output, $prehook_return);
-                $prehook_message = $prehook_output[0];
-            }
+        if ( isset($prehook['updateValidityDates']) ) {
+            list($prehook_return, $prehook_message) =
+                hook($prehook, 'updateValidityDates', $ldapInstance, $dn,
+                     array('start_date' => $start_date, 'end_date' => $end_date));
         }
 
-        if ( $prehook_return > 0 and !$ignore_prehook_updatevalidity_error) {
+        if ( $prehook_return > 0 and !$prehook['updateValidityDates']['ignoreError']) {
             $result = "hookerror";
         } else {
 
@@ -88,7 +72,7 @@ if ($result === "") {
                 $ldapStartDate = $start_date ? $directory->getLdapDate(new DateTime($start_date)) : array();
                 $update = $ldapInstance->modify_attributes($dn, array( $attributes_map['starttime']['attribute'] => $ldapStartDate));
                 if ( $update[0] == 0 ) {
-                    $result = "validiydatesupdated";
+                    $result = "validitydatesupdated";
                 } else {
                     $result = "ldaperror";
                 }
@@ -97,23 +81,18 @@ if ($result === "") {
                 $ldapEndDate = $end_date ? $directory->getLdapDate(new DateTime($end_date)) : array();
                 $update = $ldapInstance->modify_attributes($dn, array( $attributes_map['endtime']['attribute'] => $ldapEndDate));
                 if ( $update[0] == 0 and $result !== "ldaperror" ) {
-                    $result = "validiydatesupdated";
+                    $result = "validitydatesupdated";
                 } else {
                     $result = "ldaperror";
                 }
             }
         }
 
-        if ( $result === "validiydatesupdated" && isset($posthook_updatevalidity) ) {
+        if ( $result === "validitydatesupdated" && isset($posthook['updateValidityDates']) ) {
 
-            if ( !isset($posthook_login_value) ) {
-                $posthook_return = 255;
-                $posthook_message = "No login found, cannot execute posthook script";
-            } else {
-                $command = validiy_hook_command($posthook_updatevalidity, $posthook_login_value, $start_date, $end_date);
-                exec($command, $posthook_output, $posthook_return);
-                $posthook_message = $posthook_output[0];
-            }
+            list($posthook_return, $posthook_message) =
+                hook($posthook, 'updateValidityDates', $ldapInstance, $dn,
+                     array('start_date' => $start_date, 'end_date' => $end_date));
         }
 
     }
@@ -124,10 +103,10 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&updatevaliditydatesresult='.$result;
-if ( isset($prehook_return) and $display_prehook_updatevalidity_error and $prehook_return > 0 ) {
+if ( isset($prehook_return) and $prehook['updateValidityDates']['displayError'] and $prehook_return > 0 ) {
     $location .= '&prehookupdatevalidityresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $display_posthook_updatevalidity_error and $posthook_return > 0 ) {
+if ( isset($posthook_return) and $posthook['updateValidityDates']['displayError'] and $posthook_return > 0 ) {
     $location .= '&posthookupdatevalidityresult='.$posthook_message;
 }
 header('Location: '.$location);
