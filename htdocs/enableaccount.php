@@ -7,10 +7,8 @@ $result = "";
 $dn = "";
 $comment = "";
 $returnto = "display";
-$prehook_login_value = "";
 $prehook_message = "";
 $prehook_return = 0;
-$posthook_login_value = "";
 $posthook_message = "";
 $posthook_return = 0;
 
@@ -56,27 +54,12 @@ if ($result === "") {
         error_log("LDAP - $dn not found using the configured search settings, reject request");
     } else {
 
-        if ( isset($prehook_enable) || isset($posthook_enable) ) {
-            if ( isset($prehook_login) ) {
-                $prehook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $prehook_login);
-            }
-            if ( isset($posthook_login) ) {
-                $posthook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $posthook_login);
-            }
-        }
-        if ( isset($prehook_enable) ) {
-
-            if ( !isset($prehook_login_value) ) {
-                $prehook_return = 255;
-                $prehook_message = "No login found, cannot execute prehook script";
-            } else {
-                $command = hook_command($prehook_enable, $prehook_login_value);
-                exec($command, $prehook_output, $prehook_return);
-                $prehook_message = $prehook_output[0];
-            }
+        if ( isset($prehook['accountEnable']) ) {
+            list($prehook_return, $prehook_message) =
+                hook($prehook, 'accountEnable', $ldapInstance, $dn, array());
         }
 
-        if ( $prehook_return > 0 and !$ignore_prehook_enable_error) {
+        if ( $prehook_return > 0 and !$prehook['accountEnable']['ignoreError']) {
             $result = "hookerror";
         } else {
             if ( $directory->enableAccount($ldap, $dn) ) {
@@ -86,16 +69,9 @@ if ($result === "") {
             }
         }
 
-        if ( $result === "accountenabled" && isset($posthook_enable) ) {
-
-            if ( !isset($posthook_login_value) ) {
-                $posthook_return = 255;
-                $posthook_message = "No login found, cannot execute posthook script";
-            } else {
-                $command = hook_command($posthook_enable, $posthook_login_value);
-                exec($command, $posthook_output, $posthook_return);
-                $posthook_message = $posthook_output[0];
-            }
+        if ( $result === "accountenabled" && isset($posthook['accountEnable']) ) {
+            list($posthook_return, $posthook_message) =
+                hook($posthook, 'accountEnable', $ldapInstance, $dn, array());
         }
     }
 }
@@ -105,10 +81,10 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&enableaccountresult='.$result;
-if ( isset($prehook_return) and $display_prehook_enable_error and $prehook_return > 0 ) {
+if ( isset($prehook_return) and $prehook['accountEnable']['displayError'] and $prehook_return > 0 ) {
     $location .= '&prehookenableresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $display_posthook_enable_error and $posthook_return > 0 ) {
+if ( isset($posthook_return) and $posthook['accountEnable']['displayError'] and $posthook_return > 0 ) {
     $location .= '&posthookenableresult='.$posthook_message;
 }
 header('Location: '.$location);

@@ -10,9 +10,7 @@ $dn = "";
 $password = "";
 $pwdreset = "";
 $prehook_message = "";
-$prehook_login_value = "";
 $posthook_message = "";
-$posthook_login_value = "";
 
 if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $_POST["dn"];
@@ -47,14 +45,6 @@ if ($result === "") {
         $result = "noentriesfound";
         error_log("LDAP - $dn not found using the configured search settings, reject request");
     } else {
-        if ( isset($prehook) || isset($posthook) ) {
-            if ( isset($prehook_login) ) {
-                $prehook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $prehook_login);
-            }
-            if ( isset($posthook_login) ) {
-                $posthook_login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $posthook_login);
-            }
-        }
 
         # Get current entry first
         $entries_search = $ldapInstance->search_with_scope("base", $dn, '(objectClass=*)');
@@ -93,17 +83,12 @@ if ($result === "") {
 
         if( $result === "")
         {
-            if ( isset($prehook) ) {
 
-                if ( !isset($prehook_login_value) ) {
-                    $prehook_return = 255;
-                    $prehook_message = "No login found, cannot execute prehook script";
-                } else {
-                    $command = password_hook_command($prehook, $prehook_login_value, $password, null, $prehook_password_encodebase64);
-                    exec($command, $prehook_output, $prehook_return);
-                    $prehook_message = $prehook_output[0];
-                }
+            if( isset($prehook['passwordReset'])) {
+                list($prehook_return, $prehook_message) =
+                    hook($prehook, 'passwordReset', $ldapInstance, $dn, array( 'password' => $password ));
             }
+
 
             if ( $prehook_return > 0 and !$ignore_prehook_return) {
                 $result = "passwordrefused";
@@ -128,16 +113,9 @@ if ($result === "") {
             }
         }
 
-        if ( $result === "passwordchanged" && isset($posthook) ) {
-
-            if ( !isset($posthook_login_value) ) {
-                $posthook_return = 255;
-                $posthook_message = "No login found, cannot execute posthook script";
-            } else {
-                $command = password_hook_command($posthook, $posthook_login_value, $password, null, $posthook_password_encodebase64);
-                exec($command, $posthook_output, $posthook_return);
-                $posthook_message = $posthook_output[0];
-            }
+        if ( $result === "passwordchanged" && isset($posthook['passwordReset']) ) {
+            list($posthook_return, $posthook_message) =
+                hook($posthook, 'passwordReset', $ldapInstance, $dn, array( 'password' => $password ));
         }
 
         #==============================================================================
@@ -184,10 +162,10 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page=display&dn='.urlencode($dn).'&resetpasswordresult='.$result;
-if ( isset($prehook_return) and $display_prehook_error and $prehook_return > 0 ) {
+if ( isset($prehook_return) and $prehook['passwordReset']['displayError'] and $prehook_return > 0 ) {
     $location .= '&prehookresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $display_posthook_error and $posthook_return > 0 ) {
+if ( isset($posthook_return) and $posthook['passwordReset']['displayError'] and $posthook_return > 0 ) {
     $location .= '&posthookresult='.$posthook_message;
 }
 

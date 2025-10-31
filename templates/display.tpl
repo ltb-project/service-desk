@@ -519,7 +519,7 @@
                 {if $updatevaliditydatesresult eq 'ldaperror' or $updatevaliditydatesresult eq 'actionforbidden'}
                 <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-triangle"></i> {$msg_validitydatesnotupdated}</div>
                 {/if}
-                {if $updatevaliditydatesresult eq 'validiydatesupdated'}
+                {if $updatevaliditydatesresult eq 'validitydatesupdated'}
                 <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {$msg_validitydatesupdated}</div>
                 {/if}
                 {if $prehookupdatevalidityresult}

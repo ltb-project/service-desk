@@ -55,4 +55,72 @@ function validity_hook_command($hook, $login, $start_date, $end_date) {
     return $command;
 }
 
+function hook($hookConfig, $entrypoint, $ldapInstance, $dn, $params) {
+
+    if ( isset($hookConfig[$entrypoint]) ) {
+        if ( isset($hookConfig[$entrypoint]['login']) ) {
+            $login_value = $ldapInstance->get_first_value($dn, "base", '(objectClass=*)', $hookConfig[$entrypoint]['login']);
+
+            switch ($entrypoint) {
+                case "passwordReset":
+                    if(isset($hookConfig[$entrypoint]['externalScript']))
+                    {
+                        $password = $params['password'];
+                        $command = password_hook_command($hookConfig[$entrypoint]['externalScript'],
+                                                         $login_value,
+                                                         $password,
+                                                         null,
+                                                         $hookConfig[$entrypoint]['encodebase64']);
+                        exec($command, $output, $returnCode);
+                        $returnMessage = $output[0];
+                    }
+                    elseif(isset($hookConfig[$entrypoint]['function']))
+                    {
+                        # TODO: call function
+                    }
+                    break;
+                case "updateValidityDates":
+                    if(isset($hookConfig[$entrypoint]['externalScript']))
+                    {
+                        $start_date = $params['start_date'];
+                        $end_date = $params['end_date'];
+                        $command = validity_hook_command($hookConfig[$entrypoint]['externalScript'], $login_value, $start_date, $end_date);
+                        exec($command, $output, $returnCode);
+                        $returnMessage = $output[0];
+
+                    }
+                    elseif(isset($hookConfig[$entrypoint]['function']))
+                    {
+                        # TODO: call function
+                    }
+                    break;
+                case "passwordLock":
+                case "passwordUnlock":
+                case "accountEnable":
+                case "accountDisable":
+                case "deleteAccount":
+                    if(isset($hookConfig[$entrypoint]['externalScript']))
+                    {
+                        $command = hook_command($hookConfig[$entrypoint]['externalScript'], $login_value);
+                        exec($command, $output, $returnCode);
+                        $returnMessage = $output[0];
+
+                    }
+                    elseif(isset($hookConfig[$entrypoint]['function']))
+                    {
+                        # TODO: call function
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            $returnCode = 255;
+            $returnMessage = "No login found, cannot execute hook script";
+        }
+    }
+
+    return array($returnCode, $returnMessage);
+}
+
 ?>
