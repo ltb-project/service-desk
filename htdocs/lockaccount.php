@@ -45,10 +45,12 @@ if ($result === "") {
             error_log("LDAP - $dn not found using the configured search settings, reject request");
         } else {
 
-            if( isset($prehook['passwordLock'])) {
-                list($prehook_return, $prehook_message) =
-                    hook($prehook, 'passwordLock', $ldapInstance, $dn, array());
+            if ( isset($hook_login_attribute) ) {
+                $hook_login = get_hook_login($dn, $ldapInstance, $hook_login_attribute);
             }
+
+            list($prehook_return, $prehook_message) =
+                hook($prehook, 'passwordLock', $hook_login, array());
 
             if ( $prehook_return > 0 and !$prehook['passwordLock']['ignoreError']) {
                 $result = "hookerror";
@@ -68,9 +70,9 @@ if ($result === "") {
                 }
             }
 
-            if ( $result === "accountlocked" && isset($posthook['passwordLock']) ) {
+            if ( $result === "accountlocked" ) {
                 list($posthook_return, $posthook_message) =
-                    hook($posthook, 'passwordLock', $ldapInstance, $dn, array());
+                    hook($posthook, 'passwordLock', $hook_login, array());
             }
         }
     }

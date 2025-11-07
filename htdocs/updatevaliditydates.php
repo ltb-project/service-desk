@@ -58,11 +58,13 @@ if ($result === "") {
         error_log("LDAP - $dn not found using the configured search settings, reject request");
     } else {
 
-        if ( isset($prehook['updateValidityDates']) ) {
-            list($prehook_return, $prehook_message) =
-                hook($prehook, 'updateValidityDates', $ldapInstance, $dn,
-                     array('start_date' => $start_date, 'end_date' => $end_date));
+        if ( isset($hook_login_attribute) ) {
+            $hook_login = get_hook_login($dn, $ldapInstance, $hook_login_attribute);
         }
+
+        list($prehook_return, $prehook_message) =
+            hook($prehook, 'updateValidityDates', $hook_login,
+                 array('start_date' => $start_date, 'end_date' => $end_date));
 
         if ( $prehook_return > 0 and !$prehook['updateValidityDates']['ignoreError']) {
             $result = "hookerror";
@@ -88,10 +90,10 @@ if ($result === "") {
             }
         }
 
-        if ( $result === "validitydatesupdated" && isset($posthook['updateValidityDates']) ) {
+        if ( $result === "validitydatesupdated" ) {
 
             list($posthook_return, $posthook_message) =
-                hook($posthook, 'updateValidityDates', $ldapInstance, $dn,
+                hook($posthook, 'updateValidityDates', $hook_login,
                      array('start_date' => $start_date, 'end_date' => $end_date));
         }
 

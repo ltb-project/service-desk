@@ -51,10 +51,12 @@ if ($result === "") {
             error_log("LDAP - $dn not found using the configured search settings, reject request");
         } else {
 
-            if ( isset($prehook['deleteAccount']) ) {
-                list($prehook_return, $prehook_message) =
-                      hook($prehook, 'deleteAccount', $ldapInstance, $dn, array());
+            if ( isset($hook_login_attribute) ) {
+                $hook_login = get_hook_login($dn, $ldapInstance, $hook_login_attribute);
             }
+
+            list($prehook_return, $prehook_message) =
+                  hook($prehook, 'deleteAccount', $hook_login, array());
 
             if ( $prehook_return > 0 and !$prehook['deleteAccount']['ignoreError']) {
                 $result = "hookerror";
@@ -66,9 +68,9 @@ if ($result === "") {
                 }
             }
 
-            if ( $result === "deleteok" && isset($posthook['deleteAccount']) ) {
+            if ( $result === "deleteok" ) {
                 list($posthook_return, $posthook_message) =
-                      hook($posthook, 'deleteAccount', $ldapInstance, $dn, array());
+                      hook($posthook, 'deleteAccount', $hook_login, array());
             }
         }
     }
