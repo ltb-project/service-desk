@@ -110,10 +110,39 @@ function hook($hookConfig, $entrypoint, $login_value, $params) {
                 exec($command, $output, $returnCode);
                 $returnMessage = $output[0];
             }
-            # Run function
-            elseif(isset($hookConfig[$entrypoint]['function']))
+
+            # Prepare arguments and run function
+            if(isset($hookConfig[$entrypoint]['function']))
             {
-                # TODO: call function
+                switch ($entrypoint) {
+                    case "passwordReset":
+                        $password = $params['password'];
+                        if( isset($hookConfig[$entrypoint]['encodebase64']) &&
+                            $hookConfig[$entrypoint]['encodebase64'] )
+                        {
+                            $password = base64_encode($params['password']);
+                        }
+                        $params = [$login_value, $password];
+                        list($returnCode, $returnMessage) =
+                            $hookConfig[$entrypoint]['function'](...$params);
+                        break;
+                    case "updateValidityDates":
+                        $start_date = $params['start_date'];
+                        $end_date = $params['end_date'];
+                        $params = [$login_value, $start_date, $end_date];
+                        list($returnCode, $returnMessage) =
+                            $hookConfig[$entrypoint]['function'](...$params);
+                        break;
+                    case "passwordLock":
+                    case "passwordUnlock":
+                    case "accountEnable":
+                    case "accountDisable":
+                    case "deleteAccount":
+                        $params = [$login_value];
+                        list($returnCode, $returnMessage) =
+                            $hookConfig[$entrypoint]['function'](...$params);
+                        break;
+                }
             }
 
         }
