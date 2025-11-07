@@ -84,10 +84,12 @@ if ($result === "") {
         if( $result === "")
         {
 
-            if( isset($prehook['passwordReset'])) {
-                list($prehook_return, $prehook_message) =
-                    hook($prehook, 'passwordReset', $ldapInstance, $dn, array( 'password' => $password ));
+            if ( isset($hook_login_attribute) ) {
+                $hook_login = get_hook_login($dn, $ldapInstance, $hook_login_attribute);
             }
+
+            list($prehook_return, $prehook_message) =
+                hook($prehook, 'passwordReset', $hook_login, array( 'password' => $password ));
 
 
             if ( $prehook_return > 0 and !$ignore_prehook_return) {
@@ -113,9 +115,9 @@ if ($result === "") {
             }
         }
 
-        if ( $result === "passwordchanged" && isset($posthook['passwordReset']) ) {
+        if ( $result === "passwordchanged" ) {
             list($posthook_return, $posthook_message) =
-                hook($posthook, 'passwordReset', $ldapInstance, $dn, array( 'password' => $password ));
+                hook($posthook, 'passwordReset', $hook_login, array( 'password' => $password ));
         }
 
         #==============================================================================

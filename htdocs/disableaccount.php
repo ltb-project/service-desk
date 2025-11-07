@@ -50,10 +50,12 @@ if ($result === "") {
         error_log("LDAP - $dn not found using the configured search settings, reject request");
     } else {
 
-        if ( isset($prehook['accountDisable']) ) {
-            list($prehook_return, $prehook_message) =
-                hook($prehook, 'accountDisable', $ldapInstance, $dn, array());
+        if ( isset($hook_login_attribute) ) {
+            $hook_login = get_hook_login($dn, $ldapInstance, $hook_login_attribute);
         }
+
+        list($prehook_return, $prehook_message) =
+            hook($prehook, 'accountDisable', $hook_login, array());
 
         if ( $prehook_return > 0 and !$prehook['accountDisable']['ignoreError']) {
             $result = "hookerror";
@@ -64,10 +66,10 @@ if ($result === "") {
                 $result = "ldaperror";
             }
         }
-        if ( $result === "accountdisabled" && isset($posthook['accountDisable']) ) {
+        if ( $result === "accountdisabled" ) {
 
             list($posthook_return, $posthook_message) =
-                hook($posthook, 'accountDisable', $ldapInstance, $dn, array());
+                hook($posthook, 'accountDisable', $hook_login, array());
         }
 
     }

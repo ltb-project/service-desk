@@ -328,11 +328,12 @@ $debug_level = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING;
 
 # Hooks
 
+# hook_login_attribute: LDAP attribute used as identifier to send to the script or function
+$hook_login_attribute = "uid";
 #$prehook = array(
 #    "passwordReset" => array(
 #        "externalScript" => "/usr/share/service-desk/prehook.sh",
 #        "function" => "prehookFunction",
-#        "login" => "uid",
 #        "displayError" => false,
 #        "ignoreError" => false,
 #        "encodebase64" => false
@@ -354,7 +355,6 @@ $debug_level = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING;
 #  * deleteAccount:       input: login
 # externalScript: path of the script that is called. Script should return 0, else action after prehook will be aborted, unless error is ignored
 # function: the hook can also be a function. Write your own file.php in hooks/ directory
-# login: LDAP attribute used as identifier to send to the script or function
 # displayError: display an error if the script or function returns an error
 # ignoreError: prehook only, ignore error returned by the script or function
 # encodebase64: passwordReset entrypoint only, encode the password in base64 before sending it
