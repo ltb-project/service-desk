@@ -25,6 +25,7 @@ if ($result === "") {
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
     require_once("../lib/date.inc.php");
+    require_once("../lib/hook.inc.php");
 
     # Connect to LDAP
     $ldap_connection = $ldapInstance->connect();
@@ -72,21 +73,34 @@ if ($result === "") {
                     $update_attributes[ $attributes_map[$item]['attribute'] ] = $value;
                 }
 
-                # Update entry
-                if (!ldap_mod_replace($ldap, $dn, $update_attributes)) {
-                    error_log("LDAP - modify failed for $dn");
-                    $result = "updatefailed";
-                    $action = "displayform";
+
+                list($prehook_return, $prehook_message, $update_attributes) =
+                      hook($prehook, 'updateAccount', "", array("dn" => $dn, "entry" => $update_attributes));
+
+                if ( $prehook_return > 0 and !$prehook['updateAccount']['ignoreError']) {
+                    $result = "hookerror";
                 } else {
-                    $errno = ldap_errno($ldap);
-                    if ( $errno ) {
-                        error_log("LDAP - modify error $errno (".ldap_error($ldap).") for $dn");
+                    # Update entry
+                    if (!ldap_mod_replace($ldap, $dn, $update_attributes)) {
+                        error_log("LDAP - modify failed for $dn");
                         $result = "updatefailed";
                         $action = "displayform";
                     } else {
-                        $result = "updateok";
-                        $action = "displayentry";
+                        $errno = ldap_errno($ldap);
+                        if ( $errno ) {
+                            error_log("LDAP - modify error $errno (".ldap_error($ldap).") for $dn");
+                            $result = "updatefailed";
+                            $action = "displayform";
+                        } else {
+                            $result = "updateok";
+                            $action = "displayentry";
+                        }
                     }
+                }
+
+                if ( $result === "updateok" ) {
+                    list($posthook_return, $posthook_message) =
+                          hook($posthook, 'updateAccount', "", array("dn" => $dn, "entry" => $update_attributes));
                 }
 
                 if ($audit_log_file) {
@@ -137,6 +151,12 @@ if ($result === "") {
 
 if ( $action == "displayentry" ) {
     $location = 'index.php?page=display&dn='.urlencode($dn).'&updateresult='.$result;
+    if ( isset($prehook_return) and $prehook['updateAccount']['displayError'] and $prehook_return > 0 ) {
+        $location .= '&prehookresult='.$prehook_message;
+    }
+    if ( isset($posthook_return) and $posthook['updateAccount']['displayError'] and $posthook_return > 0 ) {
+        $location .= '&posthookresult='.$posthook_message;
+    }
     header('Location: '.$location);
 }
 
