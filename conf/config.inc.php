@@ -343,6 +343,8 @@ $hook_login_attribute = "uid";
 #    "accountEnable" => array(),
 #    "accountDisable" => array(),
 #    "updateValidityDates" => array(),
+#    "createAccount" => array(),
+#    "updateAccount" => array(),
 #    "deleteAccount" => array()
 #);
 # passwordReset, passwordLock,...: entrypoints triggering hooks
@@ -352,12 +354,15 @@ $hook_login_attribute = "uid";
 #  * accountEnable:       input: login
 #  * accountDisable:      input: login
 #  * updateValidityDates: input: login, start date, end date
+#  * createAccount:       input: dn, ldap entry
+#  * updateAccount:       input: dn, ldap entry
 #  * deleteAccount:       input: login
-# externalScript: path of the script that is called. Script should return 0, else action after prehook will be aborted, unless error is ignored
+# externalScript: path of the script that is called. Prehook script or function should return 0, else action will be aborted, unless error is ignored
 # function: the hook can also be a function. Write your own file.php in hooks/ directory
 # displayError: display an error if the script or function returns an error
 # ignoreError: prehook only, ignore error returned by the script or function
 # encodebase64: passwordReset entrypoint only, encode the password in base64 before sending it
+# For createAccount and updateAccount, for prehook external script, the expected output is: first line: error message, all other lines: ldap entry in json format. For prehook function, the expected returned values are: return code, error message, ldap entry
 $prehook = array();
 $posthook = array();
 

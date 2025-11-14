@@ -18,6 +18,7 @@ if ($result === "") {
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
     require_once("../lib/date.inc.php");
+    require_once("../lib/hook.inc.php");
 
     # Connect to LDAP
     $ldap_connection = $ldapInstance->connect();
@@ -74,22 +75,36 @@ if ($result === "") {
 
                 $dn .= "," . $create_base;
 
-                # Create entry
-                if (!ldap_add($ldap, $dn, $create_attributes)) {
-                    error_log("LDAP - modify failed for $dn");
-                    $result = "createfailed";
-                    $action = "displayform";
+
+                list($prehook_return, $prehook_message, $create_attributes) =
+                      hook($prehook, 'createAccount', "", array("dn" => $dn, "entry" => $create_attributes));
+
+                if ( $prehook_return > 0 and !$prehook['createAccount']['ignoreError']) {
+                    $result = "hookerror";
                 } else {
-                    $errno = ldap_errno($ldap);
-                    if ( $errno ) {
-                        error_log("LDAP - create error $errno (".ldap_error($ldap).") for $dn");
+                    # Create entry
+                    if (!ldap_add($ldap, $dn, $create_attributes)) {
+                        error_log("LDAP - modify failed for $dn");
                         $result = "createfailed";
                         $action = "displayform";
                     } else {
-                        $result = "createok";
-                        $action = "displayentry";
+                        $errno = ldap_errno($ldap);
+                        if ( $errno ) {
+                            error_log("LDAP - create error $errno (".ldap_error($ldap).") for $dn");
+                            $result = "createfailed";
+                            $action = "displayform";
+                        } else {
+                            $result = "createok";
+                            $action = "displayentry";
+                        }
                     }
                 }
+
+                if ( $result === "createok" ) {
+                    list($posthook_return, $posthook_message) =
+                          hook($posthook, 'createAccount', "", array("dn" => $dn, "entry" => $create_attributes));
+                }
+
 
                 if ($audit_log_file) {
                     auditlog($audit_log_file, $dn, $audit_admin, "createentry", $result, $comment);
@@ -118,6 +133,12 @@ if ($result === "") {
 
 if ( $action == "displayentry" ) {
     $location = 'index.php?page=display&dn='.urlencode($dn).'&createresult='.$result;
+    if ( isset($prehook_return) and $prehook['createAccount']['displayError'] and $prehook_return > 0 ) {
+        $location .= '&prehookresult='.$prehook_message;
+    }
+    if ( isset($posthook_return) and $posthook['createAccount']['displayError'] and $posthook_return > 0 ) {
+        $location .= '&posthookresult='.$posthook_message;
+    }
     header('Location: '.$location);
 }
 
