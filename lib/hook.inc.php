@@ -76,6 +76,7 @@ function call_external_command($hookConfig, $entrypoint, $login_value, $params)
 
     switch ($entrypoint) {
 
+        case "passwordCheck":
         case "passwordReset":
             $password = $params['password'];
             $command = password_hook_command($hookConfig[$entrypoint]['externalScript'],
@@ -131,6 +132,7 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
 
     switch ($entrypoint) {
 
+        case "passwordCheck":
         case "passwordReset":
             $password = $params['password'];
             if( isset($hookConfig[$entrypoint]['encodebase64']) &&
