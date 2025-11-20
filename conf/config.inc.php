@@ -338,6 +338,7 @@ $hook_login_attribute = "uid";
 #        "ignoreError" => false,
 #        "encodebase64" => false
 #    ),
+#    "passwordCheck" => array(),
 #    "passwordLock" => array(),
 #    "passwordUnlock" => array(),
 #    "accountEnable" => array(),
@@ -348,6 +349,7 @@ $hook_login_attribute = "uid";
 #    "deleteAccount" => array()
 #);
 # passwordReset, passwordLock,...: entrypoints triggering hooks
+#  * passwordCheck:       input: login, new password
 #  * passwordReset:       input: login, new password
 #  * passwordLock:        input: login
 #  * passwordUnlock:      input: login

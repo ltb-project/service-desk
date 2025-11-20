@@ -92,7 +92,7 @@ if ($result === "") {
                 hook($prehook, 'passwordReset', $hook_login, array( 'password' => $password ));
 
 
-            if ( $prehook_return > 0 and !$ignore_prehook_return) {
+            if ( $prehook_return > 0 and !$prehook['passwordReset']['ignoreError']) {
                 $result = "passwordrefused";
             } else {
             $reset = ($pwdreset === "true") ? true : false;
