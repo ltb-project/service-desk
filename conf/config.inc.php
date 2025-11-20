@@ -324,6 +324,8 @@ $audit_log_truncate_value_after = 40;
 # Debug mode
 $debug = false;
 
+$debug_level = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING;
+
 ### Prehooks
 
 # Launch a prehook script before an action.

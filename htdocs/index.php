@@ -154,7 +154,7 @@ else
 }
 
 # By default, only display error logs and not the other levels
-error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING);
+error_reporting($debug_level);
 if ($debug) {
     error_reporting(E_ALL);
     # Set debug for LDAP
