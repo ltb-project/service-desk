@@ -75,9 +75,9 @@ if ($result === "") {
 
 
                 list($prehook_return, $prehook_message, $update_attributes) =
-                      hook($prehook, 'updateAccount', "", array("dn" => $dn, "entry" => $update_attributes));
+                      hook($hook_config['updateAccount']['before'] ?? null, 'updateAccount', "", array("dn" => $dn, "entry" => $update_attributes));
 
-                if ( $prehook_return > 0 and !$prehook['updateAccount']['ignoreError']) {
+                if ( $prehook_return > 0 and !$hook_config['updateAccount']['before']['ignoreError']) {
                     $result = "hookerror";
                 } else {
                     # Update entry
@@ -100,7 +100,7 @@ if ($result === "") {
 
                 if ( $result === "updateok" ) {
                     list($posthook_return, $posthook_message) =
-                          hook($posthook, 'updateAccount', "", array("dn" => $dn, "entry" => $update_attributes));
+                          hook($hook_config['updateAccount']['after'] ?? null, 'updateAccount', "", array("dn" => $dn, "entry" => $update_attributes));
                 }
 
                 if ($audit_log_file) {
@@ -151,10 +151,16 @@ if ($result === "") {
 
 if ( $action == "displayentry" ) {
     $location = 'index.php?page=display&dn='.urlencode($dn).'&updateresult='.$result;
-    if ( isset($prehook_return) and $prehook['updateAccount']['displayError'] and $prehook_return > 0 ) {
+    if ( isset($prehook_return) and
+         isset($hook_config['updateAccount']['before']['displayError']) and
+         $hook_config['updateAccount']['before']['displayError'] and
+         $prehook_return > 0 ) {
         $location .= '&prehookresult='.$prehook_message;
     }
-    if ( isset($posthook_return) and $posthook['updateAccount']['displayError'] and $posthook_return > 0 ) {
+    if ( isset($posthook_return) and
+         isset($hook_config['updateAccount']['after']['displayError']) and
+         $hook_config['updateAccount']['after']['displayError'] and
+         $posthook_return > 0 ) {
         $location .= '&posthookresult='.$posthook_message;
     }
     header('Location: '.$location);

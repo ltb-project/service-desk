@@ -77,9 +77,9 @@ if ($result === "") {
 
 
                 list($prehook_return, $prehook_message, $create_attributes) =
-                      hook($prehook, 'createAccount', "", array("dn" => $dn, "entry" => $create_attributes));
+                      hook($hook_config['createAccount']['before'] ?? null, 'createAccount', "", array("dn" => $dn, "entry" => $create_attributes));
 
-                if ( $prehook_return > 0 and !$prehook['createAccount']['ignoreError']) {
+                if ( $prehook_return > 0 and !$hook['createAccount']['before']['ignoreError']) {
                     $result = "hookerror";
                 } else {
                     # Create entry
@@ -102,7 +102,7 @@ if ($result === "") {
 
                 if ( $result === "createok" ) {
                     list($posthook_return, $posthook_message) =
-                          hook($posthook, 'createAccount', "", array("dn" => $dn, "entry" => $create_attributes));
+                          hook($hook_config['createAccount']['after'] ?? null, 'createAccount', "", array("dn" => $dn, "entry" => $create_attributes));
                 }
 
 
@@ -133,10 +133,16 @@ if ($result === "") {
 
 if ( $action == "displayentry" ) {
     $location = 'index.php?page=display&dn='.urlencode($dn).'&createresult='.$result;
-    if ( isset($prehook_return) and $prehook['createAccount']['displayError'] and $prehook_return > 0 ) {
+    if ( isset($prehook_return) and
+         isset($hook_config['createAccount']['before']['displayError']) and
+         $hook_config['createAccount']['before']['displayError'] and
+         $prehook_return > 0 ) {
         $location .= '&prehookresult='.$prehook_message;
     }
-    if ( isset($posthook_return) and $posthook['createAccount']['displayError'] and $posthook_return > 0 ) {
+    if ( isset($posthook_return) and
+         isset($hook_config['createAccount']['after']['displayError']) and
+         $hook_config['createAccount']['after']['displayError'] and
+         $posthook_return > 0 ) {
         $location .= '&posthookresult='.$posthook_message;
     }
     header('Location: '.$location);

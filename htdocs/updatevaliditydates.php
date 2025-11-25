@@ -63,10 +63,10 @@ if ($result === "") {
         }
 
         list($prehook_return, $prehook_message) =
-            hook($prehook, 'updateValidityDates', $hook_login,
+            hook($hook_config['updateValidityDates']['before'] ?? null, 'updateValidityDates', $hook_login,
                  array('start_date' => $start_date, 'end_date' => $end_date));
 
-        if ( $prehook_return > 0 and !$prehook['updateValidityDates']['ignoreError']) {
+        if ( $prehook_return > 0 and !$hook_config['updateValidityDates']['before']['ignoreError']) {
             $result = "hookerror";
         } else {
 
@@ -93,7 +93,7 @@ if ($result === "") {
         if ( $result === "validitydatesupdated" ) {
 
             list($posthook_return, $posthook_message) =
-                hook($posthook, 'updateValidityDates', $hook_login,
+                hook($hook_config['updateValidityDates']['after'] ?? null, 'updateValidityDates', $hook_login,
                      array('start_date' => $start_date, 'end_date' => $end_date));
         }
 
@@ -105,10 +105,16 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&updatevaliditydatesresult='.$result;
-if ( isset($prehook_return) and $prehook['updateValidityDates']['displayError'] and $prehook_return > 0 ) {
+if ( isset($prehook_return) and
+     isset($hook_config['updateValidityDates']['before']['displayError']) and
+     $hook_config['updateValidityDates']['before']['displayError'] and
+     $prehook_return > 0 ) {
     $location .= '&prehookupdatevalidityresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $posthook['updateValidityDates']['displayError'] and $posthook_return > 0 ) {
+if ( isset($posthook_return) and
+     isset($hook_config['updateValidityDates']['after']['displayError']) and
+     $hook_config['updateValidityDates']['after']['displayError'] and
+     $posthook_return > 0 ) {
     $location .= '&posthookupdatevalidityresult='.$posthook_message;
 }
 header('Location: '.$location);

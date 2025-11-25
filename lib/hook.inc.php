@@ -79,24 +79,24 @@ function call_external_command($hookConfig, $entrypoint, $login_value, $params)
         case "passwordCheck":
         case "passwordReset":
             $password = $params['password'];
-            $command = password_hook_command($hookConfig[$entrypoint]['externalScript'],
+            $command = password_hook_command($hookConfig['externalScript'],
                                              $login_value,
                                              $password,
                                              null,
-                                             $hookConfig[$entrypoint]['encodebase64']);
+                                             $hookConfig['encodebase64']);
             exec($command, $output, $returnCode);
-            $returnMessage = $output[0];
+            $returnMessage = isset($output[0]) ? $output[0] : "";
             break;
 
         case "updateValidityDates":
             $start_date = $params['start_date'];
             $end_date = $params['end_date'];
-            $command = validity_hook_command($hookConfig[$entrypoint]['externalScript'],
+            $command = validity_hook_command($hookConfig['externalScript'],
                                              $login_value,
                                              $start_date,
                                              $end_date);
             exec($command, $output, $returnCode);
-            $returnMessage = $output[0];
+            $returnMessage = isset($output[0]) ? $output[0] : "";
             break;
 
         case "passwordLock":
@@ -104,17 +104,17 @@ function call_external_command($hookConfig, $entrypoint, $login_value, $params)
         case "accountEnable":
         case "accountDisable":
         case "deleteAccount":
-            $command = hook_command($hookConfig[$entrypoint]['externalScript'], $login_value);
+            $command = hook_command($hookConfig['externalScript'], $login_value);
             exec($command, $output, $returnCode);
-            $returnMessage = $output[0];
+            $returnMessage = isset($output[0]) ? $output[0] : "";
             break;
 
         case "createAccount":
         case "updateAccount":
             $dn = $params['dn'];
-            $command = hook_command($hookConfig[$entrypoint]['externalScript'], $dn, json_encode($returnedEntry));
+            $command = hook_command($hookConfig['externalScript'], $dn, json_encode($returnedEntry));
             exec($command, $output, $returnCode);
-            $returnMessage = $output[0];
+            $returnMessage = isset($output[0]) ? $output[0] : "";
             if(count($output) > 1) {
                 $returnedEntry = json_decode(implode('', array_slice($output, 1)), true);
             }
@@ -135,14 +135,14 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
         case "passwordCheck":
         case "passwordReset":
             $password = $params['password'];
-            if( isset($hookConfig[$entrypoint]['encodebase64']) &&
-                $hookConfig[$entrypoint]['encodebase64'] )
+            if( isset($hookConfig['encodebase64']) &&
+                $hookConfig['encodebase64'] )
             {
                 $password = base64_encode($params['password']);
             }
             $params = [$login_value, $password];
             list($returnCode, $returnMessage) =
-                $hookConfig[$entrypoint]['function'](...$params);
+                $hookConfig['function'](...$params);
             break;
 
         case "updateValidityDates":
@@ -150,7 +150,7 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
             $end_date = $params['end_date'];
             $params = [$login_value, $start_date, $end_date];
             list($returnCode, $returnMessage) =
-                $hookConfig[$entrypoint]['function'](...$params);
+                $hookConfig['function'](...$params);
             break;
 
         case "passwordLock":
@@ -160,7 +160,7 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
         case "deleteAccount":
             $params = [$login_value];
             list($returnCode, $returnMessage) =
-                $hookConfig[$entrypoint]['function'](...$params);
+                $hookConfig['function'](...$params);
             break;
 
         case "createAccount":
@@ -168,7 +168,7 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
             $dn = $params['dn'];
             $params = [$dn, $returnedEntry];
             list($returnCode, $returnMessage, $returnedEntry) =
-                $hookConfig[$entrypoint]['function'](...$params);
+                $hookConfig['function'](...$params);
             break;
 
     }
@@ -181,19 +181,19 @@ function hook($hookConfig, $entrypoint, $login_value, $params) {
     $returnMessage = "";
     $returnedEntry = isset($params['entry']) ? $params['entry'] : null;
 
-    if ( isset($hookConfig[$entrypoint]['externalScript']) ||
-         isset($hookConfig[$entrypoint]['function']) ) {
+    if ( isset($hookConfig['externalScript']) ||
+         isset($hookConfig['function']) ) {
         if ( isset($login_value) ) {
 
             # Compute and run external command
-            if(isset($hookConfig[$entrypoint]['externalScript']))
+            if(isset($hookConfig['externalScript']))
             {
                 list($returnCode, $returnMessage, $returnedEntry) =
                     call_external_command($hookConfig, $entrypoint, $login_value, $params);
             }
 
             # Compute arguments and run external function
-            if(isset($hookConfig[$entrypoint]['function']))
+            if(isset($hookConfig['function']))
             {
                 list($returnCode, $returnMessage, $returnedEntry) =
                     call_external_function($hookConfig, $entrypoint, $login_value, $params);

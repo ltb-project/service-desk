@@ -89,10 +89,10 @@ if ($result === "") {
             }
 
             list($prehook_return, $prehook_message) =
-                hook($prehook, 'passwordReset', $hook_login, array( 'password' => $password ));
+                hook($hook_config['passwordReset']['before'] ?? null, 'passwordReset', $hook_login, array( 'password' => $password ));
 
 
-            if ( $prehook_return > 0 and !$prehook['passwordReset']['ignoreError']) {
+            if ( $prehook_return > 0 and !$hook_config['passwordReset']['before']['ignoreError']) {
                 $result = "passwordrefused";
             } else {
             $reset = ($pwdreset === "true") ? true : false;
@@ -117,7 +117,7 @@ if ($result === "") {
 
         if ( $result === "passwordchanged" ) {
             list($posthook_return, $posthook_message) =
-                hook($posthook, 'passwordReset', $hook_login, array( 'password' => $password ));
+                hook($hook_config['passwordReset']['after'] ?? null, 'passwordReset', $hook_login, array( 'password' => $password ));
         }
 
         #==============================================================================
@@ -164,10 +164,16 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page=display&dn='.urlencode($dn).'&resetpasswordresult='.$result;
-if ( isset($prehook_return) and $prehook['passwordReset']['displayError'] and $prehook_return > 0 ) {
+if ( isset($prehook_return) and
+     isset($hook_config['passwordReset']['before']['displayError']) and
+     $hook_config['passwordReset']['before']['displayError'] and
+     $prehook_return > 0 ) {
     $location .= '&prehookresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $posthook['passwordReset']['displayError'] and $posthook_return > 0 ) {
+if ( isset($posthook_return) and
+     isset($hook_config['passwordReset']['after']['displayError']) and
+     $hook_config['passwordReset']['after']['displayError'] and
+     $posthook_return > 0 ) {
     $location .= '&posthookresult='.$posthook_message;
 }
 
