@@ -356,6 +356,8 @@ $hook_login_attribute = "uid";
 #    "updateAccount" => array(),
 #    "deleteAccount" => array()
 #);
+#
+# Hook entrypoints:
 # passwordReset, passwordLock,...: entrypoints triggering hooks
 #  * passwordCheck:       input: login, new password
 #  * passwordReset:       input: login, new password
@@ -367,13 +369,25 @@ $hook_login_attribute = "uid";
 #  * createAccount:       input: dn, ldap entry
 #  * updateAccount:       input: dn, ldap entry
 #  * deleteAccount:       input: login
-# before, after: step where the hook is called, ie before or after the entrypoint
-# externalScript: path of the script that is called. "before" script or function should return 0, else action will be aborted, unless error is ignored
-# function: the hook can also be a function. Write your own file.php in hooks/ directory
-# displayError: display an error if the script or function returns an error
-# ignoreError: only for before hooks, ignore error returned by the script or function
-# encodebase64: passwordReset entrypoint only, encode the password in base64 before sending it
-# For createAccount and updateAccount, for step=before external script, the expected output is: first line: error message, all other lines: ldap entry in json format. For step=before function, the expected returned values are: return code, error message, ldap entry
+#
+# Hook outputs:
+# * general external script output: first line: error message
+# * general external script return code: 0 is a success, any other value means an error
+# * general function return values: return code, error message
+# * for createAccount and updateAccount:
+#   * for step=before external script, the expected output is: first line: error message, all other lines: ldap entry in json format
+#   * for step=before function, the expected returned values are: return code, error message, ldap entry
+#
+# Hook steps:
+# * before: before the entrypoint
+# * after: after the entrypoint
+#
+# Hook parameters:
+# * externalScript: path of the script that is called. "before" script or function should return 0, else action will be aborted, unless error is ignored
+# * function: the hook can also be a function. Write your own file.php in hooks/ directory
+# * displayError: display an error if the script or function returns an error
+# * ignoreError: only for before hooks, ignore error returned by the script or function
+# * encodebase64: passwordReset and passwordCheck entrypoints only, encode the password in base64 before sending it
 $hook_config = array();
 
 # The name of an HTTP Header that may hold a reference to an extra config file to include.

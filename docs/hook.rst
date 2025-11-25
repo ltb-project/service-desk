@@ -1,214 +1,168 @@
 Hook
 ====
 
-Hook feature allows to run a script before or after an action:
+Hook feature allows to run an external script or a php function before or after an event.
 
-* Password reset
-* Password lock
-* Password unlock
-* Account enable
-* Account disable
-* Update validity dates
-* Delete
+Here is an example of configuration to set in you ``config.inc.local.php``:
 
-The script must return 0 if no error occured. Any text printed on STDOUT
-will be displayed as an error message (see options).
+.. code-block:: php
 
-Login
+    <?php
+
+    $hook_login_attribute = "uid";
+
+    $hook_config = array(
+        "passwordReset" => array(
+            "before" => array(
+                "externalScript" => "/usr/share/service-desk/hook.sh",
+                "function" => "hookFunction",
+                "displayError" => false,
+                "encodebase64" => false,
+                "ignoreError" => false
+            ),
+            "after" => array(
+                "externalScript" => "/usr/share/service-desk/hook.sh",
+                "function" => "hookFunction",
+                "displayError" => false,
+                "encodebase64" => false
+            )
+        ),
+        "passwordCheck" => array(),
+        "passwordLock" => array(),
+        "passwordUnlock" => array(),
+        "accountEnable" => array(),
+        "accountDisable" => array(),
+        "updateValidityDates" => array(),
+        "createAccount" => array(),
+        "updateAccount" => array(),
+        "deleteAccount" => array()
+    );
+
+    ?>
+
+Entrypoints
+-----------
+
+You can call hooks during these events:
+
+* ``passwordReset`` called when admin is changing the password at user entry display screen
+* ``passwordCheck`` called when admin is checking if a user password is correct
+* ``passwordLock`` called when admin is locking an account
+* ``passwordUnlock`` called when admin is unlocking an account
+* ``accountEnable`` called when enabling an account
+* ``accountDisable`` called when disabling an account
+* ``updateValidityDates`` called when changing the start time or end time of an account
+* ``createAccount`` called when creating a user account
+* ``updateAccount`` called when modifying a user account
+* ``deleteAccount`` called when removing a user account
+
+Steps
 -----
 
-Define which attribute will be used as login in prehook and posthook scripts:
+The hook can be called at two special steps:
 
-.. code-block:: php
+* ``before`` before the entrypoint
+* ``after`` after the entrypoint
 
-    $prehook_login = "uid";
-    $posthook_login = "uid";
+If called before the entrypoint, the return code can be checked to prevent the corresponding event if an error occurred.
 
-Password reset
---------------
+If called after the entrypoint, you are ensured the corresponding event has been successfully completed.
 
-The script is called with two parameters: login and new password.
 
-Define prehook or posthook script (and enable the feature):
+API
+---
 
-.. code-block:: php
+The input and output parameters are described there:
 
-    $prehook = "/usr/share/service-desk/prehook.sh";
-    $posthook = "/usr/share/service-desk/posthook.sh";
+passwordReset
+^^^^^^^^^^^^^
 
-You can choose to display an error if the script return code is greater
-than 0:
+* External script / function input: login, new password
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
 
-.. code-block:: php
+passwordCheck
+^^^^^^^^^^^^^
 
-   $display_prehook_error = true;
-   $display_posthook_error = true;
+* External script / function input: login, new password
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
 
-The displayed message will be the first line of the script output.
+passwordLock
+^^^^^^^^^^^^
 
-Another option can be enabled to encode the password in base64 before
-sending it to the script, which can avoid an execution issue if the
-password contains special characters:
+* External script / function input: login
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
 
-.. code-block:: php
+passwordUnlock
+^^^^^^^^^^^^^^
 
-   $prehook_password_encodebase64 = false;
-   $posthook_password_encodebase64 = false;
+* External script / function input: login
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
 
-By default with prehook script, the password will not be changed in LDAP directory if the script fails.
-You can change this behavior to ignore script error. This could be useful to run prehook script and display a warning
-if it fails, but still try to update password in the directory.
+accountEnable
+^^^^^^^^^^^^^
 
-.. code-block:: php
+* External script / function input: login
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
 
-    $ignore_prehook_error = true;
+accountDisable
+^^^^^^^^^^^^^^
 
-Password lock
--------------
+* External script / function input: login
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
 
-The script is called with one parameter: login.
+updateValidityDates
+^^^^^^^^^^^^^^^^^^^
 
-Define prehook or posthook script (and enable the feature):
+* External script / function input: login, start date, end date
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
 
-.. code-block:: php
+createAccount
+^^^^^^^^^^^^^
 
-    $prehook_lock = "/usr/share/service-desk/prehook_lock.sh";
-    $posthook_lock = "/usr/share/service-desk/posthook_lock.sh";
+* External script / function input: login, ldap entry
+* External script output: for step=before external script, the expected output is: first line: error message, all other lines: ldap entry in json format.
+* External script return code: 0 is a success, any other value means an error
+* Function return values: for step=before function, the expected returned values are: return code, error message, ldap entry, for step=after, the expected returned values are: return code, error message
 
-To display hook error:
+updateAccount
+^^^^^^^^^^^^^
 
-.. code-block:: php
+* External script / function input: login, ldap entry
+* External script output: for step=before external script, the expected output is: first line: error message, all other lines: ldap entry in json format.
+* External script return code: 0 is a success, any other value means an error
+* Function return values: for step=before function, the expected returned values are: return code, error message, ldap entry, for step=after, the expected returned values are: return code, error message
 
-   $display_prehook_lock_error = true;
-   $display_posthook_lock_error = true;
+deleteAccount
+^^^^^^^^^^^^^
 
-To ignore prehook error:
+* External script / function input: login
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
 
-.. code-block:: php
 
-    $ignore_prehook_lock_error = true;
+Configuration parameters
+------------------------
 
-Password unlock
----------------
 
-The script is called with one parameter: login.
+* ``$hook_login_attribute = "uid";``: define which attribute will be used as login in hooks
+* ``externalScript``: path of the script that is called. "before" script or function should return 0, else action will be aborted, unless error is ignored
+* ``function``: the hook can also be a function. Write your own file.php in hooks/ directory
+* ``displayError``: display an error if the script or function returns an error
+* ``ignoreError``: only for before hooks, ignore error returned by the script or function
+* ``encodebase64``: passwordReset and passwordCheck entrypoints only, encode the password in base64 before sending it
 
-Define prehook or posthook script (and enable the feature):
-
-.. code-block:: php
-
-    $prehook_unlock = "/usr/share/service-desk/prehook_unlock.sh";
-    $posthook_unlock = "/usr/share/service-desk/posthook_unlock.sh";
-
-To display hook error:
-
-.. code-block:: php
-
-   $display_prehook_unlock_error = true;
-   $display_posthook_unlock_error = true;
-
-To ignore prehook error:
-
-.. code-block:: php
-
-    $ignore_prehook_unlock_error = true;
-
-Account enable
---------------
-
-The script is called with one parameter: login.
-
-Define prehook or posthook script (and enable the feature):
-
-.. code-block:: php
-
-    $prehook_enable = "/usr/share/service-desk/prehook_enable.sh";
-    $posthook_enable = "/usr/share/service-desk/posthook_enable.sh";
-
-To display hook error:
-
-.. code-block:: php
-
-   $display_prehook_enable_error = true;
-   $display_posthook_enable_error = true;
-
-To ignore prehook error:
-
-.. code-block:: php
-
-    $ignore_prehook_enable_error = true;
-
-Account disable
----------------
-
-The script is called with one parameter: login.
-
-Define prehook or posthook script (and enable the feature):
-
-.. code-block:: php
-
-    $prehook_disable = "/usr/share/service-desk/prehook_disable.sh";
-    $posthook_disable = "/usr/share/service-desk/posthook_disable.sh";
-
-To display hook error:
-
-.. code-block:: php
-
-   $display_prehook_disable_error = true;
-   $display_posthook_disable_error = true;
-
-To ignore prehook error:
-
-.. code-block:: php
-
-    $ignore_prehook_disable_error = true;
-
-Update validity dates
----------------------
-
-The script is called with one parameter: login.
-
-Define prehook or posthook script (and enable the feature):
-
-.. code-block:: php
-
-    $prehook_updatevalidity = "/usr/share/service-desk/prehook_updatevalidity.sh";
-    $posthook_updatevalidity = "/usr/share/service-desk/posthook_updatevalidity.sh";
-
-To display hook error:
-
-.. code-block:: php
-
-   $display_prehook_updatevalidity_error = true;
-   $display_posthook_updatevalidity_error = true;
-
-To ignore prehook error:
-
-.. code-block:: php
-
-    $ignore_prehook_updatevalidity_error = true;
-
-Delete
-------
-
-The script is called with one parameter: login.
-
-Define prehook or posthook script (and enable the feature):
-
-.. code-block:: php
-
-    $prehook_delete = "/usr/share/service-desk/prehook_delete.sh";
-    $posthook_delete = "/usr/share/service-desk/posthook_delete.sh";
-
-To display hook error:
-
-.. code-block:: php
-
-   $display_prehook_delete_error = true;
-   $display_posthook_delete_error = true;
-
-To ignore prehook error:
-
-.. code-block:: php
-
-    $ignore_prehook_delete_error = true;
