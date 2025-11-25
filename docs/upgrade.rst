@@ -1,6 +1,25 @@
 Upgrade
 =======
 
+From 0.7 to 0.8
+---------------
+
+Hooks
+~~~~~
+
+The hook configuration has been completely restructured, for the sake of easyness and maintenance.
+
+If you are using hooks, you are advised to update your configuration file with the new format. See the :doc:`Hook documentation <hook>`.
+
+There are also a bunch of new features:
+
+* possibility to call a php function instead of an external script
+* new entrypoint ``passwordCheck``
+* new entrypoints ``createAccount``, ``updateAccount``, ``deleteAccount``, with the ability to modify the user attributes on the fly for the 2 first ones.
+
+
+
+
 From 0.6 to 0.7
 ---------------
 
