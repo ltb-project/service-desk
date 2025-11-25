@@ -50,9 +50,9 @@ if ($result === "") {
             }
 
             list($prehook_return, $prehook_message) =
-                hook($prehook, 'passwordLock', $hook_login, array());
+                hook($hook_config['passwordLock']['before'] ?? null, 'passwordLock', $hook_login, array());
 
-            if ( $prehook_return > 0 and !$prehook['passwordLock']['ignoreError']) {
+            if ( $prehook_return > 0 and !$hook['passwordLock']['before']['ignoreError']) {
                 $result = "hookerror";
             } else {
                 # Get password policy configuration
@@ -72,7 +72,7 @@ if ($result === "") {
 
             if ( $result === "accountlocked" ) {
                 list($posthook_return, $posthook_message) =
-                    hook($posthook, 'passwordLock', $hook_login, array());
+                    hook($hook_config['passwordLock']['after'] ?? null, 'passwordLock', $hook_login, array());
             }
         }
     }
@@ -83,10 +83,16 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&lockaccountresult='.$result;
-if ( isset($prehook_return) and $prehook['passwordLock']['displayError'] and $prehook_return > 0 ) {
+if ( isset($prehook_return) and
+     isset($hook_config['passwordLock']['before']['displayError']) and
+     $hook_config['passwordLock']['before']['displayError'] and
+     $prehook_return > 0 ) {
     $location .= '&prehooklockresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $posthook['passwordLock']['displayError'] and $posthook_return > 0 ) {
+if ( isset($posthook_return) and
+     isset($hook_config['passwordLock']['after']['displayError']) and
+     $hook_config['passwordLock']['after']['displayError'] and
+     $posthook_return > 0 ) {
     $location .= '&posthooklockresult='.$posthook_message;
 }
 header('Location: '.$location);

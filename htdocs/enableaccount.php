@@ -59,9 +59,9 @@ if ($result === "") {
         }
 
         list($prehook_return, $prehook_message) =
-            hook($prehook, 'accountEnable', $hook_login, array());
+            hook($hook_config['accountEnable']['before'] ?? null, 'accountEnable', $hook_login, array());
 
-        if ( $prehook_return > 0 and !$prehook['accountEnable']['ignoreError']) {
+        if ( $prehook_return > 0 and !$hook_config['accountEnable']['before']['ignoreError']) {
             $result = "hookerror";
         } else {
             if ( $directory->enableAccount($ldap, $dn) ) {
@@ -73,7 +73,7 @@ if ($result === "") {
 
         if ( $result === "accountenabled" ) {
             list($posthook_return, $posthook_message) =
-                hook($posthook, 'accountEnable', $hook_login, array());
+                hook($hook_config['accountEnable']['after'] ?? null, 'accountEnable', $hook_login, array());
         }
     }
 }
@@ -83,10 +83,16 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&enableaccountresult='.$result;
-if ( isset($prehook_return) and $prehook['accountEnable']['displayError'] and $prehook_return > 0 ) {
+if ( isset($prehook_return) and
+     isset($hook['accountEnable']['before']['displayError']) and
+     $hook['accountEnable']['before']['displayError'] and
+     $prehook_return > 0 ) {
     $location .= '&prehookenableresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $posthook['accountEnable']['displayError'] and $posthook_return > 0 ) {
+if ( isset($posthook_return) and
+     isset($hook['accountEnable']['after']['displayError']) and
+     $hook['accountEnable']['after']['displayError'] and
+     $posthook_return > 0 ) {
     $location .= '&posthookenableresult='.$posthook_message;
 }
 header('Location: '.$location);

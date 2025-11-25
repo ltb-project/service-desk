@@ -56,9 +56,9 @@ if ($result === "") {
             }
 
             list($prehook_return, $prehook_message) =
-                  hook($prehook, 'deleteAccount', $hook_login, array());
+                  hook($hook_config['deleteAccount']['before'] ?? null, 'deleteAccount', $hook_login, array());
 
-            if ( $prehook_return > 0 and !$prehook['deleteAccount']['ignoreError']) {
+            if ( $prehook_return > 0 and !$hook['deleteAccount']['before']['ignoreError']) {
                 $result = "hookerror";
             } else {
                 if ( ldap_delete($ldap, $dn) ) {
@@ -70,7 +70,7 @@ if ($result === "") {
 
             if ( $result === "deleteok" ) {
                 list($posthook_return, $posthook_message) =
-                      hook($posthook, 'deleteAccount', $hook_login, array());
+                      hook($hook_config['deleteAccount']['after'] ?? null, 'deleteAccount', $hook_login, array());
             }
         }
     }
@@ -81,10 +81,16 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&deleteaccountresult='.$result;
-if ( isset($prehook_return) and $prehook['deleteAccount']['displayError'] and $prehook_return > 0 ) {
+if ( isset($prehook_return) and
+     isset($hook_config['deleteAccount']['before']['displayError']) and
+     $hook_config['deleteAccount']['before']['displayError'] and
+     $prehook_return > 0 ) {
     $location .= '&prehookdeleteresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $posthook['deleteAccount']['displayError'] and $posthook_return > 0 ) {
+if ( isset($posthook_return) and
+     isset($hook_config['deleteAccount']['after']['displayError']) and
+     $hook_config['deleteAccount']['after']['displayError'] and
+     $posthook_return > 0 ) {
     $location .= '&posthookdeleteresult='.$posthook_message;
 }
 header('Location: '.$location);

@@ -330,13 +330,21 @@ $debug_level = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING;
 
 # hook_login_attribute: LDAP attribute used as identifier to send to the script or function
 $hook_login_attribute = "uid";
-#$prehook = array(
+#$hook_config = array(
 #    "passwordReset" => array(
-#        "externalScript" => "/usr/share/service-desk/prehook.sh",
-#        "function" => "prehookFunction",
-#        "displayError" => false,
-#        "ignoreError" => false,
-#        "encodebase64" => false
+#        "before" => array(
+#            "externalScript" => "/usr/share/service-desk/hook.sh",
+#            "function" => "hookFunction",
+#            "displayError" => false,
+#            "encodebase64" => false,
+#            "ignoreError" => false
+#        ),
+#        "after" => array(
+#            "externalScript" => "/usr/share/service-desk/hook.sh",
+#            "function" => "hookFunction",
+#            "displayError" => false,
+#            "encodebase64" => false
+#        )
 #    ),
 #    "passwordCheck" => array(),
 #    "passwordLock" => array(),
@@ -359,14 +367,14 @@ $hook_login_attribute = "uid";
 #  * createAccount:       input: dn, ldap entry
 #  * updateAccount:       input: dn, ldap entry
 #  * deleteAccount:       input: login
-# externalScript: path of the script that is called. Prehook script or function should return 0, else action will be aborted, unless error is ignored
+# before, after: step where the hook is called, ie before or after the entrypoint
+# externalScript: path of the script that is called. "before" script or function should return 0, else action will be aborted, unless error is ignored
 # function: the hook can also be a function. Write your own file.php in hooks/ directory
 # displayError: display an error if the script or function returns an error
-# ignoreError: prehook only, ignore error returned by the script or function
+# ignoreError: only for before hooks, ignore error returned by the script or function
 # encodebase64: passwordReset entrypoint only, encode the password in base64 before sending it
-# For createAccount and updateAccount, for prehook external script, the expected output is: first line: error message, all other lines: ldap entry in json format. For prehook function, the expected returned values are: return code, error message, ldap entry
-$prehook = array();
-$posthook = array();
+# For createAccount and updateAccount, for step=before external script, the expected output is: first line: error message, all other lines: ldap entry in json format. For step=before function, the expected returned values are: return code, error message, ldap entry
+$hook_config = array();
 
 # The name of an HTTP Header that may hold a reference to an extra config file to include.
 #$header_name_extra_config="SSP-Extra-Config";

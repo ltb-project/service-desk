@@ -56,9 +56,9 @@ if ($result === "") {
             }
 
             list($prehook_return, $prehook_message) =
-                 hook($prehook, 'passwordUnlock', $hook_login, array());
+                 hook($hook_config['passwordUnlock']['before'] ?? null, 'passwordUnlock', $hook_login, array());
 
-            if ( $prehook_return > 0 and !$prehook['passwordUnlock']['ignoreError']) {
+            if ( $prehook_return > 0 and !$hook_config['passwordUnlock']['before']['ignoreError']) {
                 $result = "hookerror";
             } else {
                 if ( $directory->unlockAccount($ldap, $dn) ) {
@@ -70,7 +70,7 @@ if ($result === "") {
 
             if ( $result === "accountunlocked" ) {
                list($posthook_return, $posthook_message) =
-                    hook($posthook, 'passwordUnlock', $hook_login, array());
+                    hook($hook_config['passwordUnlock']['after'] ?? null, 'passwordUnlock', $hook_login, array());
             }
         }
     }
@@ -81,10 +81,16 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page='.$returnto.'&dn='.urlencode($dn).'&unlockaccountresult='.$result;
-if ( isset($prehook_return) and $prehook['passwordUnlock']['displayError'] and $prehook_return > 0 ) {
+if ( isset($prehook_return) and
+     isset($hook_config['passwordUnlock']['before']['displayError']) and
+     $hook_config['passwordUnlock']['before']['displayError'] and
+     $prehook_return > 0 ) {
     $location .= '&prehookunlockresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $posthook['passwordUnlock']['displayError'] and $posthook_return > 0 ) {
+if ( isset($posthook_return) and
+     isset($hook_config['passwordUnlock']['after']['displayError']) and
+     $hook_config['passwordUnlock']['after']['displayError'] and
+     $posthook_return > 0 ) {
     $location .= '&posthookunlockresult='.$posthook_message;
 }
 header('Location: '.$location);

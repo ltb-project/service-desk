@@ -43,10 +43,10 @@ if ($result === "") {
         }
 
         list($prehook_return, $prehook_message) =
-            hook($prehook, 'passwordCheck', $hook_login, array( 'password' => $password ));
+            hook($hook_config['passwordCheck']['before'] ?? null, 'passwordCheck', $hook_login, array( 'password' => $password ));
 
 
-        if ( $prehook_return > 0 and !$prehook['passwordCheck']['ignoreError']) {
+        if ( $prehook_return > 0 and !$hook_config['passwordCheck']['before']['ignoreError']) {
             $result = "passwordinvalid";
         } else {
             if ($use_checkpasswordhistory) {
@@ -68,7 +68,7 @@ if ($result === "") {
 
         if ( $result === "passwordok" ) {
             list($posthook_return, $posthook_message) =
-                hook($posthook, 'passwordCheck', $hook_login, array( 'password' => $password ));
+                hook($hook_config['passwordCheck']['after'] ?? null, 'passwordCheck', $hook_login, array( 'password' => $password ));
         }
 
     }
@@ -79,10 +79,16 @@ if ($audit_log_file) {
 }
 
 $location = 'index.php?page=display&dn='.$dn.'&checkpasswordresult='.$result;
-if ( isset($prehook_return) and $prehook['passwordCheck']['displayError'] and $prehook_return > 0 ) {
+if ( isset($prehook_return) and
+     isset($hook_config['passwordCheck']['before']['displayError']) and
+     $hook_config['passwordCheck']['before']['displayError'] and
+     $prehook_return > 0 ) {
     $location .= '&prehookresult='.$prehook_message;
 }
-if ( isset($posthook_return) and $posthook['passwordCheck']['displayError'] and $posthook_return > 0 ) {
+if ( isset($posthook_return) and
+     isset($hook_config['passwordCheck']['after']['displayError']) and
+     $hook_config['passwordCheck']['after']['displayError'] and
+     $posthook_return > 0 ) {
     $location .= '&posthookresult='.$posthook_message;
 }
 header('Location: '.$location);
