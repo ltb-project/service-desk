@@ -104,7 +104,7 @@ if ($result === "") {
                 }
 
                 if ($audit_log_file) {
-                    auditlog($audit_log_file, $dn, $audit_admin, "updateentry", $result, $comment);
+                    auditlog($audit_log_file, $dn, $audit_admin, "updateentry", $result, $comment ?? "");
                 }
 
             }
@@ -170,7 +170,7 @@ $smarty->assign("entry", $entry);
 $smarty->assign("dn", $dn);
 $smarty->assign("action", $action);
 
-$smarty->assign("item_list", $item_list);
+$smarty->assign("item_list", $item_list ?? null);
 
 $smarty->assign("card_title", $display_title);
 $smarty->assign("card_items", array_unique(array_merge($display_items, $update_items)));

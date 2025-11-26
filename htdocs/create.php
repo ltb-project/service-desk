@@ -107,7 +107,7 @@ if ($result === "") {
 
 
                 if ($audit_log_file) {
-                    auditlog($audit_log_file, $dn, $audit_admin, "createentry", $result, $comment);
+                    auditlog($audit_log_file, $dn, $audit_admin, "createentry", $result, $comment ?? "" );
                 }
 
             }
@@ -151,7 +151,7 @@ if ( $action == "displayentry" ) {
 $smarty->assign("entry", $entry);
 $smarty->assign("action", $action);
 
-$smarty->assign("item_list", $item_list);
+$smarty->assign("item_list", $item_list ?? null);
 
 $smarty->assign("create_items", $create_items);
 $smarty->assign("show_undef", $display_show_undefined);
