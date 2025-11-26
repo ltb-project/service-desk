@@ -54,7 +54,7 @@ if ($result === "") {
                 foreach ($password_history as $previous_password) {
                     preg_match("/(?<={).*(?=})/", $previous_password, $algorithm);
                     preg_match("/{(?<={).*/", $previous_password, $hash);
-                    if (\Ltb\Password::check_password($password, $hash[0], $algorithm[0])) {
+                    if (\Ltb\Password::check_password($password, $hash[0] ?? null, $algorithm[0] ?? null)) {
                         $result = "passwordinhistory";
                     }
                 }
