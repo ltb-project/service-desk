@@ -354,7 +354,8 @@ $hook_login_attribute = "uid";
 #    "updateValidityDates" => array(),
 #    "createAccount" => array(),
 #    "updateAccount" => array(),
-#    "deleteAccount" => array()
+#    "deleteAccount" => array(),
+#    "renameAccount" => array()
 #);
 #
 # Hook entrypoints:
@@ -369,6 +370,7 @@ $hook_login_attribute = "uid";
 #  * createAccount:       input: dn, ldap entry
 #  * updateAccount:       input: dn, ldap entry
 #  * deleteAccount:       input: login
+#  * renameAccount:       input: login, dn, new_rdn, parent)
 #
 # Hook outputs:
 # * general external script output: first line: error message

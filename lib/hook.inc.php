@@ -120,6 +120,15 @@ function call_external_command($hookConfig, $entrypoint, $login_value, $params)
             }
             break;
 
+        case "renameAccount":
+            $dn      = $params['dn'];
+            $new_rdn = $params['new_rdn'];
+            $parent  = $params['parent'];
+            $command = hook_command($hookConfig['externalScript'], $login_value, $dn, $new_rdn, $parent);
+            exec($command, $output, $returnCode);
+            $returnMessage = isset($output[0]) ? $output[0] : "";
+            break;
+
     }
     return array($returnCode, $returnMessage, $returnedEntry);
 }
@@ -168,6 +177,15 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
             $dn = $params['dn'];
             $params = [$dn, $returnedEntry];
             list($returnCode, $returnMessage, $returnedEntry) =
+                $hookConfig['function'](...$params);
+            break;
+
+        case "renameAccount":
+            $dn      = $params['dn'];
+            $new_rdn = $params['new_rdn'];
+            $parent  = $params['parent'];
+            $params = [$login_value, $dn, $new_rdn, $parent];
+            list($returnCode, $returnMessage) =
                 $hookConfig['function'](...$params);
             break;
 

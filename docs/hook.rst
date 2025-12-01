@@ -35,7 +35,8 @@ Here is an example of configuration to set in you ``config.inc.local.php``:
         "updateValidityDates" => array(),
         "createAccount" => array(),
         "updateAccount" => array(),
-        "deleteAccount" => array()
+        "deleteAccount" => array(),
+        "renameAccount" => array()
     );
 
     ?>
@@ -55,6 +56,7 @@ You can call hooks during these events:
 * ``createAccount`` called when creating a user account
 * ``updateAccount`` called when modifying a user account
 * ``deleteAccount`` called when removing a user account
+* ``renameAccount`` called when renaming a user account
 
 Steps
 -----
@@ -150,6 +152,14 @@ deleteAccount
 ^^^^^^^^^^^^^
 
 * External script / function input: login
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: return code, error message
+
+deleteAccount
+^^^^^^^^^^^^^
+
+* External script / function input: login, dn, new_rdn, parent
 * External script output: first line: error message
 * External script return code: 0 is a success, any other value means an error
 * Function return values: return code, error message

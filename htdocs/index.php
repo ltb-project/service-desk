@@ -289,6 +289,19 @@ $search = "";
 if (isset($_REQUEST["search"]) and $_REQUEST["search"] and is_string($_REQUEST["search"])) { $search = htmlentities($_REQUEST["search"]); }
 $smarty->assign('search',$search);
 
+# Delete hook result assignation
+$prehookdeleteresult= "";
+$posthookdeleteresult= "";
+if (isset($_GET["prehookdeleteresult"]) and $_GET["prehookdeleteresult"]) {
+    $prehookdeleteresult = $_GET["prehookdeleteresult"];
+}
+if (isset($_GET["posthookdeleteresult"]) and $_GET["posthookdeleteresult"]) {
+    $posthookdeleteresult = $_GET["posthookdeleteresult"];
+}
+$smarty->assign("prehookdeleteresult", $prehookdeleteresult);
+$smarty->assign("posthookdeleteresult", $posthookdeleteresult);
+
+
 # Register plugins
 require_once("../lib/smarty.inc.php");
 $smarty->registerPlugin("function", "get_attribute", "get_attribute");

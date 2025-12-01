@@ -79,6 +79,7 @@ if ($result === "") {
 
                 if ( $prehook_return > 0 and !$hook_config['updateAccount']['before']['ignoreError']) {
                     $result = "hookerror";
+                    $action = "displayentry";
                 } else {
                     # Update entry
                     if (!ldap_mod_replace($ldap, $dn, $update_attributes)) {
@@ -155,13 +156,13 @@ if ( $action == "displayentry" ) {
          isset($hook_config['updateAccount']['before']['displayError']) and
          $hook_config['updateAccount']['before']['displayError'] and
          $prehook_return > 0 ) {
-        $location .= '&prehookresult='.$prehook_message;
+        $location .= '&prehookupdateresult='.$prehook_message;
     }
     if ( isset($posthook_return) and
          isset($hook_config['updateAccount']['after']['displayError']) and
          $hook_config['updateAccount']['after']['displayError'] and
          $posthook_return > 0 ) {
-        $location .= '&posthookresult='.$posthook_message;
+        $location .= '&posthookupdateresult='.$posthook_message;
     }
     header('Location: '.$location);
 }

@@ -137,13 +137,13 @@ if ( $action == "displayentry" ) {
          isset($hook_config['createAccount']['before']['displayError']) and
          $hook_config['createAccount']['before']['displayError'] and
          $prehook_return > 0 ) {
-        $location .= '&prehookresult='.$prehook_message;
+        $location .= '&prehookcreateresult='.$prehook_message;
     }
     if ( isset($posthook_return) and
          isset($hook_config['createAccount']['after']['displayError']) and
          $hook_config['createAccount']['after']['displayError'] and
          $posthook_return > 0 ) {
-        $location .= '&posthookresult='.$posthook_message;
+        $location .= '&posthookcreateresult='.$posthook_message;
     }
     header('Location: '.$location);
 }

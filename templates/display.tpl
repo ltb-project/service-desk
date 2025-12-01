@@ -18,15 +18,45 @@
     </div>
     {/if}
 
-    {if $prehookdeleteresult}
+    {if $prehookrenameresult}
     <div class="container">
-        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookdeleteresult}</div>
+        <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-circle"></i> {$msg_hookerror}</div>
+        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookrenameresult}</div>
     </div>
     {/if}
 
-    {if $posthookdeleteresult}
+    {if $posthookrenameresult}
     <div class="container">
-        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookdeleteresult}</div>
+        <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-circle"></i> {$msg_hookerror}</div>
+        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookrenameresult}</div>
+    </div>
+    {/if}
+
+    {if $prehookupdateresult}
+    <div class="container">
+        <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-circle"></i> {$msg_hookerror}</div>
+        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookupdateresult}</div>
+    </div>
+    {/if}
+
+    {if $posthookupdateresult}
+    <div class="container">
+        <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-circle"></i> {$msg_hookerror}</div>
+        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookupdateresult}</div>
+    </div>
+    {/if}
+
+    {if $prehookcreateresult}
+    <div class="container">
+        <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-circle"></i> {$msg_hookerror}</div>
+        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$prehookcreateresult}</div>
+    </div>
+    {/if}
+
+    {if $posthookcreateresult}
+    <div class="container">
+        <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation-circle"></i> {$msg_hookerror}</div>
+        <div class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i> {$posthookcreateresult}</div>
     </div>
     {/if}
 

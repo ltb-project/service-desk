@@ -36,8 +36,12 @@ $updateresult = "";
 $renameresult = "";
 $createresult = "";
 $deleteresult = "";
-$prehookdeleteresult= "";
-$posthookdeleteresult= "";
+$prehookcreateresult= "";
+$posthookcreateresult= "";
+$prehookupdateresult= "";
+$posthookupdateresult= "";
+$prehookrenameresult= "";
+$posthookrenameresult= "";
 
 if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $_GET["dn"];
@@ -139,12 +143,28 @@ if (isset($_GET["deleteresult"]) and $_GET["deleteresult"]) {
     $deleteresult = $_GET["deleteresult"];
 }
 
-if (isset($_GET["prehookdeleteresult"]) and $_GET["prehookdeleteresult"]) {
-    $prehookdeleteresult = $_GET["prehookdeleteresult"];
+if (isset($_GET["prehookcreateresult"]) and $_GET["prehookcreateresult"]) {
+    $prehookcreateresult = $_GET["prehookcreateresult"];
 }
 
-if (isset($_GET["posthookdeleteresult"]) and $_GET["posthookdeleteresult"]) {
-    $posthookdeleteresult = $_GET["posthookdeleteresult"];
+if (isset($_GET["posthookcreateresult"]) and $_GET["posthookcreateresult"]) {
+    $posthookcreateresult = $_GET["posthookcreateresult"];
+}
+
+if (isset($_GET["prehookupdateresult"]) and $_GET["prehookupdateresult"]) {
+    $prehookupdateresult = $_GET["prehookupdateresult"];
+}
+
+if (isset($_GET["posthookupdateresult"]) and $_GET["posthookupdateresult"]) {
+    $posthookupdateresult = $_GET["posthookupdateresult"];
+}
+
+if (isset($_GET["prehookrenameresult"]) and $_GET["prehookrenameresult"]) {
+    $prehookrenameresult = $_GET["prehookrenameresult"];
+}
+
+if (isset($_GET["posthookrenameresult"]) and $_GET["posthookrenameresult"]) {
+    $posthookrenameresult = $_GET["posthookrenameresult"];
 }
 
 if ($result === "") {
@@ -289,7 +309,11 @@ $smarty->assign("updateresult", $updateresult);
 $smarty->assign("renameresult", $renameresult);
 $smarty->assign("createresult", $createresult);
 $smarty->assign("deleteresult", $deleteresult);
-$smarty->assign("prehookdeleteresult", $prehookdeleteresult);
-$smarty->assign("posthookdeleteresult", $posthookdeleteresult);
+$smarty->assign("prehookcreateresult", $prehookcreateresult);
+$smarty->assign("posthookcreateresult", $posthookcreateresult);
+$smarty->assign("prehookupdateresult", $prehookupdateresult);
+$smarty->assign("posthookupdateresult", $posthookupdateresult);
+$smarty->assign("prehookrenameresult", $prehookrenameresult);
+$smarty->assign("posthookrenameresult", $posthookrenameresult);
 
 ?>
