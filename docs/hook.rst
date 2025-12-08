@@ -156,7 +156,7 @@ deleteAccount
 * External script return code: 0 is a success, any other value means an error
 * Function return values: return code, error message
 
-deleteAccount
+renameAccount
 ^^^^^^^^^^^^^
 
 * External script / function input: login, dn, new_rdn, parent
