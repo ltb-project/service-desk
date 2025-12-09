@@ -364,8 +364,10 @@ if (isset($header_name_audit_admin)) {
 #==============================================================================
 if (isset($_POST["apiendpoint"])) {
     $data = array();
-    if (file_exists('api/'.$_POST["apiendpoint"].'.php')) {
-        require_once('api/'.$_POST["apiendpoint"].'.php');
+    $apiendpoint = $_POST["apiendpoint"];
+    $allowed_apiendpoints = array("search-api","search_dn");
+    if (file_exists("api/$apiendpoint.php") and in_array($apiendpoint, $allowed_apiendpoints)) {
+        require_once("api/$apiendpoint.php");
     }
     echo json_encode($data);
     exit(0);
