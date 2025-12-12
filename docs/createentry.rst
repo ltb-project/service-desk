@@ -22,6 +22,9 @@ You can choose which items will be asked for the entry creation:
 
    $create_items = array('firstname', 'lastname', 'title', 'businesscategory', 'mail');
 
+Take care about the mandatory attributes defined in the ``$attributes_map`` parameter. (see :doc:`attributes documentation <attributes>`)
+
+
 DN
 --
 

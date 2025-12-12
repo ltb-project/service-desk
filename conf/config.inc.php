@@ -56,10 +56,10 @@ $attributes_map = array(
     'employeenumber' => array( 'attribute' => 'employeenumber', 'faclass' => 'hashtag', 'type' => 'text' ),
     'employeetype' => array( 'attribute' => 'employeetype', 'faclass' => 'id-badge', 'type' => 'text' ),
     'fax' => array( 'attribute' => 'facsimiletelephonenumber', 'faclass' => 'fax', 'type' => 'tel', 'dtorder' => 'disable' ),
-    'firstname' => array( 'attribute' => 'givenname', 'faclass' => 'user-o', 'type' => 'text' , 'dtorder' => 'disable' ),
+    'firstname' => array( 'attribute' => 'givenname', 'mandatory' => array("all"), 'faclass' => 'user-o', 'type' => 'text' , 'dtorder' => 'disable' ),
     'fullname' => array( 'attribute' => 'cn', 'faclass' => 'user-circle', 'type' => 'text' ),
     'l' => array( 'attribute' => 'l', 'faclass' => 'globe', 'type' => 'text' ),
-    'lastname' => array( 'attribute' => 'sn', 'faclass' => 'user-o', 'type' => 'text' ),
+    'lastname' => array( 'attribute' => 'sn', 'mandatory' => array("all"), 'faclass' => 'user-o', 'type' => 'text' ),
     'mail' => array( 'attribute' => 'mail', 'faclass' => 'envelope-o', 'type' => 'mailto', 'multivalued' => true ),
     'mailquota' => array( 'attribute' => 'gosamailquota', 'faclass' => 'pie-chart', 'type' => 'bytes' ),
     'manager' => array( 'attribute' => 'manager', 'faclass' => 'user-circle-o', 'type' => 'dn_link', 'dtorder' => 'disable' ),
@@ -80,7 +80,7 @@ $attributes_map = array(
 # Directory specific attributes
 $openldap_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'authtimestamp', 'faclass' => 'lock', 'type' => 'date' ),
-    'identifier' => array( 'attribute' => 'uid', 'faclass' => 'user-o', 'type' => 'text' ),
+    'identifier' => array( 'attribute' => 'uid', 'mandatory' => array("all"), 'faclass' => 'user-o', 'type' => 'text' ),
     'pwdaccountlockedtime' => array( 'attribute' => 'pwdaccountlockedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date', 'sort' => 'descending' ),
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date', 'sort' => 'descending' ),
@@ -93,7 +93,7 @@ $openldap_attributes_map = array(
 );
 $activedirectory_attributes_map = array(
     'authtimestamp' => array( 'attribute' => 'lastlogon', 'faclass' => 'lock', 'type' => 'ad_date' ),
-    'identifier' => array( 'attribute' => 'samaccountname', 'faclass' => 'user-o', 'type' => 'text' ),
+    'identifier' => array( 'attribute' => 'samaccountname', 'mandatory' => array("all"), 'faclass' => 'user-o', 'type' => 'text' ),
     'pwdaccountlockedtime' => array( 'attribute' => 'lockouttime', 'faclass' => 'lock', 'type' => 'ad_date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdlastset', 'faclass' => 'lock', 'type' => 'ad_date' ),
     'pwdfailuretime' => array( 'attribute' => 'badpasswordtime', 'faclass' => 'lock', 'type' => 'ad_date' ),
