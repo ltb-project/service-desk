@@ -30,7 +30,7 @@
     <div class="z-3 position-absolute list-group dn_link_suggestions"></div>
     </div>
 {else}
-    <input type="text" name={$item} class="form-control" value="{$value}" data-role="value" />
+    <input type="text" name="{$item}{$itemindex}" class="form-control" value="{$value}" data-role="value" />
 {/if}
   </div>
   <div class="value_editor_button col-2">
