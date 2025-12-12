@@ -96,6 +96,7 @@ $messages['label_pwdaccountlockedtime'] = "Locking date";
 $messages['label_pwdchangedtime'] = "Last password change";
 $messages['label_pwdfailuretime'] = "Last authentication failures";
 $messages['label_pwdgraceusetime'] = "Last grace authentications";
+$messages['label_pwdhistory'] = "Password change history";
 $messages['label_pwdlastsuccess'] = $messages['label_authtimestamp'];
 $messages['label_pwdpolicysubentry'] = "Associated password policy";
 $messages['label_pwdreset'] = "Reset password at next connection";

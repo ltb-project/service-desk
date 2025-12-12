@@ -96,6 +96,7 @@ $messages['label_pwdaccountlockedtime'] = "Låsedato";
 $messages['label_pwdchangedtime'] = "Siste passordendring";
 $messages['label_pwdfailuretime'] = "Siste autentiseringsfeil";
 $messages['label_pwdgraceusetime'] = "Siste nådeautentiseringer";
+$messages['label_pwdhistory'] = "Historikk over passordendringer";
 $messages['label_pwdlastsuccess'] = $messages['label_authtimestamp'];
 $messages['label_pwdpolicysubentry'] = "Tilknyttet passordpolicy";
 $messages['label_pwdreset'] = "Tilbakestill passord ved neste tilkobling";

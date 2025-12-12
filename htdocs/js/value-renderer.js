@@ -719,6 +719,30 @@ function ldapAddressTypeRenderer(config_js, dn, value, column, type)
     return render;
 }
 
+function ldapPwdhistoryTypeRenderer(config_js, dn, value, column, type)
+{
+    var render = "";
+
+    [search_result_show_undefined,
+     display_show_undefined,
+     truncate_value_after,
+     search,
+     js_date_specifiers ] =
+            get_normalized_parameters(config_js);
+
+    const regex = /#.*$/;
+    var truncated_value = value.replace(regex, "");
+    var date = ldap2date.parse(truncated_value);
+    var val = dayjs(date).format(js_date_specifiers);
+
+    var values = {
+      "value": val
+    };
+    render = renderTemplate(arguments.callee.name, values);
+
+    return render;
+}
+
 function truncate(string, length)
 {
     result = string;

@@ -84,9 +84,10 @@ $openldap_attributes_map = array(
     'pwdaccountlockedtime' => array( 'attribute' => 'pwdaccountlockedtime', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdchangedtime' => array( 'attribute' => 'pwdchangedtime', 'faclass' => 'lock', 'type' => 'date', 'sort' => 'descending' ),
     'pwdfailuretime' => array( 'attribute' => 'pwdfailuretime', 'faclass' => 'lock', 'type' => 'date', 'sort' => 'descending' ),
+    'pwdgraceusetime' => array( 'attribute' => 'pwdgraceusetime', 'faclass' => 'lock', 'type' => 'date' ),
+    'pwdhistory' => array( 'attribute' => 'pwdhistory', 'faclass' => 'lock', 'type' => 'pwdhistory' ),
     'pwdlastsuccess' => array( 'attribute' => 'pwdlastsuccess', 'faclass' => 'lock', 'type' => 'date' ),
     'pwdpolicysubentry' => array( 'attribute' => 'pwdpolicysubentry', 'faclass' => 'lock', 'type' => 'ppolicy_dn' ),
-    'pwdgraceusetime' => array( 'attribute' => 'pwdgraceusetime', 'faclass' => 'lock', 'type' => 'date' ),
     'starttime' => array( 'attribute' => 'pwdstarttime', 'faclass' => 'lock', 'type' => 'date' ),
     'endtime' => array( 'attribute' => 'pwdendtime', 'faclass' => 'lock', 'type' => 'date' ),
 );
@@ -133,7 +134,7 @@ $datatables_auto_print = true;
 $display_items = array('identifier', 'firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary' );
 $display_title = "fullname";
 $display_show_undefined = false;
-$display_password_items = array('pwdchangedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'pwdgraceusetime', 'starttime', 'endtime', 'created', 'modified');
+$display_password_items = array('pwdchangedtime', 'pwdfailuretime', 'pwdhistory', 'pwdpolicysubentry', 'authtimestamp', 'pwdgraceusetime', 'starttime', 'endtime', 'created', 'modified');
 $display_password_expiration_date = true;
 
 # Features
