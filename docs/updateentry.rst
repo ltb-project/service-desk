@@ -22,6 +22,8 @@ You can choose which items will be available for the update:
 
 .. tip:: Other items will be read-only if they are listed in display items
 
+Take care about the mandatory attributes defined in the ``$attributes_map`` parameter. (see :doc:`attributes documentation <attributes>`)
+
 Macros
 ------
 

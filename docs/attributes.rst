@@ -7,6 +7,7 @@ Attributes map
 Attributes are defined in ``$attributes_map``, where each item is an array with these keys:
 
 * ``attribute``: name of LDAP attribute, in lower case
+* ``mandatory``: indicate if the attribute is mandatory. mandatory is an array with these possible values: ``all``, ``create``, ``update``
 * ``faclass``: name of Font Awesome icon class
 * ``type``: type of attribute (text, mailto, tel or date)
 * ``sort``: optional, when attribute is multi-valued, sort them. Two possible values: ``ascending`` (default) or ``descending``
