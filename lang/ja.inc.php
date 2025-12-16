@@ -42,7 +42,7 @@ $messages['displayentry'] = "エントリーの表示";
 $messages['dnrequired'] = "エントリーのIDが必要です";
 $messages['editentry'] = "編集";
 $messages['enableaccount'] = "アカウントの有効化";
-$messages['enddate'] = "狩猟日";
+$messages['enddate'] = "終了日";
 $messages['entriesfound'] = "エントリーがみつかりました";
 $messages['entryfound'] = "エントリーがみつかりました";
 $messages['eventfound'] = "イベントがみつかりました";
@@ -182,6 +182,12 @@ $messages['unlockaccount'] = "アカウントのロックを解除";
 $messages['unlockdate'] = "自動ロック解除日:";
 $messages['updateentry'] = "エントリーの更新";
 $messages['updatefailed'] = "修正は失敗しました";
+$messages['updateok'] = "エントリーの修正は成功しました";
+$messages['updatevaliditydates'] = "検証日を更新";
+$messages['validitydatesnotupdated'] = "検証日の更新中にエラー";
+$messages['validitydatesupdated'] = "検証日の更新しました";
+$messages['welcome'] = "LDAP Tool Boxサービスデスクへようこそ";
+$messages['willexpireaccounts'] = "パスワードはすぐに期限がきれます";
 $messages['willexpireaccountstitle'] = "$willexpiredays 日内に期限がきれるパスワード";
 
 ?>
