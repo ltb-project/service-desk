@@ -183,6 +183,8 @@ $use_updatestarttime = true;
 $use_updateendtime = true;
 $use_searchinvalid = true;
 
+$use_searchall = true;
+
 $samba_mode = false;
 $samba_options=[];
 # Set password min/max age in Samba attributes

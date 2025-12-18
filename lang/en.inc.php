@@ -16,6 +16,7 @@ $messages['accountstatus'] = "Account status";
 $messages['accountunlocked'] = "Account is not locked";
 $messages['accountvalid'] = "Account is valid";
 $messages['actionforbidden'] = "Action forbidden";
+$messages['allaccounts'] = "List of all acoounts";
 $messages['auditlogs'] = "Audit logs";
 $messages['auditlogtitle'] = "Audit log for the last $audit_log_days days";
 $messages['cancelbacktoentry'] = "Cancel and go back to entry";

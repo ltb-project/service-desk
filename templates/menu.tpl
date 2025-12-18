@@ -23,6 +23,10 @@
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-fw fa-dashboard"></i> {$msg_dashboards}<span class="caret"></span></a>
                   <ul class="dropdown-menu">
+                      {if $use_searchall}
+                      <li><a href="index.php?page=searchall" class="dropdown-item"><i class="fa fa-fw fa-users"></i> {$msg_allaccounts}</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      {/if}
                       {if $use_searchlocked}
                       <li><a href="index.php?page=searchlocked" class="dropdown-item"><i class="fa fa-fw fa-lock"></i> {$msg_lockedaccounts}</a></li>
                       {/if}

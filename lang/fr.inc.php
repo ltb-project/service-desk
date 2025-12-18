@@ -16,6 +16,7 @@ $messages['accountstatus'] = "Statut du compte";
 $messages['accountunlocked'] = "Le compte n'est pas verrouillé";
 $messages['accountvalid'] = "Le compte est valide";
 $messages['actionforbidden'] = "Action interdite";
+$messages['allaccounts'] = "Liste de tous les comptes";
 $messages['auditlogs'] = "Audit";
 $messages['auditlogtitle'] = "Traces d'audit pour les $audit_log_days derniers jours";
 $messages['cancelbacktoentry'] = "Annuler et revenir à l'entrée";

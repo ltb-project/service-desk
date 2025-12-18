@@ -5,7 +5,7 @@
 
 require_once(__DIR__ . "/../../lib/date.inc.php");
 
-$possible_actions = [ 'searchdisabled', 'searchexpired',
+$possible_actions = [ 'searchall', 'searchdisabled', 'searchexpired',
                       'searchidle', 'searchinvalid',
                       'searchlocked', 'search',
                       'searchwillexpire', 'display' ];
