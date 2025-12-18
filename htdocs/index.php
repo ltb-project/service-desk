@@ -377,6 +377,7 @@ if (isset($_POST["apiendpoint"])) {
 # Route to page
 #==============================================================================
 $result = "";
+$allowed_pages = array("auditlog", "checkentropy", "checkpassword", "create", "delete", "disableaccount", "display", "enableaccount", "lockaccount", "rename", "resetpassword", "search", "unlockaccount", "update", "updatevaliditydates", "welcome");
 $page = "welcome";
 $searchaction = "";
 if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
@@ -401,6 +402,8 @@ if ( preg_match("/^search.*$/",$page) )
     $searchaction = $page;
     $page = "search"; # Use generic page search
 }
+if ( !preg_match("/^[\w-]+$/", $page) ) { $page = "welcome"; }
+if ( !in_array($page, $allowed_pages) ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 $smarty->assign('searchaction',$searchaction);
