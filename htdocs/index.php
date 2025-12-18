@@ -366,8 +366,10 @@ if (isset($header_name_audit_admin)) {
 #==============================================================================
 if (isset($_POST["apiendpoint"])) {
     $data = array();
-    if (file_exists('api/'.$_POST["apiendpoint"].'.php')) {
-        require_once('api/'.$_POST["apiendpoint"].'.php');
+    $apiendpoint = $_POST["apiendpoint"];
+    $allowed_apiendpoints = array("search-api","search_dn");
+    if (file_exists("api/$apiendpoint.php") and in_array($apiendpoint, $allowed_apiendpoints)) {
+        require_once("api/$apiendpoint.php");
     }
     echo json_encode($data);
     exit(0);
@@ -377,6 +379,7 @@ if (isset($_POST["apiendpoint"])) {
 # Route to page
 #==============================================================================
 $result = "";
+$allowed_pages = array("auditlog", "checkentropy", "checkpassword", "create", "delete", "disableaccount", "display", "enableaccount", "lockaccount", "rename", "resetpassword", "search", "unlockaccount", "update", "updatevaliditydates", "welcome");
 $page = "welcome";
 $searchaction = "";
 if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
@@ -401,6 +404,8 @@ if ( preg_match("/^search.*$/",$page) )
     $searchaction = $page;
     $page = "search"; # Use generic page search
 }
+if ( !preg_match("/^[\w-]+$/", $page) ) { $page = "welcome"; }
+if ( !in_array($page, $allowed_pages) ) { $page = "welcome"; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 $smarty->assign('searchaction',$searchaction);
