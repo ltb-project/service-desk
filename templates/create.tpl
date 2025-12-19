@@ -18,6 +18,12 @@
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
                 {$multivalued=$attributes_map.{$item}.multivalued}
+                {$required=0}
+                {if ($attributes_map.{$item}.mandatory|is_array)}
+                {if in_array('all',$attributes_map.{$item}.mandatory) or in_array('create',$attributes_map.{$item}.mandatory)}
+                {$required=1}
+                {/if}
+                {/if}
 
                     <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == 0} bg-white{/if}" id="create_{$item}">
                         <div class="col-1 px-1">
@@ -27,7 +33,7 @@
                             {$msg_label_{$item}}
                         </div>
                         <div class="col-md px-1">
-                            {include 'value_editor.tpl' item=$item itemindex=0 value="" type=$type list=$item_list.$item multivalued=$multivalued truncate_value_after=10000}
+                            {include 'value_editor.tpl' item=$item itemindex=0 value="" type=$type list=$item_list.$item multivalued=$multivalued required=$required truncate_value_after=10000}
                         </div>
                     </div>
                 {/foreach}
