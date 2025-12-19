@@ -1,6 +1,17 @@
 Dashboards
 ==========
 
+List of all accounts
+--------------------
+
+This page list all accounts.
+
+To enable it:
+
+.. code-block:: php
+
+    $use_searchall = true;
+
 Locked accounts
 ---------------
 

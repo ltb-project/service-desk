@@ -9,6 +9,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 
 switch ($searchaction) {
+    case "searchall":
+        $smarty->assign("page_title", "allaccounts");
+        break;
     case "searchdisabled":
         $smarty->assign("page_title", "disabledaccounts");
         break;

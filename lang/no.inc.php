@@ -16,6 +16,7 @@ $messages['accountstatus'] = "Kontostatus";
 $messages['accountunlocked'] = "Kontoen er ikke låst";
 $messages['accountvalid'] = "Kontoen er gyldig";
 $messages['actionforbidden'] = "Handling forbudt";
+$messages['allaccounts'] = "List of all acoounts";
 $messages['auditlogs'] = "Revisjonslogger";
 $messages['auditlogtitle'] = "Revisjonslogg for de siste $audit_log_days dagene";
 $messages['cancelbacktoentry'] = "Avbryt og gå tilbake til oppføring";

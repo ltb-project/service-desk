@@ -16,6 +16,7 @@ $messages['accountstatus'] = "アカウントの状態";
 $messages['accountunlocked'] = "アカウントはロックされていない";
 $messages['accountvalid'] = "アカウントは有効";
 $messages['actionforbidden'] = "アクションは禁止されている";
+$messages['allaccounts'] = "List of all acoounts";
 $messages['auditlogs'] = "監査ログ";
 $messages['auditlogtitle'] = "直近 $audit_log_days 日の監査ログ";
 $messages['cancelbacktoentry'] = "キャンセルしてエントリーに戻る";
