@@ -8,7 +8,7 @@
     <input type="tel" name="{$item}{$itemindex}" class="form-control {if $required}border border-danger-subtle{/if}" value="{$value}" data-role="value" {if $required}required{/if} />
 {else if $type eq 'boolean'}
     <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" name="{$item}{$itemindex}" {if $value eq 'TRUE'} checked{/if} value="TRUE" data-role="value" {if $required}required{/if} />
+        <input class="form-check-input" type="checkbox" role="switch" name="{$item}{$itemindex}" {if $value eq 'TRUE'} checked{/if} value="TRUE" data-role="value" />
     </div>
 {else if $type eq 'date'}
     <input type="date" class="form-control {if $required}border border-danger-subtle{/if}" name="{$item}{$itemindex}" value="{convert_ldap_date($value)|date_format:"%Y-%m-%d"}" data-role="value" {if $required}required{/if} />
