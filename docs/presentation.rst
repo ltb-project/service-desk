@@ -28,6 +28,7 @@ Features
 * Launch a prehook and a posthook for each action
 * Dashboards:
 
+  * All accounts
   * Accounts locked
   * Accounts disabled
   * Accounts with a password that will soon expire
