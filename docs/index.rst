@@ -38,3 +38,4 @@ LDAP Tool Box Service Desk documentation
    updateentry.rst
    deleteentry.rst
    tooltips.rst
+   patterns.rst
