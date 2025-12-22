@@ -87,7 +87,6 @@
                     <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == $modulo} bg-white{/if}" id="info_{$item}" data-item="{$item}" data-type="{$type}" data-attribute="{$attribute}" data-faclass="{$faclass}" data-index="{$smarty.foreach.items.iteration}">
                     </div>
                 {/foreach}
-                </table>
                 </div>
             </div>
 
