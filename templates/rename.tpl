@@ -35,6 +35,7 @@
                     </div>
                     <div class="col-3 fw-semibold px-1 d-none d-sm-block">
                         {$msg_label_{$item}}
+                            {if $msg_tooltip_{$item}}<span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{$msg_tooltip_{$item}}"><i class="fa fa-fw fa-regular fa-circle-question"></i></span>{/if}
                     </div>
                     <div class="col-6 col-sm-4 px-1">
                         {foreach $entry.{$attribute} as $value}
