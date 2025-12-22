@@ -31,6 +31,7 @@
                         </div>
                         <div class="col-11 col-md-3 fw-semibold px-1">
                             {$msg_label_{$item}}
+                            {if $msg_tooltip_{$item}}<span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{$msg_tooltip_{$item}}"><i class="fa fa-fw fa-regular fa-circle-question"></i></span>{/if}
                         </div>
                         <div class="col-md px-1">
                             {include 'value_editor.tpl' item=$item itemindex=0 value="" type=$type list=$item_list.$item multivalued=$multivalued required=$required truncate_value_after=10000}

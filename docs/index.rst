@@ -37,3 +37,4 @@ LDAP Tool Box Service Desk documentation
    renameentry.rst
    updateentry.rst
    deleteentry.rst
+   tooltips.rst

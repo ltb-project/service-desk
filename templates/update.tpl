@@ -39,6 +39,7 @@
                         </div>
                         <div class="col-11 col-md-3 px-1 fw-semibold">
                             {$msg_label_{$item}}
+                            {if $msg_tooltip_{$item}}<span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{$msg_tooltip_{$item}}"><i class="fa fa-fw fa-regular fa-circle-question"></i></span>{/if}
                         </div>
                         <div class="col-md px-1">
                             {if $item|in_array:$update_items}
