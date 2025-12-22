@@ -18,6 +18,7 @@
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
                 {$multivalued=$attributes_map.{$item}.multivalued}
+                {$pattern=$attributes_map.{$item}.pattern}
                 {$required=0}
                 {if ($attributes_map.{$item}.mandatory|is_array)}
                 {if in_array('all',$attributes_map.{$item}.mandatory) or in_array('create',$attributes_map.{$item}.mandatory)}
@@ -34,7 +35,7 @@
                             {if $msg_tooltip_{$item}}<span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{$msg_tooltip_{$item}}"><i class="fa fa-fw fa-regular fa-circle-question"></i></span>{/if}
                         </div>
                         <div class="col-md px-1">
-                            {include 'value_editor.tpl' item=$item itemindex=0 value="" type=$type list=$item_list.$item multivalued=$multivalued required=$required truncate_value_after=10000}
+                            {include 'value_editor.tpl' item=$item itemindex=0 value="" type=$type list=$item_list.$item multivalued=$multivalued pattern=$pattern required=$required truncate_value_after=10000}
                         </div>
                     </div>
                 {/foreach}

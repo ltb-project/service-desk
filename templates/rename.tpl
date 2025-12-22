@@ -28,6 +28,7 @@
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}
                 {$faclass=$attributes_map.{$item}.faclass}
+                {$pattern=$attributes_map.{$item}.pattern}
 
                 <div class="row align-items-center p-2{if $smarty.foreach.items.iteration % 2 == 0} bg-white{/if}" id="info_{$item}">
                     <div class="col-1 px-1 d-none d-sm-block">
@@ -43,7 +44,7 @@
                         {/foreach}
                     </div>
                     <div class="col-6 col-sm-4 px-1">
-                        {include 'value_editor.tpl' item=$item value="" type=$type list=$item_list.$item truncate_value_after=10000}
+                        {include 'value_editor.tpl' item=$item value="" type=$type list=$item_list.$item pattern=$pattern truncate_value_after=10000}
                     </div>
                 </div>
                 {/foreach}
