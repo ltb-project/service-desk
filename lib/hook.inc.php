@@ -72,6 +72,7 @@ function call_external_command($hookConfig, $entrypoint, $login_value, $params)
 {
     $returnCode = 0;
     $returnMessage = "";
+    $returnedDN = isset($params['dn']) ? $params['dn'] : null;
     $returnedEntry = isset($params['entry']) ? $params['entry'] : null;
 
     switch ($entrypoint) {
@@ -110,6 +111,16 @@ function call_external_command($hookConfig, $entrypoint, $login_value, $params)
             break;
 
         case "createAccount":
+            $dn = $params['dn'];
+            $command = hook_command($hookConfig['externalScript'], $dn, json_encode($returnedEntry));
+            exec($command, $output, $returnCode);
+            $returnMessage = isset($output[0]) ? $output[0] : "";
+            $returnedDN = isset($output[1]) ? $output[1] : $dn;
+            if(count($output) > 2) {
+                $returnedEntry = json_decode(implode('', array_slice($output, 2)), true);
+            }
+            break;
+
         case "updateAccount":
             $dn = $params['dn'];
             $command = hook_command($hookConfig['externalScript'], $dn, json_encode($returnedEntry));
@@ -130,13 +141,14 @@ function call_external_command($hookConfig, $entrypoint, $login_value, $params)
             break;
 
     }
-    return array($returnCode, $returnMessage, $returnedEntry);
+    return array($returnCode, $returnMessage, $returnedDN, $returnedEntry);
 }
 
 function call_external_function($hookConfig, $entrypoint, $login_value, $params)
 {
     $returnCode = 0;
     $returnMessage = "";
+    $returnedDN = isset($params['dn']) ? $params['dn'] : null;
     $returnedEntry = isset($params['entry']) ? $params['entry'] : null;
 
     switch ($entrypoint) {
@@ -173,6 +185,12 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
             break;
 
         case "createAccount":
+            $dn = $params['dn'];
+            $params = [$dn, $returnedEntry];
+            list($returnCode, $returnMessage, $returnedDN, $returnedEntry) =
+                $hookConfig['function'](...$params);
+            break;
+
         case "updateAccount":
             $dn = $params['dn'];
             $params = [$dn, $returnedEntry];
@@ -190,13 +208,14 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
             break;
 
     }
-    return array($returnCode, $returnMessage, $returnedEntry);
+    return array($returnCode, $returnMessage, $returnedDN, $returnedEntry);
 }
 
 function hook($hookConfig, $entrypoint, $login_value, $params) {
 
     $returnCode = 0; # success return code by default
     $returnMessage = "";
+    $returnedDN = isset($params['dn']) ? $params['dn'] : null;
     $returnedEntry = isset($params['entry']) ? $params['entry'] : null;
 
     if ( isset($hookConfig['externalScript']) ||
@@ -206,14 +225,14 @@ function hook($hookConfig, $entrypoint, $login_value, $params) {
             # Compute and run external command
             if(isset($hookConfig['externalScript']))
             {
-                list($returnCode, $returnMessage, $returnedEntry) =
+                list($returnCode, $returnMessage, $returnedDN, $returnedEntry) =
                     call_external_command($hookConfig, $entrypoint, $login_value, $params);
             }
 
             # Compute arguments and run external function
             if(isset($hookConfig['function']))
             {
-                list($returnCode, $returnMessage, $returnedEntry) =
+                list($returnCode, $returnMessage, $returnedDN, $returnedEntry) =
                     call_external_function($hookConfig, $entrypoint, $login_value, $params);
             }
 
@@ -225,7 +244,7 @@ function hook($hookConfig, $entrypoint, $login_value, $params) {
         }
     }
 
-    return array($returnCode, $returnMessage, $returnedEntry);
+    return array($returnCode, $returnMessage, $returnedDN, $returnedEntry);
 }
 
 ?>
