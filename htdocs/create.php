@@ -76,7 +76,7 @@ if ($result === "") {
                 $dn .= "," . $create_base;
 
 
-                list($prehook_return, $prehook_message, $create_attributes) =
+                list($prehook_return, $prehook_message, $dn, $create_attributes) =
                       hook($hook_config['createAccount']['before'] ?? null, 'createAccount', "", array("dn" => $dn, "entry" => $create_attributes));
 
                 if ( $prehook_return > 0 and !$hook['createAccount']['before']['ignoreError']) {
