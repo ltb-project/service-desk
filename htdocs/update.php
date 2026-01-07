@@ -74,7 +74,7 @@ if ($result === "") {
                 }
 
 
-                list($prehook_return, $prehook_message, $update_attributes) =
+                list($prehook_return, $prehook_message, , $update_attributes) =
                       hook($hook_config['updateAccount']['before'] ?? null, 'updateAccount', "", array("dn" => $dn, "entry" => $update_attributes));
 
                 if ( $prehook_return > 0 and !$hook_config['updateAccount']['before']['ignoreError']) {

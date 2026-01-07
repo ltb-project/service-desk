@@ -379,7 +379,10 @@ $hook_login_attribute = "uid";
 # * general external script output: first line: error message
 # * general external script return code: 0 is a success, any other value means an error
 # * general function return values: return code, error message
-# * for createAccount and updateAccount:
+# * for createAccount:
+#   * for step=before external script, the expected output is: first line: error message, second line: dn, all other lines: ldap entry in json format
+#   * for step=before function, the expected returned values are: return code, error message, dn, ldap entry
+# * for updateAccount:
 #   * for step=before external script, the expected output is: first line: error message, all other lines: ldap entry in json format
 #   * for step=before function, the expected returned values are: return code, error message, ldap entry
 #
