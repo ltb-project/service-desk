@@ -176,3 +176,36 @@ Configuration parameters
 * ``ignoreError``: only for before hooks, ignore error returned by the script or function
 * ``encodebase64``: passwordReset and passwordCheck entrypoints only, encode the password in base64 before sending it
 
+Code samples
+------------
+
+createAccount
+^^^^^^^^^^^^^
+
+Function to add a description attribute:
+
+.. code-block:: php
+
+    <?php
+
+    function addDescription($dn, $attributes) {
+        $attributes['description'] = array("This entry was created by Service Desk");
+        return array(0, "description added", $dn, $attributes);
+    }
+
+    ?>
+
+
+Function to add a suffix to identifer, used to build the DN:
+
+.. code-block:: php
+
+    <?php
+
+    function changeDN($dn, $attributes) {
+        $attributes["uid"][0] = $attributes["uid"][0] ."-test";
+        $new_dn = preg_replace('/uid=([^,]+),(.*)/', 'uid=${1}-test,$2', $dn);
+        return array(0, "identifier modified", $new_dn, $attributes);
+    }
+
+    ?>
