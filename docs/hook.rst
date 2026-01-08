@@ -160,9 +160,9 @@ renameAccount
 ^^^^^^^^^^^^^
 
 * External script / function input: login, dn, new_rdn, parent
-* External script output: first line: error message
+* External script output: for step=before external script, the expected output is: first line: error message, second line: dn, all other lines: JSON document with ``new_rdn`` and ``parent``  keys.
 * External script return code: 0 is a success, any other value means an error
-* Function return values: return code, error message
+* Function return values: for step=before function, the expected returned values are: return code, error message, dn, array with ``new_rdn`` and ``parent`` keys, for step=after, the expected returned values are: return code, error message
 
 
 Configuration parameters
@@ -206,6 +206,38 @@ Function to add a suffix to identifer, used to build the DN:
         $attributes["uid"][0] = $attributes["uid"][0] ."-test";
         $new_dn = preg_replace('/uid=([^,]+),(.*)/', 'uid=${1}-test,$2', $dn);
         return array(0, "identifier modified", $new_dn, $attributes);
+    }
+
+    ?>
+
+updateAccount
+^^^^^^^^^^^^^
+
+Function to update description using some other attributes values:
+
+.. code-block:: php
+
+    <?php
+
+    function updateDescription($dn, $attributes) {
+        $attributes['description'] = "Name is ".$attributes["sn"][0];
+        return array(0, "description updated", $attributes);
+    }
+
+    ?>
+
+renameAccount
+^^^^^^^^^^^^^
+
+Function to add a suffix to identifer, used to build the RDN:
+
+.. code-block:: php
+
+    <?php
+
+    function changeRDN($login $dn, $new_rdn, $parent) {
+        $properties["new_rdn"] = $new_rdn ."-test";
+        return array(0, "identifier modified", $dn, $properties);
     }
 
     ?>

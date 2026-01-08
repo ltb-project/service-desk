@@ -203,7 +203,7 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
             $new_rdn = $params['new_rdn'];
             $parent  = $params['parent'];
             $params = [$login_value, $dn, $new_rdn, $parent];
-            list($returnCode, $returnMessage) =
+            list($returnCode, $returnMessage, $returnedDN, $returnedEntry) =
                 $hookConfig['function'](...$params);
             break;
 
