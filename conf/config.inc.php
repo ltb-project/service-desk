@@ -386,8 +386,8 @@ $hook_login_attribute = "uid";
 #   * for step=before external script, the expected output is: first line: error message, all other lines: ldap entry in json format
 #   * for step=before function, the expected returned values are: return code, error message, ldap entry
 # * for renameAccount:
-#   * for step=before external script, the expected output is: first line: error message, second line: dn, all other lines: JSON document with ``new_rdn`` and ``parent``  keys
-#   * for step=before function, the expected returned values are: return code, error message, dn, array with ``new_rdn`` and ``parent`` keys
+#   * for step=before external script, the expected output is: first line: error message, second line: dn, all other lines: JSON document with 'new_rdn' and 'parent' keys
+#   * for step=before function, the expected returned values are: return code, error message, dn, array with 'new_rdn' and 'parent' keys
 #
 # Hook steps:
 # * before: before the entrypoint
