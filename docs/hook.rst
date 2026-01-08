@@ -210,6 +210,22 @@ Function to add a suffix to identifer, used to build the DN:
 
     ?>
 
+updateAccount
+^^^^^^^^^^^^^
+
+Function to update description using some other attributes values:
+
+.. code-block:: php
+
+    <?php
+
+    function updateDescription($dn, $attributes) {
+        $attributes['description'] = "Name is ".$attributes["sn"][0];
+        return array(0, "description updated", $attributes);
+    }
+
+    ?>
+
 renameAccount
 ^^^^^^^^^^^^^
 
