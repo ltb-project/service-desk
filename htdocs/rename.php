@@ -67,11 +67,14 @@ if ($result === "") {
                     $hook_login = get_hook_login($dn, $ldapInstance, $hook_login_attribute);
                 }
 
-                list($prehook_return, $prehook_message) =
+                list($prehook_return, $prehook_message, $dn, $rename_properties) =
                       hook($hook_config['renameAccount']['before'] ?? null,
                            'renameAccount',
                            $hook_login,
                            array("dn" => $cur_dn, "new_rdn" => $new_rdn, "parent" => $parent));
+
+                $new_rdn = $rename_properties["new_rdn"] ? $rename_properties["new_rdn"] : $new_rdn;
+                $parent = $rename_properties["parent"] ? $rename_properties["parent"] : $parent;
 
                 if ( $prehook_return > 0 and !$hook['renameAccount']['before']['ignoreError']) {
                     $result = "hookerror";
