@@ -20,6 +20,7 @@ rm -f $NAME*
 mkdir -p $NAME-$VERSION
 mkdir -p $NAME-$VERSION/cache
 mkdir -p $NAME-$VERSION/conf
+mkdir -p $NAME-$VERSION/hooks
 mkdir -p $NAME-$VERSION/htdocs
 mkdir -p $NAME-$VERSION/js-templates
 mkdir -p $NAME-$VERSION/lang
