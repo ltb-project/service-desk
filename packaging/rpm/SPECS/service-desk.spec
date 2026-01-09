@@ -103,7 +103,6 @@ cp -a             htdocs/css     %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/images  %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/js      %{buildroot}/%{sd_destdir}/htdocs
 cp -a             htdocs/vendor  %{buildroot}/%{sd_destdir}/htdocs
-install -p -m 644 hooks/*        %{buildroot}/%{sd_destdir}/hooks
 install -p -m 644 js-templates/* %{buildroot}/%{sd_destdir}/js-templates
 install -p -m 644 lang/*         %{buildroot}/%{sd_destdir}/lang
 install -p -m 644 lib/*          %{buildroot}/%{sd_destdir}/lib
