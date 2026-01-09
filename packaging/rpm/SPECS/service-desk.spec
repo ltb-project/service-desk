@@ -16,7 +16,7 @@
 %undefine __brp_mangle_shebangs
 
 Name:      service-desk
-Version:   0.7.1
+Version:   0.8
 Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
 URL:       https://ltb-project.org/
@@ -175,6 +175,44 @@ rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %changelog
+* Fri Jan 09 2026 Clement Oudot <clem@ltb-project.org> - 0.8-1
+- gh#214: Optimize the ldap search accounts request
+- gh#219: Improve hooks management
+- gh#249: Update repository deb822 format
+- gh#251: Samba mode
+- gh#253: Define mandatory attributes
+- gh#267: use ltb-common 0.6.2
+- gh#268: optimize LDAP functions (#214)
+- gh#269: update doc with deb822 repository format (#249)
+- gh#270: add samba mode (#251)
+- gh#271: Append hook before and after password check process
+- gh#272: Delete hook is missing at the begining of documentation page
+- gh#273: fix missing delete hook in the list in documentation (#272)
+- gh#274: 219 improve hooks management
+- gh#275: no log at all with $debug=false
+- gh#276: display error logs even when $debug=false (#275)
+- gh#277: Display pwdHistory in pretty way
+- gh#280: fix convert_ldap_date and convert_ad_date functions deprecated warnings (#112)
+- gh#281: Add dashboard "all users"
+- gh#283: Local file inclusion via "page" GET param
+- gh#284: clean all the warnings display in debug mode
+- gh#285: remove multiple warnings in logs (#284)
+- gh#286: Check page and api endpoint parameters
+- gh#287: add a type rendering for password history (#277)
+- gh#290: defined mandatory attributes (#253)
+- gh#291: some attributes are emptied when updating an entry
+- gh#292: fix empty attributes when updating (#291)
+- gh#293: Add Japanese translation
+- gh#294: Add dashboard to list all users
+- gh#295: Tooltips for attributes
+- gh#296: Tooltips for attributes
+- gh#297: Syntax checker for attribute edition
+- gh#298: Patterns
+- gh#299: Create hook not able to update DN
+- gh#300: Update dn in create hook
+- gh#301: Rename hook not able to update DN
+- gh#302: Rename hook can now change RDN and parent
+
 * Tue Sep 16 2025 Clement Oudot <clem@ltb-project.org> - 0.7.1-1
 - gh#248: Documentation for admin notify by mail feature
 - gh#250: For attributes of type "list" or "static_list", key is displayed instead value
