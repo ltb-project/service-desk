@@ -13,6 +13,25 @@
 
             <div class="card-body">
                 <div class="container-fluid">
+
+                {if $create_branch_type == "list" or $create_branch_type == "static_list"}
+                    <div class="row align-items-center p-2 bg-white" id="create_branch">
+                        <div class="col-1 px-1">
+                            <i class="fa fa-fw fa-sitemap"></i>
+                        </div>
+                        <div class="col-11 col-md-3 fw-semibold px-1">
+                            {$msg_createbranch}
+                        </div>
+                        <div class="col-md px-1">
+                            <select class="form-control" name="create_branch" required>
+                            {foreach $branch_list as $blvalue}
+                                <option value="{$blvalue@key}">{$blvalue}</option>
+                            {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                {/if}
+
                 {foreach from=$create_items item=item name=items}
                 {$attribute=$attributes_map.{$item}.attribute}
                 {$type=$attributes_map.{$item}.type}

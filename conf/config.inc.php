@@ -205,7 +205,10 @@ $use_create = true;
 $create_items = array('identifier', 'firstname', 'lastname', 'mail');
 $create_objectclass = array('top', 'person', 'organizationalPerson', 'inetOrgPerson');
 $create_dn_items = array('identifier');
+$create_branch_type = "base";
 $create_base = $ldap_user_base;
+#$create_list = array('base'=>'ou=organizations,dc=my-domain,dc=com', 'filter'=>'(objectClass=organizationalUnit)', 'key'=>'entrydn', 'value'=>'description');
+#$create_staticlist = array('ou=orga,dc=example,dc=com' => 'Organization A', 'ou=orgb,dc=example,dc=com' => 'Organization B');
 $create_items_macros = array('fullname' => '%firstname% %lastname%');
 
 $use_delete = true;

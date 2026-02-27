@@ -27,6 +27,7 @@ $messages['changesubjectforadmin'] = "Brukerens passord har blitt endret";
 $messages['checkpassword'] = "Sjekk passord";
 $messages['close'] = "Lukk";
 $messages['comment_needed'] = "En kommentar vil bli bedt om";
+$messages['createbranch'] = "Branch choice";
 $messages['createentry'] = "Create entry";
 $messages['createfailed'] = "Creation has failed";
 $messages['createok'] = "Entry has been created";
