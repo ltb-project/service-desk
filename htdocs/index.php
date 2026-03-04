@@ -243,6 +243,7 @@ $smarty->assign('use_create',$use_create);
 $smarty->assign('use_delete',$use_delete);
 $smarty->assign('dn_link_label_attributes',implode(",",$dn_link_label_attributes));
 $smarty->assign('dn_link_search_min_chars',$dn_link_search_min_chars);
+$smarty->assign('create_branch_type',$create_branch_type);
 
 $config_js = [];
 $config_js["messages"] = $messages;

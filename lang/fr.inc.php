@@ -27,6 +27,7 @@ $messages['changesubject'] = "Votre mot de passe a été changé";
 $messages['checkpassword'] = "Vérification du mot de passe";
 $messages['close'] = "Fermer";
 $messages['comment_needed'] = "Un commentaire sera demandé";
+$messages['createbranch'] = "Choix de la branche";
 $messages['createentry'] = "Créer une entrée";
 $messages['createfailed'] = "La création a échoué";
 $messages['createok'] = "L'entrée a été créée";

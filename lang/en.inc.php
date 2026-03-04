@@ -27,6 +27,7 @@ $messages['changesubject'] = "Your password has been changed";
 $messages['checkpassword'] = "Check password";
 $messages['close'] = "Close";
 $messages['comment_needed'] = "A comment will be asked";
+$messages['createbranch'] = "Branch choice";
 $messages['createentry'] = "Create entry";
 $messages['createfailed'] = "Creation has failed";
 $messages['createok'] = "Entry has been created";

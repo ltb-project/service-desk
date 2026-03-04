@@ -8,6 +8,7 @@ $dn = "";
 $entry = "";
 $action = "displayform";
 $result = "";
+$branch_list = "";
 
 if (isset($_POST["action"]) and $_POST["action"]) {
     $action = $_POST["action"];
@@ -73,8 +74,12 @@ if ($result === "") {
                     $dn .= $attribute . "=" . ldap_escape($create_attributes[$attribute][0], "", LDAP_ESCAPE_DN);
                 }
 
-                $dn .= "," . $create_base;
-
+                if ($create_branch_type === "base") {
+                    $dn .= "," . $create_base;
+                } elseif ($create_branch_type === "list" || $create_branch_type === "static_list") {
+                    $create_branch = $_POST["create_branch"];
+                    $dn .= "," . $create_branch;
+                }
 
                 list($prehook_return, $prehook_message, $dn, $create_attributes) =
                       hook($hook_config['createAccount']['before'] ?? null, 'createAccount', "", array("dn" => $dn, "entry" => $create_attributes));
@@ -127,6 +132,13 @@ if ($result === "") {
                     }
                 }
 
+                if ( $create_branch_type === "static_list") {
+                    $branch_list = $create_staticlist ? $create_staticlist : array();
+                }
+                if ( $create_branch_type === "list") {
+                    $branch_list = $ldapInstance->get_list( $create_list["base"], $create_list["filter"], $create_list["key"], $create_list["value"] );
+                }
+
             }
     }
 }
@@ -152,6 +164,7 @@ $smarty->assign("entry", $entry);
 $smarty->assign("action", $action);
 
 $smarty->assign("item_list", $item_list ?? null);
+$smarty->assign("branch_list", $branch_list ?? null);
 
 $smarty->assign("create_items", $create_items);
 $smarty->assign("show_undef", $display_show_undefined);
