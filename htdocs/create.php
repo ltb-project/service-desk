@@ -89,7 +89,7 @@ if ($result === "") {
                 } else {
                     # Create entry
                     if (!ldap_add($ldap, $dn, $create_attributes)) {
-                        error_log("LDAP - modify failed for $dn");
+                        error_log("LDAP - create failed for $dn");
                         $result = "createfailed";
                         $action = "displayform";
                     } else {
