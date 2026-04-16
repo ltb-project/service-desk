@@ -275,6 +275,7 @@ $smarty->assign("refresh_link", "index.php?page=display&dn=".urlencode($dn));
 $smarty->assign("edit_link", "index.php?page=update&dn=".urlencode($dn));
 $smarty->assign("rename_link", "index.php?page=rename&dn=".urlencode($dn));
 $smarty->assign("delete_link", "index.php?page=delete&dn=".urlencode($dn));
+$smarty->assign("groups_link", "index.php?page=groups&dn=".urlencode($dn));
 
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);

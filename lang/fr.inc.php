@@ -55,6 +55,7 @@ $messages['forbiddenchars'] = "Votre mot de passe contient des caractères inter
 $messages['forbiddenldapfields'] = "Votre mot de passe contient des valeurs de votre entrée LDAP";
 $messages['forbiddenwords'] = "Votre mot de passe contient des mots interdits";
 $messages['forcereset'] = "Forcer la réinitialisation à la prochaine connexion";
+$messages['groups'] = "Groupes";
 $messages['hookerror'] = "Une erreur s'est produite dans le hook";
 $messages['idleaccounts'] = "Comptes inactifs";
 $messages['idleaccountstitle'] = "Comptes inactifs depuis plus de $idledays jours";

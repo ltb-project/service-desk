@@ -55,6 +55,7 @@ $messages['forbiddenchars'] = "Passordet ditt inneholder forbudte tegn";
 $messages['forbiddenldapfields'] = "Ditt passord inneholder verdier fra din LDAP-oppføring";
 $messages['forbiddenwords'] = "Ditt passord inneholder forbudte ord eller strenger";
 $messages['forcereset'] = "Tilbakestil passord ved neste tilkobling";
+$messages['groups'] = "Groups";
 $messages['hookerror'] = "En feil oppstod i hooken";
 $messages['idleaccounts'] = "Inaktive kontoer";
 $messages['idleaccountstitle'] = "Kontoer inaktive i mer enn $idledays dager";

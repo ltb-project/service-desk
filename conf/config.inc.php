@@ -42,6 +42,10 @@ $ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
 $ldap_page_size = 0;
 
+$ldap_group_base = "ou=groups,".$ldap_base;
+$ldap_group_filter = "(objectClass=groupOfNames)";
+$ldap_group_member_attribute = "member";
+
 # Override LDAP password policy configuration
 #$ldap_lockout_duration = 3600; # 1 hour
 #$ldap_password_max_age = 7889400; # 3 months
@@ -212,6 +216,8 @@ $create_base = $ldap_user_base;
 $create_items_macros = array('fullname' => '%firstname% %lastname%');
 
 $use_delete = true;
+
+$use_groups = true;
 
 # Local password policy
 # This is applied before directory password policy
