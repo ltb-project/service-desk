@@ -40,6 +40,9 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 {if $page|strstr:"audit"}
 {include 'datatables-audit.js.tpl'}
 {/if}
+{if $page == "groups"}
+{include 'datatables-groups.js.tpl'}
+{/if}
 {if $page|strstr:"display" || $page|strstr:"update" || $page|strstr:"rename"}
 {include 'value-displayer.js.tpl'}
 {/if}

@@ -67,6 +67,21 @@ if ($result === "") {
 
             # Display
             if ($action == "display") {
+                $columns = $group_result_items;
+                if (! in_array($group_result_title, $columns)) array_unshift($columns, $group_result_title);
+                $columns[] = "ismember";
+                $smarty->assign("listing_columns", $columns);
+
+                # Build config_js for the groups DataTable
+                $config_js["listing_linkto"] = false;
+                $config_js["attributes_map"] = array();
+                $config_js["attributes_map"]["dn"] = array("type" => "dn");
+                foreach ($columns as $column) {
+                    $config_js["attributes_map"][$column] = array(
+                        "type" => $attributes_map[$column]["type"],
+                    );
+                }
+                $smarty->assign("config_js", base64_encode(json_encode($config_js)));
             }
 
         }}

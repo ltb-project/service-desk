@@ -46,6 +46,10 @@ $ldap_group_base = "ou=groups,".$ldap_base;
 $ldap_group_filter = "(objectClass=groupOfNames)";
 $ldap_group_member_attribute = "member";
 
+$group_result_items = array('description');
+$group_result_title = "fullname";
+$group_result_sortby = "fullname";
+
 # Override LDAP password policy configuration
 #$ldap_lockout_duration = 3600; # 1 hour
 #$ldap_password_max_age = 7889400; # 3 months
@@ -79,6 +83,7 @@ $attributes_map = array(
     'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
     'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
     'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' ),
+    'ismember' => array( 'attribute' => null, 'faclass' => 'check', 'type' => 'boolean' ),
 );
 
 # Directory specific attributes

@@ -82,6 +82,7 @@ $messages['label_firstname'] = "名前";
 $messages['label_fullname'] = "フルネーム";
 $messages['label_identifier'] = "ID";
 $messages['label_ip'] = "IPアドレス";
+$messages['label_ismember'] = "メンバー";
 $messages['label_lastname'] = "名字";
 $messages['label_l'] = "地域";
 $messages['label_mail'] = "メール";

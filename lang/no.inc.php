@@ -82,6 +82,7 @@ $messages['label_firstname'] = "Fornavn";
 $messages['label_fullname'] = "Fullt navn";
 $messages['label_identifier'] = "Brukernavn";
 $messages['label_ip'] = "IP-adresse";
+$messages['label_ismember'] = "Medlem";
 $messages['label_lastname'] = "Etternavn";
 $messages['label_l'] = "Sted";
 $messages['label_mail'] = "E-post";

@@ -82,6 +82,7 @@ $messages['label_firstname'] = "Prénom";
 $messages['label_fullname'] = "Nom complet";
 $messages['label_identifier'] = "Identifiant";
 $messages['label_ip'] = "Adresse IP";
+$messages['label_ismember'] = "Membre";
 $messages['label_lastname'] = "Nom";
 $messages['label_l'] = "Ville";
 $messages['label_mail'] = "Courriel";
