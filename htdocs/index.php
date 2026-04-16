@@ -244,6 +244,7 @@ $smarty->assign('use_delete',$use_delete);
 $smarty->assign('dn_link_label_attributes',implode(",",$dn_link_label_attributes));
 $smarty->assign('dn_link_search_min_chars',$dn_link_search_min_chars);
 $smarty->assign('create_branch_type',$create_branch_type);
+$smarty->assign('use_groups',$use_groups);
 
 $config_js = [];
 $config_js["messages"] = $messages;
@@ -381,7 +382,7 @@ if (isset($_POST["apiendpoint"])) {
 # Route to page
 #==============================================================================
 $result = "";
-$allowed_pages = array("auditlog", "checkentropy", "checkpassword", "create", "delete", "disableaccount", "display", "enableaccount", "lockaccount", "rename", "resetpassword", "search", "unlockaccount", "update", "updatevaliditydates", "welcome");
+$allowed_pages = array("auditlog", "checkentropy", "checkpassword", "create", "delete", "disableaccount", "display", "enableaccount", "groups", "lockaccount", "rename", "resetpassword", "search", "unlockaccount", "update", "updatevaliditydates", "welcome");
 $page = "welcome";
 $searchaction = "";
 if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
@@ -402,6 +403,7 @@ if ( $page === "update" and !$use_update ) { $page = "welcome"; }
 if ( $page === "rename" and !$use_rename ) { $page = "welcome"; }
 if ( $page === "create" and !$use_create ) { $page = "welcome"; }
 if ( $page === "delete" and !$use_delete ) { $page = "welcome"; }
+if ( $page === "groups" and !$use_groups ) { $page = "welcome"; }
 if ( preg_match("/^search.*$/",$page) )
 {
     $searchaction = $page;
