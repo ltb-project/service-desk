@@ -83,7 +83,6 @@ $attributes_map = array(
     'state' => array( 'attribute' => 'st', 'faclass' => 'globe', 'type' => 'text' ),
     'street' => array( 'attribute' => 'street', 'faclass' => 'map-marker', 'type' => 'text' ),
     'title' => array( 'attribute' => 'title', 'faclass' => 'certificate', 'type' => 'text' ),
-    'ismember' => array( 'attribute' => null, 'faclass' => 'check', 'type' => 'boolean' ),
 );
 
 # Directory specific attributes

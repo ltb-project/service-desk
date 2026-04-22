@@ -5,6 +5,7 @@
     var config_js = JSON.parse(atob("{$config_js}"));
     var searchaction = "{$searchaction}";
     var search_query = "{$search_query}";
+    var target_dn = "{$dn|default:''}";
 {literal}
 
     DataTable.ext.errMode = 'none';
@@ -22,11 +23,17 @@
         data: {
             action: searchaction,
             search_query: search_query,
+            dn: target_dn,
             apiendpoint: "search-api"
         }
       },
       // Calling renderer for each cell
       columnDefs: [
+{/literal}
+{if $searchaction == "searchgroups"}
+          { targets: 0, visible: false },
+{/if}
+{literal}
           { targets: '_all', render: function ( data, type, row, meta ) {return datatableTypeRenderer(data, type, row, meta, config_js);} }
       ],
       drawCallback: function (settings) { updateEntriesCount(settings, config_js, searchaction); redirectWhenOneEntry(settings, config_js, searchaction)},

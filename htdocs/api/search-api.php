@@ -7,7 +7,7 @@ require_once(__DIR__ . "/../../lib/date.inc.php");
 
 $possible_actions = [ 'searchall', 'searchdisabled', 'searchexpired',
                       'searchidle', 'searchinvalid',
-                      'searchlocked', 'search',
+                      'searchlocked', 'search', 'searchgroups',
                       'searchwillexpire', 'display' ];
 $action = "";
 $targetDN = "";
@@ -98,6 +98,16 @@ switch ($action) {
         $ldapInstance->ldap_user_base = $targetDN;
         $search_result_items = array_merge($display_items, $display_password_items);
         $ldap_scope = "base";
+        break;
+
+    case "searchgroups":
+        $user_dn = isset($_REQUEST["dn"]) ? $_REQUEST["dn"] : "";
+        $saved_ldap_user_base = $ldapInstance->ldap_user_base;
+        $ldapInstance->ldap_user_base = $ldap_group_base;
+        $ldap_user_filter = $ldap_group_filter;
+        $search_result_items = $group_result_items;
+        $search_result_title = $group_result_title;
+        $search_result_sortby = $group_result_sortby;
         break;
 }
 
@@ -222,6 +232,10 @@ switch ($action) {
 
     case "display":
         $ldapInstance->ldap_user_base = $ldap_user_base;
+        break;
+
+    case "searchgroups":
+        $ldapInstance->ldap_user_base = $saved_ldap_user_base;
         break;
 }
 
@@ -416,6 +430,33 @@ foreach ($entries as $entry)
         array_push( $outputdata[$i], $values );
     }
     $i++;
+}
+
+# For searchgroups, append ismember value (TRUE/FALSE) to each row
+if ($action == "searchgroups")
+{
+    foreach ($outputdata as &$row)
+    {
+        $group_dn = $row[0];
+        $is_member = false;
+        if (!empty($user_dn))
+        {
+            $member_values = $ldapInstance->get_attribute_values($group_dn, $ldap_group_member_attribute);
+            if ($member_values)
+            {
+                foreach ($member_values as $k => $v)
+                {
+                    if ($k !== 'count' && strcasecmp($v, $user_dn) === 0)
+                    {
+                        $is_member = true;
+                        break;
+                    }
+                }
+            }
+        }
+        array_push($row, [$is_member ? "TRUE" : "FALSE"]);
+    }
+    unset($row);
 }
 
 $error = "";
