@@ -404,6 +404,7 @@ if ( $page === "rename" and !$use_rename ) { $page = "welcome"; }
 if ( $page === "create" and !$use_create ) { $page = "welcome"; }
 if ( $page === "delete" and !$use_delete ) { $page = "welcome"; }
 if ( $page === "groups" and !$use_groups ) { $page = "welcome"; }
+if ( $page === "groups" ) { $searchaction = "searchgroups"; }
 if ( preg_match("/^search.*$/",$page) )
 {
     $searchaction = $page;

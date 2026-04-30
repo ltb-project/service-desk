@@ -123,6 +123,7 @@ $dn_link_search_size_limit = 10;
 $search_attributes = array('uid', 'cn', 'mail');
 $search_use_substring_match = true;
 $search_result_items = array('identifier', 'mail', 'mobile');
+$search_result_group_items = array('fullname','description');
 $search_result_title = "fullname";
 $search_result_sortby = "lastname";
 $search_result_linkto = array("fullname");

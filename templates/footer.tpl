@@ -34,7 +34,7 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 
 {include 'commentbox.js.tpl'}
 
-{if $page|strstr:"search"}
+{if $page|strstr:"search" || $page|strstr:"groups"}
 {include 'datatables-search.js.tpl'}
 {/if}
 {if $page|strstr:"audit"}
