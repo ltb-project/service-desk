@@ -104,6 +104,9 @@
                 </button>
                 {include 'deletemodal.tpl' dn={$dn}}
                 {/if}
+                {if $use_groups}
+                <a class="btn btn-outline-secondary m-1" href="{$groups_link}"><i class="fa fa-users"></i> {$msg_groups}</a>
+                {/if}
             </div>
 
         </div>

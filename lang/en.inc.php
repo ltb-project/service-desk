@@ -55,6 +55,7 @@ $messages['forbiddenchars'] = "You password contains forbidden characters";
 $messages['forbiddenldapfields'] = "Your password contains values from your LDAP entry";
 $messages['forbiddenwords'] = "Your passwords contains forbidden words or strings";
 $messages['forcereset'] = "Force reset at next connection";
+$messages['groups'] = "Groups";
 $messages['hookerror'] = "An error occured in the hook";
 $messages['idleaccounts'] = "Idle accounts";
 $messages['idleaccountstitle'] = "Accounts idle for more than $idledays days";
