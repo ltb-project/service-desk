@@ -36,12 +36,12 @@ if ($result === "") {
         if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
             $result = "noentriesfound";
             error_log("LDAP - $dn not found using the configured search settings, reject request");
-        } else {
-
-        }}
+        }
+   }
 }
 
 $columns = $search_result_group_items;
+$columns[] = "ismember";
 if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
 $smarty->assign("listing_columns", $columns);
 

@@ -15,5 +15,5 @@
 </table>
 
 <div class="mt-3 text-center">
-    <a href="?page=display&dn={$dn|escape:'url'}" class="btn btn-outline-secondary m-1"><i class="fa fa-fw fa-cancel"></i> {$msg_cancelbacktoentry}</a>
+    <a href="?page=display&dn={$dn|escape:'url'}" class="btn btn-primary m-1"><i class="fa fa-fw fa-id-card"></i> {$msg_displayentry}</a>
 </div>

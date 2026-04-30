@@ -264,15 +264,6 @@ $config_js["enable"]["use_enablecomment"] = $use_enablecomment;
 $config_js["enable"]["use_enablecomment_required"] = $use_enablecomment_required;
 $config_js["attributes_map"] = [];
 $config_js["attributes_map"]["dn"] = array("type" => "dn");
-$columns = $search_result_items;
-if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
-foreach ($columns as $column )
-{
-    $config_js["attributes_map"][$column] = array(
-        "type" => $attributes_map[$column]["type"],
-    );
-}
-$smarty->assign("config_js", base64_encode(json_encode($config_js)));
 
 # Assign custom template variables
 foreach (get_defined_vars() as $key => $value) {
@@ -412,6 +403,29 @@ if ( preg_match("/^search.*$/",$page) )
 }
 if ( !preg_match("/^[\w-]+$/", $page) ) { $page = "welcome"; }
 if ( !in_array($page, $allowed_pages) ) { $page = "welcome"; }
+
+# Columns for users and groups
+if ($page == "groups") {
+    $columns = $search_result_group_items;
+} else {
+    $columns = $search_result_items;
+    if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+}
+
+foreach ($columns as $column )
+{
+    $config_js["attributes_map"][$column] = array(
+        "type" => $attributes_map[$column]["type"],
+    );
+}
+
+if ($page == "groups") {
+    $config_js["attributes_map"]["ismember"] = array(
+        "type" => "membership",
+    );
+}
+$smarty->assign("config_js", base64_encode(json_encode($config_js)));
+
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 $smarty->assign('searchaction',$searchaction);
