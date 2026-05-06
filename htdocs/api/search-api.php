@@ -8,7 +8,7 @@ require_once(__DIR__ . "/../../lib/date.inc.php");
 $possible_actions = [ 'searchall', 'searchdisabled', 'searchexpired',
                       'searchidle', 'searchinvalid',
                       'searchlocked', 'search',
-                      'searchwillexpire', 'display' ];
+                      'searchwillexpire', 'display', 'searchgroups' ];
 $action = "";
 $targetDN = "";
 
@@ -41,6 +41,7 @@ if ( isset($_REQUEST["targetDN"]) )
     $targetDN = $_REQUEST["targetDN"];
 }
 $ldap_user_base = "";
+$ldap_search_filter = $ldap_user_filter;
 
 
 # Prepare the LDAP request according to the action
@@ -53,7 +54,7 @@ switch ($action) {
         $dateIdleLdap = $directory->getLdapDate($dateIdle);
         # Search filter
         $ldap_filter = "(&".$ldap_user_filter."(|(!(".$ldap_lastauth_attribute."=*))(".$ldap_lastauth_attribute."<=".$dateIdleLdap.")))";
-        $ldap_user_filter = $ldap_filter;
+        $ldap_search_filter = $ldap_filter;
         break;
 
     case "searchinvalid":
@@ -71,7 +72,7 @@ switch ($action) {
             $search_result_items[] = "endtime";
         }
         $ldap_filter.= "))";
-        $ldap_user_filter = $ldap_filter;
+        $ldap_search_filter = $ldap_filter;
         break;
 
     case "search":
@@ -90,7 +91,7 @@ switch ($action) {
             $ldap_filter .= ")";
         }
         $ldap_filter .= "))";
-        $ldap_user_filter = $ldap_filter;
+        $ldap_search_filter = $ldap_filter;
         break;
 
     case "display":
@@ -99,6 +100,15 @@ switch ($action) {
         $search_result_items = array_merge($display_items, $display_password_items);
         $ldap_scope = "base";
         break;
+
+    case "searchgroups":
+        $ldapInstance->ldap_user_base = $ldap_group_base;
+        $search_result_items = $search_result_group_items;
+        $ldap_search_filter = $ldap_group_filter;
+        $ldap_search_group_membership_filter ="(&".$ldap_group_filter."(".$ldap_group_member_attribute."=".$targetDN."))";
+        $search_result_items = $search_result_group_items;
+        break;
+
 }
 
 # FILTERING
@@ -119,13 +129,13 @@ if( !empty($datatables_input["search"]["value"]) )
     }
     $filter_components .= ")";
 
-    # Include the new filter in the ldap_user_filter
-    $ldap_user_filter = "(&". $ldap_user_filter . $filter_components . ")";
+    # Include the new filter in the ldap_search_filter
+    $ldap_search_filter = "(&". $ldap_search_filter . $filter_components . ")";
 }
 
-# LDAP request for searching users
+# LDAP request for searching entries
 [$ldap,$result,$nb_entries,$entries,$size_limit_reached] = $ldapInstance->search(
-    $ldap_user_filter,
+    $ldap_search_filter,
     $directory->getOperationalAttributes(),
     $attributes_map,
     $search_result_title,
@@ -133,6 +143,20 @@ if( !empty($datatables_input["search"]["value"]) )
     $search_result_items,
     $ldap_scope
 );
+
+# LDAP request for group membership
+$gm_entries = array();
+if ($action == "searchgroups" ) {
+    [$ldap,$gm_result,$gm_nb_entries,$gm_entries,$gm_size_limit_reached] = $ldapInstance->search(
+        $ldap_search_group_membership_filter,
+        $directory->getOperationalAttributes(),
+        $attributes_map,
+        $search_result_title,
+        $search_result_sortby,
+        $search_result_items,
+        $ldap_scope
+    );
+}
 
 # Get password policies list + user's ppolicy assignment
 list($passwordPolicies, $userPolicies) = $directory->getPwdPolicies(
@@ -222,6 +246,9 @@ switch ($action) {
 
     case "display":
         $ldapInstance->ldap_user_base = $ldap_user_base;
+        break;
+
+    case "searchgroups":
         break;
 }
 
@@ -416,6 +443,19 @@ foreach ($entries as $entry)
         array_push( $outputdata[$i], $values );
     }
     $i++;
+}
+
+if ($action == "searchgroups") {
+    foreach ($outputdata as &$row) {
+        $group_dn = $row[0];
+        $is_member = false;
+
+        foreach ($gm_entries as $gm_entry) {
+            if ( $gm_entry["dn"] == $group_dn ) { $is_member = true; }
+        }
+        array_push($row, [$is_member ? "TRUE" : "FALSE"]);
+    }
+    unset($row);
 }
 
 $error = "";

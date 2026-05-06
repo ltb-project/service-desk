@@ -244,6 +244,7 @@ $smarty->assign('use_delete',$use_delete);
 $smarty->assign('dn_link_label_attributes',implode(",",$dn_link_label_attributes));
 $smarty->assign('dn_link_search_min_chars',$dn_link_search_min_chars);
 $smarty->assign('create_branch_type',$create_branch_type);
+$smarty->assign('use_groups',$use_groups);
 
 $config_js = [];
 $config_js["messages"] = $messages;
@@ -263,15 +264,6 @@ $config_js["enable"]["use_enablecomment"] = $use_enablecomment;
 $config_js["enable"]["use_enablecomment_required"] = $use_enablecomment_required;
 $config_js["attributes_map"] = [];
 $config_js["attributes_map"]["dn"] = array("type" => "dn");
-$columns = $search_result_items;
-if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
-foreach ($columns as $column )
-{
-    $config_js["attributes_map"][$column] = array(
-        "type" => $attributes_map[$column]["type"],
-    );
-}
-$smarty->assign("config_js", base64_encode(json_encode($config_js)));
 
 # Assign custom template variables
 foreach (get_defined_vars() as $key => $value) {
@@ -381,7 +373,7 @@ if (isset($_POST["apiendpoint"])) {
 # Route to page
 #==============================================================================
 $result = "";
-$allowed_pages = array("auditlog", "checkentropy", "checkpassword", "create", "delete", "disableaccount", "display", "enableaccount", "lockaccount", "rename", "resetpassword", "search", "unlockaccount", "update", "updatevaliditydates", "welcome");
+$allowed_pages = array("auditlog", "checkentropy", "checkpassword", "create", "delete", "disableaccount", "display", "enableaccount", "groups", "lockaccount", "rename", "resetpassword", "search", "unlockaccount", "update", "updatevaliditydates", "welcome");
 $page = "welcome";
 $searchaction = "";
 if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
@@ -402,6 +394,8 @@ if ( $page === "update" and !$use_update ) { $page = "welcome"; }
 if ( $page === "rename" and !$use_rename ) { $page = "welcome"; }
 if ( $page === "create" and !$use_create ) { $page = "welcome"; }
 if ( $page === "delete" and !$use_delete ) { $page = "welcome"; }
+if ( $page === "groups" and !$use_groups ) { $page = "welcome"; }
+if ( $page === "groups" ) { $searchaction = "searchgroups"; }
 if ( preg_match("/^search.*$/",$page) )
 {
     $searchaction = $page;
@@ -409,6 +403,29 @@ if ( preg_match("/^search.*$/",$page) )
 }
 if ( !preg_match("/^[\w-]+$/", $page) ) { $page = "welcome"; }
 if ( !in_array($page, $allowed_pages) ) { $page = "welcome"; }
+
+# Columns for users and groups
+if ($page == "groups") {
+    $columns = $search_result_group_items;
+} else {
+    $columns = $search_result_items;
+    if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
+}
+
+foreach ($columns as $column )
+{
+    $config_js["attributes_map"][$column] = array(
+        "type" => $attributes_map[$column]["type"],
+    );
+}
+
+if ($page == "groups") {
+    $config_js["attributes_map"]["ismember"] = array(
+        "type" => "membership",
+    );
+}
+$smarty->assign("config_js", base64_encode(json_encode($config_js)));
+
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 $smarty->assign('searchaction',$searchaction);
