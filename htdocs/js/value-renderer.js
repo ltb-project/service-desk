@@ -746,7 +746,9 @@ function ldapPwdhistoryTypeRenderer(config_js, dn, value, column, type)
 function ldapMembershipTypeRenderer(config_js, dn, value, column, type)
 {
     var values = {
-        "checked": (value === "TRUE") ? ' checked' : ''
+        "checked": (value === "TRUE") ? ' checked' : '',
+        "type": type,
+        "groupdn": dn
     };
     return renderTemplate(arguments.callee.name, values);
 }
