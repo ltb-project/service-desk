@@ -3,6 +3,8 @@
 
 <div id="size_limit_reached" class="alert alert-warning"><i class="fa fa-fw fa-exclamation-triangle"></i></div>
 
+<div id="user-dn" data-user-dn="{$dn}"></div>
+
 <table id="search-listing" class="table table-striped table-hover table-condensed dataTable">
     <thead>
         <tr>

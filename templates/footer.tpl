@@ -48,8 +48,6 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 {include 'auditlog-value-displayer.js.tpl'}
 {/if}
 
-
-
 {literal}
     <script>
     $(document).ready(function(){

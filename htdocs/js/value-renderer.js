@@ -748,7 +748,7 @@ function ldapMembershipTypeRenderer(config_js, dn, value, column, type)
     var values = {
         "checked": (value === "TRUE") ? ' checked' : '',
         "type": type,
-        "groupdn": dn
+        "dn": dn
     };
     return renderTemplate(arguments.callee.name, values);
 }

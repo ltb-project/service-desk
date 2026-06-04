@@ -1,14 +1,15 @@
 $(document).ready(function(){
 
     console.debug("JS membership loaded");
+    var userdn = $("div#user-dn").data("user-dn");
+    console.debug("USER DN "+userdn);
 
-    $('[data-component="membership"]').on("change", function (event) {
+    $(document).on("change", 'input[data-component="membership"]', function (event) {
         console.debug("Change detected on membership switch button");
         var dn = $(this).data("dn");
-        var groupdn = $(this).data("groupdn");
-        var checked = $(this).checked;
+        var checked = $(this).is(':checked');
 
-        console.debug("CALL GROUP MEMBERSHIP WITH DN "+dn+" - GROUPDN "+groupdn+" - CHECKED "+checked);
+        console.debug("CALL GROUP MEMBERSHIP WITH DN "+dn+" - USERDN "+userdn+" - CHECKED "+checked);
     });
 
 });
