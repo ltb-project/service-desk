@@ -28,17 +28,26 @@ if (!$use_groups) {
         } else {
 
             $group_modify = false;
+            $audit_action = "";
+            $result = "";
             if ($checked == "true") {
                 $group_modify = ldap_mod_add($ldap, $dn, array( $ldap_group_member_attribute => $userdn ));
+                $audit_action = "addusertogroup";
             } else if ($checked == "false") {
                 $group_modify = ldap_mod_del($ldap, $dn, array( $ldap_group_member_attribute => $userdn ));
+                $audit_action = "removeuserfromgroup";
             }
 
             if (!$group_modify) {
                 $data["error"] = "groupupdateerror";
+                $result = "groupupdateerror";
                 error_log("Modification of group $dn for user $userdn failed");
             } else {
+                $result = "groupupdatesuccess";
                 error_log("Modification of group $dn for user $userdn succeeded");
+            }
+            if ($audit_log_file) {
+                auditlog($audit_log_file, $userdn, $audit_admin, $audit_action, $result, $comment);
             }
         }
     } else {
