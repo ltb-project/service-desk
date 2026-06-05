@@ -159,11 +159,13 @@ if ($action == "searchgroups" ) {
 }
 
 # Get password policies list + user's ppolicy assignment
-list($passwordPolicies, $userPolicies) = $directory->getPwdPolicies(
-                                             $ldap,
-                                             $entries,
-                                             $ldap_default_ppolicy
-                                         );
+if ($action != "searchgroups" ) {
+    list($passwordPolicies, $userPolicies) = $directory->getPwdPolicies(
+        $ldap,
+        $entries,
+        $ldap_default_ppolicy
+    );
+}
 
 # Filter the result according to the action
 switch ($action) {
