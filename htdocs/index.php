@@ -139,6 +139,11 @@ $pwd_policy_config = array(
 
 if (!isset($pwd_show_policy_pos)) { $pwd_show_policy_pos = "above"; }
 
+# Declare fake ismember attribute
+if ($use_groups) {
+    $attributes_map['ismember'] = array("attribute" => "ismember", "type" => "membership");
+}
+
 #==============================================================================
 # Smarty
 #==============================================================================

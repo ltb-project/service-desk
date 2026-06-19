@@ -251,9 +251,19 @@ switch ($action) {
         break;
 
     case "searchgroups":
+        # Add ismember attribute
+        $search_result_items[] = 'ismember';
+        foreach($entries as $entry_key => $entry) {
+            $is_member = false;
+
+            foreach ($gm_entries as $gm_entry_key => $gm_entry) {
+                if ( $gm_entry["dn"] == $entry["dn"] ) { $is_member = true; }
+            }
+            $entry['ismember'] = [$is_member ? 1 : 0];
+            $entries[$entry_key] = $entry;
+        }
         break;
 }
-
 
 # Get columns labels
 $columns = $search_result_items;
@@ -445,33 +455,6 @@ foreach ($entries as $entry)
         array_push( $outputdata[$i], $values );
     }
     $i++;
-}
-
-if ($action == "searchgroups") {
-    foreach ($outputdata as &$row) {
-        $group_dn = $row[0];
-        $is_member = false;
-
-        foreach ($gm_entries as $gm_entry) {
-            if ( $gm_entry["dn"] == $group_dn ) { $is_member = true; }
-        }
-        array_push($row, [$is_member ? 1 : 0]);
-    }
-    # Order
-    if(isset($datatables_input["order"]) &&
-      isset($datatables_input["order"][0]) &&
-      isset($datatables_input["order"][0]["column"]) &&
-      $datatables_input["order"][0]["column"] == (count($search_result_group_items) + 1))
-    {
-        $direction = isset($datatables_input["order"][0]["dir"]) ?
-            $datatables_input["order"][0]["dir"] : "asc";
-        usort($outputdata, function($a, $b) use ($direction) {
-          if (end($a)[0] == end($b)[0]) { return 0;}
-          $result = (end($a)[0] > end($b)[0]) ? 1 :  -1;
-          if ($direction == "desc") { $result = $result * -1; }
-          return $result;
-        });
-    }
 }
 
 $error = "";
