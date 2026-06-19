@@ -423,6 +423,7 @@ if ($page == "groups") {
     $config_js["attributes_map"]["ismember"] = array(
         "type" => "membership",
     );
+    $config_js['ismember_idx'] = count( $search_result_group_items)+1;
 }
 $smarty->assign("config_js", base64_encode(json_encode($config_js)));
 

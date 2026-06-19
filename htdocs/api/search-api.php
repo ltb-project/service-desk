@@ -147,7 +147,7 @@ if( !empty($datatables_input["search"]["value"]) )
 # LDAP request for group membership
 $gm_entries = array();
 if ($action == "searchgroups" ) {
-    [$ldap,$gm_result,$gm_nb_entries,$gm_entries,$gm_size_limit_reached] = $ldapInstance->search(
+    [$ldap,$gm_result,$gm_nb_entries,$gm_entries] = $ldapInstance->search(
         $ldap_search_group_membership_filter,
         $directory->getOperationalAttributes(),
         $attributes_map,
@@ -455,9 +455,23 @@ if ($action == "searchgroups") {
         foreach ($gm_entries as $gm_entry) {
             if ( $gm_entry["dn"] == $group_dn ) { $is_member = true; }
         }
-        array_push($row, [$is_member ? "TRUE" : "FALSE"]);
+        array_push($row, [$is_member ? 1 : 0]);
     }
-    unset($row);
+    # Order
+    if(isset($datatables_input["order"]) &&
+      isset($datatables_input["order"][0]) &&
+      isset($datatables_input["order"][0]["column"]) &&
+      $datatables_input["order"][0]["column"] == (count($search_result_group_items) + 1))
+    {
+        $direction = isset($datatables_input["order"][0]["dir"]) ?
+            $datatables_input["order"][0]["dir"] : "asc";
+        usort($outputdata, function($a, $b) use ($direction) {
+          if (end($a)[0] == end($b)[0]) { return 0;}
+          $result = (end($a)[0] > end($b)[0]) ? 1 :  -1;
+          if ($direction == "desc") { $result = $result * -1; }
+          return $result;
+        });
+    }
 }
 
 $error = "";

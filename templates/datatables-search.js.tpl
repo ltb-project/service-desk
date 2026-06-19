@@ -37,6 +37,11 @@
           { targets: '_all', render: function ( data, type, row, meta ) {return datatableTypeRenderer(data, type, row, meta, config_js);} }
       ],
       drawCallback: function (settings) { updateEntriesCount(settings, config_js, searchaction); redirectWhenOneEntry(settings, config_js, searchaction)},
+{/literal}
+{if $searchaction == "searchgroups"}
+     order: [[config_js['ismember_idx'], 'desc']],
+{/if}
+{literal}
       layout: {
         topStart: {
 {/literal}
