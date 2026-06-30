@@ -218,7 +218,7 @@ $create_items_macros = array('fullname' => '%firstname% %lastname%');
 
 $use_delete = true;
 
-$use_groups = true;
+$use_groupmembership = true;
 
 # Local password policy
 # This is applied before directory password policy

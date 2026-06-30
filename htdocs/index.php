@@ -140,7 +140,7 @@ $pwd_policy_config = array(
 if (!isset($pwd_show_policy_pos)) { $pwd_show_policy_pos = "above"; }
 
 # Declare fake ismember attribute
-if ($use_groups) {
+if ($use_groupmembership) {
     $attributes_map['ismember'] = array("attribute" => "ismember", "type" => "membership");
 }
 
@@ -249,7 +249,7 @@ $smarty->assign('use_delete',$use_delete);
 $smarty->assign('dn_link_label_attributes',implode(",",$dn_link_label_attributes));
 $smarty->assign('dn_link_search_min_chars',$dn_link_search_min_chars);
 $smarty->assign('create_branch_type',$create_branch_type);
-$smarty->assign('use_groups',$use_groups);
+$smarty->assign('use_groupmembership',$use_groupmembership);
 
 $config_js = [];
 $config_js["messages"] = $messages;
@@ -399,7 +399,7 @@ if ( $page === "update" and !$use_update ) { $page = "welcome"; }
 if ( $page === "rename" and !$use_rename ) { $page = "welcome"; }
 if ( $page === "create" and !$use_create ) { $page = "welcome"; }
 if ( $page === "delete" and !$use_delete ) { $page = "welcome"; }
-if ( $page === "groups" and !$use_groups ) { $page = "welcome"; }
+if ( $page === "groups" and !$use_groupmembership ) { $page = "welcome"; }
 if ( $page === "groups" ) { $searchaction = "searchgroups"; }
 if ( preg_match("/^search.*$/",$page) )
 {

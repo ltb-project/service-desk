@@ -7,7 +7,7 @@ $checked = $_POST["checked"];
 
 error_log("USER DN ".$userdn." - DN ".$dn." CHECKED ".$checked);
 
-if (!$use_groups) {
+if (!$use_groupmembership) {
     $data['error'] = "featurenoteanbled";
 } else {
 
