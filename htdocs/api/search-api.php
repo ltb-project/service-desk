@@ -106,7 +106,6 @@ switch ($action) {
         $search_result_items = $search_result_group_items;
         $ldap_search_filter = $ldap_group_filter;
         $ldap_search_group_membership_filter ="(&".$ldap_group_filter."(".$ldap_group_member_attribute."=".$targetDN."))";
-        $search_result_items = $search_result_group_items;
         break;
 
 }
