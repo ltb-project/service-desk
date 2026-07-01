@@ -429,6 +429,7 @@ if ($page == "groups") {
         "type" => "membership",
     );
     $config_js['ismember_idx'] = count( $search_result_group_items)+1;
+    $config_js["listing_linkto"] = null;
 }
 $smarty->assign("config_js", base64_encode(json_encode($config_js)));
 
