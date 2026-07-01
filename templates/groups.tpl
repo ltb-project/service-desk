@@ -1,3 +1,5 @@
+{include 'toasts.tpl'}
+
 <div id="entriesCount" class="alert alert-success">
 </div>
 
@@ -19,3 +21,4 @@
 <div class="mt-3 text-center">
     <a href="?page=display&dn={$dn|escape:'url'}" class="btn btn-primary m-1"><i class="fa fa-fw fa-id-card"></i> {$msg_displayentry}</a>
 </div>
+

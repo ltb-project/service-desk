@@ -27,7 +27,10 @@
 <script src="js/ppolicy.js"></script>
 <script src="js/value_editor_dn_link.js"></script>
 <script src="js/value_editor_add_delete.js"></script>
+{if $use_groupmembership}
+<script src="js/bootstrap-toast.js"></script>
 <script src="js/group_membership.js"></script>
+{/if}
 <script>
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
