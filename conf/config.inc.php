@@ -72,6 +72,7 @@ $attributes_map = array(
     'modified' => array( 'attribute' => 'modifytimestamp', 'faclass' => 'clock-o', 'type' => 'date' ),
     'organization' => array( 'attribute' => 'o', 'faclass' => 'building', 'type' => 'text' ),
     'organizationalunit' => array( 'attribute' => 'ou', 'faclass' => 'building-o', 'type' => 'text' ),
+    'owner' => array( 'attribute' => 'owner', 'faclass' => 'user-circle', 'type' => 'dn_link', 'dtorder' => 'disable' ),
     'pager' => array( 'attribute' => 'pager', 'faclass' => 'mobile', 'type' => 'tel' , 'dtorder' => 'disable' ),
     'phone' => array( 'attribute' => 'telephonenumber', 'faclass' => 'phone', 'type' => 'tel', 'dtorder' => 'disable' ),
     'postaladdress' => array( 'attribute' => 'postaladdress', 'faclass' => 'map-marker', 'type' => 'address' ),

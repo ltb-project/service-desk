@@ -104,6 +104,7 @@ $messages['label_mobile'] = "Portable";
 $messages["label_modified"] = "Modifié";
 $messages['label_organizationalunit'] = "Service";
 $messages['label_organization'] = "Organisation";
+$messages['label_owner'] = "Propriétaire";
 $messages['label_pager'] = "Messagerie";
 $messages['label_phone'] = "Téléphone";
 $messages['label_postaladdress'] = "Adresse";

@@ -104,6 +104,7 @@ $messages['label_mobile'] = "Mobil";
 $messages["label_modified"] = "Endret";
 $messages['label_organizationalunit'] = "Organisatorisk enhet";
 $messages['label_organization'] = "Organisasjon";
+$messages['label_owner'] = "Owner";
 $messages['label_pager'] = "Personsøker";
 $messages['label_phone'] = "Telefon";
 $messages['label_postaladdress'] = "Adresse";

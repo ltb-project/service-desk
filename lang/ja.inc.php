@@ -104,6 +104,7 @@ $messages['label_mobile'] = "スマートフォン";
 $messages["label_modified"] = "修正";
 $messages['label_organizationalunit'] = "組織の単位";
 $messages['label_organization'] = "組織";
+$messages['label_owner'] = "Owner";
 $messages['label_pager'] = "ページャー";
 $messages['label_phone'] = "電話番号";
 $messages['label_postaladdress'] = "住所";
