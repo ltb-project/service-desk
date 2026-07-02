@@ -414,8 +414,9 @@ if ($page == "groups") {
     $columns = $search_result_group_items;
 } else {
     $columns = $search_result_items;
-    if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
 }
+
+if (! in_array($search_result_title, $columns)) array_unshift($columns, $search_result_title);
 
 foreach ($columns as $column )
 {
