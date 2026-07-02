@@ -45,6 +45,7 @@ $ldap_page_size = 0;
 $ldap_group_base = "ou=groups,".$ldap_base;
 $ldap_group_filter = "(objectClass=groupOfNames)";
 $ldap_group_member_attribute = "member";
+$ldap_group_size_limit = $ldap_size_limit;
 
 # Override LDAP password policy configuration
 #$ldap_lockout_duration = 3600; # 1 hour

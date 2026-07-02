@@ -249,7 +249,9 @@ if ($result === "") {
 
         if ($use_groupmembership) {
             $ldap_base = $ldapInstance->ldap_user_base;
+            $size_limit = $ldapInstance->ldap_size_limit;
             $ldapInstance->ldap_user_base = $ldap_group_base;
+            $ldapInstance->ldap_size_limit = 0;
             $ldap_search_group_membership_filter ="(&".$ldap_group_filter."(".$ldap_group_member_attribute."=".$dn."))";
             [$ldap,$groups_result,$nb_groups,$groups_entries] = $ldapInstance->search(
                 $ldap_search_group_membership_filter,
@@ -261,6 +263,7 @@ if ($result === "") {
                 $ldap_scope
             );
             $ldapInstance->ldap_user_base = $ldap_base;
+            $ldapInstance->ldap_size_limit = $size_limit;
         }
 
     }}}
