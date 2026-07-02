@@ -250,6 +250,26 @@ switch ($action) {
         break;
 
     case "searchgroups":
+        # Add all gm entries in entries
+        $uniqueEntries = [];
+        foreach ($entries as $entry) {
+            if (isset($entry['dn'])) {
+                $dn = $entry['dn'];
+                $uniqueEntries[$dn] = $entry;
+            }
+        }
+        if (!empty($gm_entries)) {
+            foreach ($gm_entries as $gmEntry) {
+                if (isset($gmEntry['dn'])) {
+                    $dn = $gmEntry['dn'];
+                    if (!isset($uniqueEntries[$dn])) {
+                        $uniqueEntries[$dn] = $gmEntry;
+                    }
+                }
+            }
+        }
+        $entries = array_values($uniqueEntries);
+
         # Add ismember attribute
         $search_result_items[] = 'ismember';
         foreach($entries as $entry_key => $entry) {
