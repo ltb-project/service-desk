@@ -39,3 +39,4 @@ LDAP Tool Box Service Desk documentation
    deleteentry.rst
    tooltips.rst
    patterns.rst
+   groupmembership.rst
