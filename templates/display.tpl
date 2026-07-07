@@ -108,6 +108,27 @@
 
         </div>
 
+        {if $use_groupmembership}
+        <div class="card mb-3 shadow">
+            <div class="card-header text-bg-secondary text-center">
+                <p class="card-title">
+                    <i class="fa fa-fw fa-user-group"></i>
+                    {$msg_groupmembership}
+                </p>
+            </div>
+
+            <div class="card-body">
+                {if $nb_groups == 0}{$msg_groupmembership_nogroups}{/if}
+                {if $nb_groups == 1}{$msg_groupmembership_memberof} 1 {$msg_group}{/if}
+                {if $nb_groups > 1}{$msg_groupmembership_memberof} {$nb_groups} {$msg_groups}{/if}
+            </div>
+
+            <div class="card-footer text-center">
+                <a class="btn btn-outline-success m-1" href="{$groupmembership_link}"><i class="fa fa-users"></i> {$msg_groupmembership_update}</a>
+            </div>
+        </div>
+        {/if}
+
         <div class="card mb-3 shadow ">
             <div class="card-header text-bg-secondary text-center">
                 <p class="card-title">

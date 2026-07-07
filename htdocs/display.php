@@ -247,6 +247,25 @@ if ($result === "") {
             $sambaKickoffTime = $entry['sambakickofftime'][0] ?? null;
         }
 
+        if ($use_groupmembership) {
+            $ldap_base = $ldapInstance->ldap_user_base;
+            $size_limit = $ldapInstance->ldap_size_limit;
+            $ldapInstance->ldap_user_base = $ldap_group_base;
+            $ldapInstance->ldap_size_limit = 0;
+            $ldap_search_group_membership_filter ="(&".$ldap_group_filter."(".$ldap_group_member_attribute."=".$dn."))";
+            [$ldap,$groups_result,$nb_groups,$groups_entries] = $ldapInstance->search(
+                $ldap_search_group_membership_filter,
+                array(),
+                $attributes_map,
+                null,
+                null,
+                array(),
+                $ldap_scope
+            );
+            $ldapInstance->ldap_user_base = $ldap_base;
+            $ldapInstance->ldap_size_limit = $size_limit;
+        }
+
     }}}
 }
 
@@ -271,10 +290,13 @@ $smarty->assign("sambaPwdCanChange", $sambaPwdCanChange);
 $smarty->assign("sambaPwdMustChange", $sambaPwdMustChange);
 $smarty->assign("sambaKickoffTime", $sambaKickoffTime);
 
+$smarty->assign("nb_groups", $nb_groups);
+
 $smarty->assign("refresh_link", "index.php?page=display&dn=".urlencode($dn));
 $smarty->assign("edit_link", "index.php?page=update&dn=".urlencode($dn));
 $smarty->assign("rename_link", "index.php?page=rename&dn=".urlencode($dn));
 $smarty->assign("delete_link", "index.php?page=delete&dn=".urlencode($dn));
+$smarty->assign("groupmembership_link", "index.php?page=groups&dn=".urlencode($dn));
 
 $smarty->assign("checkpasswordresult", $checkpasswordresult);
 $smarty->assign("resetpasswordresult", $resetpasswordresult);

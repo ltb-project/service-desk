@@ -140,6 +140,15 @@ function call_external_command($hookConfig, $entrypoint, $login_value, $params)
             $returnMessage = isset($output[0]) ? $output[0] : "";
             break;
 
+        case "updateGroupMembership":
+            $dn      = $params['dn'];
+            $new_rdn = $params['group_dn'];
+            $parent  = $params['checked'];
+            $command = hook_command($hookConfig['externalScript'], $dn, $group_dn, $checked);
+            exec($command, $output, $returnCode);
+            $returnMessage = isset($output[0]) ? $output[0] : "";
+            break;
+
     }
     return array($returnCode, $returnMessage, $returnedDN, $returnedEntry);
 }
@@ -203,6 +212,15 @@ function call_external_function($hookConfig, $entrypoint, $login_value, $params)
             $new_rdn = $params['new_rdn'];
             $parent  = $params['parent'];
             $params = [$login_value, $dn, $new_rdn, $parent];
+            list($returnCode, $returnMessage, $returnedDN, $returnedEntry) =
+                $hookConfig['function'](...$params);
+            break;
+
+        case "updateGroupMembership":
+            $dn = $params['dn'];
+            $group_dn = $params['group_dn'];
+            $checked = $params['checked'];
+            $params = [$dn, $group_dn, $checked];
             list($returnCode, $returnMessage, $returnedDN, $returnedEntry) =
                 $hookConfig['function'](...$params);
             break;

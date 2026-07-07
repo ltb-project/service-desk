@@ -36,7 +36,8 @@ Here is an example of configuration to set in you ``config.inc.local.php``:
         "createAccount" => array(),
         "updateAccount" => array(),
         "deleteAccount" => array(),
-        "renameAccount" => array()
+        "renameAccount" => array(),
+        "updateGroupMembership" => array()
     );
 
     ?>
@@ -57,6 +58,7 @@ You can call hooks during these events:
 * ``updateAccount`` called when modifying a user account
 * ``deleteAccount`` called when removing a user account
 * ``renameAccount`` called when renaming a user account
+* ``updateGroupMembership`` called when adding or removing a user from a group
 
 Steps
 -----
@@ -164,10 +166,16 @@ renameAccount
 * External script return code: 0 is a success, any other value means an error
 * Function return values: for step=before function, the expected returned values are: return code, error message, dn, array with ``new_rdn`` and ``parent`` keys, for step=after, the expected returned values are: return code, error message
 
+updateGroupMembership
+^^^^^^^^^^^^^^^^^^^^^
+
+* External script / function input: dn, group dn, cheched status
+* External script output: first line: error message
+* External script return code: 0 is a success, any other value means an error
+* Function return values: for step=before function, the expected returned values are: return code, error message, dn, array containing group dn and checked status, for step=after, the expected returned values are: return code, error message
 
 Configuration parameters
 ------------------------
-
 
 * ``$hook_login_attribute = "uid";``: define which attribute will be used as login in hooks
 * ``externalScript``: path of the script that is called. "before" script or function should return 0, else action will be aborted, unless error is ignored
@@ -238,6 +246,24 @@ Function to add a suffix to identifer, used to build the RDN:
     function changeRDN($login $dn, $new_rdn, $parent) {
         $properties["new_rdn"] = $new_rdn ."-test";
         return array(0, "identifier modified", $dn, $properties);
+    }
+
+    ?>
+
+updateGroupMembership
+^^^^^^^^^^^^^^^^^^^^^
+Function to refuse the removal from a specific group (but add is allowed)
+
+.. code-block:: php
+
+    <?php
+
+    function groupRemovalPolicy($dn, $group_dn, $checked) {
+        if ( preg_match('/^cn=this-group-is-special,/',  $group_dn) and $checked == "false") {
+            // Do not allow to remove membership from this group
+            return array(1, "Not allowed to be removed from $group_dn", $dn, array("group_dn" => $group_dn, "checked" => $checked));
+        }
+        return array(0, "Group modification allowed", $dn, array("group_dn" => $group_dn, "checked" => $checked));
     }
 
     ?>

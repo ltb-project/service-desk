@@ -27,6 +27,10 @@
 <script src="js/ppolicy.js"></script>
 <script src="js/value_editor_dn_link.js"></script>
 <script src="js/value_editor_add_delete.js"></script>
+{if $use_groupmembership}
+<script src="js/bootstrap-toast.js"></script>
+<script src="js/group_membership.js"></script>
+{/if}
 <script>
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -34,7 +38,7 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 
 {include 'commentbox.js.tpl'}
 
-{if $page|strstr:"search"}
+{if $page|strstr:"search" || $page|strstr:"groups"}
 {include 'datatables-search.js.tpl'}
 {/if}
 {if $page|strstr:"audit"}
@@ -46,8 +50,6 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 {if $page|strstr:"auditlog"}
 {include 'auditlog-value-displayer.js.tpl'}
 {/if}
-
-
 
 {literal}
     <script>

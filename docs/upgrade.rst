@@ -1,6 +1,23 @@
 Upgrade
 =======
 
+From 0.8 to 0.9
+---------------
+
+Group membership management enabled by default
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Management of group membership is enabled by default, if you want not to use it, you need to update your configuration:
+
+.. code-block:: php
+
+    $use_groupmembership = false;
+
+If you want to use this feature, be sure to configure what is needed to read groups in your directory:
+
+* :doc:`Group membership<groupmembership>`
+
+
 From 0.7 to 0.8
 ---------------
 
@@ -16,9 +33,6 @@ There are also a bunch of new features:
 * possibility to call a php function instead of an external script
 * new entrypoint ``passwordCheck``
 * new entrypoints ``createAccount``, ``updateAccount``, ``deleteAccount``, with the ability to modify the user attributes on the fly for the 2 first ones.
-
-
-
 
 From 0.6 to 0.7
 ---------------

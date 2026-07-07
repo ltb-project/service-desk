@@ -743,6 +743,16 @@ function ldapPwdhistoryTypeRenderer(config_js, dn, value, column, type)
     return render;
 }
 
+function ldapMembershipTypeRenderer(config_js, dn, value, column, type)
+{
+    var values = {
+        "checked": (value === 1) ? ' checked' : '',
+        "type": type,
+        "dn": dn
+    };
+    return renderTemplate(arguments.callee.name, values);
+}
+
 function truncate(string, length)
 {
     result = string;
