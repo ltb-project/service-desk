@@ -40,6 +40,8 @@ if (!$use_groupmembership) {
                 $result = "hookerror";
                 error_log("Prehook failed for group membership update (group $dn and user $userdn)");
             } else {
+                if (isset($infos['group_dn'])) { $dn = $infos['group_dn']; }
+                if (isset($infos['checked'])) { $checked = $infos['checked']; }
                 if ($checked == "true") {
                     $group_modify = ldap_mod_add($ldap, $dn, array( $ldap_group_member_attribute => $userdn ));
                     $audit_action = "addusertogroup";
