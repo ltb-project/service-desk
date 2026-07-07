@@ -144,8 +144,8 @@ Start container, mounting that configuration file:
         -it docker.io/ltbproject/service-desk:latest
 
 
-From git repository, for developpers only
------------------------------------------
+From git repository, for developers only
+----------------------------------------
 
 You can get the content of git repository
 
