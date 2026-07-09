@@ -24,7 +24,9 @@ if ($result === "") {
 
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
-    require_once("../lib/attributes.inc.php");
+    if (!class_exists('\Ltb\Attributes')) {
+        require_once("../lib/attributes.inc.php");
+    }
     require_once("../lib/date.inc.php");
     require_once("../lib/hook.inc.php");
 
@@ -87,7 +89,7 @@ if ($result === "") {
                     $result = "hookerror";
                     $action = "displayentry";
                 } else {
-                   $missing_attributes = find_missing_mandatory_attributes('update', $attributes_map, $update_attributes, array_unique($submitted_update_items));
+                   $missing_attributes = \Ltb\Attributes::findMissingMandatoryAttributes('update', $attributes_map, $update_attributes, array_unique($submitted_update_items));
                    if (!empty($missing_attributes)) {
                        error_log("LDAP - update rejected for missing mandatory attributes: " . implode(", ", $missing_attributes) . " on $dn");
                        $result = "mandatoryattributerequired";

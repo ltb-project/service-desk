@@ -18,7 +18,9 @@ if ($result === "") {
 
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
-    require_once("../lib/attributes.inc.php");
+    if (!class_exists('\Ltb\Attributes')) {
+        require_once("../lib/attributes.inc.php");
+    }
     require_once("../lib/date.inc.php");
     require_once("../lib/hook.inc.php");
 
@@ -88,7 +90,7 @@ if ($result === "") {
                 if ( $prehook_return > 0 and !$hook['createAccount']['before']['ignoreError']) {
                     $result = "hookerror";
                 } else {
-                   $missing_attributes = find_missing_mandatory_attributes('create', $attributes_map, $create_attributes);
+                   $missing_attributes = \Ltb\Attributes::findMissingMandatoryAttributes('create', $attributes_map, $create_attributes);
                    if (!empty($missing_attributes)) {
                        error_log("LDAP - create rejected for missing mandatory attributes: " . implode(", ", $missing_attributes));
                        $result = "mandatoryattributerequired";
