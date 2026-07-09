@@ -84,15 +84,15 @@ if ($result === "") {
 
                 if ( $prehook_return > 0 and !$hook_config['updateAccount']['before']['ignoreError']) {
                     $result = "hookerror";
-                    $action = "displayentry";
+                    $action = "displayform";
                 } else {
                    $missing_attributes = \Ltb\Attributes::findMissingMandatoryAttributes('update', $attributes_map, $update_attributes, array_unique($submitted_update_items));
                    if (!empty($missing_attributes)) {
-                       error_log("LDAP - update rejected for missing mandatory attributes: " . implode(", ", $missing_attributes) . " on $dn");
+                       error_log("Update rejected for missing mandatory attributes: " . implode(", ", $missing_attributes) . " on $dn");
                        $result = "mandatoryattributerequired";
-                        $action = "displayform";
+                       $action = "displayform";
                     } else {
-                    # Update entry
+                       # Update entry
                        if (!ldap_mod_replace($ldap, $dn, $update_attributes)) {
                            error_log("LDAP - modify failed for $dn");
                             $result = "updatefailed";
@@ -121,7 +121,6 @@ if ($result === "") {
                 }
 
             }
-
             # Display form
             if ($action == "displayform") {
 
