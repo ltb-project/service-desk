@@ -38,7 +38,6 @@ $ldap_ppolicy_filter = "(objectClass=pwdPolicy)";
 $ldap_ppolicy_name_attribute = "cn";
 $ldap_size_limit = 100;
 #$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
-$ldap_lastauth_attribute = "authTimestamp";
 #$ldap_network_timeout = 10;
 $ldap_page_size = 0;
 

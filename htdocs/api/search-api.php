@@ -53,6 +53,7 @@ switch ($action) {
         date_sub( $dateIdle, new DateInterval('P'.$idledays.'D') );
         $dateIdleLdap = $directory->getLdapDate($dateIdle);
         # Search filter
+        $ldap_lastauth_attribute = $attributes_map['authtimestamp']['attribute'];
         $ldap_filter = "(&".$ldap_user_filter."(|(!(".$ldap_lastauth_attribute."=*))(".$ldap_lastauth_attribute."<=".$dateIdleLdap.")))";
         $ldap_search_filter = $ldap_filter;
         break;
