@@ -143,6 +143,14 @@ Start container, mounting that configuration file:
         -v /home/test/servicedesk.conf.php:/var/www/conf/config.inc.local.php \
         -it docker.io/ltbproject/service-desk:latest
 
+If you need to provide more configuration files, for example when using multi-tenant feature, then mount the full configuration directory:
+
+
+.. prompt:: bash #
+
+    docker run -p 80:80 \
+        -v /home/test/sdconf/:/var/www/conf \
+        -it docker.io/ltbproject/service-desk:latest
 
 From git repository, for developers only
 ----------------------------------------
