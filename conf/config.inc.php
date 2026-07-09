@@ -202,7 +202,7 @@ $samba_options=[];
 ## Edition
 
 $use_update = true;
-$update_items = array('firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'mailquota', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary');
+$update_items = array('firstname', 'lastname', 'title', 'businesscategory', 'employeenumber', 'employeetype', 'mail', 'phone', 'mobile', 'fax', 'postaladdress', 'street', 'postalcode', 'l', 'state', 'organizationalunit', 'organization', 'manager', 'secretary');
 $update_items_macros = array('fullname' => '%firstname% %lastname%');
 
 $use_rename = true;
