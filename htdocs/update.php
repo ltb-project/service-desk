@@ -24,6 +24,7 @@ if ($result === "") {
 
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
+    require_once("../lib/attributes.inc.php");
     require_once("../lib/date.inc.php");
     require_once("../lib/hook.inc.php");
 
@@ -46,9 +47,13 @@ if ($result === "") {
 
                 # Get all data
                 $update_attributes = array();
+                $submitted_update_items = array();
                 foreach ($update_items as $item) {
                     $values = array();
                     $item_keys = preg_grep("/^$item(\d+)$/", array_keys($_POST));
+                   if (!empty($item_keys)) {
+                       $submitted_update_items[] = $item;
+                   }
                     foreach ($item_keys as $item_key) {
                         if (isset($_POST[$item_key]) and !empty($_POST[$item_key])) {
                             $value = $_POST[$item_key];
@@ -64,6 +69,7 @@ if ($result === "") {
 
                 # Use macros
                 foreach ($update_items_macros as $item => $macro) {
+                   $submitted_update_items[] = $item;
                     $value = preg_replace_callback('/%(\w+)%/',
                         function ($matches) use ($item, $update_attributes, $attributes_map) {
                             return $update_attributes[ $attributes_map[$matches[1]]['attribute'] ][0];
@@ -81,22 +87,29 @@ if ($result === "") {
                     $result = "hookerror";
                     $action = "displayentry";
                 } else {
-                    # Update entry
-                    if (!ldap_mod_replace($ldap, $dn, $update_attributes)) {
-                        error_log("LDAP - modify failed for $dn");
-                        $result = "updatefailed";
+                   $missing_attributes = find_missing_mandatory_attributes('update', $attributes_map, $update_attributes, array_unique($submitted_update_items));
+                   if (!empty($missing_attributes)) {
+                       error_log("LDAP - update rejected for missing mandatory attributes: " . implode(", ", $missing_attributes) . " on $dn");
+                       $result = "mandatoryattributerequired";
                         $action = "displayform";
                     } else {
-                        $errno = ldap_errno($ldap);
-                        if ( $errno ) {
-                            error_log("LDAP - modify error $errno (".ldap_error($ldap).") for $dn");
+                    # Update entry
+                       if (!ldap_mod_replace($ldap, $dn, $update_attributes)) {
+                           error_log("LDAP - modify failed for $dn");
                             $result = "updatefailed";
                             $action = "displayform";
                         } else {
-                            $result = "updateok";
-                            $action = "displayentry";
-                        }
-                    }
+                           $errno = ldap_errno($ldap);
+                           if ( $errno ) {
+                               error_log("LDAP - modify error $errno (".ldap_error($ldap).") for $dn");
+                               $result = "updatefailed";
+                               $action = "displayform";
+                           } else {
+                               $result = "updateok";
+                               $action = "displayentry";
+                           }
+                       }
+                   }
                 }
 
                 if ( $result === "updateok" ) {

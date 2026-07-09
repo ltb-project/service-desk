@@ -18,6 +18,7 @@ if ($result === "") {
 
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
+    require_once("../lib/attributes.inc.php");
     require_once("../lib/date.inc.php");
     require_once("../lib/hook.inc.php");
 
@@ -87,22 +88,29 @@ if ($result === "") {
                 if ( $prehook_return > 0 and !$hook['createAccount']['before']['ignoreError']) {
                     $result = "hookerror";
                 } else {
-                    # Create entry
-                    if (!ldap_add($ldap, $dn, $create_attributes)) {
-                        error_log("LDAP - create failed for $dn");
-                        $result = "createfailed";
+                   $missing_attributes = find_missing_mandatory_attributes('create', $attributes_map, $create_attributes);
+                   if (!empty($missing_attributes)) {
+                       error_log("LDAP - create rejected for missing mandatory attributes: " . implode(", ", $missing_attributes));
+                       $result = "mandatoryattributerequired";
                         $action = "displayform";
                     } else {
-                        $errno = ldap_errno($ldap);
-                        if ( $errno ) {
-                            error_log("LDAP - create error $errno (".ldap_error($ldap).") for $dn");
+                    # Create entry
+                       if (!ldap_add($ldap, $dn, $create_attributes)) {
+                           error_log("LDAP - create failed for $dn");
                             $result = "createfailed";
                             $action = "displayform";
                         } else {
-                            $result = "createok";
-                            $action = "displayentry";
-                        }
-                    }
+                           $errno = ldap_errno($ldap);
+                           if ( $errno ) {
+                               error_log("LDAP - create error $errno (".ldap_error($ldap).") for $dn");
+                               $result = "createfailed";
+                               $action = "displayform";
+                           } else {
+                               $result = "createok";
+                               $action = "displayentry";
+                           }
+                       }
+                   }
                 }
 
                 if ( $result === "createok" ) {
