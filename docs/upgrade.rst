@@ -17,6 +17,16 @@ If you want to use this feature, be sure to configure what is needed to read gro
 
 * :doc:`Group membership<groupmembership>`
 
+Last authentication time attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configuration parameter ``$ldap_lastauth_attribute`` has been removed.
+
+If you configured a specific value for it, which was possible for OpenLDAP to use ``pwdLastSuccess`` instead of ``authTimestamp``, then you must change your settings:
+
+.. code-block:: php
+
+    $openldap_attributes_map['authtimestamp']['attribute'] = "pwdlastsuccess";
 
 From 0.7 to 0.8
 ---------------
