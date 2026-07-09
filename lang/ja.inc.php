@@ -152,6 +152,7 @@ $messages['passwordok'] = "認証に成功しました！";
 $messages['password'] = "パスワード";
 $messages['passwordrefused'] = "パスワードは拒否されました";
 $messages['passwordrequired'] = "パスワードを入力してください";
+$messages['mandatoryattributerequired'] = "必須属性をすべて入力してください";
 $messages['policycomplex'] = "文字クラスの最小数:";
 $messages['policydifflogin'] = "あなたのパスワードはログイン時とことなっていなければなりません";
 $messages['policydiffminchars'] = "ユニークな文字の最小数:";

@@ -152,6 +152,7 @@ $messages['passwordok'] = "Autentisering vellykket!";
 $messages['password'] = "Passord";
 $messages['passwordrefused'] = "Passordet ble avvist";
 $messages['passwordrequired'] = "Vennligst skriv inn passordet";
+$messages['mandatoryattributerequired'] = "Vennligst fyll ut alle obligatoriske attributter";
 $messages['policycomplex'] = "Minimum antall forskjellige tegnklasser:";
 $messages['policydifflogin'] = "Ditt nye passord kan ikke være det samme som ditt brukernavn";
 $messages['policydiffminchars'] = "Minimum antall nye unike tegn:";

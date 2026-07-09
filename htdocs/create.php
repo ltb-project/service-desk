@@ -87,22 +87,29 @@ if ($result === "") {
                 if ( $prehook_return > 0 and !$hook['createAccount']['before']['ignoreError']) {
                     $result = "hookerror";
                 } else {
-                    # Create entry
-                    if (!ldap_add($ldap, $dn, $create_attributes)) {
-                        error_log("LDAP - create failed for $dn");
-                        $result = "createfailed";
+                   $missing_attributes = \Ltb\Attributes::findMissingMandatoryAttributes('create', $attributes_map, $create_attributes);
+                   if (!empty($missing_attributes)) {
+                       error_log("LDAP - create rejected for missing mandatory attributes: " . implode(", ", $missing_attributes));
+                       $result = "mandatoryattributerequired";
                         $action = "displayform";
                     } else {
-                        $errno = ldap_errno($ldap);
-                        if ( $errno ) {
-                            error_log("LDAP - create error $errno (".ldap_error($ldap).") for $dn");
+                    # Create entry
+                       if (!ldap_add($ldap, $dn, $create_attributes)) {
+                           error_log("LDAP - create failed for $dn");
                             $result = "createfailed";
                             $action = "displayform";
                         } else {
-                            $result = "createok";
-                            $action = "displayentry";
-                        }
-                    }
+                           $errno = ldap_errno($ldap);
+                           if ( $errno ) {
+                               error_log("LDAP - create error $errno (".ldap_error($ldap).") for $dn");
+                               $result = "createfailed";
+                               $action = "displayform";
+                           } else {
+                               $result = "createok";
+                               $action = "displayentry";
+                           }
+                       }
+                   }
                 }
 
                 if ( $result === "createok" ) {

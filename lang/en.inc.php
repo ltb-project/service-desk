@@ -152,6 +152,7 @@ $messages['passwordok'] = "Authentication succeeds!";
 $messages['password'] = "Password";
 $messages['passwordrefused'] = "Password was refused";
 $messages['passwordrequired'] = "Please enter the password";
+$messages['mandatoryattributerequired'] = "Please fill all mandatory attributes";
 $messages['policycomplex'] = "Minimum number of different classes of characters:";
 $messages['policydifflogin'] = "Your new password may not be the same as your login";
 $messages['policydiffminchars'] = "Minimum number of new unique characters:";
