@@ -137,13 +137,20 @@ You can override some policies, like lockout duration or password maximal age:
 Last authentication attribute
 -----------------------------
 
-The last authentication date can be stored in different attributes depending on your OpenLDAP version or configuration.
+The last authentication date can be stored in different attributes depending on your LDAP directory version or configuration.
+
+For example, for OpenLDAP, to use ``pwdLastSuccess`` instead of ``authTimestamp``:
 
 .. code-block:: php
 
-    $ldap_lastauth_attribute = "pwdLastSuccess";
+    $openldap_attributes_map['authtimestamp']['attribute'] = "pwdlastsuccess";
 
-.. tip:: This attribute is automatically configured for Active Directory.
+
+For Active Directory, to use ``lastlogontimestamp`` (replicated againts all DC) instead of ``lastlogon`` (updated only on the targeted DC):
+
+.. code-block:: php
+
+    $activedirectory_attributes_map['authtimestamp']['attribute'] = "lastlogontimestamp";
 
 Samba 3
 -------
