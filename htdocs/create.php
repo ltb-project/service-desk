@@ -18,9 +18,6 @@ if ($result === "") {
 
     require_once("../conf/config.inc.php");
     require __DIR__ . '/../vendor/autoload.php';
-    if (!class_exists('\Ltb\Attributes')) {
-        require_once("../lib/attributes.inc.php");
-    }
     require_once("../lib/date.inc.php");
     require_once("../lib/hook.inc.php");
 
