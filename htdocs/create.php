@@ -62,7 +62,7 @@ if ($result === "") {
                         },
                         $macro);
                     error_log( "Use macro $macro for item $item: $value" );
-                    $create_attributes[ $attributes_map[$item]['attribute'] ] = $value;
+                    $create_attributes[ $attributes_map[$item]['attribute'] ] = [$value];
                 }
 
                 # Build DN

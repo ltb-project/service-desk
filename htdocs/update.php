@@ -75,7 +75,7 @@ if ($result === "") {
                         },
                         $macro);
                     error_log( "Use macro $macro for item $item: $value" );
-                    $update_attributes[ $attributes_map[$item]['attribute'] ] = $value;
+                    $update_attributes[ $attributes_map[$item]['attribute'] ] = [$value];
                 }
 
 
