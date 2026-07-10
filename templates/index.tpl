@@ -12,12 +12,10 @@
 {/if}
 
 {if $error}
-<div class="alert alert-danger">
-    <i class="fa fa-fw fa-exclamation-circle"></i> {$error}
-</div>
-{else}
-{include file="$page.tpl"}
+{include file="error_message.tpl"}
 {/if}
+
+{include file="$page.tpl"}
 
 </div>
 </div>

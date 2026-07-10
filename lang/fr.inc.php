@@ -68,6 +68,7 @@ $messages['groupmembership_update'] = "Mettre à jour les groupes";
 $messages['groups'] = "groupes";
 $messages['groupupdateerror'] = "Groupe non modifié";
 $messages['groupupdatesuccess'] = "Groupe modifié";
+$messages["home"] = "Accueil";
 $messages['hookerror'] = "Une erreur s'est produite dans le hook";
 $messages['idleaccounts'] = "Comptes inactifs";
 $messages['idleaccountstitle'] = "Comptes inactifs depuis plus de $idledays jours";
