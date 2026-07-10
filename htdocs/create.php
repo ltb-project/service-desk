@@ -7,7 +7,6 @@ $result = "";
 $dn = "";
 $entry = "";
 $action = "displayform";
-$result = "";
 $branch_list = "";
 
 if (isset($_POST["action"]) and $_POST["action"]) {
@@ -91,9 +90,9 @@ if ($result === "") {
                    if (!empty($missing_attributes)) {
                        error_log("LDAP - create rejected for missing mandatory attributes: " . implode(", ", $missing_attributes));
                        $result = "mandatoryattributerequired";
-                        $action = "displayform";
-                    } else {
-                    # Create entry
+                       $action = "displayform";
+                   } else {
+                       # Create entry
                        if (!ldap_add($ldap, $dn, $create_attributes)) {
                            error_log("LDAP - create failed for $dn");
                             $result = "createfailed";

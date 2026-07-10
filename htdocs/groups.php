@@ -17,6 +17,7 @@ if (isset($_POST["dn"]) and $_POST["dn"]) {
     $dn = $entry_dn;
 } else {
     $result = "dnrequired";
+    $page = "error";
 }
 
 if ($result === "") {
@@ -35,6 +36,7 @@ if ($result === "") {
         # DN match
         if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
             $result = "noentriesfound";
+            $page = "error";
             error_log("LDAP - $dn not found using the configured search settings, reject request");
         }
    }

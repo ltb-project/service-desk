@@ -49,6 +49,7 @@ if (isset($_GET["dn"]) and $_GET["dn"]) {
     $dn = $entry_dn;
 } else {
     $result = "dnrequired";
+    $page = "error";
 }
 
 if (isset($_GET["checkpasswordresult"]) and $_GET["checkpasswordresult"]) {
@@ -184,6 +185,7 @@ if ($result === "") {
         # DN match
         if ( !$ldapInstance->matchDn($dn, $dnAttribute, $ldap_user_filter, $ldap_user_base, $ldap_scope) ) {
             $result = "noentriesfound";
+            $page = "error";
             error_log("LDAP - $dn not found using the configured search settings, reject request");
         } else {
 
@@ -208,6 +210,7 @@ if ($result === "") {
 
         if ( $errno ) {
             $result = "ldaperror";
+            $page = "error";
             error_log("LDAP - Search error $errno  (".ldap_error($ldap).")");
         } else {
 

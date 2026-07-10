@@ -68,6 +68,7 @@ $messages['groupmembership_update'] = "Update groups";
 $messages['groups'] = "groups";
 $messages['groupupdateerror'] = "Group not updated";
 $messages['groupupdatesuccess'] = "Group updated";
+$messages["home"] = "Home";
 $messages['hookerror'] = "このフックでエラーが発生";
 $messages['idleaccounts'] = "アイドル状態のアカウント";
 $messages['idleaccountstitle'] = "$idledays 日以上、アイドル状態のアカウント";

@@ -85,7 +85,7 @@ if ( isset($prehook_return) and
      isset($hook_config['deleteAccount']['before']['displayError']) and
      $hook_config['deleteAccount']['before']['displayError'] and
      $prehook_return > 0 ) {
-    $location .= '&prehookdeleteresult='.$prehook_message;
+     $location .= '&prehookdeleteresult='.$prehook_message;
 }
 if ( isset($posthook_return) and
      isset($hook_config['deleteAccount']['after']['displayError']) and

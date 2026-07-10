@@ -68,6 +68,7 @@ $messages['groupmembership_update'] = "Update groups";
 $messages['groups'] = "groups";
 $messages['groupupdateerror'] = "Group not updated";
 $messages['groupupdatesuccess'] = "Group updated";
+$messages["home"] = "Home";
 $messages['hookerror'] = "En feil oppstod i hooken";
 $messages['idleaccounts'] = "Inaktive kontoer";
 $messages['idleaccountstitle'] = "Kontoer inaktive i mer enn $idledays dager";
