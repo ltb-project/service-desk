@@ -275,6 +275,8 @@ foreach (get_defined_vars() as $key => $value) {
     }
 }
 
+$smarty->assign('require_auth',$require_auth);
+
 # Assign messages
 $smarty->assign('lang',$lang);
 foreach ($messages as $key => $message) {
@@ -376,7 +378,7 @@ if (isset($_POST["apiendpoint"])) {
 # Route to page
 #==============================================================================
 $result = "";
-$allowed_pages = array("auditlog", "checkentropy", "checkpassword", "create", "delete", "disableaccount", "display", "enableaccount", "groups", "lockaccount", "rename", "resetpassword", "search", "unlockaccount", "update", "updatevaliditydates", "welcome");
+$allowed_pages = array("auditlog", "checkentropy", "checkpassword", "create", "delete", "disableaccount", "display", "enableaccount", "groups", "lockaccount", 'login', 'logout', "rename", "resetpassword", "search", "unlockaccount", "update", "updatevaliditydates", "welcome");
 $page = "welcome";
 $searchaction = "";
 if (isset($_GET["page"]) and $_GET["page"]) { $page = $_GET["page"]; }
@@ -399,6 +401,8 @@ if ( $page === "create" and !$use_create ) { $page = "welcome"; }
 if ( $page === "delete" and !$use_delete ) { $page = "welcome"; }
 if ( $page === "groups" and !$use_groupmembership ) { $page = "welcome"; }
 if ( $page === "groups" ) { $searchaction = "searchgroups"; }
+if ( $page === "login" and !$require_auth ) { $page = "welcome"; }
+if ( $page === "logout" and !$require_auth ) { $page = "welcome"; }
 if ( preg_match("/^search.*$/",$page) )
 {
     $searchaction = $page;
@@ -432,6 +436,21 @@ if ($page == "groups") {
 }
 $smarty->assign("config_js", base64_encode(json_encode($config_js)));
 
+#==============================================================================
+# Authentication
+#==============================================================================
+if ($require_auth) {
+    session_start();
+    if (!isset($_SESSION["userdn"]) and $page !== "login") {
+        $login_url = "index.php?page=login&return_page=$page";
+        header('Location: '.$login_url);
+        exit;
+    }
+    $smarty->assign('userdn',$_SESSION["userdn"]);
+}
+#==============================================================================
+# Load page
+#==============================================================================
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 $smarty->assign('searchaction',$searchaction);

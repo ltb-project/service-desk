@@ -13,6 +13,7 @@
               </button>
 
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
+              {if ($require_auth and $userdn) or !$require_auth}
               <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
                 {if $use_create}
                 <li class="nav-item">
@@ -53,9 +54,9 @@
                   <a href="index.php?page=auditlog" class="nav-link"><i class="fa fa-fw fa-list"></i> {$msg_auditlogs}</a>
                 </li>
                 {/if}
-                {if $logout_link}
+                {if (!$require_auth and $logout_link) or ($require_auth and $userdn)}
                 <li class="nav_item">
-                  <a href="{$logout_link}" class="nav-link"><i class="fa fa-fw fa-sign-out"></i> {$msg_logout}</a>
+                  <a class="nav-link" href="{if $require_auth}index.php?page=logout{else}{$logout_link}{/if}"><i class="fa fa-fw fa-sign-out"></i> {$msg_logout}</a>
                 </li>
                 {/if}
               </ul>
@@ -65,6 +66,7 @@
                   <button class="btn btn-outline-secondary" type="submit">&nbsp;<i class="fa fa-fw fa-search"></i></button>
                 </div>
               </form>
+              {/if}
             </div>
           </div>
         </nav>

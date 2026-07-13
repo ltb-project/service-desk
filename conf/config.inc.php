@@ -24,6 +24,11 @@
 # config.inc.local.php file instead to override the settings from here.
 #==============================================================================
 
+# Authentication
+$require_auth = false;
+$auth_type = "ldap"; # "ldap" or "header"
+#$auth_header_name_user = "Auth-User";
+
 # LDAP
 $ldap_type = "openldap";
 $ldap_url = "ldap://localhost";
@@ -34,6 +39,8 @@ $ldap_base = "dc=example,dc=com";
 $ldap_user_base = "ou=users,".$ldap_base;
 $ldap_scope = "sub"; # possible values: sub, one, base
 $ldap_user_filter = "(objectClass=inetOrgPerson)";
+$ldap_login_attribute = "uid";
+$ldap_login_filter = "(&$ldap_user_filter($ldap_login_attribute={login}))";
 $ldap_ppolicy_filter = "(objectClass=pwdPolicy)";
 $ldap_ppolicy_name_attribute = "cn";
 $ldap_size_limit = 100;
