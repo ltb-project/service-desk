@@ -5,6 +5,7 @@ $result = "";
 $login = "";
 $password = "";
 $userdn = "";
+$userlogin = "";
 $action = "";
 
 $return_url = "index.php";
@@ -50,7 +51,7 @@ if ($result == "" and ($auth_type === "header" or ($auth_type === "ldap" and $ac
 
     $search_login = ldap_escape($login, "", LDAP_ESCAPE_FILTER);
     $ldap_filter = str_replace("{login}", $search_login, $ldap_login_filter);
-    $search = $ldapInstance->search_with_scope($ldap_scope, $ldap_user_base, $ldap_filter);
+    $search = $ldapInstance->search_with_scope($ldap_scope, $ldap_user_base, $ldap_filter, array($ldap_login_attribute));
 
     $errno = ldap_errno($ldap);
     if ( $errno ) {
@@ -66,6 +67,8 @@ if ($result == "" and ($auth_type === "header" or ($auth_type === "ldap" and $ac
             error_log("LDAP - User $login not found");
         } else { 
             $userdn = ldap_get_dn($ldap, $entry);
+            $loginvalues = ldap_get_values($ldap, $entry, $ldap_login_attribute);
+            $userlogin = $loginvalues['count'] > 0 ? $loginvalues[0] : null;
         }
     }
 }
@@ -80,8 +83,9 @@ if ($result == "" and $action === "login" and $auth_type === "ldap") {
 }
 
 # Create session
-if ($result == "" and $userdn) {
+if ($result == "" and $userdn and $userlogin) {
     $_SESSION["userdn"] = $userdn;
+    $_SESSION["userlogin"] = $userlogin;
     header("Location: $return_url");
 }
 

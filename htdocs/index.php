@@ -447,6 +447,11 @@ if ($require_auth) {
         exit;
     }
     $smarty->assign('userdn',$_SESSION["userdn"]);
+
+    # Admin is no more anonymous
+    if ($audit_admin == "anonymous") {
+        $audit_admin = $_SESSION["userlogin"];
+    }
 }
 #==============================================================================
 # Load page
