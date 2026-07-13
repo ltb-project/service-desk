@@ -46,11 +46,3 @@ Here is a sample block server configuration:
                   fastcgi_param SCRIPT_FILENAME   $request_filename;
           }
   } 
-
-.. warning:: You must protect the access to the application, else everyone will be able to reset any user password!
-
-External authentication
------------------------
-
-You can use any authentication source and authentication protocols supported by Nginx.
-Configuring these solutions is out of scope of the current documentation.

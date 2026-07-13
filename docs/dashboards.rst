@@ -71,7 +71,7 @@ Idle accounts
 
 This page will list all accounts never connected, or not connected since a number of days.
 
-.. tip:: This requires the ``authTimestamp`` attribute which is provided by the ``lastbind`` overlay.
+.. tip:: This requires to have the last authentication time in the user account entry.
 
 To enable it:
 

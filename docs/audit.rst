@@ -44,15 +44,17 @@ Set the file where actions are logged:
 Admin name
 ----------
 
-The admin name must be set into an HTTP header.
+The admin name is given by the authentication mechanism.
 
-Using Apache, we could use instead:
+But if authentication is disabled, you can define a HTTP header.
+
+Using Apache:
 
 .. code-block:: php
 
   $header_name_audit_admin = "Auth-User";
 
-Using Nginx, we could use instead:
+Using Nginx:
 
 .. code-block:: php
 

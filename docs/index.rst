@@ -14,6 +14,7 @@ LDAP Tool Box Service Desk documentation
 
    presentation.rst
    installation.rst
+   authentication.rst
    upgrade.rst
    configuration-apache.rst
    configuration-nginx.rst
