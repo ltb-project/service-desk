@@ -25,7 +25,7 @@
 #==============================================================================
 
 # Authentication
-$require_auth = false;
+$require_auth = true;
 $auth_type = "ldap"; # "ldap" or "header"
 #$auth_header_name_user = "Auth-User";
 

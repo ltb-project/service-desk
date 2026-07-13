@@ -4,6 +4,23 @@ Upgrade
 From 0.8 to 0.9
 ---------------
 
+Authentication enabled by default
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here we are, now Service Desk ask for authentication by default!
+
+If you already configured your Web Server or SSO system to access Service Desk, you can directly use ``header`` authentication mode and choose in ``$auth_header_name_user`` which header carries the user login.
+
+You can also configure ``ldap`` authentication mode, to display a login form.
+
+Is you really want to disable authentication, you can do it with:
+
+.. code-block:: php
+
+    $require_auth = false;
+
+Learn more on :doc:`authentication documentation<authentication>`.
+
 Group membership management enabled by default
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
