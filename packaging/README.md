@@ -50,13 +50,13 @@ For example:
 Form current directory, do:
 
 ```
-fakeroot dpkg-buildpackage -b -k"LTB-Project Debian"
+dpkg-buildpackage -b -k"LTB-Project Debian"
 ```
 
 If you do not have LTB GPG secret key, do:
 
 ```
-fakeroot dpkg-buildpackage -b -us -uc
+dpkg-buildpackage -b -us -uc
 ```
 
 ## 3 - RPM (RHEL, CentOS, Fedora, ...)

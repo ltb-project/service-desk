@@ -26,3 +26,7 @@ fi
 
 # Clean cache
 rm -rf /var/cache/service-desk/{cache,templates_c}/*
+
+# Change ownership of cache directories
+chown www-data:www-data /var/cache/service-desk/cache
+chown www-data:www-data /var/cache/service-desk/templates_c
