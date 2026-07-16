@@ -190,6 +190,7 @@ $smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => 
 $smarty->assign('logo',$logo);
 $smarty->assign('background_image',$background_image);
 $smarty->assign('favicon',$favicon);
+$smarty->assign('logo_menu',$logo_menu);
 $smarty->assign('custom_css',$custom_css);
 $smarty->assign('attributes_map',$attributes_map);
 $smarty->assign('date_specifiers',$date_specifiers);

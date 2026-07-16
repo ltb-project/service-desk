@@ -321,9 +321,10 @@ $js_date_specifiers = "YYYY-MM-DD HH:mm:ss (Z)";
 $date_timezone = "UTC";
 
 # Graphics
-$logo = "images/ltb-logo.png";
-$background_image = "images/unsplash-space.jpeg";
-$favicon = "images/favicon.ico";
+$logo = "images/ltb_sd_logo.png";
+#$background_image = "images/custom-background.png";
+$favicon = "images/ltb_sd_icon.png";
+$logo_menu = $favicon;
 $custom_css = "";
 $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
