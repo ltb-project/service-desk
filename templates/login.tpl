@@ -1,12 +1,10 @@
-<div class="alert shadow alert-success">{$msg_authenticate|unescape: "html" nofilter}</div>
-
 <div class="row m-5 p-3">
 <div class="col-md-6">
   <img src="{$logo}" alt="{$msg_title}" class="logo img-fluid mx-auto d-block" />
 </div>
-<div class="col-md-6 card shadow">
+<div class="col-md-6 p-5">
 
-  <div class="card-body">
+  <div class="alert alert-success">{$msg_authenticate|unescape: "html" nofilter}</div>
 
   <form method="post" action="index.php?page=login">
 
@@ -35,8 +33,6 @@
   </div>
 
   </form>
-
-  </div>
 
 </div>
 </div>
