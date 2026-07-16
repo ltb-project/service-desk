@@ -1,10 +1,15 @@
 /* CSS for LDAP Tool Box Service Desk */
 
-html, body {
-  background: #eee;
+html {
+  min-height:100%;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+body {
   font-size: 12pt;
+  height: 100%;
+  background-color: #c8e41b;
+  background-image: url(../images/ltb_tile_1080p.svg), radial-gradient(at 74.1% 25.6%, #f4fbcc 0px, transparent 50%), radial-gradient(at 3.3% 2.1%, #b7ee46 0px, transparent 50%), radial-gradient(at 38.6% 58.9%, #b7ee46 0px, transparent 50%), radial-gradient(at 78.7% 85.1%, #c8e41b 0px, transparent 50%), radial-gradient(at 3.6% 98.3%, #356f56 0px, transparent 50%);
 }
 
 a, a:hover {
@@ -28,7 +33,6 @@ img.menu-logo {
 .table {
   margin-bottom: 0;
 }
-
 table.table td {
  line-break: anywhere;
 }

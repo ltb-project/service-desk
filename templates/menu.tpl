@@ -3,8 +3,8 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation">
           <div class="container-fluid">
               <a class="navbar-brand" href="index.php?page=welcome">
-                {if $logo}
-                <img src="{$logo}" alt="Logo" class="menu-logo img-fluid" />
+                {if $logo_menu}
+                <img src="{$logo_menu}" alt="Logo" class="menu-logo img-fluid" />
                 {/if}
                 {$msg_title}
               </a>

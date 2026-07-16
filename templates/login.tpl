@@ -1,7 +1,9 @@
 <div class="alert shadow alert-success">{$msg_authenticate|unescape: "html" nofilter}</div>
 
-<div class="row mt-5 pb-3">
-<div class="col-md-3"></div>
+<div class="row m-5 p-3">
+<div class="col-md-6">
+  <img src="{$logo}" alt="{$msg_title}" class="logo img-fluid mx-auto d-block" />
+</div>
 <div class="col-md-6 card shadow">
 
   <div class="card-body">
@@ -37,5 +39,4 @@
   </div>
 
 </div>
-<div class="col-md-3"></div>
 </div>
