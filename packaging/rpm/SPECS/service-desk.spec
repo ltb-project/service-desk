@@ -16,7 +16,7 @@
 %undefine __brp_mangle_shebangs
 
 Name:      service-desk
-Version:   0.8
+Version:   0.9
 Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
 URL:       https://ltb-project.org/
@@ -174,6 +174,30 @@ rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %changelog
+* Fri Jul 17 2026 Clement Oudot <clem@ltb-project.org> - 0.9-1
+- gh#58: Manage group membership
+- gh#282: Authentication system
+- gh#288: implement mandatory attributes at backend side
+- gh#304: Please fix typo
+- gh#305: debian package set incorrect cache permissions
+- gh#307: Choose branch when creating a new entry
+- gh#308: Fixing debug log level
+- gh#309: Fixing debug log level
+- gh#310: Option to choose in which branch we can create the user account
+- gh#313: Problem with multi tenancy in Docker image
+- gh#315: Page for group membership management
+- gh#316: Page for groups membership management
+- gh#318: Fix typo in installation.rst
+- gh#319: Idle accounts list with ActiveDirectory
+- gh#320: Change type of macro generated attributes
+- gh#321: Rely on attributes map for last authentication attribute
+- gh#323: Upgrade to LTB Common 0.7
+- gh#324: Errors should be displayed on current page
+- gh#325: Create a dedicated error page, and display some errors on current page
+- gh#326: Use new logo and background
+- gh#327: Authentication system
+- gh#328: Use new LTB design
+
 * Fri Jan 09 2026 Clement Oudot <clem@ltb-project.org> - 0.8-1
 - gh#214: Optimize the ldap search accounts request
 - gh#219: Improve hooks management
