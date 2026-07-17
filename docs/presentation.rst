@@ -4,18 +4,16 @@ Presentation
 .. image:: images/ltb_sd_welcome_page.png
 
 LDAP Tool Box Service Desk is a web application for administrators and support teams.
-It allows to browse accounts in an LDAP directory, view and update their status.
-
-.. warning:: There is no authentication requested by the application.
-             You must set some before opening the application to your
-             trusted users. Some examples are provided in the documentation.
+It allows to manage accounts in an LDAP directory, view and update their status.
 
 Features
 --------
 
 * LDAPv3 and Active Directory support
+* Authentication with LDAP or SSO (HTTP header)
 * Quick search for an account
 * Create, update, rename and delete accounts
+* Add or remove users from groups (group membership)
 * View main attributes
 * View account and password status
 * Test current password

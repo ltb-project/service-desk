@@ -11,11 +11,9 @@ See [list of features](https://service-desk.readthedocs.io/en/stable/presentatio
 
 ![Screenshot](https://raw.githubusercontent.com/ltb-project/service-desk/master/ltb_sd_screenshot.png)
 
-:exclamation: With great power comes great responsibility: this application allows to reset password of any user, you must protect it and allow access only to trusted users.
-
 ## Documentation
 
-Documentation is available on https://service-desk.readthedocs.io/en/latest/
+Documentation is available on https://service-desk.readthedocs.io/en/stable/
 
 ## Docker
 
