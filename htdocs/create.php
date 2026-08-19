@@ -142,7 +142,7 @@ if ($result === "") {
                     $branch_list = $create_staticlist ? $create_staticlist : array();
                 }
                 if ( $create_branch_type === "list") {
-                    $branch_list = $ldapInstance->get_list( $create_list["base"], $create_list["filter"], $create_list["key"], $create_list["value"] );
+                    $branch_list = $ldapInstance->get_sorted_list( $create_list["base"], $create_list["filter"], $create_list["key"], $create_list["value"] );
                 }
 
             }
