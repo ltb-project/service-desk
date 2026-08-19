@@ -35,36 +35,43 @@ Requires:  php-Smarty
 Requires:  php-fpm
 %{!?el7:%global __requires_exclude /usr/bin/python}
 
-Provides:  bundled(js-bootstrap) = v5.3.2
-Provides:  bundled(js-jquery) = v3.7.1
-Provides:  bundled(js-datatables.net-datatables.net) = 2.1.2
-Provides:  bundled(js-datatables.net-datatables.net-bs5) = 2.0.8
-Provides:  bundled(js-datatables.net-datatables.net-buttons) = 3.1.0
-Provides:  bundled(js-datatables.net-datatables.net-buttons-bs5) = 3.0.2
+# License MIT
+Provides:  bundled(js-bootstrap) = 5.3.2
+Provides:  bundled(js-jquery) = 3.7.1
+Provides:  bundled(js-datatables) = 2.3.8
+Provides:  bundled(js-datatables-bs5) = 2.0.8
+Provides:  bundled(js-datatables-buttons) = 3.2.6
+Provides:  bundled(js-datatables-buttons-bs5) = 3.0.2
+Provides:  bundled(js-datatables-responsive) = 3.0.8
+Provides:  bundled(js-datatables-responsive-bs5) = 3.0.2
+# License CC-BY-4.0 and OFL-1.1 and MIT
 Provides:  bundled(fontawesome-fonts) = 6.5.2
-Provides:  bundled(php-ltb-project-ltb-common) = 0.3.0
-Provides:  bundled(php-bjeavons-zxcvbn-php) = 1.3.1
-Provides:  bundled(php-guzzlehttp-guzzle) = 7.8.1
-Provides:  bundled(php-guzzlehttp-promises) = 2.0.2
-Provides:  bundled(php-guzzlehttp-psr7) = 2.6.2
+# License GPL-3.0-or-later
+Provides:  bundled(php-ltb-project-ltb-common) = 0.7.0
+# License LGPL-2.1-only
+Provides:  bundled(php-phpmailer-phpmailer) = 6.12.0
+# License MIT
+Provides:  bundled(php-bjeavons-zxcvbn-php) = 1.4.2
+Provides:  bundled(php-guzzlehttp-guzzle) = 7.14.2
+Provides:  bundled(php-guzzlehttp-promises) = 2.5.1
+Provides:  bundled(php-guzzlehttp-psr7) = 2.12.5
 Provides:  bundled(php-mxrxdxn-pwned-passwords) = 2.1.0
-Provides:  bundled(php-phpmailer) = 6.9.1
-Provides:  bundled(php-psr-http-client) = 1.0.3
-Provides:  bundled(php-psr-http-factory) = 1.0.2
-Provides:  bundled(php-psr-http-message) = 2.0
-Provides:  bundled(php-ralouphie-getallheaders) = 3.0.3
-Provides:  bundled(php-symfony-deprecation-contracts) = 3.4.0
-Provides:  bundled(php-symfony-finder) = 7.0.0
-Provides:  bundled(php-symfony-polyfill) = v1.31.0
-Provides:  bundled(php-symfony-deprecation-contracts) = v2.5.3
-Provides:  bundled(php-symfony-var-exporter) = v5.4.40
-Provides:  bundled(php-psr-container) = 1.1.2
-Provides:  bundled(php-symfony-service-contracts) = v2.5.3
+Provides:  bundled(php-predis-predis) = 2.4.1
 Provides:  bundled(php-psr-cache) = 1.0.1
-Provides:  bundled(php-symfony-cache-contracts) = v2.5.3
+Provides:  bundled(php-psr-container) = 1.1.2
+Provides:  bundled(php-psr-http-client) = 1.0.3
+Provides:  bundled(php-psr-http-factory) = 1.1.0
+Provides:  bundled(php-psr-http-message) = 2.0
 Provides:  bundled(php-psr-log) = 1.1.4
-Provides:  bundled(php-symfony-cache) = v5.4.42
-Provides:  bundled(php-predis-predis) = v2.2.2
+Provides:  bundled(php-ralouphie-getallheaders) = 3.0.3
+Provides:  bundled(php-symfony-cache) = 5.4.53
+Provides:  bundled(php-symfony-cache-contracts) = 2.5.4
+Provides:  bundled(php-symfony-deprecation-contracts) = 2.5.4
+Provides:  bundled(php-symfony-polyfill-mbstring) = 1.38.2
+Provides:  bundled(php-symfony-polyfill-php73) = 1.37.0
+Provides:  bundled(php-symfony-polyfill-php80) = 1.37.0
+Provides:  bundled(php-symfony-service-contracts) = 2.5.4
+Provides:  bundled(php-symfony-var-exporter) = 5.4.45
 
 
 %description
