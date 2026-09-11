@@ -204,6 +204,12 @@ if ($result === "") {
                        "sambaPwdMustChange", "sambaKickoffTime");
         }
 
+        if ($show_validitystatus) {
+            array_push($attributes,
+                $attributes_map['starttime']['attribute'],
+                $attributes_map['endtime']['attribute']);
+        }
+
         # Search entry
         $search = ldap_read($ldap, $dn, $ldap_user_filter, $attributes);
         $errno = ldap_errno($ldap);
