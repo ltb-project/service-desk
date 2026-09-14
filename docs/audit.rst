@@ -109,7 +109,7 @@ The table columns to be displayed can be configured with the following variable:
 
 .. code-block:: php
 
-   $audit_log_items = array('date','ip','dn','done_by','action','result','comment');
+   $audit_log_items = array('date','ip','user_dn','done_by','action','result','comment');
 
 Audit table sorting
 ^^^^^^^^^^^^^^^^^^^
