@@ -110,7 +110,7 @@ The component ``dn_link`` can be used when updating an entry. In this case it is
 
 Some configuration parameters can be used:
 
-* What to display as search result label: it can be useful to use more thanone attribute to display the entry found by the search. This is possible by configuring a macro. For example to display the full name with the email in parenthesis:
+* What to display as search result label: it can be useful to use more than one attribute to display the entry found by the search. This is possible by configuring a macro. For example to display the full name with the email in parenthesis:
 
 .. code-block:: php
 
