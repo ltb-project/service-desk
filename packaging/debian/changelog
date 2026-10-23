@@ -1,4 +1,4 @@
-ltb-project-service-desk (0.9-1-1) unstable; urgency=low
+ltb-project-service-desk (0.9.1-1) unstable; urgency=low
 
     * gh#329: Fix bundled dependencies versions
     * gh#330: Sort items in creation base list
