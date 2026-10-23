@@ -369,6 +369,13 @@ if (isset($_POST["apiendpoint"])) {
     $apiendpoint = $_POST["apiendpoint"];
     $allowed_apiendpoints = array("search-api", "search_dn", "update_group_membership");
     if (file_exists("api/$apiendpoint.php") and in_array($apiendpoint, $allowed_apiendpoints)) {
+        if ($require_auth) {
+            session_start();
+            if (!isset($_SESSION["userdn"])) {
+                http_response_code(401);
+                exit;
+            }
+        }
         require_once("api/$apiendpoint.php");
     }
     echo json_encode($data);
