@@ -375,6 +375,10 @@ if (isset($_POST["apiendpoint"])) {
                 http_response_code(401);
                 exit;
             }
+            # Admin is no more anonymous
+            if ($audit_admin == "anonymous") {
+                $audit_admin = $_SESSION["userlogin"];
+            }
         }
         require_once("api/$apiendpoint.php");
     }
