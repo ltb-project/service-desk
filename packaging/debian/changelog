@@ -1,3 +1,18 @@
+ltb-project-service-desk (0.9-1-1) unstable; urgency=low
+
+    * gh#329: Fix bundled dependencies versions
+    * gh#330: Sort items in creation base list
+    * gh#332: Sort list when creation branch is dynamic
+    * gh#333: Use LTB Common 0.8
+    * gh#335: Typo in audit log doc
+    * gh#336: Typo in dn_link doc
+    * gh#338: Add Japanese translation
+    * gh#340: In audit log, done by field is always anonymous for group update actions
+    * gh#341: GHSA-xmc5-9pwf-84w6
+    * gh#343: Set audit_admin in API calls if authentication is enabled
+
+ -- Clement Oudot <clem@ltb-project.org>  Fri, 23 Oct 2026 12:00:00 +0200
+
 ltb-project-service-desk (0.9-1) unstable; urgency=low
 
     * gh#58: Manage group membership

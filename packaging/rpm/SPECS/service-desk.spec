@@ -16,7 +16,7 @@
 %undefine __brp_mangle_shebangs
 
 Name:      service-desk
-Version:   0.9
+Version:   0.9.1
 Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
 URL:       https://ltb-project.org/
@@ -181,6 +181,18 @@ rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %changelog
+* Fri Oct 23 2026 Clement Oudot <clem@ltb-project.org> - 0.9.1-1
+- gh#329: Fix bundled dependencies versions
+- gh#330: Sort items in creation base list
+- gh#332: Sort list when creation branch is dynamic
+- gh#333: Use LTB Common 0.8
+- gh#335: Typo in audit log doc
+- gh#336: Typo in dn_link doc
+- gh#338: Add Japanese translation
+- gh#340: In audit log, done by field is always anonymous for group update actions
+- gh#341: GHSA-xmc5-9pwf-84w6
+- gh#343: Set audit_admin in API calls if authentication is enabled
+
 * Fri Jul 17 2026 Clement Oudot <clem@ltb-project.org> - 0.9-1
 - gh#58: Manage group membership
 - gh#282: Authentication system
