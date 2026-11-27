@@ -16,8 +16,8 @@
 %undefine __brp_mangle_shebangs
 
 Name:      service-desk
-Version:   0.9.1
-Release:   2%{?dist}
+Version:   1.0
+Release:   1%{?dist}
 Summary:   LDAP Tool Box Service Desk web interface
 URL:       https://ltb-project.org/
 License:   GPL-3.0-only
@@ -31,7 +31,7 @@ Source1:   service-desk-apache.conf
 Requires:  coreutils
 Requires:  php(language) >= 7.3
 Requires:  php-ldap
-Requires:  (php-smarty4 or php-Smarty)
+Requires:  php-smarty4
 Requires:  php-fpm
 %{!?el7:%global __requires_exclude /usr/bin/python}
 
@@ -123,7 +123,6 @@ install -m 644 %{SOURCE1} \
 
 # Adapt Smarty paths
 sed -i \
-  -e 's:/usr/share/php/smarty3:/usr/share/php/smarty4:' \
   -e 's:^#$smarty_cache_dir.*:$smarty_cache_dir = "'%{sd_cachedir}/cache'";:' \
   -e 's:^#$smarty_compile_dir.*:$smarty_compile_dir = "'%{sd_cachedir}/templates_c'";:' \
   conf/config.inc.php
@@ -181,8 +180,8 @@ rm -rf %{sd_cachedir}/{cache,templates_c}/*
 
 
 %changelog
-* Fri Nov 27 2026 Xavier Bachelot <xavier.bachelot@worteks.com> - 0.9.1-2
-- Switch to smarty4
+* Thu Dec 31 2026 - Clement Oudot <clem@ltb-project.org> - 1.0-1
+- gh#348: Upgrade to smarty4
 
 * Fri Oct 23 2026 Clement Oudot <clem@ltb-project.org> - 0.9.1-1
 - gh#329: Fix bundled dependencies versions
